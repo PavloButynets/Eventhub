@@ -32,12 +32,16 @@ public class Event {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "participants")
-    private int participants;
+    @Column(name = "participants_count")
+    private int participantsCount;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
+
+    @OneToMany
+    @JoinTable(name = "participant_id")
+    private List<User> participants;
 
     @Column(name = "location")
     private String location;
