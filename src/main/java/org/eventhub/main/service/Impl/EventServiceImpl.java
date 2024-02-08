@@ -7,6 +7,7 @@ import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public Event update(Event event) {
         if(event != null) {
             readById(event.getId());
@@ -45,6 +47,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public void delete(long id) {
         eventRepository.delete(readById(id));
     }
