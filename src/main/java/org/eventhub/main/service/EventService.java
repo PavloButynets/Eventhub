@@ -11,5 +11,4 @@ public interface EventService {
     void delete(long id);
 
     List<Event> getAll();
-    List<Event> getByEventId(long eventId);
 }
