@@ -6,24 +6,26 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="photos")
-public class Photo {
+@Table(name="categories")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = "The 'name' cannot be empty")
-    @Column(name="photo_url")
-    String photoUrl;
+    @NotBlank(message = "Name of Category can't be blank")
+    @Column(name="name")
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
+    @ManyToMany(mappedBy = "categories")
+    private Set<Event> events = new HashSet<>();
+
 }
