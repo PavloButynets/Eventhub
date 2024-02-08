@@ -7,11 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name="event_photos")
 public class EventPhoto {
     @Id
@@ -21,7 +21,7 @@ public class EventPhoto {
 
     @NotBlank(message = "The 'URL' cannot be empty")
     @Column(name="photo_url")
-    String photoUrl;
+    private String photoUrl;
 
     @ManyToOne
     @JoinColumn(name = "event_id")

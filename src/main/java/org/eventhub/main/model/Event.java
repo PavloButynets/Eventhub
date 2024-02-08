@@ -21,10 +21,14 @@ public class Event {
     @NotBlank(message = "Name is mandatory")
     @Size(max = 20, min = 5,
     message = "Name length cannot be greater than 20 symbols")
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @NotBlank(message = "Specify max number of participants")
+    @Max(value = 20000,
+            message = "You cannot have more than 20 000 participants")
+    @Min(value = 2,
+            message = "You cannot have less than 2 participants")
     @Pattern(regexp = "\\d+",
             message = "This field must contain only numbers")
     @Column(name = "max_participants")

@@ -49,8 +49,8 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "photo_link", nullable = false)
-    private String photoLink;
+    @Column(name = "profile_image", nullable = false)
+    private String profileImage;
 
     @Column(name = "description", nullable = false)
     private String description;
