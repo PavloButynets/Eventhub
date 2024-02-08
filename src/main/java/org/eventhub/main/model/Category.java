@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -25,7 +23,10 @@ public class Category {
     @Column(name="name", length = 30, nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
-    private Set<Event> events = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "event_categories",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id"))
+    private List<Event> events;
 
 }
