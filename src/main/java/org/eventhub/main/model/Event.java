@@ -57,10 +57,7 @@ public class Event {
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    @ManyToMany
-    @JoinTable(name="event_participants",
-            joinColumns = @JoinColumn(name = "event_id"),
-            inverseJoinColumns = @JoinColumn(name = "participants_id"))
+    @OneToMany(mappedBy = "event")
     private List<User> participants;
 
     @ManyToMany
