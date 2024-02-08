@@ -22,7 +22,7 @@ public class Category {
     private Long id;
 
     @NotBlank(message = "Name of Category can't be blank")
-    @Column(name="name")
+    @Column(name="name", length = 30, nullable = false, unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "categories")
