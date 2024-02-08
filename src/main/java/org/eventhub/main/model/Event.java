@@ -2,10 +2,12 @@ package org.eventhub.main.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Data
 @Table(name = "events")
 public class Event {
     @Id
