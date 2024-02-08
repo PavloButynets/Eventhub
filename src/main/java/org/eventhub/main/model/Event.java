@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Setter
@@ -61,14 +62,14 @@ public class Event {
     private String location;
 
     @OneToMany(mappedBy = "event")
-    private List<Photo> photos;
+    private List<EventPhoto> photos;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
 
     @OneToMany(mappedBy = "event")
-    private List<User> participants;
+    private List<Participant> participants;
 
     @ManyToMany
     @JoinTable(name = "event_categories",

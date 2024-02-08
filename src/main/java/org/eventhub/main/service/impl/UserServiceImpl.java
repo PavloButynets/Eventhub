@@ -2,6 +2,7 @@ package org.eventhub.main.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.model.User;
 import org.eventhub.main.repository.UserRepository;
 import org.eventhub.main.service.UserService;

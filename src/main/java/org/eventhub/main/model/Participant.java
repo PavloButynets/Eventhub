@@ -21,18 +21,22 @@ public class Participant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @NotNull
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
     @NotNull
     @Column(name = "is_approved")
     private boolean isApproved;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id", referencedColumnName = "id")
+    @JoinColumn(name = "event_id")
     @NotNull
     private Event event;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id")
     @NotNull
     private User user;
 
