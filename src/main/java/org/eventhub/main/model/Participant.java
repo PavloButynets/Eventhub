@@ -22,16 +22,18 @@ public class Participant {
     @Column(name = "id")
     private Long id;
     @NotNull
-    @Column(name = "event_id")
-    private Long eventId;
-    @NotNull
-    @Column(name = "user_id")
-    private Long userId;
-    @NotNull
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @NotNull
     @Column(name = "is_approved")
     private boolean isApproved;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_id", referencedColumnName = "id")
+    @NotNull
+    private Event event;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @NotNull
+    private User user;
 
 }
