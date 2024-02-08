@@ -1,16 +1,20 @@
 package org.eventhub.main.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.eventhub.main.model.User;
 import org.eventhub.main.repository.UserRepository;
 import org.eventhub.main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+//@RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -28,9 +32,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User readById(long id) {
         return userRepository.findById(id).orElseThrow(
-                () -> new NullEntityReferenceException("User with" + id + "not found"));
+                () -> new EntityNotFoundException("User with" + id + "not found"));
     }
 
+    @Transactional
     @Override
     public User update(User user) {
         if (user != null) {

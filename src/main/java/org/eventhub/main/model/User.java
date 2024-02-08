@@ -2,11 +2,13 @@ package org.eventhub.main.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,7 +30,8 @@ public class User {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "username", nullable = false)
+    @Size(min = 3, max = 15)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @Pattern(regexp = "[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}", message = "Must be a valid e-mail address")
@@ -58,6 +61,12 @@ public class User {
     @Column(name = "location_city", nullable = false)
     private String city;
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number", nullable = false, unique = true)
     private String phoneNumber;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
+    private List<Event> userEvents;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Participant> userParticipants;
 }
