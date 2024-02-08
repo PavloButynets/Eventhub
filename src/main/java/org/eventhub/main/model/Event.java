@@ -49,6 +49,10 @@ public class Event {
     private int participantCount;
 
     @NotNull
+    @Column(name = "state")
+    private State state;
+
+    @NotNull
     @Column(name = "location")
     private String location;
 
