@@ -1,5 +1,6 @@
 package org.eventhub.main.service.Impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.model.Event;
 import org.eventhub.main.repository.EventRepository;
@@ -14,7 +15,7 @@ import java.util.List;
 public class EventServiceImpl implements EventService {
 
     @Autowired
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
 
     public EventServiceImpl(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
@@ -31,7 +32,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event readById(long id) {
-        return eventRepository.findById(id).orElseThrow( () -> new NullEntityReferenceException("Non existing id: " + id));
+        return eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
     }
 
     @Override
