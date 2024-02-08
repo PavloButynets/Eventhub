@@ -1,13 +1,13 @@
 package org.eventhub.main.service;
 
-import org.eventhub.main.model.Photo;
+import org.eventhub.main.model.EventPhoto;
 
 import java.util.List;
 
 public interface PhotoService {
-    Photo create(Photo photo);
-    Photo readById(long id);
-    Photo update(Photo photo);
+    EventPhoto create(EventPhoto photo);
+    EventPhoto readById(long id);
+    EventPhoto update(EventPhoto photo);
     void delete (long id);
-    List<Photo> getAll();
+    List<EventPhoto> getAll();
 }

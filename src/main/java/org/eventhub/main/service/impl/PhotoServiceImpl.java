@@ -1,7 +1,8 @@
 package org.eventhub.main.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.exception.NullEntityReferenceException;
-import org.eventhub.main.model.Photo;
+import org.eventhub.main.model.EventPhoto;
 import org.eventhub.main.repository.PhotoRepository;
 import org.eventhub.main.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public Photo create(Photo photo) {
+    public EventPhoto create(EventPhoto photo) {
         if(photo != null){
             return photoRepository.save(photo);
         }
@@ -29,13 +30,13 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public Photo readById(long id) {
+    public EventPhoto readById(long id) {
         return photoRepository.findById(id)
-                .orElseThrow(()->new NullEntityReferenceException("Photo with given id is not found"));
+                .orElseThrow(()->new EntityNotFoundException("Photo with" + id + " id is not found"));
     }
 
     @Override
-    public Photo update(Photo photo) {
+    public EventPhoto update(EventPhoto photo) {
         if (photo != null) {
             readById(photo.getId());
             return photoRepository.save(photo);
@@ -49,7 +50,7 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public List<Photo> getAll() {
+    public List<EventPhoto> getAll() {
         return photoRepository.findAll();
     }
 }
