@@ -2,12 +2,15 @@ package org.eventhub.main.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "events")
 public class Event {
     @Id
@@ -15,7 +18,7 @@ public class Event {
     private long id;
 
     @NotBlank(message = "Name is mandatory")
-    @Size(max = 20,
+    @Size(max = 20, min = 5,
     message = "Name length cannot be greater than 20 symbols")
     @Column(name = "name")
     private String name;
@@ -48,6 +51,7 @@ public class Event {
     @Column(name = "participant_count")
     private int participantCount;
 
+    @Enumerated(EnumType.STRING)
     @NotNull
     @Column(name = "state")
     private State state;

@@ -1,4 +1,4 @@
-package org.eventhub.main.service.Impl;
+package org.eventhub.main.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.exception.NullEntityReferenceException;
