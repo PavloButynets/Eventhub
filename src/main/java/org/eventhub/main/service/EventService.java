@@ -9,8 +9,10 @@ import java.util.List;
 
 public interface EventService {
     Event create(EventCreateRequest eventCreateRequest);
-    EventDto readById(long id);
-    Event update(EventRequest eventCreateRequest);
+    EventDto readByIdDto(long id);
+
+    Event readById(long id);
+    Event update(EventRequest eventRequest);
     void delete(long id);
 
     List<EventDto> getAll();

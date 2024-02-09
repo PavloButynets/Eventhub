@@ -55,9 +55,14 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventDto readById(long id) {
+    public EventDto readByIdDto(long id) {
         Event event = eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
         return eventDtoMapper.apply(event);
+    }
+
+    @Override
+    public Event readById(long id) {
+        return eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
     }
 
     @Override
