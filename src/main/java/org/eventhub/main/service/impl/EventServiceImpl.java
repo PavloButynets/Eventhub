@@ -1,6 +1,7 @@
 package org.eventhub.main.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.eventhub.main.dto.EventDto;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.exception.NotValidDateException;
 import org.eventhub.main.exception.NullEntityReferenceException;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -91,8 +93,10 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> getAll() {
-        List<Event> events = eventRepository.findAll();
-        return events.isEmpty() ? new ArrayList<>() : events;
+    public List<EventDto> getAll() {
+        return eventRepository.findAll()
+                .stream()
+                .map(eventDtoMapper)
+                .collect(Collectors.toList());
     }
 }

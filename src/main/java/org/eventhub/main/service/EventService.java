@@ -1,5 +1,6 @@
 package org.eventhub.main.service;
 
+import org.eventhub.main.dto.EventDto;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.model.Event;
 
@@ -11,5 +12,5 @@ public interface EventService {
     Event update(Event event);
     void delete(long id);
 
-    List<Event> getAll();
+    List<EventDto> getAll();
 }
