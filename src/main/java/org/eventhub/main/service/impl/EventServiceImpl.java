@@ -58,7 +58,7 @@ public class EventServiceImpl implements EventService {
         }
 
         if (dateComparisonResultStartAt < 0) {event.setState(State.UPCOMING);}
-        else if (dateComparisonResultStartAt >= 0 && dateComparisonResultExpireAt <= 0) {event.setState(State.LIVE);}
+        else if (dateComparisonResultExpireAt <= 0) {event.setState(State.LIVE);}
         else {event.setState(State.PAST);}
 
         event.setParticipants(new ArrayList<>());
