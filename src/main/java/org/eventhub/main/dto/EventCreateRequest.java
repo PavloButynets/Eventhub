@@ -1,17 +1,13 @@
 package org.eventhub.main.dto;
 
 import lombok.Data;
-import org.eventhub.main.model.Category;
-import org.eventhub.main.model.EventPhoto;
-import org.eventhub.main.model.User;
+import org.eventhub.main.model.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class EventRequest {
-
-    private long id;
+public class EventCreateRequest {
 
     private String title;
 
