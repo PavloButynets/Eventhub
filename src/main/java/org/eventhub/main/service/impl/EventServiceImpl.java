@@ -44,7 +44,7 @@ public class EventServiceImpl implements EventService {
         event.setCreatedAt(currentTime);
         event.setParticipantCount(0);
 
-        checkState(event,currentTime, eventCreateRequest.getStartAt(), eventCreateRequest.getExpireAt());
+        checkState(event, currentTime, eventCreateRequest.getStartAt(), eventCreateRequest.getExpireAt());
 
         event.setParticipants(new ArrayList<>());
 
