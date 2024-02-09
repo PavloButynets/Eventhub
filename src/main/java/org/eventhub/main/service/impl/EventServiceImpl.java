@@ -39,15 +39,7 @@ public class EventServiceImpl implements EventService {
         LocalDateTime currentTime = LocalDateTime.now();
         Event event = new Event();
 
-        event.setTitle(eventCreateRequest.getTitle());
-        event.setMaxParticipants(eventCreateRequest.getMaxParticipants());
-        event.setStartAt(eventCreateRequest.getStartAt());
-        event.setExpireAt(eventCreateRequest.getExpireAt());
-        event.setDescription(eventCreateRequest.getDescription());
-        event.setLocation(eventCreateRequest.getLocation());
-        event.setPhotos(eventCreateRequest.getPhotos());
-        event.setOwner(eventCreateRequest.getOwner());
-        event.setCategories(eventCreateRequest.getCategories());
+        mapCreateEventRequest(event, eventCreateRequest);
 
         event.setCreatedAt(currentTime);
         event.setParticipantCount(0);
@@ -74,16 +66,7 @@ public class EventServiceImpl implements EventService {
             LocalDateTime currentTime = LocalDateTime.now();
             Event event = readById(eventRequest.getId());
 
-
-            event.setTitle(eventRequest.getTitle());
-            event.setMaxParticipants(eventRequest.getMaxParticipants());
-            event.setStartAt(eventRequest.getStartAt());
-            event.setExpireAt(eventRequest.getExpireAt());
-            event.setDescription(eventRequest.getDescription());
-            event.setLocation(eventRequest.getLocation());
-            event.setPhotos(eventRequest.getPhotos());
-            event.setOwner(eventRequest.getOwner());
-            event.setCategories(eventRequest.getCategories());
+            mapEventRequest(event, eventRequest);
 
             checkState(event,currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
@@ -119,5 +102,29 @@ public class EventServiceImpl implements EventService {
         if (dateComparisonResultStartAt < 0) {event.setState(State.UPCOMING);}
         else if (dateComparisonResultExpireAt <= 0) {event.setState(State.LIVE);}
         else {event.setState(State.PAST);}
+    }
+
+    void mapEventRequest(Event event, EventRequest eventRequest) {
+        event.setTitle(eventRequest.getTitle());
+        event.setMaxParticipants(eventRequest.getMaxParticipants());
+        event.setStartAt(eventRequest.getStartAt());
+        event.setExpireAt(eventRequest.getExpireAt());
+        event.setDescription(eventRequest.getDescription());
+        event.setLocation(eventRequest.getLocation());
+        event.setPhotos(eventRequest.getPhotos());
+        event.setOwner(eventRequest.getOwner());
+        event.setCategories(eventRequest.getCategories());
+    }
+
+    void mapCreateEventRequest(Event event, EventCreateRequest eventCreateRequest) {
+        event.setTitle(eventCreateRequest.getTitle());
+        event.setMaxParticipants(eventCreateRequest.getMaxParticipants());
+        event.setStartAt(eventCreateRequest.getStartAt());
+        event.setExpireAt(eventCreateRequest.getExpireAt());
+        event.setDescription(eventCreateRequest.getDescription());
+        event.setLocation(eventCreateRequest.getLocation());
+        event.setPhotos(eventCreateRequest.getPhotos());
+        event.setOwner(eventCreateRequest.getOwner());
+        event.setCategories(eventCreateRequest.getCategories());
     }
 }
