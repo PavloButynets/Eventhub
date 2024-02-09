@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EventService {
     Event create(EventCreateRequest eventCreateRequest);
-    Event readById(long id);
+    EventDto readById(long id);
     Event update(EventRequest eventCreateRequest);
     void delete(long id);
 
