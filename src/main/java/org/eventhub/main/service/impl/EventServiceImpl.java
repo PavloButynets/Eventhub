@@ -2,7 +2,6 @@ package org.eventhub.main.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.EventDto;
-import org.eventhub.main.dto.EventCreateRequest;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.exception.NotValidDateException;
 import org.eventhub.main.exception.NullEntityReferenceException;
