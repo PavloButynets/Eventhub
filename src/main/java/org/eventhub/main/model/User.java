@@ -1,6 +1,7 @@
 package org.eventhub.main.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -65,6 +67,14 @@ public class User {
 
     @Column(name = "phone_number", nullable = false, unique = true)
     private String phoneNumber;
+
+    @Past
+    @Column(name = "birth_date", nullable = false)
+    private LocalDate birthDate;
+
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @OneToMany(mappedBy = "owner")
     private List<Event> userEvents;

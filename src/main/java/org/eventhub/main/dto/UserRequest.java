@@ -1,13 +1,16 @@
 package org.eventhub.main.dto;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.eventhub.main.model.Event;
+import org.eventhub.main.model.Gender;
 import org.eventhub.main.model.Participant;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -49,6 +52,12 @@ public class UserRequest {
     private String city;
 
     private String phoneNumber;
+
+    @Past
+    private LocalDate birthDate;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     private List<EventRequest> userEvents;
 
