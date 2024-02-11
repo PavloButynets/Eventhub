@@ -1,7 +1,11 @@
 package org.eventhub.main.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.eventhub.main.dto.EventPhotoRequest;
+import org.eventhub.main.dto.EventPhotoResponse;
+import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
+import org.eventhub.main.mapper.EventPhotoMapper;
 import org.eventhub.main.model.EventPhoto;
 import org.eventhub.main.repository.PhotoRepository;
 import org.eventhub.main.service.PhotoService;
@@ -10,47 +14,57 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class PhotoServiceImpl implements PhotoService {
     private final PhotoRepository photoRepository;
+    private final EventPhotoMapper eventPhotoMapper;
+
 
     @Autowired
-    public PhotoServiceImpl(PhotoRepository photoRepository){
+    public PhotoServiceImpl(PhotoRepository photoRepository, EventPhotoMapper eventPhotoMapper){
         this.photoRepository = photoRepository;
+        this.eventPhotoMapper = eventPhotoMapper;
     }
 
     @Override
-    public EventPhoto create(EventPhoto photo) {
-        if(photo != null){
-            return photoRepository.save(photo);
+    public EventPhotoResponse create(EventPhotoRequest eventPhotoRequest) {
+        if(eventPhotoRequest != null){
+            EventPhoto photo = eventPhotoMapper.requestToEntity(eventPhotoRequest, new EventPhoto());
+            return eventPhotoMapper.entityToResponse(photoRepository.save(photo));
         }
-        throw new NullEntityReferenceException("Created photo can't be null");
+        throw new NullDtoReferenceException("Created photo Request can't be null");
     }
 
     @Override
-    public EventPhoto readById(long id) {
-        return photoRepository.findById(id)
+    public EventPhotoResponse readById(long id) {
+        EventPhoto photo= photoRepository.findById(id)
                 .orElseThrow(()->new EntityNotFoundException("Photo with" + id + " id is not found"));
+        return eventPhotoMapper.entityToResponse(photo);
     }
 
     @Override
-    public EventPhoto update(EventPhoto photo) {
-        if (photo != null) {
+    public EventPhotoResponse update(EventPhotoRequest photoRequest) {
+        if (photoRequest != null) {
+            EventPhoto photo = eventPhotoMapper.requestToEntity(photoRequest, new EventPhoto());
             readById(photo.getId());
-            return photoRepository.save(photo);
+            return eventPhotoMapper.entityToResponse(photoRepository.save(photo));
         }
-        throw new NullEntityReferenceException("Updated photo cannot be 'null'");
+        throw new NullDtoReferenceException("Updated photo Request cannot be 'null'");
     }
 
     @Override
     public void delete(long id) {
-        photoRepository.delete(readById(id));
+        photoRepository.deleteById(id);
     }
 
     @Override
-    public List<EventPhoto> getAll() {
-        return photoRepository.findAll();
+    public List<EventPhotoResponse> getAll() {
+        return photoRepository.findAll()
+                .stream()
+                .map(eventPhotoMapper::entityToResponse)
+                .collect(Collectors.toList());
     }
 }

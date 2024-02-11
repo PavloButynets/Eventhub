@@ -1,6 +1,10 @@
 package org.eventhub.main.service.impl;
 
+import org.eventhub.main.dto.CategoryRequest;
+import org.eventhub.main.dto.CategoryResponse;
+import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
+import org.eventhub.main.mapper.CategoryMapper;
 import org.eventhub.main.model.Category;
 import org.eventhub.main.repository.CategoryRepository;
 import org.eventhub.main.service.CategoryService;
@@ -8,45 +12,55 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     @Autowired
-    public CategoryServiceImpl(CategoryRepository categoryRepository){
+    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper){
         this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
     }
     @Override
-    public Category create(Category category) {
-        if (category != null) {
-            return categoryRepository.save(category);
+    public CategoryResponse create(CategoryRequest categoryRequest) {
+        if (categoryRequest != null) {
+            Category category = categoryMapper.requestToEntity(categoryRequest, new Category());
+            return categoryMapper.entityToResponse(categoryRepository.save(category));
         }
-        throw new NullEntityReferenceException("Created Category cannot be 'null'");
+        throw new NullDtoReferenceException("Request cannot be 'null'");
     }
 
     @Override
-    public Category readById(long id) {
-        return categoryRepository.findById(id).orElseThrow(
+    public CategoryResponse readById(long id) {
+        Category category = categoryRepository.findById(id).orElseThrow(
                 () -> new NullEntityReferenceException("Category with id " + id + " not found"));
+        return categoryMapper.entityToResponse(category);
     }
 
     @Override
-    public Category update(Category category) {
-        if (category != null) {
-            readById(category.getId());
-            return categoryRepository.save(category);
+    public CategoryResponse update(CategoryRequest categoryRequest) {
+        if (categoryRequest != null) {
+            Category category = categoryMapper.requestToEntity(categoryRequest, new Category());
+            readById(category.getId());// to check if category exist
+            return categoryMapper.entityToResponse(categoryRepository.save(category));
         }
-        throw new NullEntityReferenceException("Updated Category cannot be 'null'");
+        throw new NullDtoReferenceException("Updated Category Request cannot be 'null'");
     }
 
     @Override
     public void delete(long id) {
-        categoryRepository.delete(readById(id));
+        categoryRepository.deleteById(id);
     }
 
     @Override
-    public List<Category> getAll() {
-        return categoryRepository.findAll();
+    public List<CategoryResponse> getAll() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(categoryMapper::entityToResponse)
+                .collect(Collectors.toList());
     }
+
 }
