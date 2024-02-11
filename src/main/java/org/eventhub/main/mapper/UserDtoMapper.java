@@ -1,13 +1,13 @@
 package org.eventhub.main.mapper;
 
-import org.eventhub.main.dto.UserDto;
+import org.eventhub.main.dto.UserResponse;
 import org.eventhub.main.dto.UserRequest;
 import org.eventhub.main.model.User;
 import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.repository.ParticipantRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.function.Function;
+import java.time.LocalDateTime;
 
 @Service
 public class UserDtoMapper {
@@ -20,8 +20,8 @@ public class UserDtoMapper {
         this.eventRepository = eventRepository;
     }
 
-    public UserDto UserToResponse(User user) {
-        return new UserDto(
+    public UserResponse UserToResponse(User user) {
+        return new UserResponse(
                 user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
@@ -46,7 +46,7 @@ public class UserDtoMapper {
                 userRequest.getPassword(),
                 userRequest.getProfileImage(),
                 userRequest.getDescription(),
-                userRequest.getCreatedAt(),
+                LocalDateTime.now(),
                 userRequest.getCity(),
                 userRequest.getPhoneNumber(),
                 eventRepository.findAll(),
