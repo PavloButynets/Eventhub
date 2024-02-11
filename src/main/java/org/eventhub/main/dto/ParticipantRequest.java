@@ -12,6 +12,5 @@ public class ParticipantRequest {
     private Long id;
     private Long eventId;
     private Long userId;
-    private LocalDateTime createdAt;
     private boolean isApproved;
 }
