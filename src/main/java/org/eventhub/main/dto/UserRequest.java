@@ -1,5 +1,9 @@
 package org.eventhub.main.dto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -13,6 +17,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class UserRequest {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Pattern(regexp = "[A-Z][a-z]+",
             message = "Must start with a capital letter followed by one or more lowercase letters")
     private String firstName;
@@ -27,6 +35,16 @@ public class UserRequest {
     @Pattern(regexp = "[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}", message = "Must be a valid e-mail address")
     private String email;
 
+    @Pattern(regexp = "[A-Za-z\\d]{6,}",
+            message = "Must be minimum 6 symbols long, using digits and latin letters")
+    @Pattern(regexp = ".*\\d.*",
+            message = "Must contain at least one digit")
+    @Pattern(regexp = ".*[A-Z].*",
+            message = "Must contain at least one uppercase letter")
+    @Pattern(regexp = ".*[a-z].*",
+            message = "Must contain at least one lowercase letter")
+    private String password;
+
     private String profileImage;
 
     private String description;
@@ -34,4 +52,6 @@ public class UserRequest {
     private LocalDateTime createdAt;
 
     private String city;
+
+    private String phoneNumber;
 }

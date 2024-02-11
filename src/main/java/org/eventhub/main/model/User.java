@@ -72,15 +72,4 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Participant> userParticipants;
 
-    public User(String firstName, String lastName, String username, String email, String profileImage,
-                String description, LocalDateTime createdAt, String city) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.username = username;
-        this.email = email;
-        this.profileImage = profileImage;
-        this.description = description;
-        this.createdAt = createdAt;
-        this.city = city;
-    }
 }
