@@ -34,12 +34,14 @@ public class ParticipantMapper {
                 .build();
     }
 
-    public Participant requestToEntity(ParticipantRequest participantRequest){
+    public Participant requestToEntity(ParticipantRequest participantRequest, Participant participant){
         if(participantRequest == null){
             throw new NullDtoReferenceException("Request can't be null");
         }
+        if(participant == null){
+            throw  new NullEntityReferenceException("Participant cat't be null");
+        }
 
-        Participant participant = new Participant();
         participant.setId(participantRequest.getId());
         participant.setApproved(participantRequest.isApproved());
         participant.setUser(userRepository.findById(participant.getId()).orElseThrow(()->new NullEntityReferenceException("User cant be null")));
