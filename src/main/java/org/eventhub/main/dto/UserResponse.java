@@ -16,7 +16,7 @@ public record UserResponse(
         String description,
         LocalDateTime createdAt,
         String city,
-        List<Event> userEvents,
-        List<Participant> userParticipants
+        List<EventDto> userEvents,
+        List<ParticipantResponse> userParticipants
 ) {
 }

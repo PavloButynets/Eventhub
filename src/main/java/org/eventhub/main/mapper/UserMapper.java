@@ -36,8 +36,9 @@ public class UserMapper {
                 user.getDescription(),
                 user.getCreatedAt(),
                 user.getCity(),
-                user.getUserEvents(),
-                user.getUserParticipants()
+                user.getUserEvents().stream().map(eventDtoMapper::EventToResponse).collect(Collectors.toList()),
+                //Yaroslav should implement EventToResponse in his mapper
+                user.getUserParticipants().stream().map(participantMapper::entityToResponse).collect(Collectors.toList())
         );
     }
 
