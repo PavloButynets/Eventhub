@@ -23,8 +23,6 @@ public record UserResponse(
         LocalDateTime createdAt,
         String city,
         LocalDate birthDate,
-        Gender gender,
-        List<EventDto> userEvents,
-        List<ParticipantResponse> userParticipants
+        Gender gender
 ) {
 }
