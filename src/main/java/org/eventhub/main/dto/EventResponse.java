@@ -2,6 +2,7 @@ package org.eventhub.main.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class EventResponse {
     @NotNull
     private long id;
 
-    @NotNull
+    @NotBlank(message = "Title cannot be blank")
     private String title;
 
     @NotNull
