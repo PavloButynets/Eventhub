@@ -21,7 +21,7 @@ public class Event {
     @NotBlank(message = "Name is mandatory")
     @Size(max = 20, min = 5,
     message = "Name length cannot be greater than 20 symbols")
-    @Column(name = "title")
+    @Column(name = "title", unique = true)
     private String title;
 
     @NotBlank(message = "Specify max number of participants")
