@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EventService {
     Event create(EventRequest eventRequest);
-    EventResponse readByIdDto(long id);
+    EventResponse readByIdResponse(long id);
 
     Event readById(long id);
 

@@ -53,9 +53,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventResponse readByIdDto(long id) {
+    public EventResponse readByIdResponse(long id) {
         Event event = eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
-        return eventMapper.apply(event);
+        return eventMapper.entityToResponse(event);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class EventServiceImpl implements EventService {
     public List<EventResponse> getAll() {
         return eventRepository.findAll()
                 .stream()
-                .map(eventMapper)
+                .map(eventMapper::entityToResponse)
                 .collect(Collectors.toList());
     }
 
