@@ -3,10 +3,18 @@ package org.eventhub.main.mapper;
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.model.Event;
+import org.eventhub.main.repository.UserRepository;
+import org.eventhub.main.service.UserService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EventMapper {
+    UserService userService;
+
+    public EventMapper(UserService userService) {
+        this.userService = userService;
+    }
+
     public EventResponse entityToResponse(Event event) {
         return EventResponse.builder()
                 .id(event.getId())
@@ -19,10 +27,7 @@ public class EventMapper {
                 .participantCount(event.getParticipantCount())
                 .state(event.getState())
                 .location(event.getLocation())
-                .photos(event.getPhotos())
-                .owner(event.getOwner())
-                .participants(event.getParticipants())
-                .categories(event.getCategories())
+                .ownerId(event.getOwner().getId())
                 .build();
     }
 
@@ -33,9 +38,7 @@ public class EventMapper {
         event.setExpireAt(eventRequest.getExpireAt());
         event.setDescription(eventRequest.getDescription());
         event.setLocation(eventRequest.getLocation());
-        event.setPhotos(eventRequest.getPhotos());
-        event.setOwner(eventRequest.getOwner());
-        event.setCategories(eventRequest.getCategories());
+        event.setOwner(userService.readById(eventRequest.getOwnerId()));
         return event;
     }
 }

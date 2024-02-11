@@ -37,10 +37,11 @@ public class UserMapper {
                 user.getCreatedAt(),
                 user.getCity(),
                 user.getBirthDate(),
-                user.getGender(),
-                user.getUserEvents().stream().map(eventMapper::EventToResponse).collect(Collectors.toList()),
-                //Yaroslav should implement EventToResponse in his mapper
-                user.getUserParticipants().stream().map(participantMapper::entityToResponse).collect(Collectors.toList())
+                user.getGender();
+//                user.getUserEvents().stream().map(eventDtoMapper::EventToResponse).collect(Collectors.toList()),
+//                //Yaroslav should implement EventToResponse in his mapper
+//                user.getUserParticipants().stream().map(participantMapper::entityToResponse).collect(Collectors.toList())
+
         );
     }
 
@@ -57,9 +58,15 @@ public class UserMapper {
         user.setPhoneNumber(userRequest.getPhoneNumber());
         user.setBirthDate(userRequest.getBirthDate());
         user.setGender(userRequest.getGender());
+<<<<<<< HEAD
         user.setUserEvents(userRequest.getUserEvents().stream().map(eventMapper::RequestToEvent).collect(Collectors.toList()));
         //Yaroslav should implement RequestToEvent in his mapper
         user.setUserParticipants(userRequest.getUserParticipants().stream().map(participantMapper::requestToEntity).collect(Collectors.toList()));
+=======
+//        user.setUserEvents(userRequest.getUserEvents().stream().map(eventDtoMapper::RequestToEvent).collect(Collectors.toList()));
+//        //Yaroslav should implement RequestToEvent in his mapper
+//        user.setUserParticipants(userRequest.getUserParticipants().stream().map(participantMapper::requestToEntity).collect(Collectors.toList()));
+>>>>>>> fdb4126cd152986598e0a9e7f9b206f4aacee1e8
 
         return user;
     }

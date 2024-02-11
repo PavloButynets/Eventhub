@@ -58,8 +58,4 @@ public class UserRequest {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
-
-    private List<EventRequest> userEvents;
-
-    private List<ParticipantRequest> userParticipants;
 }

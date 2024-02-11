@@ -20,5 +20,6 @@ public record UserResponse(
         Gender gender,
         List<EventResponse> userEvents,
         List<ParticipantResponse> userParticipants
+
 ) {
 }

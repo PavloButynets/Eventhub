@@ -34,11 +34,5 @@ public class EventResponse {
 
     private String location;
 
-    private List<EventPhotoResponse> photos;
-
-    private UserResponse owner;
-
-    private List<ParticipantResponse> participants;
-
-    private List<CategoryResponse> categories;
+    private long ownerId;
 }

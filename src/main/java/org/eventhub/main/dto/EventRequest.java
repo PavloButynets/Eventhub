@@ -26,9 +26,5 @@ public class EventRequest {
 
     private String location;
 
-    private List<EventPhoto> photos;
-
-    private User owner;
-
-    private List<Category> categories;
+    private long ownerId;
 }

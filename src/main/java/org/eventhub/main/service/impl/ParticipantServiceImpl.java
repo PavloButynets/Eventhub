@@ -33,7 +33,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public ParticipantResponse create(ParticipantRequest participantRequest) {
         if(participantRequest != null){
-            Participant participant = participantMapper.requestToEntity(participantRequest);
+            Participant participant = participantMapper.requestToEntity(participantRequest, new Participant());
             participant = participantRepository.save(participant);
             return participantMapper.entityToResponse(participant);
         }
@@ -50,7 +50,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public ParticipantResponse update(ParticipantRequest participantRequest) {
         if(participantRequest != null){
-            Participant participant = participantMapper.requestToEntity(participantRequest);
+            Participant participant = participantMapper.requestToEntity(participantRequest, new Participant());
             readById(participant.getId()); // to check if participant exist
             participant = participantRepository.save(participant);
             return participantMapper.entityToResponse(participant);
