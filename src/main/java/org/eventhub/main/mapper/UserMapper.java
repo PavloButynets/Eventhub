@@ -15,13 +15,13 @@ public class UserMapper {
 
     private final ParticipantRepository participantRepository;
     private final EventRepository eventRepository;
-    private final EventDtoMapper eventDtoMapper;
+    private final EventMapper eventMapper;
     private final ParticipantMapper participantMapper;
 
-    public UserMapper(ParticipantRepository participantRepository, EventRepository eventRepository, EventDtoMapper eventDtoMapper, ParticipantMapper participantMapper) {
+    public UserMapper(ParticipantRepository participantRepository, EventRepository eventRepository, EventMapper eventMapper, ParticipantMapper participantMapper) {
         this.participantRepository = participantRepository;
         this.eventRepository = eventRepository;
-        this.eventDtoMapper = eventDtoMapper;
+        this.eventMapper = eventMapper;
         this.participantMapper = participantMapper;
     }
 
@@ -38,7 +38,7 @@ public class UserMapper {
                 user.getCity(),
                 user.getBirthDate(),
                 user.getGender(),
-                user.getUserEvents().stream().map(eventDtoMapper::EventToResponse).collect(Collectors.toList()),
+                user.getUserEvents().stream().map(eventMapper::EventToResponse).collect(Collectors.toList()),
                 //Yaroslav should implement EventToResponse in his mapper
                 user.getUserParticipants().stream().map(participantMapper::entityToResponse).collect(Collectors.toList())
         );
@@ -57,7 +57,7 @@ public class UserMapper {
         user.setPhoneNumber(userRequest.getPhoneNumber());
         user.setBirthDate(userRequest.getBirthDate());
         user.setGender(userRequest.getGender());
-        user.setUserEvents(userRequest.getUserEvents().stream().map(eventDtoMapper::RequestToEvent).collect(Collectors.toList()));
+        user.setUserEvents(userRequest.getUserEvents().stream().map(eventMapper::RequestToEvent).collect(Collectors.toList()));
         //Yaroslav should implement RequestToEvent in his mapper
         user.setUserParticipants(userRequest.getUserParticipants().stream().map(participantMapper::requestToEntity).collect(Collectors.toList()));
 

@@ -1,12 +1,6 @@
 package org.eventhub.main.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.Past;
-import org.eventhub.main.model.Event;
 import org.eventhub.main.model.Gender;
-import org.eventhub.main.model.Participant;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,7 +18,7 @@ public record UserResponse(
         String city,
         LocalDate birthDate,
         Gender gender,
-        List<EventDto> userEvents,
+        List<EventResponse> userEvents,
         List<ParticipantResponse> userParticipants
 ) {
 }

@@ -2,8 +2,6 @@ package org.eventhub.main.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
 import org.eventhub.main.model.*;
@@ -14,7 +12,7 @@ import java.util.List;
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class EventDto {
+public class EventResponse {
 
     private long id;
 

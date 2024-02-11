@@ -1,16 +1,14 @@
 package org.eventhub.main.mapper;
 
-import org.eventhub.main.dto.EventDto;
+import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.model.Event;
 import org.springframework.stereotype.Service;
 
-import java.util.function.Function;
-
 @Service
-public class EventDtoMapper {
-    public EventDto entityToResponse(Event event) {
-        return EventDto.builder()
+public class EventMapper {
+    public EventResponse entityToResponse(Event event) {
+        return EventResponse.builder()
                 .id(event.getId())
                 .title(event.getTitle())
                 .maxParticipants(event.getMaxParticipants())

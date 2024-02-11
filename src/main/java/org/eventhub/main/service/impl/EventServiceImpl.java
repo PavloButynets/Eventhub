@@ -1,11 +1,11 @@
 package org.eventhub.main.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.eventhub.main.dto.EventDto;
+import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.exception.NotValidDateException;
 import org.eventhub.main.exception.NullEntityReferenceException;
-import org.eventhub.main.mapper.EventDtoMapper;
+import org.eventhub.main.mapper.EventMapper;
 import org.eventhub.main.model.Event;
 import org.eventhub.main.model.State;
 import org.eventhub.main.repository.EventRepository;
@@ -25,11 +25,11 @@ public class EventServiceImpl implements EventService {
     @Autowired
     private final EventRepository eventRepository;
 
-    private final EventDtoMapper eventDtoMapper;
+    private final EventMapper eventMapper;
 
-    public EventServiceImpl(EventRepository eventRepository, EventDtoMapper eventDtoMapper) {
+    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper) {
         this.eventRepository = eventRepository;
-        this.eventDtoMapper = eventDtoMapper;
+        this.eventMapper = eventMapper;
     }
 
 
@@ -54,9 +54,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventDto readByIdDto(long id) {
+    public EventResponse readByIdDto(long id) {
         Event event = eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
-        return eventDtoMapper.apply(event);
+        return eventMapper.apply(event);
     }
 
     @Override
@@ -87,10 +87,10 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventDto> getAll() {
+    public List<EventResponse> getAll() {
         return eventRepository.findAll()
                 .stream()
-                .map(eventDtoMapper)
+                .map(eventMapper)
                 .collect(Collectors.toList());
     }
 
@@ -107,29 +107,5 @@ public class EventServiceImpl implements EventService {
         if (dateComparisonResultStartAt < 0) {event.setState(State.UPCOMING);}
         else if (dateComparisonResultExpireAt <= 0) {event.setState(State.LIVE);}
         else {event.setState(State.PAST);}
-    }
-
-    void mapEventRequest(Event event, EventRequest eventRequest) {
-        event.setTitle(eventRequest.getTitle());
-        event.setMaxParticipants(eventRequest.getMaxParticipants());
-        event.setStartAt(eventRequest.getStartAt());
-        event.setExpireAt(eventRequest.getExpireAt());
-        event.setDescription(eventRequest.getDescription());
-        event.setLocation(eventRequest.getLocation());
-        event.setPhotos(eventRequest.getPhotos());
-        event.setOwner(eventRequest.getOwner());
-        event.setCategories(eventRequest.getCategories());
-    }
-
-    void mapCreateEventRequest(Event event, EventCreateRequest eventCreateRequest) {
-        event.setTitle(eventCreateRequest.getTitle());
-        event.setMaxParticipants(eventCreateRequest.getMaxParticipants());
-        event.setStartAt(eventCreateRequest.getStartAt());
-        event.setExpireAt(eventCreateRequest.getExpireAt());
-        event.setDescription(eventCreateRequest.getDescription());
-        event.setLocation(eventCreateRequest.getLocation());
-        event.setPhotos(eventCreateRequest.getPhotos());
-        event.setOwner(eventCreateRequest.getOwner());
-        event.setCategories(eventCreateRequest.getCategories());
     }
 }
