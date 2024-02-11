@@ -41,10 +41,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse update(CategoryRequest categoryRequest) {
+    public Category readByIdEntity(long id){
+        return categoryRepository.findById(id).orElseThrow(
+                () -> new NullEntityReferenceException("Category with id " + id + " not found"));
+    }
+
+    @Override
+    public CategoryResponse update(CategoryRequest categoryRequest, long id) {
         if (categoryRequest != null) {
-            Category category = categoryMapper.requestToEntity(categoryRequest, new Category());
-            readById(category.getId());// to check if category exist
+            Category existingCategory = readByIdEntity(id);// to check if category exist
+            Category category = categoryMapper.requestToEntity(categoryRequest, existingCategory);
             return categoryMapper.entityToResponse(categoryRepository.save(category));
         }
         throw new NullDtoReferenceException("Updated Category Request cannot be 'null'");

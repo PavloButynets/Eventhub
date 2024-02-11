@@ -10,8 +10,9 @@ import lombok.Data;
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class CategoryRequest {
-    private Long id;
-
     @NotBlank(message = "Name of Category can't be blank")
     private String name;
+    public CategoryRequest(String name){
+        this.name = name;
+    }
 }

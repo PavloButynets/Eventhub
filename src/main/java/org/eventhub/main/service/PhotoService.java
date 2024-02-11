@@ -9,7 +9,8 @@ import java.util.List;
 public interface PhotoService {
     EventPhotoResponse create(EventPhotoRequest photoRequest);
     EventPhotoResponse readById(long id);
-    EventPhotoResponse update(EventPhotoRequest photoRequest);
+    EventPhoto readByIdEntity(long id);
+    EventPhotoResponse update(EventPhotoRequest photoRequest, long id);
     void delete (long id);
     List<EventPhotoResponse> getAll();
 }

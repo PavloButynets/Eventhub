@@ -39,7 +39,7 @@ public class EventPhotoMapper {
         if(eventPhoto == null){
             throw new NullEntityReferenceException("Event Photo can't be null");
         }
-        eventPhoto.setId(request.getId());
+
         eventPhoto.setPhotoUrl(request.getPhotoUrl());
         eventPhoto.setEvent(eventRepository.findById(request.getEventId()).orElseThrow(()->new NullEntityReferenceException("Event can't be null")));
         return eventPhoto;
