@@ -31,7 +31,7 @@ public class UserDtoMapper {
                 user.getDescription(),
                 user.getCreatedAt(),
                 user.getCity(),
-                user.getUserEvents(),
+                user.getUserEvents().stream().map(),
                 user.getUserParticipants()
         );
     }
