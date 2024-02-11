@@ -49,8 +49,6 @@ public class UserRequest {
 
     private String description;
 
-    private LocalDateTime createdAt;
-
     private String city;
 
     private String phoneNumber;

@@ -1,11 +1,10 @@
 package org.eventhub.main.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.eventhub.main.dto.UserDto;
+import org.eventhub.main.dto.UserResponse;
 import org.eventhub.main.dto.UserRequest;
 import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.mapper.UserDtoMapper;
-import org.eventhub.main.mapper.UserRequestMapper;
 import org.eventhub.main.model.User;
 import org.eventhub.main.repository.UserRepository;
 import org.eventhub.main.service.UserService;
@@ -21,28 +20,27 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserDtoMapper userDtoMapper;
-    private final UserRequestMapper userRequestMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserDtoMapper userDtoMapper, UserRequestMapper userRequestMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserDtoMapper userDtoMapper) {
         this.userRepository = userRepository;
         this.userDtoMapper = userDtoMapper;
-        this.userRequestMapper = userRequestMapper;
     }
 
     @Override
-    public UserDto create(UserRequest userRequest) {
+    public UserResponse create(UserRequest userRequest) {
         if (userRequest != null) {
-            User user = userRequestMapper.apply(userRequest);
+            User user = userDtoMapper.RequestToUser(userRequest);
             userRepository.save(user);
         }
         throw new NullEntityReferenceException("User cannot be 'null'");
     }
 
     @Override
-    public UserDto readByDtoId(long id) {
-        return userRepository.findById(id).map(userDtoMapper).orElseThrow(
+    public UserResponse readByDtoId(long id) {
+        User user = userRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("User with" + id + "not found"));
+        return userDtoMapper.UserToResponse(user);
     }
 
     @Override
@@ -53,9 +51,9 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserDto update(UserRequest userRequest) {
+    public UserResponse update(UserRequest userRequest) {
         if (userRequest != null) {
-            User user = userRequestMapper.apply(userRequest);
+            User user = userDtoMapper.RequestToUser(userRequest);
             readById(user.getId());
             userRepository.save(user);
         }
@@ -68,10 +66,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAll() {
+    public List<UserResponse> getAll() {
         return userRepository.findAll()
                 .stream()
-                .map(userDtoMapper)
+                .map(userDtoMapper::UserToResponse)
                 .collect(Collectors.toList());
     }
 }
