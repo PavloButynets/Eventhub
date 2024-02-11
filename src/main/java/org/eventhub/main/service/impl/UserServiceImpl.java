@@ -21,19 +21,17 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserDtoMapper userDtoMapper;
-    private final UserRequestMapper userRequestMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserDtoMapper userDtoMapper, UserRequestMapper userRequestMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserDtoMapper userDtoMapper) {
         this.userRepository = userRepository;
         this.userDtoMapper = userDtoMapper;
-        this.userRequestMapper = userRequestMapper;
     }
 
     @Override
     public UserDto create(UserRequest userRequest) {
         if (userRequest != null) {
-            User user = userRequestMapper.apply(userRequest);
+            User user = userDtoMapper.RequestToUser(userRequest);
             userRepository.save(user);
         }
         throw new NullEntityReferenceException("User cannot be 'null'");
@@ -41,8 +39,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto readByDtoId(long id) {
-        return userRepository.findById(id).map(userDtoMapper).orElseThrow(
+        User user = userRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("User with" + id + "not found"));
+        return userDtoMapper.UserToResponse(user);
     }
 
     @Override
@@ -55,7 +54,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto update(UserRequest userRequest) {
         if (userRequest != null) {
-            User user = userRequestMapper.apply(userRequest);
+            User user = userDtoMapper.RequestToUser(userRequest);
             readById(user.getId());
             userRepository.save(user);
         }
@@ -71,7 +70,7 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> getAll() {
         return userRepository.findAll()
                 .stream()
-                .map(userDtoMapper)
+                .map(userDtoMapper::UserToResponse)
                 .collect(Collectors.toList());
     }
 }
