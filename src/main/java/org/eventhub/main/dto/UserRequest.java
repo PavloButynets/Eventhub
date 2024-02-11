@@ -1,9 +1,6 @@
 package org.eventhub.main.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -52,4 +49,8 @@ public class UserRequest {
     private String city;
 
     private String phoneNumber;
+
+    private List<EventRequest> userEvents;
+
+    private List<ParticipantRequest> userParticipants;
 }
