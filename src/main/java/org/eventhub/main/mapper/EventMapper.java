@@ -3,7 +3,6 @@ package org.eventhub.main.mapper;
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.model.Event;
-import org.eventhub.main.repository.UserRepository;
 import org.eventhub.main.service.UserService;
 import org.springframework.stereotype.Service;
 
