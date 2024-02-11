@@ -34,21 +34,20 @@ public class EventServiceImpl implements EventService {
 
 
     @Override
-    public Event create(EventCreateRequest eventCreateRequest) {
+    public Event create(EventRequest eventRequest) {
         LocalDateTime currentTime = LocalDateTime.now();
         Event event = new Event();
-
-        mapCreateEventRequest(event, eventCreateRequest);
 
         event.setCreatedAt(currentTime);
         event.setParticipantCount(0);
 
-        checkState(event, currentTime, eventCreateRequest.getStartAt(), eventCreateRequest.getExpireAt());
+        checkState(event, currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
         event.setParticipants(new ArrayList<>());
 
         if(event != null) {
-            return eventRepository.save(event);
+            Event eventToSave = eventMapper.requestToEntity(eventRequest, event);
+            return eventRepository.save(eventToSave);
         }
         throw new NullEntityReferenceException("Cannot save null event");
     }
@@ -65,17 +64,28 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    public Event readByTitle(String title) {
+        Event event = eventRepository.findByTitle(title);
+        if (event != null) {
+            return event;
+        }
+        throw new EntityNotFoundException("Event with title " + title + " was not found");
+    }
+
+    @Override
     @Transactional
     public Event update(EventRequest eventRequest) {
         if(eventRequest != null) {
             LocalDateTime currentTime = LocalDateTime.now();
-            Event event = readById(eventRequest.getId());
+            Event event = readByTitle(eventRequest.getTitle());
 
-            mapEventRequest(event, eventRequest);
+
 
             checkState(event,currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
-            return eventRepository.save(event);
+            Event eventToUpdate = eventMapper.requestToEntity(eventRequest, event);
+
+            return eventRepository.save(eventToUpdate);
         }
         throw new NullEntityReferenceException("Cannot update null event");
     }
