@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class EventServiceImpl implements EventService {
 
+
     @Autowired
     private final EventRepository eventRepository;
 
