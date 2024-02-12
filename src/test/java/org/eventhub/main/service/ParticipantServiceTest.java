@@ -1,8 +1,6 @@
 package org.eventhub.main.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.eventhub.main.dto.CategoryRequest;
-import org.eventhub.main.dto.CategoryResponse;
 import org.eventhub.main.dto.ParticipantRequest;
 import org.eventhub.main.dto.ParticipantResponse;
 import org.eventhub.main.exception.NullDtoReferenceException;
@@ -17,11 +15,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @SpringBootTest
-public class ParticipantServiceImplTest {
+public class ParticipantServiceTest {
     private final ParticipantService participantService;
 
     @Autowired
-    public ParticipantServiceImplTest(ParticipantService participantService){
+    public ParticipantServiceTest(ParticipantService participantService){
         this.participantService = participantService;
     }
 
