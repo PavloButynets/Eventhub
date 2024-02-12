@@ -8,13 +8,13 @@ import org.eventhub.main.model.Event;
 import java.util.List;
 
 public interface EventService {
-    Event create(EventRequest eventRequest);
+    EventResponse create(EventRequest eventRequest);
     EventResponse readByIdResponse(long id);
 
     Event readById(long id);
 
     Event readByTitle(String title);
-    Event update(EventRequest eventRequest);
+    EventResponse update(EventRequest eventRequest);
     void delete(long id);
 
     List<EventResponse> getAll();
