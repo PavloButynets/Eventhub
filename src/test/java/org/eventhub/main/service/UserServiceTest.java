@@ -72,7 +72,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void deleteAndGeAllUserTest() {
+    public void deleteUserTest() {
         userService.delete(1);
         Assertions.assertEquals(5, userService.getAll().size());
     }
