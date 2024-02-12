@@ -1,5 +1,6 @@
 package org.eventhub.main.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.exception.NotValidDateException;
@@ -146,8 +147,10 @@ class EventServiceTest {
         EventResponse actual = eventService.readByIdResponse(expected.getId());
         actual.setCreatedAt(expected.getCreatedAt());
 
+        System.out.println("\n\n\n");
         System.out.println(actual);
         System.out.println(eventService.getAll());
+        System.out.println("\n\n");
 
 
 
@@ -157,7 +160,6 @@ class EventServiceTest {
 
 
         eventService.delete(actual.getId());
-        eventService.delete(expected.getId());
     }
 
     @Test
@@ -231,6 +233,8 @@ class EventServiceTest {
                 () -> {
                     EventResponse updatedEvent = eventService.update(eventRequest2);
                 });
+
+        eventService.delete(actual.getId());
     }
 
     @Test
@@ -333,9 +337,17 @@ class EventServiceTest {
         EventResponse actual = eventService.create(eventRequest);
 
         eventService.delete(actual.getId());
-        System.out.println(eventService.getAll());
+        System.out.println("\n\n"+ eventService.getAll()+"\n\n");
 
         Assertions.assertEquals(3, eventService.getAll().size());
+    }
+
+    @Test
+    public void checkDeleteInvalidEvent() {
+
+
+        Assertions.assertThrows(EntityNotFoundException.class,
+                () -> {eventService.delete(76); });
     }
 }
 
