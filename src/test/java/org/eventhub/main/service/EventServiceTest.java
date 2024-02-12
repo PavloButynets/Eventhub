@@ -1,7 +1,10 @@
 package org.eventhub.main.service;
 
 import org.eventhub.main.dto.EventRequest;
+import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.model.Event;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -17,6 +20,7 @@ class EventServiceImplTest {
         this.eventService = eventService;
     }
 
+    @Test
     public void createEventCheck() {
         EventRequest eventRequest = new EventRequest();
 
@@ -28,7 +32,12 @@ class EventServiceImplTest {
         eventRequest.setLocation("37.0902 95.7129");
         eventRequest.setOwnerId(10);
 
-        Event event = eventService.create(eventRequest);
+        EventResponse eventResponse = eventService.create(eventRequest);
+
+        Assertions.assertNotNull(eventResponse);
+        Assertions.assertEquals(eventService.getAll().size(), 4);
+
+        eventService.delete(eventResponse.getId());
 
     }
 }
