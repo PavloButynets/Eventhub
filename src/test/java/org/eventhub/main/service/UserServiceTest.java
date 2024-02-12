@@ -45,7 +45,7 @@ public class UserServiceTest {
         UserResponse expected = userMapper.UserToResponse(user);
         expected.setCreatedAt(actual.getCreatedAt());
 
-        Assertions.assertEquals(actual, expected);
+        Assertions.assertEquals(expected, actual);
     }
 
 }
