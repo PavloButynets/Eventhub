@@ -1,23 +1,19 @@
-package org.eventhub.main.service.impl;
+package org.eventhub.main.service;
 
 import org.eventhub.main.dto.EventRequest;
-import org.eventhub.main.mapper.EventMapper;
-import org.eventhub.main.model.Event;
-import org.eventhub.main.service.EventService;
+import org.eventhub.main.dto.EventResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.time.Month;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class EventServiceImplTest {
+class EventServiceTest {
     private final EventService eventService;
 
     @Autowired
-    public EventServiceImplTest(EventService eventService) {
+    public EventServiceTest(EventService eventService) {
         this.eventService = eventService;
     }
 
@@ -32,7 +28,7 @@ class EventServiceImplTest {
         eventRequest.setLocation("37.0902 95.7129");
         eventRequest.setOwnerId(10);
 
-        Event event = eventService.create(eventRequest);
+        EventResponse event = eventService.create(eventRequest);
 
     }
 }

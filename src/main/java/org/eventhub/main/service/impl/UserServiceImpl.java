@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse create(UserRequest userRequest) {
         if (userRequest != null) {
             User user = userDtoMapper.RequestToUser(userRequest, new User());
-            userRepository.save(user);
+            return userDtoMapper.UserToResponse(userRepository.save(user));
         }
         throw new NullEntityReferenceException("User cannot be 'null'");
     }
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         if (userRequest != null) {
             User user = userDtoMapper.RequestToUser(userRequest, userRepository.findByEmail(userRequest.getEmail()));
             readById(user.getId());
-            userRepository.save(user);
+            return userDtoMapper.UserToResponse(userRepository.save(user));
         }
         throw new NullEntityReferenceException("User cannot be 'null'");
     }

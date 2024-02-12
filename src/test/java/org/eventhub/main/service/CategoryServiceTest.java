@@ -14,11 +14,11 @@ import java.util.List;
 
 
 @SpringBootTest
-public class CategoryServiceImplTest {
+public class CategoryServiceTest {
     private final CategoryService categoryService;
 
     @Autowired
-    public CategoryServiceImplTest(CategoryService categoryService){
+    public CategoryServiceTest(CategoryService categoryService){
         this.categoryService = categoryService;
     }
 
