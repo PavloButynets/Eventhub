@@ -6,11 +6,13 @@ import org.eventhub.main.mapper.EventMapper;
 import org.eventhub.main.model.Event;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+
 
 @SpringBootTest
 class EventServiceTest {
@@ -18,7 +20,11 @@ class EventServiceTest {
     private final EventMapper eventMapper;
 
     @Autowired
+
+
+
     public EventServiceTest(EventService eventService, EventMapper eventMapper) {
+
         this.eventService = eventService;
         this.eventMapper = eventMapper;
     }
@@ -35,6 +41,7 @@ class EventServiceTest {
         eventRequest.setLocation("37.0902 95.7129");
         eventRequest.setOwnerId(10);
 
+
         EventResponse actual = eventService.create(eventRequest);
 
         Event event = eventMapper.requestToEntity(eventRequest, new Event());
@@ -49,6 +56,7 @@ class EventServiceTest {
 
 
         eventService.delete(actual.getId());
+
 
     }
 }
