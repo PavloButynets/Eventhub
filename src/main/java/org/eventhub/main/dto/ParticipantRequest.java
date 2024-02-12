@@ -18,4 +18,10 @@ public class ParticipantRequest {
     @NonNull
     private Long userId;
     private boolean isApproved;
+
+    public ParticipantRequest(Long eventId, Long userId, boolean isApproved){
+        this.eventId = eventId;
+        this.userId = userId;
+        this.isApproved = isApproved;
+    }
 }

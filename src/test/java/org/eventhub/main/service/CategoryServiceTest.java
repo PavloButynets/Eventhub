@@ -59,7 +59,7 @@ public class CategoryServiceTest {
     }
     @Test
     public void readByIdEntityInvalidCategoryTest(){
-        Assertions.assertThrows(NullEntityReferenceException.class, () -> categoryService.readByIdEntity(100));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> categoryService.readByIdEntity(100));
     }
     @Test
     public void updateValidCategoryTest(){
@@ -79,7 +79,7 @@ public class CategoryServiceTest {
     }
     @Test
     void updateInvalidCategoryTest2(){
-        Assertions.assertThrows(NullEntityReferenceException.class, () -> categoryService.update(new CategoryRequest("Updated name"), 100));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> categoryService.update(new CategoryRequest("Updated name"), 100));
     }
     @Test
     void deleteValidCategoryTest(){
@@ -98,7 +98,7 @@ public class CategoryServiceTest {
     }
     @Test
     void deleteInvalidCategoryTest(){
-        Assertions.assertThrows(NullEntityReferenceException.class, () -> categoryService.delete(100));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> categoryService.delete(100));
     }
     @Test
     void getAllValidCategoryTest(){

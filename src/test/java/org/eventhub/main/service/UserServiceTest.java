@@ -49,4 +49,33 @@ public class UserServiceTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
+    public void updateUserTest() {
+        UserRequest userRequest = new UserRequest();
+
+        userRequest.setFirstName("Jack");
+        userRequest.setLastName("Rob");
+        userRequest.setUsername("Jacky");
+        userRequest.setEmail("jack@mail.com");
+        userRequest.setPassword("Pass12564");
+        userRequest.setProfileImage("photo");
+        userRequest.setDescription("I'm alfa");
+        userRequest.setCity("Lviv");
+        userRequest.setPhoneNumber("0672604256");
+        userRequest.setBirthDate(LocalDate.of(1990, 5, 15));
+        userRequest.setGender(Gender.MALE);
+
+        UserResponse actual = userService.create(userRequest);
+        UserResponse updated = userService.update(userRequest);
+        updated.setCreatedAt(actual.getCreatedAt());
+
+        Assertions.assertEquals(updated, actual);
+    }
+
+    @Test
+    public void deleteUserTest() {
+        userService.delete(1);
+        Assertions.assertEquals(5, userService.getAll().size());
+    }
+
 }

@@ -12,6 +12,7 @@ import org.eventhub.main.service.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,8 +35,8 @@ public class ParticipantServiceImpl implements ParticipantService {
     public ParticipantResponse create(ParticipantRequest participantRequest) {
         if(participantRequest != null){
             Participant participant = participantMapper.requestToEntity(participantRequest, new Participant());
-            participant = participantRepository.save(participant);
-            return participantMapper.entityToResponse(participant);
+            participant.setCreatedAt(LocalDateTime.now());
+            return participantMapper.entityToResponse( participantRepository.save(participant));
         }
         throw new NullDtoReferenceException("Request can't be null");
     }
@@ -64,7 +65,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     public void delete(Long id) {
-        participantRepository.deleteById(id);
+        participantRepository.delete(readByIdEntity(id));
     }
 
     @Override
