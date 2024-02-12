@@ -10,9 +10,8 @@ import lombok.Data;
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class EventPhotoRequest {
-    private Long id;
     @NotBlank(message = "The 'URL' cannot be empty")
     private String photoUrl;
-    private long eventId;
+    private Long eventId;
 
 }

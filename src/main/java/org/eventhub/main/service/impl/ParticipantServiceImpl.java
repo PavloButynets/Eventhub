@@ -48,10 +48,15 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public ParticipantResponse update(ParticipantRequest participantRequest) {
+    public Participant readByIdEntity(long id){
+        return participantRepository.findById(id)
+                .orElseThrow(()->new EntityNotFoundException("Participant with" + id + " id is not found"));
+    }
+    @Override
+    public ParticipantResponse update(ParticipantRequest participantRequest, long id) {
         if(participantRequest != null){
-            Participant participant = participantMapper.requestToEntity(participantRequest, new Participant());
-            readById(participant.getId()); // to check if participant exist
+            Participant existingParticipant = readByIdEntity(id);
+            Participant participant = participantMapper.requestToEntity(participantRequest, existingParticipant);
             participant = participantRepository.save(participant);
             return participantMapper.entityToResponse(participant);
         }

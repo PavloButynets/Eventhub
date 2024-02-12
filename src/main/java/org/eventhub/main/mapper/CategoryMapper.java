@@ -26,7 +26,6 @@ public class CategoryMapper {
         if(category == null){
             throw new NullEntityReferenceException("Category can't be null");
         }
-        category.setId(request.getId());
         category.setName(request.getName());
         return category;
     }

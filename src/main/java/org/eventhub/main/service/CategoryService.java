@@ -9,7 +9,9 @@ import java.util.List;
 public interface CategoryService {
     CategoryResponse create(CategoryRequest category);
     CategoryResponse readById(long id);
-    CategoryResponse update(CategoryRequest category);
+
+    Category readByIdEntity(long id);
+    CategoryResponse update(CategoryRequest category, long id);
     void delete(long id);
     List<CategoryResponse> getAll();
 

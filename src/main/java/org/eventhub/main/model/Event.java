@@ -24,13 +24,11 @@ public class Event {
     @Column(name = "title", unique = true)
     private String title;
 
-    @NotBlank(message = "Specify max number of participants")
+    @NotNull
     @Max(value = 20000,
             message = "You cannot have more than 20 000 participants")
     @Min(value = 2,
             message = "You cannot have less than 2 participants")
-    @Pattern(regexp = "\\d+",
-            message = "This field must contain only numbers")
     @Column(name = "max_participants")
     private int maxParticipants;
 

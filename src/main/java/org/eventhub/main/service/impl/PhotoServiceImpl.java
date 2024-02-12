@@ -46,10 +46,16 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public EventPhotoResponse update(EventPhotoRequest photoRequest) {
+    public EventPhoto readByIdEntity(long id){
+        return photoRepository.findById(id)
+                .orElseThrow(()->new EntityNotFoundException("Photo with" + id + " id is not found"));
+    }
+
+    @Override
+    public EventPhotoResponse update(EventPhotoRequest photoRequest, long id) {
         if (photoRequest != null) {
-            EventPhoto photo = eventPhotoMapper.requestToEntity(photoRequest, new EventPhoto());
-            readById(photo.getId());
+            EventPhoto existingPhoto = readByIdEntity(id);
+            EventPhoto photo = eventPhotoMapper.requestToEntity(photoRequest, existingPhoto);
             return eventPhotoMapper.entityToResponse(photoRepository.save(photo));
         }
         throw new NullDtoReferenceException("Updated photo Request cannot be 'null'");

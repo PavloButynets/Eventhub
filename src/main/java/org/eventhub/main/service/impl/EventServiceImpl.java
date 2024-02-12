@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class EventServiceImpl implements EventService {
 
+
     @Autowired
     private final EventRepository eventRepository;
 
@@ -34,7 +35,7 @@ public class EventServiceImpl implements EventService {
 
 
     @Override
-    public Event create(EventRequest eventRequest) {
+    public EventResponse create(EventRequest eventRequest) {
         LocalDateTime currentTime = LocalDateTime.now();
         Event event = new Event();
 
@@ -47,7 +48,7 @@ public class EventServiceImpl implements EventService {
 
         if(event != null) {
             Event eventToSave = eventMapper.requestToEntity(eventRequest, event);
-            return eventRepository.save(eventToSave);
+            return eventMapper.entityToResponse(eventRepository.save(eventToSave));
         }
         throw new NullEntityReferenceException("Cannot save null event");
     }
@@ -74,7 +75,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public Event update(EventRequest eventRequest) {
+    public EventResponse update(EventRequest eventRequest) {
         if(eventRequest != null) {
             LocalDateTime currentTime = LocalDateTime.now();
             Event event = readByTitle(eventRequest.getTitle());
@@ -85,7 +86,7 @@ public class EventServiceImpl implements EventService {
 
             Event eventToUpdate = eventMapper.requestToEntity(eventRequest, event);
 
-            return eventRepository.save(eventToUpdate);
+            return eventMapper.entityToResponse(eventRepository.save(eventToUpdate));
         }
         throw new NullEntityReferenceException("Cannot update null event");
     }
