@@ -13,18 +13,21 @@ import java.util.stream.Collectors;
 @Service
 public class UserMapper {
     public UserResponse UserToResponse(User user) {
-        return new UserResponse(
-                user.getId(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getProfileImage(),
-                user.getDescription(),
-                user.getCreatedAt(),
-                user.getCity(),
-                user.getBirthDate(),
-                user.getGender());
+        UserResponse userResponse = new UserResponse();
+
+        userResponse.setId(user.getId());
+        userResponse.setFirstName(user.getFirstName());
+        userResponse.setLastName(user.getLastName());
+        userResponse.setUsername(user.getUsername());
+        userResponse.setEmail(user.getEmail());
+        userResponse.setProfileImage(user.getProfileImage());
+        userResponse.setDescription(user.getDescription());
+        userResponse.setCreatedAt(user.getCreatedAt());
+        userResponse.setCity(user.getCity());
+        userResponse.setBirthDate(user.getBirthDate());
+        userResponse.setGender(user.getGender());
+
+        return userResponse;
     }
 
     public User RequestToUser(UserRequest userRequest, User user) {
@@ -40,6 +43,7 @@ public class UserMapper {
         user.setPhoneNumber(userRequest.getPhoneNumber());
         user.setBirthDate(userRequest.getBirthDate());
         user.setGender(userRequest.getGender());
+
         return user;
     }
 }

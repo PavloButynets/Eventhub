@@ -7,15 +7,12 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-
 @SpringBootTest
-public class CategoryServiceImplTest {
+public class CategoryServiceTest {
     private final CategoryService categoryService;
 
     @Autowired
-    public CategoryServiceImplTest(CategoryService categoryService){
+    public CategoryServiceTest(CategoryService categoryService){
         this.categoryService = categoryService;
     }
 

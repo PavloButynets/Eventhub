@@ -1,11 +1,15 @@
 package org.eventhub.main.dto;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.eventhub.main.model.Event;
 import org.eventhub.main.model.Gender;
 import org.eventhub.main.model.Participant;
@@ -16,11 +20,10 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+//@Builder
+//@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserRequest {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Pattern(regexp = "[A-Z][a-z]+",
             message = "Must start with a capital letter followed by one or more lowercase letters")
     private String firstName;
