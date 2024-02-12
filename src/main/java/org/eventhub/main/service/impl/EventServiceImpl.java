@@ -96,6 +96,8 @@ public class EventServiceImpl implements EventService {
         eventRepository.delete(readById(id));
     }
 
+
+
     @Override
     public List<EventResponse> getAll() {
         return eventRepository.findAll()

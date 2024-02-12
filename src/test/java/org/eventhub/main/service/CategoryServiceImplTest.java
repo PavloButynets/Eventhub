@@ -18,7 +18,7 @@ public class CategoryServiceImplTest {
 
     @Test
     public void testCreateToDo() {
-        ToDo toDo = createTestToDo();
+        Togi Do toDo = createTestToDo();
         ToDo savedToDo = toDoRepository.save(toDo);
 
         Assertions.assertNotNull(savedToDo);
