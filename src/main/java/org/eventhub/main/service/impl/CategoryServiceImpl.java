@@ -1,5 +1,6 @@
 package org.eventhub.main.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.CategoryRequest;
 import org.eventhub.main.dto.CategoryResponse;
 import org.eventhub.main.exception.NullDtoReferenceException;
@@ -36,14 +37,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponse readById(long id) {
         Category category = categoryRepository.findById(id).orElseThrow(
-                () -> new NullEntityReferenceException("Category with id " + id + " not found"));
+                () -> new EntityNotFoundException("Category with id " + id + " not found"));
         return categoryMapper.entityToResponse(category);
     }
 
     @Override
     public Category readByIdEntity(long id){
         return categoryRepository.findById(id).orElseThrow(
-                () -> new NullEntityReferenceException("Category with id " + id + " not found"));
+                () -> new EntityNotFoundException("Category with id " + id + " not found"));
     }
 
     @Override

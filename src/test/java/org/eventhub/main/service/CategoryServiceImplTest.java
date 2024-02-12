@@ -1,6 +1,7 @@
 package org.eventhub.main.service;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.CategoryRequest;
 import org.eventhub.main.dto.CategoryResponse;
 import org.eventhub.main.exception.NullDtoReferenceException;
@@ -9,10 +10,8 @@ import org.eventhub.main.model.Category;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+
 
 @SpringBootTest
 public class CategoryServiceImplTest {
@@ -31,6 +30,7 @@ public class CategoryServiceImplTest {
         Assertions.assertNotNull(response);
         Assertions.assertEquals(request.getName(),response.getName());
         Assertions.assertEquals(3, categoryService.getAll().size());
+        Assertions.assertNotNull(response.getId());
 
         categoryService.delete(response.getId());
     }
@@ -47,7 +47,7 @@ public class CategoryServiceImplTest {
     }
     @Test
     public void readByIdInvalidCategoryResponseTest(){
-        Assertions.assertThrows(NullEntityReferenceException.class, () -> categoryService.readById(100));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> categoryService.readById(100));
     }
     @Test
     public void readByIdEntityValidCategoryTest(){
@@ -58,7 +58,7 @@ public class CategoryServiceImplTest {
     }
     @Test
     public void readByIdEntityInvalidCategoryTest(){
-        Assertions.assertThrows(NullEntityReferenceException.class, () -> categoryService.readByIdEntity(100));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> categoryService.readByIdEntity(100));
     }
     @Test
     public void updateValidCategoryTest(){
@@ -78,7 +78,7 @@ public class CategoryServiceImplTest {
     }
     @Test
     void updateInvalidCategoryTest2(){
-        Assertions.assertThrows(NullEntityReferenceException.class, () -> categoryService.update(new CategoryRequest("Updated name"), 100));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> categoryService.update(new CategoryRequest("Updated name"), 100));
     }
     @Test
     void deleteValidCategoryTest(){
@@ -97,7 +97,7 @@ public class CategoryServiceImplTest {
     }
     @Test
     void deleteInvalidCategoryTest(){
-        Assertions.assertThrows(NullEntityReferenceException.class, () -> categoryService.delete(100));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> categoryService.delete(100));
     }
     @Test
     void getAllValidCategoryTest(){
