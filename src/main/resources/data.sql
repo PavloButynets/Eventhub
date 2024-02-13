@@ -8,24 +8,24 @@ INSERT INTO users (id, first_name, last_name, username, email, password, profile
 -- INSERT INTO users (id, first_name, last_name, email, password, role_id) VALUES (4, 'Mike', 'Brown', 'mike@mail.com', '$2a$10$CdEJ2PKXgUCIwU4pDQWICuiPjxb1lysoX7jrN.Y4MTMoY9pjfPALO', 1);
 --
 --
-INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id) VALUES (10, 'Event 1', 190, '2020-09-16 14:00:04.810221','2020-09-16 14:30:04.810221','2021-09-16 14:30:04.810221', 'Description 1', 2, 'UPCOMING', 'Stryi', 10);
-INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id) VALUES (11, 'Event 2', 50, '2020-09-16 14:00:11.480271','2020-10-16 14:00:11.480271','2022-09-16 14:30:04.810221', 'Description 2',  1, 'UPCOMING', 'Brovary', 11);
-INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id) VALUES (12, 'Event 3', 22, '2020-09-16 14:00:16.351238', '2020-11-16 14:00:16.351238','2023-09-16 14:30:04.810221', 'Description 3', 1, 'UPCOMING', 'Baranovichi', 12);
+INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id) VALUES (30, 'Event 1', 190, '2020-09-16 14:00:04.810221','2020-09-16 14:30:04.810221','2021-09-16 14:30:04.810221', 'Description 1', 2, 'UPCOMING', 'Stryi', 10);
+INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id) VALUES (31, 'Event 2', 50, '2020-09-16 14:00:11.480271','2020-10-16 14:00:11.480271','2022-09-16 14:30:04.810221', 'Description 2',  1, 'UPCOMING', 'Brovary', 11);
+INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id) VALUES (32, 'Event 3', 22, '2020-09-16 14:00:16.351238', '2020-11-16 14:00:16.351238','2023-09-16 14:30:04.810221', 'Description 3', 1, 'UPCOMING', 'Baranovichi', 12);
 
-INSERT INTO event_photos (id, photo_url, event_id) VALUES (10, 'Photo 1', 10);
-INSERT INTO event_photos (id, photo_url, event_id) VALUES (11, 'Photo 2', 11);
-INSERT INTO event_photos (id, photo_url, event_id) VALUES (12, 'Photo 3', 12);
-
-
-INSERT INTO event_categories (event_id, category_id) VALUES (10, 10);
-INSERT INTO event_categories (event_id, category_id) VALUES (10, 11);
-INSERT INTO event_categories (event_id, category_id) VALUES (11, 10);
-INSERT INTO event_categories (event_id, category_id) VALUES (12, 11);
+INSERT INTO event_photos (id, photo_url, event_id) VALUES (10, 'Photo 1', 30);
+INSERT INTO event_photos (id, photo_url, event_id) VALUES (11, 'Photo 2', 31);
+INSERT INTO event_photos (id, photo_url, event_id) VALUES (12, 'Photo 3', 32);
 
 
+INSERT INTO event_categories (event_id, category_id) VALUES (30, 10);
+INSERT INTO event_categories (event_id, category_id) VALUES (30, 11);
+INSERT INTO event_categories (event_id, category_id) VALUES (31, 10);
+INSERT INTO event_categories (event_id, category_id) VALUES (32, 11);
 
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (10, '2020-11-16 14:00:04.810221', 'false', 10, 11);
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (11, '2020-11-16 14:00:05.810221', 'true', 10, 12);
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (12, '2020-11-16 14:00:05.810222', 'true', 10, 13);
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (13, '2020-11-16 14:00:05.810221', 'true', 11, 10);
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (14, '2020-11-16 14:00:05.810222', 'true', 12, 11);
+
+
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (10, '2020-11-16 14:00:04.810221', 'false', 30, 11);
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (11, '2020-11-16 14:00:05.810221', 'true', 30, 12);
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (12, '2020-11-16 14:00:05.810222', 'true', 30, 13);
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (13, '2020-11-16 14:00:05.810221', 'true', 31, 10);
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (14, '2020-11-16 14:00:05.810222', 'true', 32, 11);

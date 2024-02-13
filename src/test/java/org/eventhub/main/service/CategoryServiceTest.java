@@ -23,6 +23,7 @@ public class CategoryServiceTest {
     }
 
     @Test
+
     public void createValidCategoryTest() {
         CategoryRequest request = new CategoryRequest("New Category");
         CategoryResponse response = categoryService.create(request);
