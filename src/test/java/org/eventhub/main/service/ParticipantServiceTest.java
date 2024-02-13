@@ -25,7 +25,7 @@ public class ParticipantServiceTest {
 
     @Test
     public void createValidParticipantTest(){
-        ParticipantRequest request = new ParticipantRequest(10L, 10L, false);
+        ParticipantRequest request = new ParticipantRequest(30L, 10L, false);
         ParticipantResponse response = participantService.create(request);
 
         Assertions.assertNotNull(response);
@@ -39,13 +39,13 @@ public class ParticipantServiceTest {
 
     @Test
     public void createInvalidParticipantTest1(){
-        ParticipantRequest request = new ParticipantRequest(10L, 100L, false);
+        ParticipantRequest request = new ParticipantRequest(30L, 100L, false);
         Assertions.assertThrows(NullEntityReferenceException.class, () -> participantService.create(request));
     }
 
     @Test
     public void createInvalidParticipantTest2(){
-        ParticipantRequest request = new ParticipantRequest(100L, 10L, false);
+        ParticipantRequest request = new ParticipantRequest(100L, 30L, false);
         Assertions.assertThrows(NullEntityReferenceException.class, () -> participantService.create(request));
     }
 
@@ -61,7 +61,7 @@ public class ParticipantServiceTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS");
         LocalDateTime localDateTime = LocalDateTime.parse("2020-11-16 14:00:04.810221", formatter);
 
-        ParticipantResponse expected = new ParticipantResponse(10L, localDateTime, false, 10L, 11L);
+        ParticipantResponse expected = new ParticipantResponse(10L, localDateTime, false, 30L, 11L);
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(expected, actual);
         Assertions.assertEquals(5, participantService.getAll().size());
@@ -82,7 +82,7 @@ public class ParticipantServiceTest {
         Assertions.assertNotNull(actual);
         Assertions.assertEquals(10L, actual.getId());
         Assertions.assertFalse(actual.isApproved());
-        Assertions.assertEquals(10L, actual.getEvent().getId());
+        Assertions.assertEquals(30L, actual.getEvent().getId());
         Assertions.assertEquals(11L, actual.getUser().getId());
         Assertions.assertEquals(localDateTime, actual.getCreatedAt());
         Assertions.assertEquals(5, participantService.getAll().size());
@@ -90,8 +90,8 @@ public class ParticipantServiceTest {
 
     @Test
     public void updateValidParticipantTest(){
-        ParticipantResponse response = participantService.create(new ParticipantRequest(10L, 10L, false));
-        ParticipantRequest request = new ParticipantRequest(10L, 11L, true);
+        ParticipantResponse response = participantService.create(new ParticipantRequest(30L, 10L, false));
+        ParticipantRequest request = new ParticipantRequest(30L, 11L, true);
         ParticipantResponse actual = participantService.update(request, response.getId());
 
         Assertions.assertNotNull(actual);
@@ -123,7 +123,7 @@ public class ParticipantServiceTest {
 
     @Test
     void deleteValidParticipantTest(){
-        ParticipantRequest request = new ParticipantRequest(10L, 10L, false);
+        ParticipantRequest request = new ParticipantRequest(30L, 10L, false);
         ParticipantResponse response = participantService.create(request);
 
         Assertions.assertNotNull(response);
@@ -141,7 +141,7 @@ public class ParticipantServiceTest {
 
     @Test
     void getAllValidParticipantTest(){
-        ParticipantRequest request = new ParticipantRequest(10L, 10L, false);
+        ParticipantRequest request = new ParticipantRequest(30L, 10L, false);
         ParticipantResponse response = participantService.create(request);
 
         Assertions.assertEquals(6, participantService.getAll().size());

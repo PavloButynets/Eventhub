@@ -44,4 +44,5 @@ public class EventPhotoMapper {
         eventPhoto.setEvent(eventRepository.findById(request.getEventId()).orElseThrow(()->new NullEntityReferenceException("Event can't be null")));
         return eventPhoto;
     }
+
 }

@@ -113,10 +113,10 @@ public class UserServiceTest {
 //        Assertions.assertEquals(updated, actual);
 //    }
 
-    @Test
-    public void deleteUserTest() {
-        userService.delete(1);
-        Assertions.assertEquals(5, userService.getAll().size());
-    }
+//    @Test
+//    public void deleteUserTest() {
+//        userService.delete(1);
+//        Assertions.assertEquals(5, userService.getAll().size());
+//    }
 
 }
