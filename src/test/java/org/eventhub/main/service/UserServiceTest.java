@@ -1,7 +1,5 @@
 package org.eventhub.main.service;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.checkerframework.checker.units.qual.A;
 import org.eventhub.main.dto.UserRequest;
 import org.eventhub.main.dto.UserResponse;
 import org.eventhub.main.mapper.UserMapper;
@@ -9,10 +7,8 @@ import org.eventhub.main.model.Gender;
 import org.eventhub.main.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.control.MappingControl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -70,13 +66,13 @@ public class UserServiceTest {
 
     @Test
     public void readValidUserById() {
-        User user = userService.readById(10L);
+        User user = userService.readByIdEntity(10L);
         Assertions.assertEquals("nickGreen", user.getUsername());
     }
 
     @Test
     public void readValidUserResponseById() {
-        UserResponse response = userService.readByDtoId(10L);
+        UserResponse response = userService.readById(10L);
         Assertions.assertEquals("nickGreen", response.getUsername());
     }
 

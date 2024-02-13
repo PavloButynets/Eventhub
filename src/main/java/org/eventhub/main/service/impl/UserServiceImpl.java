@@ -39,14 +39,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse readByDtoId(long id) {
+    public UserResponse readById(long id) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("User with" + id + "not found"));
         return userDtoMapper.entityToResponse(user);
     }
 
     @Override
-    public User readById(long id) {
+    public User readByIdEntity(long id) {
         return userRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("User with" + id + "not found"));
     }
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse update(UserRequest userRequest) {
         if (userRequest != null) {
             User user = userDtoMapper.requestToEntity(userRequest, userRepository.findByEmail(userRequest.getEmail()));
-            readById(user.getId());
+            readByIdEntity(user.getId());
             return userDtoMapper.entityToResponse(userRepository.save(user));
         }
         throw new NullDtoReferenceException("User cannot be 'null'");
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(long id) {
-        userRepository.delete(readById(id));
+        userRepository.delete(readByIdEntity(id));
     }
 
     @Override
