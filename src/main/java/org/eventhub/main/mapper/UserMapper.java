@@ -2,35 +2,43 @@ package org.eventhub.main.mapper;
 
 import org.eventhub.main.dto.UserResponse;
 import org.eventhub.main.dto.UserRequest;
+import org.eventhub.main.exception.NullDtoReferenceException;
+import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.model.User;
-import org.eventhub.main.repository.EventRepository;
-import org.eventhub.main.repository.ParticipantRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 @Service
 public class UserMapper {
-    public UserResponse UserToResponse(User user) {
-        UserResponse userResponse = new UserResponse();
+    public UserResponse entityToResponse(User user) {
+        if (user == null) {
+            throw new NullEntityReferenceException("User can't be found");
+        }
 
-        userResponse.setId(user.getId());
-        userResponse.setFirstName(user.getFirstName());
-        userResponse.setLastName(user.getLastName());
-        userResponse.setUsername(user.getUsername());
-        userResponse.setEmail(user.getEmail());
-        userResponse.setProfileImage(user.getProfileImage());
-        userResponse.setDescription(user.getDescription());
-        userResponse.setCreatedAt(user.getCreatedAt());
-        userResponse.setCity(user.getCity());
-        userResponse.setBirthDate(user.getBirthDate());
-        userResponse.setGender(user.getGender());
-
-        return userResponse;
+        return UserResponse.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .profileImage(user.getProfileImage())
+                .description(user.getDescription())
+                .createdAt(user.getCreatedAt())
+                .city(user.getCity())
+                .birthDate(user.getBirthDate())
+                .gender(user.getGender())
+                .build();
     }
 
-    public User RequestToUser(UserRequest userRequest, User user) {
+    public User requestToEntity(UserRequest userRequest, User user) {
+        if(userRequest == null){
+            throw new NullDtoReferenceException("UserRequest can't be null");
+        }
+        if(user == null){
+            throw new NullEntityReferenceException("User can't be null");
+        }
+
         user.setFirstName(userRequest.getFirstName());
         user.setLastName(userRequest.getLastName());
         user.setUsername(userRequest.getUsername());

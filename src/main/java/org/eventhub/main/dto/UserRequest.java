@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-//@Builder
-//@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@Builder
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserRequest {
     @Pattern(regexp = "[A-Z][a-z]+",
             message = "Must start with a capital letter followed by one or more lowercase letters")
@@ -59,6 +59,8 @@ public class UserRequest {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    public UserRequest() {}
 
     public UserRequest(String firstName, String lastName, String username, String email, String password, String profileImage, String description, String city, String phoneNumber, LocalDate birthDate, Gender gender) {
         this.firstName = firstName;

@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-//@Builder
-//@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@Builder
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserResponse {
 
     private Long id;
