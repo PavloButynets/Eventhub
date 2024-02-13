@@ -54,13 +54,13 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventResponse readByIdResponse(long id) {
+    public EventResponse readById(long id) {
         Event event = eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
         return eventMapper.entityToResponse(event);
     }
 
     @Override
-    public Event readById(long id) {
+    public Event readByIdEntity(long id) {
         return eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
     }
 
@@ -94,7 +94,7 @@ public class EventServiceImpl implements EventService {
     @Override
     @Transactional
     public void delete(long id) {
-        eventRepository.delete(readById(id));
+        eventRepository.delete(readByIdEntity(id));
     }
 
 

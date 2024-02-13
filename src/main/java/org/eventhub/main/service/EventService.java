@@ -1,6 +1,5 @@
 package org.eventhub.main.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.model.Event;
@@ -9,9 +8,9 @@ import java.util.List;
 
 public interface EventService {
     EventResponse create(EventRequest eventRequest);
-    EventResponse readByIdResponse(long id);
+    EventResponse readById(long id);
 
-    Event readById(long id);
+    Event readByIdEntity(long id);
 
     Event readByTitle(String title);
     EventResponse update(EventRequest eventRequest);
