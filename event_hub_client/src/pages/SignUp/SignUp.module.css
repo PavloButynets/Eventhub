@@ -17,7 +17,7 @@
     border-radius: 15px;
   }
   
-  .SignInForm {
+  .SignUpForm {
     width: 600px; /* Ширина форми */
     height: auto; /* Висота форми */
     display: flex; 

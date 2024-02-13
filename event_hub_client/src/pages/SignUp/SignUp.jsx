@@ -1,14 +1,11 @@
-import styles from './SignIn.module.css';
+import styles from './SignUp.module.css';
 import React, { useState } from 'react';
 import {
-  AutoComplete,
   Button,
-  Cascader,
   Checkbox,
   Col,
   Form,
   Input,
-  InputNumber,
   Row,
   Select,
 } from 'antd';
@@ -57,7 +54,7 @@ const App = () => {
     <div className= {styles.RegisterPage}>
     <div className= {styles.container}>
     <img className={styles.Photo} src="/images/EventHub_loginPhoto.jpg" alt="Your Photo" />
-    <Form className={styles.SignInForm}
+    <Form className={styles.SignUpForm}
       {...formItemLayout}
       labelCol={{ span: 24 }}  // Лейбл займає всю ширину
       wrapperCol={{ span: 24 }} // Поле вводу також займає всю ширину

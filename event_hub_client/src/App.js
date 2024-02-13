@@ -1,4 +1,4 @@
-import SignIn from './pages/SignIn/SignIn';
+import SignUp from './pages/SignUp/SignUp';
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,7 +13,7 @@ function App() {
       <Router>
         <div>
           <Routes>
-            <Route path="/" element={<SignIn/>}/>
+            <Route path="/" element={<SignUp/>}/>
           </Routes>
         </div>
       </Router>
