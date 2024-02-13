@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-//@Builder
 @NoArgsConstructor
 //@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class EventPhotoRequest {

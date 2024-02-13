@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class CategoryRequest {
     @NotBlank(message = "Name of Category can't be blank")
