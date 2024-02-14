@@ -10,9 +10,9 @@ public interface UserService {
 
     UserResponse create(UserRequest userRequest);
 
-    UserResponse readByDtoId(long id);
+    UserResponse readById(long id);
 
-    User readById(long id);
+    User readByIdEntity(long id);
 
     UserResponse update(UserRequest userRequest);
 

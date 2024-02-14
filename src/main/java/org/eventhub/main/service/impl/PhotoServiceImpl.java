@@ -63,7 +63,7 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public void delete(long id) {
-        photoRepository.deleteById(id);
+        photoRepository.delete(readByIdEntity(id));
     }
 
     @Override

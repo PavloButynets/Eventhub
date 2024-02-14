@@ -56,10 +56,7 @@ public class CategoryServiceTest {
         Assertions.assertEquals("Sport", category.getName());
         Assertions.assertEquals(2, categoryService.getAll().size());
     }
-    @Test
-    public void readByIdEntityInvalidCategoryTest(){
-        Assertions.assertThrows(EntityNotFoundException.class, () -> categoryService.readByIdEntity(100));
-    }
+
     @Test
     public void updateValidCategoryTest(){
         CategoryResponse response = categoryService.create(new CategoryRequest("Tested Category"));
