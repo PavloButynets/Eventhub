@@ -41,14 +41,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse readById(long id) {
         User user = userRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("User with" + id + "not found"));
+                () -> new EntityNotFoundException("User with " + id + " not found"));
         return userDtoMapper.entityToResponse(user);
     }
 
     @Override
     public User readByIdEntity(long id) {
         return userRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("User with" + id + "not found"));
+                () -> new EntityNotFoundException("User with " + id + " not found"));
     }
 
     @Transactional

@@ -1,7 +1,9 @@
 package org.eventhub.main.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.UserRequest;
 import org.eventhub.main.dto.UserResponse;
+import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.mapper.UserMapper;
 import org.eventhub.main.model.Gender;
 import org.eventhub.main.model.User;
@@ -65,15 +67,30 @@ public class UserServiceTest {
     }
 
     @Test
+    public void createInvalidUser(){
+        Assertions.assertThrows(NullDtoReferenceException.class, () -> userService.create(null));
+    }
+
+    @Test
     public void readValidUserById() {
         User user = userService.readByIdEntity(10L);
         Assertions.assertEquals("nickGreen", user.getUsername());
     }
 
     @Test
+    public void readInvalidUserById() {
+        Assertions.assertThrows(EntityNotFoundException.class, () -> userService.readById(100));
+    }
+
+    @Test
     public void readValidUserResponseById() {
         UserResponse response = userService.readById(10L);
         Assertions.assertEquals("nickGreen", response.getUsername());
+    }
+
+    @Test
+    public void readInvalidUserResponseById() {
+        Assertions.assertThrows(EntityNotFoundException.class, () -> userService.readById(100));
     }
 
     @Test
@@ -118,6 +135,11 @@ public class UserServiceTest {
     }
 
     @Test
+    public void updateInvalidUser(){
+        Assertions.assertThrows(NullDtoReferenceException.class, () -> userService.update(null));
+    }
+
+    @Test
     public void deleteValidUserTest() {
         UserRequest request = new UserRequest(
                 "Johny",
@@ -143,6 +165,11 @@ public class UserServiceTest {
     }
 
     @Test
+    public void deleteInvalidUserTest() {
+        Assertions.assertThrows(EntityNotFoundException.class, () -> userService.delete(100));
+    }
+
+    @Test
     public void getAllValidUsersTest() {
         Assertions.assertEquals(4, userService.getAll().size());
     }
@@ -152,4 +179,9 @@ public class UserServiceTest {
         User user = userService.findByEmail("nick@mail.com");
         Assertions.assertEquals("nick@mail.com", user.getEmail());
     }
+
+//    @Test
+//    public void findUserByInvalidEmail() {
+//        Assertions.assertThrows(EntityNotFoundException.class, () -> userService.findByEmail("batman04@mail.com"));
+//    }
 }
