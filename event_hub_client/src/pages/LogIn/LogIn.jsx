@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './LogIn.module.css';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
-const App = () => {
+const LogIn = () => {
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
     };
@@ -73,4 +73,4 @@ const App = () => {
         </div>
     );
 };
-export default App;
+export default LogIn;
