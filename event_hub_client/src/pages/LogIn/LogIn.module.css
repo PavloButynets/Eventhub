@@ -1,0 +1,47 @@
+
+
+
+.container{
+    display: flex;
+    background-color: #EFEFEF;
+    border-radius: 15px;
+    border: 2px solid #ccc;
+
+
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    padding: 20px;
+    top: 50%;
+    left: 50%;
+
+    position: absolute;
+
+    transform: translate(-50%, -50%);
+
+
+}
+
+.loginButton {
+    width: 400px;
+    height: 40px;
+    font-size: 15px
+
+
+}
+
+.RememberMe{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.Photo {
+    border-radius: 45px;
+    width: auto; /* Ширина фото */
+    height: 450px; /* Автоматична висота для збереження пропорцій */
+    margin: 40px;
+
+
+}

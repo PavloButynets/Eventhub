@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import './App.css';
+import SignIn from "./pages/LogIn/LogIn";
 
 function App() {
   return (
