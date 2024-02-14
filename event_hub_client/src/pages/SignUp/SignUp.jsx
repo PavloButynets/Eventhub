@@ -72,7 +72,7 @@ const App = () => {
     >
   <h1 style={{margin:"0px"}}>Register</h1>
   <Row gutter={16}> {/* Встановлюємо проміжок між елементами */}
-  <Col span={12}> {/* Перший колонка, яка займає половину рядка */}
+  <Col xs={24} sm={12}> {/* Перший колонка, яка займає половину рядка */}
     <Form.Item
       name="firstname"
       label="First name"
@@ -88,7 +88,7 @@ const App = () => {
       <Input placeholder="First name" />
     </Form.Item>
   </Col>
-  <Col span={12}> {/* Друга колонка, також займає половину рядка */}
+  <Col xs={24} sm={12}> {/* Друга колонка, також займає половину рядка */}
     <Form.Item
       className={styles.Item}
       name="lastname"
@@ -106,7 +106,7 @@ const App = () => {
   </Col>
 </Row>
   <Row gutter={16}> {/* Встановлюємо проміжок між елементами */}
-  <Col span={12}> {/* Перший колонка, яка займає половину рядка */}
+  <Col xs={24} sm={12}> {/* Перший колонка, яка займає половину рядка */}
       <Form.Item
         className={styles.Item}
         name="password"
@@ -122,7 +122,7 @@ const App = () => {
         <Input.Password />
       </Form.Item>
     </Col>
-  <Col span={12}>
+  <Col xs={24} sm={12}>
       <Form.Item name="confirm" label="Confirm Password" dependencies={['password']} hasFeedback   className={styles.Item}
         rules={[
           {
@@ -144,7 +144,7 @@ const App = () => {
       </Col>
     </Row>
     <Row gutter={16}> {/* Встановлюємо проміжок між елементами */}
-  <Col span={12}> {/* Перший колонка, яка займає половину рядка */}
+  <Col xs={24} sm={12}> {/* Перший колонка, яка займає половину рядка */}
  
       <Form.Item name="nickname" label="Nickname" tooltip="What do you want others to call you?"   className={styles.Item}
         rules={[
@@ -158,7 +158,7 @@ const App = () => {
         <Input />
       </Form.Item>
       </Col>
-      <Col span={12}> 
+      <Col xs={24} sm={12}> 
       <Form.Item
         className={styles.Item}
         name="gender"
@@ -179,7 +179,7 @@ const App = () => {
       </Col>
       </Row>
     <Row gutter={16}> {/* Встановлюємо проміжок між елементами */}
-  <Col span={12}> {/* Перший колонка, яка займає половину рядка */}
+  <Col xs={24} sm={12}> {/* Перший колонка, яка займає половину рядка */}
  
       <Form.Item
         className={styles.Item}
@@ -195,7 +195,7 @@ const App = () => {
         <Input/>
       </Form.Item>
     </Col>
-    <Col span={12}>
+    <Col xs={24} sm={12}>
       <Form.Item  className={styles.Item}  name="phone"  label="Phone Number"
         rules={[
           {
