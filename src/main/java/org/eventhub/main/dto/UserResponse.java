@@ -28,7 +28,10 @@ public class UserResponse {
     private LocalDate birthDate;
     private Gender gender;
 
-    public UserResponse(){}
+    public UserResponse(){
+
+    }
+
     public UserResponse(Long id, String firstName, String lastName, String username, String email, String profileImage, String description, LocalDateTime createdAt, String city, LocalDate birthDate, Gender gender) {
         this.id = id;
         this.firstName = firstName;
@@ -42,4 +45,5 @@ public class UserResponse {
         this.birthDate = birthDate;
         this.gender = gender;
     }
+
 }
