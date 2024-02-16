@@ -78,5 +78,4 @@ public class Event {
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
-
 }
