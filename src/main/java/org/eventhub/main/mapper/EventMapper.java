@@ -3,6 +3,7 @@ package org.eventhub.main.mapper;
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.model.Event;
+import org.eventhub.main.model.State;
 import org.eventhub.main.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,7 @@ public class EventMapper {
         event.setStartAt(eventRequest.getStartAt());
         event.setExpireAt(eventRequest.getExpireAt());
         event.setDescription(eventRequest.getDescription());
+        event.setState(State.UPCOMING);
         event.setLocation(eventRequest.getLocation());
         event.setOwner(userService.readByIdEntity(eventRequest.getOwnerId()));
         return event;

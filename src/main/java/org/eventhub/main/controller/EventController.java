@@ -31,7 +31,16 @@ public class EventController {
         this.eventService = eventService;
         this.userService = userService;
     }
-
+    @PostMapping("/{user_id}/events")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<EventResponse> create(@Validated @RequestBody EventRequest request,
+                                                BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new ResponseStatusException("Invalid Input");
+        }
+        EventResponse response = eventService.create(request);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
     @GetMapping("/events")
     public List<EventResponse> getAll(){
         return eventService.getAll();
@@ -45,17 +54,6 @@ public class EventController {
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PostMapping("/{user_id}/events")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<EventResponse> create(@Validated @RequestBody EventRequest request,
-                                               BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            throw new ResponseStatusException("Invalid Input");
-        }
-        EventResponse response = eventService.create(request);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
     @PutMapping("/{owner_id}/events/{event_id}")
     public ResponseEntity<EventResponse> update(@PathVariable("owner_id") long ownerId,
                                                 @PathVariable("event_id") long eventId,
