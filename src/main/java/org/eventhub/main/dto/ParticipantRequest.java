@@ -17,9 +17,9 @@ public class ParticipantRequest {
     private Long eventId;
     @NonNull
     private Long userId;
-    private boolean isApproved;
+    private Boolean isApproved;
 
-    public ParticipantRequest(Long eventId, Long userId, boolean isApproved){
+    public ParticipantRequest(Long eventId, Long userId, Boolean isApproved){
         this.eventId = eventId;
         this.userId = userId;
         this.isApproved = isApproved;
