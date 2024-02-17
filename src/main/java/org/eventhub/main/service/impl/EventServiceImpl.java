@@ -6,10 +6,12 @@ import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.exception.NotValidDateException;
 import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.mapper.EventMapper;
+import org.eventhub.main.model.Embedding;
 import org.eventhub.main.model.Event;
 import org.eventhub.main.model.State;
 import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.service.EventService;
+import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,10 +30,15 @@ public class EventServiceImpl implements EventService {
 
     private final EventMapper eventMapper;
 
-    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper) {
+    private EmbeddingClient embeddingClient;
+
+    @Autowired
+    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EmbeddingClient embeddingClient) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
+        this.embeddingClient = embeddingClient;
     }
+
 
 
     @Override
@@ -46,11 +53,11 @@ public class EventServiceImpl implements EventService {
 
         event.setParticipants(new ArrayList<>());
 
-        if(event != null) {
-            Event eventToSave = eventMapper.requestToEntity(eventRequest, event);
-            return eventMapper.entityToResponse(eventRepository.save(eventToSave));
-        }
-        throw new NullEntityReferenceException("Cannot save null event");
+        Embedding embedding = setVector(eventRequest);
+
+
+        Event eventToSave = eventMapper.requestToEntity(eventRequest, event);
+        return eventMapper.entityToResponse(eventRepository.save(eventToSave));
     }
 
     @Override
@@ -120,5 +127,11 @@ public class EventServiceImpl implements EventService {
         if (dateComparisonResultStartAt < 0) {event.setState(State.UPCOMING);}
         else if (dateComparisonResultExpireAt <= 0) {event.setState(State.LIVE);}
         else {event.setState(State.PAST);}
+    }
+
+    Embedding setVector(EventRequest eventRequest) {
+        Embedding embedding = new Embedding();
+        embedding.setEmbedding(embeddingClient.embed(eventRequest.getTitle() + " " + eventRequest.getDescription() + " " + eventRequest.getLocation()));
+        return embedding;
     }
 }

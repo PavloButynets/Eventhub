@@ -29,3 +29,7 @@ INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES
 INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (12, '2020-11-16 14:00:05.810222', 'true', 30, 13);
 INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (13, '2020-11-16 14:00:05.810221', 'true', 31, 10);
 INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (14, '2020-11-16 14:00:05.810222', 'true', 32, 11);
+
+-- INSERT INTO event_embeddings (id, embedding) VALUES (1, 11);
+-- INSERT INTO event_embeddings (id, embedding) VALUES (2, 10);
+-- INSERT INTO event_embeddings (id, embedding) VALUES (3, 11);

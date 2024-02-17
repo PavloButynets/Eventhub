@@ -9,6 +9,8 @@ import org.hibernate.annotations.Array;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.List;
+
 @Entity
 @Setter
 @Getter
@@ -20,10 +22,11 @@ public class Embedding {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "embedding")
     @JdbcTypeCode(SqlTypes.VECTOR)
     @Array(length = 1536)
-    private float[] embedding;
+    private List<Double> embedding;
 
     @OneToOne(mappedBy = "embedding")
     private Event event;
