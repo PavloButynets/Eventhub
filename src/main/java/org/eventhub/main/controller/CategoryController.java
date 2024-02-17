@@ -49,7 +49,7 @@ public class CategoryController {
             throw new ResponseStatusException("Invalid Input");
         }
 
-        CategoryResponse categoryResponse = categoryService.create(categoryRequest);
+        CategoryResponse categoryResponse = categoryService.update(categoryRequest, categoryId);
         log.info("**/updated category(id) = " + categoryId);
 
         return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
