@@ -55,6 +55,8 @@ public class EventServiceImpl implements EventService {
 
         Embedding embedding = setVector(eventRequest);
 
+        event.setEmbedding(embedding);
+
 
         Event eventToSave = eventMapper.requestToEntity(eventRequest, event);
         return eventMapper.entityToResponse(eventRepository.save(eventToSave));
