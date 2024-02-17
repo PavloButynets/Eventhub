@@ -8,9 +8,9 @@ INSERT INTO users (id, first_name, last_name, username, email, password, profile
 -- INSERT INTO users (id, first_name, last_name, email, password, role_id) VALUES (4, 'Mike', 'Brown', 'mike@mail.com', '$2a$10$CdEJ2PKXgUCIwU4pDQWICuiPjxb1lysoX7jrN.Y4MTMoY9pjfPALO', 1);
 --
 --
-INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id) VALUES (30, 'Event 1', 190, '2020-09-16 14:00:04.810221','2020-09-16 14:30:04.810221','2021-09-16 14:30:04.810221', 'Description 1', 2, 'UPCOMING', 'Stryi', 10);
-INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id) VALUES (31, 'Event 2', 50, '2020-09-16 14:00:11.480271','2020-10-16 14:00:11.480271','2022-09-16 14:30:04.810221', 'Description 2',  1, 'UPCOMING', 'Brovary', 11);
-INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id) VALUES (32, 'Event 3', 22, '2020-09-16 14:00:16.351238', '2020-11-16 14:00:16.351238','2023-09-16 14:30:04.810221', 'Description 3', 1, 'UPCOMING', 'Baranovichi', 12);
+INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id) VALUES (30, 'Гонки на дровах', 190, '2020-09-16 14:00:04.810221','2020-09-16 14:30:04.810221','2021-09-16 14:30:04.810221', 'Стриййські гоки на биках, через місяці, середній рівень, бажано чоловіки', 2, 'UPCOMING', 'Стрий', 10);
+INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id) VALUES (31, 'Пиво в Броварах', 50, '2020-09-16 14:00:11.480271','2020-10-16 14:00:11.480271','2022-09-16 14:30:04.810221', 'Вживаємо пиво до схочу, кількість обмежена, дрескод - смокінг і спортивки',  1, 'UPCOMING', 'Бровари', 11);
+INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id) VALUES (32, 'Дурдом 5', 22, '2020-09-16 14:00:16.351238', '2020-11-16 14:00:16.351238','2023-09-16 14:30:04.810221', 'Хто вважає себе псіхом - приходьте', 1, 'UPCOMING', 'Барановічі', 12);
 
 INSERT INTO event_photos (id, photo_url, event_id) VALUES (10, 'Photo 1', 30);
 INSERT INTO event_photos (id, photo_url, event_id) VALUES (11, 'Photo 2', 31);
