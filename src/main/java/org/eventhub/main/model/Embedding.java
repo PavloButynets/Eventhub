@@ -24,4 +24,7 @@ public class Embedding {
     @JdbcTypeCode(SqlTypes.VECTOR)
     @Array(length = 1536)
     private float[] embedding;
+
+    @OneToOne(mappedBy = "embedding")
+    private Event event;
 }

@@ -82,7 +82,7 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "embedding_id")
     private Embedding embedding;
 
