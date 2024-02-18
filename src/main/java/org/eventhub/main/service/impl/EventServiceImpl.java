@@ -89,8 +89,6 @@ public class EventServiceImpl implements EventService {
             LocalDateTime currentTime = LocalDateTime.now();
             Event event = readByTitle(eventRequest.getTitle());
 
-
-
             checkState(event,currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
             Embedding embedding = setVector(eventRequest);
