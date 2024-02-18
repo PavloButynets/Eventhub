@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/categories")
+@RequestMapping("/categories")
 public class CategoryController {
     private final CategoryService categoryService;
 
@@ -57,8 +57,9 @@ public class CategoryController {
 
     @DeleteMapping("/{category_id}")
     public ResponseEntity<OperationResponse> delete(@PathVariable("category_id") long categoryId) {
+        String name = categoryService.readById(categoryId).getName();
         log.info("**/deleted category(id) = " + categoryId);
         categoryService.delete(categoryId);
-        return new ResponseEntity<>(new OperationResponse("Category deleted successfully"), HttpStatus.OK);
+        return new ResponseEntity<>(new OperationResponse("Category " + name + " deleted successfully"), HttpStatus.OK);
     }
 }

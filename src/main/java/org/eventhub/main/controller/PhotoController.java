@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/users/{user_id}/events/{event_id}/photos")
+@RequestMapping("/users/{user_id}/events/{event_id}/photos")
 public class PhotoController {
     private final PhotoService photoService;
 
@@ -59,9 +59,10 @@ public class PhotoController {
 
     @DeleteMapping("/{photo_id}")
     public ResponseEntity<OperationResponse> delete(@PathVariable("photo_id") long photoId) {
+        String name = photoService.readById(photoId).getPhotoUrl();
         log.info("**/deleted user(id) = " + photoId);
         photoService.delete(photoId);
-        return new ResponseEntity<>(new OperationResponse("EventPhoto deleted successfully"), HttpStatus.OK);
+        return new ResponseEntity<>(new OperationResponse("EventPhoto " + name + " deleted successfully"), HttpStatus.OK);
     }
 }
 
