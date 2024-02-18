@@ -1,6 +1,7 @@
 package org.eventhub.main.controller;
 
 import groovy.util.logging.Slf4j;
+import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.exception.NullEntityReferenceException;
@@ -35,6 +36,18 @@ public class EventController {
         }
         EventResponse response = eventService.create(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{owner_id}/events/{event_id}")
+    public ResponseEntity<EventResponse> update(@PathVariable("owner_id") long ownerId,
+                                                @PathVariable("event_id") long eventId,
+                                                @Validated @RequestBody EventRequest request,
+                                                BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new EntityNotFoundException("Invalid Input");
+        }
+        EventResponse response = eventService.update(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
