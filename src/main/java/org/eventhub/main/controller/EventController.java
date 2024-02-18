@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/EventHub/users")
+@RequestMapping("/users")
 public class EventController {
     private final EventService eventService;
     private final UserService userService;
