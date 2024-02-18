@@ -37,7 +37,6 @@ public class EventMapper {
         event.setStartAt(eventRequest.getStartAt());
         event.setExpireAt(eventRequest.getExpireAt());
         event.setDescription(eventRequest.getDescription());
-        event.setState(State.UPCOMING);
         event.setLocation(eventRequest.getLocation());
         event.setOwner(userService.readByIdEntity(eventRequest.getOwnerId()));
         return event;

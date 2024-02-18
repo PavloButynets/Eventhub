@@ -21,7 +21,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/users")
+@RequestMapping("/EventHub/users")
 public class EventController {
     private final EventService eventService;
     private final UserService userService;
@@ -49,9 +49,6 @@ public class EventController {
     public ResponseEntity<EventResponse> getById(@PathVariable("owner_id") long ownerId,
                                                  @PathVariable("event_id") long eventId){
         EventResponse response = eventService.readById(eventId);
-        if(ownerId != response.getOwnerId()){
-            throw new AccessIsDeniedException("Access is denied");
-        }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PutMapping("/{owner_id}/events/{event_id}")
@@ -62,18 +59,12 @@ public class EventController {
         if(bindingResult.hasErrors()){
             throw new ResponseStatusException("Invalid Input");
         }
-        if(ownerId != request.getOwnerId()){
-            throw new AccessIsDeniedException("Access is denied");
-        }
         EventResponse response = eventService.update(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/{owner_id}/events/{event_id}")
     public ResponseEntity<OperationResponse> delete(@PathVariable("owner_id") long ownerId,
                                                     @PathVariable("event_id") long eventId) {
-        if(ownerId != eventService.readById(eventId).getOwnerId()){
-            throw new AccessIsDeniedException("Access is denied");
-        }
         eventService.delete(eventId);
         return new ResponseEntity<>(new OperationResponse("Event deleted successfully"), HttpStatus.OK);
     }
