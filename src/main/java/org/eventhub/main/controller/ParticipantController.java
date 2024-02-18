@@ -47,9 +47,6 @@ public class ParticipantController {
     public ResponseEntity<ParticipantResponse> getById(@PathVariable("participant_id")long participantId,
                                                       @PathVariable("event_id")long eventId){
         ParticipantResponse response = participantService.readById(participantId);
-        if(eventId != response.getEventId()){
-            throw new AccessIsDeniedException("Access is denied");
-        }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -61,9 +58,6 @@ public class ParticipantController {
         if(bindingResult.hasErrors()){
             throw new ResponseStatusException("Invalid Input");
         }
-        if(eventId != request.getEventId()){
-            throw new AccessIsDeniedException("Access is denied");
-        }
         ParticipantResponse response = participantService.update(request, participantId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -71,9 +65,6 @@ public class ParticipantController {
     @DeleteMapping("/{participant_id}")
     public ResponseEntity<OperationResponse> delete(@PathVariable("event_id") long eventId,
                                                     @PathVariable("participant_id") long participantId){
-        if(eventId != participantService.readById(participantId).getEventId()){
-            throw new AccessIsDeniedException("Access is denied");
-        }
         participantService.delete(participantId);
         return new ResponseEntity<>(new OperationResponse("Participant deleted successfully"), HttpStatus.OK);
     }
