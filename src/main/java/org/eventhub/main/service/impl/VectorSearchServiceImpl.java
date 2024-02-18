@@ -11,8 +11,8 @@ import java.util.List;
 
 @Service
 public class VectorSearchServiceImpl implements VectorSearchService {
-    private EmbeddingClient embeddingClient;
-    private JdbcClient jdbcClient;
+    private final EmbeddingClient embeddingClient;
+    private final JdbcClient jdbcClient;
 
     @Autowired
     public VectorSearchServiceImpl(EmbeddingClient embeddingClient, JdbcClient jdbcClient) {
