@@ -93,6 +93,10 @@ public class EventServiceImpl implements EventService {
 
             checkState(event,currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
+            Embedding embedding = setVector(eventRequest);
+
+            event.setEmbedding(embedding);
+
             Event eventToUpdate = eventMapper.requestToEntity(eventRequest, event);
 
             return eventMapper.entityToResponse(eventRepository.save(eventToUpdate));
@@ -133,7 +137,7 @@ public class EventServiceImpl implements EventService {
 
     Embedding setVector(EventRequest eventRequest) {
         Embedding embedding = new Embedding();
-        embedding.setEmbedding(embeddingClient.embed(eventRequest.getTitle() + " " + eventRequest.getDescription() + " " + eventRequest.getLocation()));
+        embedding.setEmbedding(embeddingClient.embed(eventRequest.getDescription()));
         return embedding;
     }
 }

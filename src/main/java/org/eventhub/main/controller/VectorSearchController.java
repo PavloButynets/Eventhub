@@ -25,7 +25,7 @@ public class VectorSearchController {
     @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<EventResponse>> search(@RequestParam(name = "prompt") String prompt) {
-        List<EventResponse> eventResponse = vectorSearchService.searchEvents(prompt);
-        return new ResponseEntity<>(eventResponse, HttpStatus.OK);
+        List<EventResponse> eventsResponse = vectorSearchService.searchEvents(prompt);
+        return new ResponseEntity<>(eventsResponse, HttpStatus.OK);
     }
 }
