@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/events/{event_id}/participants")
+@RequestMapping("/events/{event_id}/participants")
 public class ParticipantController {
     private final ParticipantService participantService;
 
