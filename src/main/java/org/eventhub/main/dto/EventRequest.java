@@ -41,5 +41,8 @@ public class EventRequest {
     private String location;
 
     @NotNull
+    private List<CategoryRequest> categoryRequests;
+
+    @NotNull
     private long ownerId;
 }

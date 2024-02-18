@@ -47,21 +47,7 @@ public class EventResponse {
     private String location;
 
     @NotNull
+    private List<CategoryResponse> categoryResponses;
+    @NotNull
     private long ownerId;
-
-    public EventResponse() {}
-
-    public EventResponse(long id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, State state, String location, long ownerId) {
-        this.id = id;
-        this.title = title;
-        this.maxParticipants = maxParticipants;
-        this.createdAt = createdAt;
-        this.startAt = startAt;
-        this.expireAt = expireAt;
-        this.description = description;
-        this.participantCount = participantCount;
-        this.state = state;
-        this.location = location;
-        this.ownerId = ownerId;
-    }
 }
