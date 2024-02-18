@@ -1,7 +1,6 @@
 package org.eventhub.main.service.impl;
 
 import org.eventhub.main.dto.EventResponse;
-import org.eventhub.main.exception.BadSearchRequestException;
 import org.eventhub.main.service.VectorSearchService;
 import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +33,7 @@ WHERE 1 - (embedding <=> :user_prompt::vector) >= 0.8
 ORDER BY (embedding <=> :user_prompt::vector) LIMIT 15
 """).param("user_prompt", embedding.toString());
 
-        List<EventResponse> responsesList = query.query(EventResponse.class).list();
-        if(responsesList.isEmpty()) {
-            throw new BadSearchRequestException("Prompt: " + prompt + " is not meaningful. We cannot find any matches.");
-        }
 
-        return responsesList;
+        return query.query(EventResponse.class).list();
     }
 }
