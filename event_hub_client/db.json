@@ -1,0 +1,45 @@
+{
+  "users": [
+    {
+      "firstName": "Pavlo",
+      "lastName": "Butynets",
+      "password": "123",
+      "nickname": "Pppp",
+      "gender": "male",
+      "city": "с. Глиниці",
+      "email": "pavlobutynez@gmail.com",
+      "id": "101",
+      "error": "User with this email already exists."
+    },
+    {
+      "id": "4607",
+      "firstName": "Pavlo",
+      "lastName": "Butynets",
+      "password": "123321",
+      "nickname": "rrr",
+      "gender": "female",
+      "city": "Львів",
+      "email": "pbutynez@gmail.com"
+    },
+    {
+      "id": "190c",
+      "firstName": "Ivan",
+      "lastName": "Ivanov",
+      "password": "123321",
+      "nickname": "ivvvan",
+      "gender": "male",
+      "city": "Pidor",
+      "email": "@gmail.com.ivan"
+    },
+    {
+      "id": "a864",
+      "firstName": "Ivan",
+      "lastName": "Ivanov",
+      "password": "123321",
+      "nickname": "ivvvan",
+      "gender": "male",
+      "city": "Pidor",
+      "email": "@gmail.com.ivan"
+    }
+  ]
+}

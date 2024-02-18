@@ -1,5 +1,8 @@
 import styles from './SignUp.module.css';
 import React, { useState } from 'react';
+import axios from "axios";
+import { useNavigate, Link } from 'react-router-dom';
+import LogIn from '../LogIn/LogIn';
 import {
   Button,
   Checkbox,
@@ -9,6 +12,7 @@ import {
   Row,
   Select,
 } from 'antd';
+
 
 
 const { Option } = Select;
@@ -45,9 +49,44 @@ const tailFormItemLayout = {
 };
 const SignUp = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
+
+
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
+
+ 
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [password, setPassword] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [gender, setGender] = useState('');
+  const [city, setCity] = useState('');
+  const [email, setEmail] = useState('');
+
+  const handleSubmit = async()=>{
+     const userData = {
+        firstName,
+        lastName,
+        password,
+        nickname,
+        gender,
+        city,
+        email,
+     }
+     try{
+      const res = await axios.post('http://localhost:3500/users', userData);
+      console.log(res)
+      console.log('Response:', res.data);
+      // navigate('/');
+
+     }
+     catch(err){
+      console.log(err)
+     }
+
+  }
 
 
   return (
@@ -60,10 +99,9 @@ const SignUp = () => {
       wrapperCol={{ span: 24 }} // Поле вводу також займає всю ширину
       form={form}
       name="register"
-      onFinish={onFinish}
+      onFinish={handleSubmit}
       initialValues={{
-        city: "Lviv",
-        prefix: '86',
+
       }}
       style={{
         maxWidth: 600,
@@ -85,7 +123,7 @@ const SignUp = () => {
         },
       ]}
     >
-      <Input placeholder="First name" />
+      <Input placeholder="First name" onChange={(e) => setFirstName(e.target.value)}/>
     </Form.Item>
   </Col>
   <Col xs={24} sm={12}> {/* Друга колонка, також займає половину рядка */}
@@ -101,12 +139,12 @@ const SignUp = () => {
         },
       ]}
     >
-      <Input placeholder="Last name" />
+      <Input placeholder="Last name" onChange={(e)=>setLastName(e.target.value)} />
     </Form.Item>
   </Col>
 </Row>
-  <Row gutter={16}> {/* Встановлюємо проміжок між елементами */}
-  <Col xs={24} sm={12}> {/* Перший колонка, яка займає половину рядка */}
+  <Row gutter={16}>
+  <Col xs={24} sm={12}> 
       <Form.Item
         className={styles.Item}
         name="password"
@@ -119,7 +157,7 @@ const SignUp = () => {
         ]}
         hasFeedback
       >
-        <Input.Password />
+        <Input.Password onChange={(e)=>setPassword(e.target.value)} />
       </Form.Item>
     </Col>
   <Col xs={24} sm={12}>
@@ -143,8 +181,8 @@ const SignUp = () => {
       </Form.Item>
       </Col>
     </Row>
-    <Row gutter={16}> {/* Встановлюємо проміжок між елементами */}
-  <Col xs={24} sm={12}> {/* Перший колонка, яка займає половину рядка */}
+    <Row gutter={16}> 
+  <Col xs={24} sm={12}> 
  
       <Form.Item name="nickname" label="Nickname" tooltip="What do you want others to call you?"   className={styles.Item}
         rules={[
@@ -152,10 +190,11 @@ const SignUp = () => {
             required: true,
             message: 'Please input your nickname!',
             whitespace: true,
+            
           },
         ]}
       >
-        <Input />
+        <Input onChange={(e)=>setNickname(e.target.value)} placeholder="Your Nick Name" />
       </Form.Item>
       </Col>
       <Col xs={24} sm={12}> 
@@ -170,7 +209,9 @@ const SignUp = () => {
           },
         ]}
       >
-        <Select placeholder="select your gender">
+        <Select placeholder="select your gender"
+        onChange={(value) => setGender(value)}
+        >
           <Option value="male">Male</Option>
           <Option value="female">Female</Option>
           <Option value="other">Other</Option>
@@ -178,8 +219,8 @@ const SignUp = () => {
       </Form.Item>
       </Col>
       </Row>
-    <Row gutter={16}> {/* Встановлюємо проміжок між елементами */}
-  <Col xs={24} sm={12}> {/* Перший колонка, яка займає половину рядка */}
+    <Row gutter={16}> 
+  <Col xs={24} sm={12}>
  
       <Form.Item
         className={styles.Item}
@@ -189,25 +230,28 @@ const SignUp = () => {
           {
             required: true,
             message: 'Please select your City',
+            whitespace: true,
           },
         ]}
       >
-        <Input/>
+        <Input onChange={(e)=>setCity(e.target.value)}/>
       </Form.Item>
     </Col>
     <Col xs={24} sm={12}>
-      <Form.Item  className={styles.Item}  name="phone"  label="Phone Number"
+      <Form.Item  className={styles.Item}  name="email"  label="Email"
         rules={[
           {
             required: true,
-            message: 'Please input your phone number!',
+            message: 'Please input your phone email!',
+            whitespace: true,
           },
         ]}
       >
         <Input
           style={{
             width: '100%',
-          }}
+          } }
+          onChange={(e)=>setEmail(e.target.value)}
         />
       </Form.Item>
     </Col>
@@ -229,11 +273,11 @@ const SignUp = () => {
         </Checkbox>
       </Form.Item>
       <Form.Item {...tailFormItemLayout} className={styles.Item}>
-        <Button type="primary" htmlType="submit" className={styles.customButton}>
+        <Button  type="primary" htmlType="submit" className={styles.customButton}>
           Register
         </Button>
         <span style={{ marginTop: '10px' }}>
-          Already have an account? <a href="#">Login</a>
+          Already have an account? <Link to="/LogIn">Login</Link>
         </span>
       </Form.Item>
     </Form>
