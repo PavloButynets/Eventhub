@@ -1,4 +1,4 @@
-INSERT INTO event_embeddings (id, embedding) VALUES (1, '[
+INSERT INTO event_embeddings (id, embedding) VALUES (10, '[
                 -0.013752565,
                 -0.0038292096,
                 0.02492408,
@@ -1536,7 +1536,7 @@ INSERT INTO event_embeddings (id, embedding) VALUES (1, '[
                 0.018002173,
                 -0.013778636
             ]');
-INSERT INTO event_embeddings (id, embedding) VALUES (2, '[
+INSERT INTO event_embeddings (id, embedding) VALUES (11, '[
                 -0.0027898783,
                 -0.016468657,
                 -0.0005178671,
@@ -3074,7 +3074,7 @@ INSERT INTO event_embeddings (id, embedding) VALUES (2, '[
                 -0.014342423,
                 0.014664579
             ]');
-INSERT INTO event_embeddings (id, embedding) VALUES (3, '[
+INSERT INTO event_embeddings (id, embedding) VALUES (12, '[
                 -0.0069624214,
                 -0.003872886,
                 0.0059440653,
@@ -4624,9 +4624,9 @@ INSERT INTO users (id, first_name, last_name, username, email, password, profile
 -- INSERT INTO users (id, first_name, last_name, email, password, role_id) VALUES (4, 'Mike', 'Brown', 'mike@mail.com', '$2a$10$CdEJ2PKXgUCIwU4pDQWICuiPjxb1lysoX7jrN.Y4MTMoY9pjfPALO', 1);
 --
 --
-INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES (30, 'Гонки на мопедах', 190, '2020-09-16 14:00:04.810221','2020-09-16 14:30:04.810221','2021-09-16 14:30:04.810221', 'Стрийські гонки на мопедах, кожного місяця подія повторюється, тільки чоловіки', 2, 'UPCOMING', 'Стрий', 10, 1);
-INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES (31, 'Пиво в Броварах', 50, '2020-09-16 14:00:11.480271','2020-10-16 14:00:11.480271','2022-09-16 14:30:04.810221', 'Вживаємо пиво до схочу, кількість обмежена, дрескод - смокінг і спортивки',  1, 'UPCOMING', 'Бровари', 11, 2);
-INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES (32, 'Дурдом 5', 22, '2020-09-16 14:00:16.351238', '2020-11-16 14:00:16.351238','2023-09-16 14:30:04.810221', 'Хто вважає себе псіхом - приходьте, будемо веселитись.', 1, 'UPCOMING', 'Барановічі', 12, 3);
+INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES (30, 'Гонки на мопедах', 190, '2020-09-16 14:00:04.810221','2020-09-16 14:30:04.810221','2021-09-16 14:30:04.810221', 'Стрийські гонки на мопедах, кожного місяця подія повторюється, тільки чоловіки', 2, 'UPCOMING', 'Стрий', 10, 10);
+INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES (31, 'Пиво в Броварах', 50, '2020-09-16 14:00:11.480271','2020-10-16 14:00:11.480271','2022-09-16 14:30:04.810221', 'Вживаємо пиво до схочу, кількість обмежена, дрескод - смокінг і спортивки',  1, 'UPCOMING', 'Бровари', 11, 11);
+INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES (32, 'Дурдом 5', 22, '2020-09-16 14:00:16.351238', '2020-11-16 14:00:16.351238','2023-09-16 14:30:04.810221', 'Хто вважає себе псіхом - приходьте, будемо веселитись.', 1, 'UPCOMING', 'Барановічі', 12, 12);
 
 INSERT INTO event_photos (id, photo_url, event_id) VALUES (10, 'Photo 1', 30);
 INSERT INTO event_photos (id, photo_url, event_id) VALUES (11, 'Photo 2', 31);
