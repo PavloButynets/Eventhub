@@ -65,7 +65,8 @@ public class EventController {
     @DeleteMapping("/{owner_id}/events/{event_id}")
     public ResponseEntity<OperationResponse> delete(@PathVariable("owner_id") long ownerId,
                                                     @PathVariable("event_id") long eventId) {
+        String title = eventService.readById(eventId).getTitle();
         eventService.delete(eventId);
-        return new ResponseEntity<>(new OperationResponse("Event deleted successfully"), HttpStatus.OK);
+        return new ResponseEntity<>(new OperationResponse("Event with title '"+title+"' deleted successfully"), HttpStatus.OK);
     }
 }
