@@ -35,37 +35,43 @@ public class ParticipantController {
             throw new ResponseStatusException("Invalid Input");
         }
         ParticipantResponse response = participantService.create(request);
+        log.info("**/created participant(id) = " + response.getId());
+
+
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
-    List<ParticipantResponse> getAll() {
-        return participantService.getAll();
+    ResponseEntity<List<ParticipantResponse>> getAll() {
+        log.info("**/get all participant");
+        return new ResponseEntity<>(participantService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{participant_id}")
-    public ResponseEntity<ParticipantResponse> getById(@PathVariable("participant_id")long participantId,
-                                                      @PathVariable("event_id")long eventId){
+    public ResponseEntity<ParticipantResponse> getById(@PathVariable("participant_id")long participantId){
         ParticipantResponse response = participantService.readById(participantId);
+        log.info("**/get by id participant(id) = " + response.getId());
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("/{participant_id}")
-    public ResponseEntity<ParticipantResponse> update(@PathVariable("event_id") long eventId,
-                                                      @PathVariable("participant_id") long participantId,
+    public ResponseEntity<ParticipantResponse> update(@PathVariable("participant_id") long participantId,
                                                       @Validated @RequestBody ParticipantRequest request,
                                                       BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new ResponseStatusException("Invalid Input");
         }
         ParticipantResponse response = participantService.update(request, participantId);
+        log.info("**/updated participant(id) = " + response.getId());
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{participant_id}")
-    public ResponseEntity<OperationResponse> delete(@PathVariable("event_id") long eventId,
-                                                    @PathVariable("participant_id") long participantId){
+    public ResponseEntity<OperationResponse> delete(@PathVariable("participant_id") long participantId){
         participantService.delete(participantId);
+        log.info("**/deleted participant(id) = " + participantId);
         return new ResponseEntity<>(new OperationResponse("Participant deleted successfully"), HttpStatus.OK);
     }
 }
