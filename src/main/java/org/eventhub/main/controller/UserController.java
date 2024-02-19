@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -61,9 +61,10 @@ public class UserController {
 
     @DeleteMapping("/{user_id}")
     public ResponseEntity<OperationResponse> delete(@PathVariable("user_id") long userId) {
+        String name = userService.readById(userId).getFirstName();
         log.info("**/deleted user(id) = " + userId);
         userService.delete(userId);
-        return new ResponseEntity<>(new OperationResponse("User deleted successfully"), HttpStatus.OK);
+        return new ResponseEntity<>(new OperationResponse("User " + name + " deleted successfully"), HttpStatus.OK);
     }
 }
 

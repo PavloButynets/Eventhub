@@ -11,6 +11,7 @@ import lombok.Data;
 public class CategoryRequest {
     @NotBlank(message = "Name of Category can't be blank")
     private String name;
+    public CategoryRequest(){}
     public CategoryRequest(String name){
         this.name = name;
     }
