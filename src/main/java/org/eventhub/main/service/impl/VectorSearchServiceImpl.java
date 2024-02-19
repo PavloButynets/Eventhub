@@ -47,13 +47,9 @@ SELECT
     events.title,
     events.description,
     events.location,
-    event_embeddings.embedding,
-    categories.id AS category_id,
-    categories.name AS category_name
+    event_embeddings.embedding
 FROM events
 INNER JOIN event_embeddings ON events.embedding_id = event_embeddings.id
-LEFT JOIN event_categories ON events.id = event_categories.event_id
-LEFT JOIN categories ON event_categories.category_id = categories.id
 WHERE 1 - (embedding <=> :user_prompt::vector) >= 0.7
 ORDER BY (embedding <=> :user_prompt::vector) LIMIT 15
 """).param("user_prompt", embedding.toString());
@@ -83,27 +79,6 @@ ORDER BY (embedding <=> :user_prompt::vector) LIMIT 15
                     }
 
                 return newEvent;
-        }).list()
-                .stream()
-                .distinct()
-                .collect(Collectors.toList());
+        }).list();
     }
-    /*
-     @Override
-    public List<EventResponse> searchEvents(String prompt) {
-        List<Double> embedding = embeddingClient.embed(prompt);
-
-        JdbcClient.StatementSpec query = jdbcClient.sql(
-                """
-SELECT events.id, events.max_participants,events.created_at, events.start_at, events.expire_at,events.participant_count, events.state, events.owner_id, events.title, events.description, events.location, event_embeddings.embedding
-FROM events
-INNER JOIN event_embeddings ON events.embedding_id=event_embeddings.id
-WHERE 1 - (embedding <=> :user_prompt::vector) >= 0.7
-ORDER BY (embedding <=> :user_prompt::vector) LIMIT 15
-""").param("user_prompt", embedding.toString());
-
-
-        return query.query(EventResponse.class).list();
-    }
-    */
 }
