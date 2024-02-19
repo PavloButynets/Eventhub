@@ -82,4 +82,12 @@ public class CategoryServiceImpl implements CategoryService {
         }
     }
 
+    @Override
+    public List<CategoryResponse> getAllByEventId(Long eventId) {
+        List<Category> categories = categoryRepository.findAllByEventsId(eventId);
+        return categories.stream()
+                .map(categoryMapper::entityToResponse)
+                .collect(Collectors.toList());
+    }
+
 }

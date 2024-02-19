@@ -16,4 +16,6 @@ public interface CategoryService {
     List<CategoryResponse> getAll();
     Category getByName(String name);
 
+    List<CategoryResponse> getAllByEventId(Long eventId);
+
 }

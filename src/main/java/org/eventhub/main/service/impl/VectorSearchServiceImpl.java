@@ -3,6 +3,7 @@ package org.eventhub.main.service.impl;
 import org.eventhub.main.dto.CategoryResponse;
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.model.State;
+import org.eventhub.main.service.CategoryService;
 import org.eventhub.main.service.VectorSearchService;
 import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,13 @@ public class VectorSearchServiceImpl implements VectorSearchService{
     private final EmbeddingClient embeddingClient;
     private final JdbcClient jdbcClient;
 
+    private final CategoryService categoryService;
+
     @Autowired
-    public VectorSearchServiceImpl(EmbeddingClient embeddingClient, JdbcClient jdbcClient) {
+    public VectorSearchServiceImpl(EmbeddingClient embeddingClient, JdbcClient jdbcClient, CategoryService categoryService) {
         this.embeddingClient = embeddingClient;
         this.jdbcClient = jdbcClient;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -54,14 +58,12 @@ WHERE 1 - (embedding <=> :user_prompt::vector) >= 0.7
 ORDER BY (embedding <=> :user_prompt::vector) LIMIT 15
 """).param("user_prompt", embedding.toString());
 
-        Map<Long, EventResponse> eventMap = new HashMap<>();
-        return query.query((resultSet, statementContext) -> {
-            long eventId = resultSet.getLong("id");
 
-                EventResponse eventResponse = eventMap.computeIfAbsent(eventId, id -> {
+        return query.query((resultSet, statementContext) -> {
                     EventResponse newEvent = new EventResponse();
+
                     try {
-                        newEvent.setId(eventId);
+                        newEvent.setId(resultSet.getLong("id"));
                         newEvent.setTitle(resultSet.getString("title"));
                         newEvent.setMaxParticipants(resultSet.getInt("max_participants"));
                         newEvent.setCreatedAt(resultSet.getObject("created_at", LocalDateTime.class));
@@ -73,18 +75,14 @@ ORDER BY (embedding <=> :user_prompt::vector) LIMIT 15
                         newEvent.setLocation(resultSet.getString("location"));
                         newEvent.setOwnerId(resultSet.getLong("owner_id"));
                         newEvent.setCategoryResponses(new ArrayList<>());
+
+                        newEvent.getCategoryResponses().addAll(categoryService.getAllByEventId(resultSet.getLong("id")));
                     }
                     catch (SQLException ex){
                         throw new RuntimeException(ex.getMessage());
                     }
-                    return newEvent;
-                });
-                CategoryResponse categoryResponse = new CategoryResponse();
-                categoryResponse.setId(resultSet.getLong("category_id"));
-                categoryResponse.setName(resultSet.getString("category_name"));
-                eventResponse.getCategoryResponses().add(categoryResponse);
 
-                return eventResponse;
+                return newEvent;
         }).list()
                 .stream()
                 .distinct()
