@@ -2,6 +2,8 @@ package org.eventhub.main.mapper;
 
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventRequest;
+import org.eventhub.main.exception.NullDtoReferenceException;
+import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.model.Category;
 import org.eventhub.main.model.Event;
 import org.eventhub.main.model.State;
@@ -23,6 +25,9 @@ public class EventMapper {
     }
 
     public EventResponse entityToResponse(Event event) {
+        if (event == null) {
+            throw new NullEntityReferenceException("Event can't be found");
+        }
         return EventResponse.builder()
                 .id(event.getId())
                 .title(event.getTitle())
@@ -44,6 +49,12 @@ public class EventMapper {
     }
 
     public Event requestToEntity(EventRequest eventRequest, Event event) {
+        if(eventRequest == null){
+            throw new NullDtoReferenceException("EventRequest can't be null");
+        }
+        if(event == null){
+            throw new NullEntityReferenceException("Event can't be null");
+        }
         event.setTitle(eventRequest.getTitle());
         event.setMaxParticipants(eventRequest.getMaxParticipants());
         event.setStartAt(eventRequest.getStartAt());
