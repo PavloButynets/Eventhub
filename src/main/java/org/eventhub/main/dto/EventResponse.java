@@ -46,8 +46,8 @@ public class EventResponse {
     @NotNull
     private String location;
 
-    @NotNull
-    private List<CategoryResponse> categoryResponses;
+//    @NotNull
+//    private List<CategoryResponse> categoryResponses;
     @NotNull
     private long ownerId;
 }

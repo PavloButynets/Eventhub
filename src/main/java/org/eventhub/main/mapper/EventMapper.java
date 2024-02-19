@@ -34,10 +34,10 @@ public class EventMapper {
                 .participantCount(event.getParticipantCount())
                 .state(event.getState())
                 .location(event.getLocation())
-                .categoryResponses(event.getCategories()
-                        .stream()
-                        .map(categoryMapper::entityToResponse)
-                        .collect(Collectors.toList()))
+//                .categoryResponses(event.getCategories()
+//                        .stream()
+//                        .map(categoryMapper::entityToResponse)
+//                        .collect(Collectors.toList()))
                 .ownerId(event.getOwner().getId())
                 .build();
     }

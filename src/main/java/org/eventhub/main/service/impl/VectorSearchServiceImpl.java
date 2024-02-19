@@ -29,7 +29,7 @@ public class VectorSearchServiceImpl implements VectorSearchService {
 SELECT events.id, events.max_participants,events.created_at, events.start_at, events.expire_at,events.participant_count, events.state, events.owner_id, events.title, events.description, events.location, event_embeddings.embedding
 FROM events
 INNER JOIN event_embeddings ON events.embedding_id=event_embeddings.id
-WHERE 1 - (embedding <=> :user_prompt::vector) >= 0.8
+WHERE 1 - (embedding <=> :user_prompt::vector) >= 0.7
 ORDER BY (embedding <=> :user_prompt::vector) LIMIT 15
 """).param("user_prompt", embedding.toString());
 

@@ -48,16 +48,13 @@ public class EventController {
         return eventService.getAll();
     }
     @GetMapping("/{owner_id}/events/{event_id}")
-    public ResponseEntity<EventResponse> getById(@PathVariable("owner_id") long ownerId,
-                                                 @PathVariable("event_id") long eventId){
+    public ResponseEntity<EventResponse> getById(@PathVariable("event_id") long eventId){
         EventResponse response = eventService.readById(eventId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("/{owner_id}/events/{event_id}")
-    public ResponseEntity<EventResponse> update(@PathVariable("owner_id") long ownerId,
-                                                @PathVariable("event_id") long eventId,
-                                                @Validated @RequestBody EventRequest request,
+    public ResponseEntity<EventResponse> update(@Validated @RequestBody EventRequest request,
                                                 BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new ResponseStatusException("Invalid Input");
@@ -67,8 +64,7 @@ public class EventController {
     }
 
     @DeleteMapping("/{owner_id}/events/{event_id}")
-    public ResponseEntity<OperationResponse> delete(@PathVariable("owner_id") long ownerId,
-                                                    @PathVariable("event_id") long eventId) {
+    public ResponseEntity<OperationResponse> delete(@PathVariable("event_id") long eventId) {
         String title = eventService.readById(eventId).getTitle();
         eventService.delete(eventId);
         return new ResponseEntity<>(new OperationResponse("Event with title '"+title+"' deleted successfully"), HttpStatus.OK);
