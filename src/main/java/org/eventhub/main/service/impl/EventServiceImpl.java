@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.exception.NotValidDateException;
+import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.mapper.EventMapper;
 import org.eventhub.main.model.Embedding;
@@ -89,8 +90,6 @@ public class EventServiceImpl implements EventService {
             LocalDateTime currentTime = LocalDateTime.now();
             Event event = readByTitle(eventRequest.getTitle());
 
-
-
             checkState(event,currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
             Embedding embedding = setVector(eventRequest);
@@ -101,7 +100,7 @@ public class EventServiceImpl implements EventService {
 
             return eventMapper.entityToResponse(eventRepository.save(eventToUpdate));
         }
-        throw new NullEntityReferenceException("Cannot update null event");
+        throw new NullDtoReferenceException("Cannot update null event");
     }
 
     @Override

@@ -85,5 +85,4 @@ public class Event {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "embedding_id")
     private Embedding embedding;
-
 }

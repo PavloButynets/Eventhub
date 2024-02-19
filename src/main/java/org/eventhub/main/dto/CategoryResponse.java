@@ -13,4 +13,12 @@ public class CategoryResponse {
     private Long id;
     @NotBlank(message = "Name of Category can't be blank")
     private String name;
+
+    public CategoryResponse() {
+    }
+
+    public CategoryResponse(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
