@@ -31,8 +31,6 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/users/{user_id}/events/{event_id}/photos")
 public class PhotoController {
-    private static final String connectionString = "DefaultEndpointsProtocol=https;AccountName=eventhubproject;AccountKey=KDM2AysSXKu3dXoifZKlsp0/D3Fz4APx6ySAGEJeFtLpQ/AZG3UhG0wUyIscSPXXVsWjFVYYWbiP+ASt1bCrLw==;EndpointSuffix=core.windows.net";
-    private static final String containerName = "images";
     private final PhotoService photoService;
 
     @Autowired
@@ -73,43 +71,16 @@ public class PhotoController {
 
     @DeleteMapping("/{photo_id}")
     public ResponseEntity<OperationResponse> delete(@PathVariable("photo_id") long photoId) throws UnsupportedEncodingException {
-        String blobUrl = photoService.readById(photoId).getPhotoUrl();
-        BlobContainerClient blobContainerClient = new BlobContainerClientBuilder()
-                .connectionString(connectionString)
-                .containerName(containerName)
-                .buildClient();
-        BlockBlobClient blockBlobClient = blobContainerClient.getBlobClient(blobUrl).getBlockBlobClient();
-
-        blockBlobClient.delete();
-
         log.info("**/deleted user(id) = " + photoId);
         photoService.delete(photoId);
-        return new ResponseEntity<>(new OperationResponse("EventPhoto " + blobUrl + " deleted successfully"), HttpStatus.OK);
+        return new ResponseEntity<>(new OperationResponse("EventPhoto id:" + photoId + " deleted successfully"), HttpStatus.OK);
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadImages(@PathVariable(name = "event_id") Long eventId,
-                                               @RequestPart("files") List<MultipartFile> files) {
-        try {
-            BlobContainerClient blobContainerClient = new BlobContainerClientBuilder()
-                    .connectionString(connectionString)
-                    .containerName(containerName)
-                    .buildClient();
-
-            for (MultipartFile file : files) {
-                try (ByteArrayInputStream dataStream = new ByteArrayInputStream(file.getBytes())) {
-                    BlockBlobClient blockBlobClient = blobContainerClient.getBlobClient(file.getOriginalFilename()).getBlockBlobClient();
-                    blockBlobClient.upload(dataStream, file.getSize());
-
-                    String imageUrl = blockBlobClient.getBlobName();
-                    photoService.create(new EventPhotoRequest(imageUrl, eventId));
-                }
-            }
-            return ResponseEntity.ok("Images uploaded successfully.");
-        } catch (IOException e) {
-            log.error("Error uploading images.", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading images.");
-        }
+    public ResponseEntity<List<EventPhotoResponse>> uploadImages(@PathVariable(name = "event_id") Long eventId,
+                                               @RequestPart("files") List<MultipartFile> files){
+        log.info("Uploading photos");
+        return new ResponseEntity<>(this.photoService.uploadPhotos(eventId, files), HttpStatus.CREATED);
     }
 
 }
