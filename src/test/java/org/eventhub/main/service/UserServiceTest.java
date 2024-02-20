@@ -50,7 +50,6 @@ public class UserServiceTest {
                 "profile-image.jpg",
                 "A description about John",
                 "New York",
-                "1234567890",
                 LocalDate.of(1990, 5, 15),
                 Gender.MALE
         );
@@ -117,7 +116,6 @@ public class UserServiceTest {
                 "profile-image.jpg",
                 "A description about John",
                 "New York",
-                "1234567890",
                 LocalDate.of(1990, 5, 15),
                 Gender.MALE
         );
@@ -150,7 +148,6 @@ public class UserServiceTest {
                 "profile-image.jpg",
                 "A description about John",
                 "New York",
-                "12345678333",
                 LocalDate.of(1990, 5, 15),
                 Gender.MALE
         );

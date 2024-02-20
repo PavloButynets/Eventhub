@@ -52,8 +52,6 @@ public class UserRequest {
 
     private String city;
 
-    private String phoneNumber;
-
     @Past
     private LocalDate birthDate;
 
@@ -62,7 +60,7 @@ public class UserRequest {
 
     public UserRequest() {}
 
-    public UserRequest(String firstName, String lastName, String username, String email, String password, String profileImage, String description, String city, String phoneNumber, LocalDate birthDate, Gender gender) {
+    public UserRequest(String firstName, String lastName, String username, String email, String password, String profileImage, String description, String city, LocalDate birthDate, Gender gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -71,7 +69,6 @@ public class UserRequest {
         this.profileImage = profileImage;
         this.description = description;
         this.city = city;
-        this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;
         this.gender = gender;
     }
