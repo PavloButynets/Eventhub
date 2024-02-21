@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,20 +40,20 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public EventPhotoResponse readById(long id) {
+    public EventPhotoResponse readById(UUID id) {
         EventPhoto photo= photoRepository.findById(id)
                 .orElseThrow(()->new EntityNotFoundException("Photo with" + id + " id is not found"));
         return eventPhotoMapper.entityToResponse(photo);
     }
 
     @Override
-    public EventPhoto readByIdEntity(long id){
+    public EventPhoto readByIdEntity(UUID id){
         return photoRepository.findById(id)
                 .orElseThrow(()->new EntityNotFoundException("Photo with" + id + " id is not found"));
     }
 
     @Override
-    public EventPhotoResponse update(EventPhotoRequest photoRequest, long id) {
+    public EventPhotoResponse update(EventPhotoRequest photoRequest, UUID id) {
         if (photoRequest != null) {
             EventPhoto existingPhoto = readByIdEntity(id);
             EventPhoto photo = eventPhotoMapper.requestToEntity(photoRequest, existingPhoto);
@@ -62,7 +63,7 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(UUID id) {
         photoRepository.delete(readByIdEntity(id));
     }
 

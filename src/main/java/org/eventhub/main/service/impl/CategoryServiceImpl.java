@@ -49,7 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse update(CategoryRequest categoryRequest, long id) {
+    public CategoryResponse update(CategoryRequest categoryRequest, UUID id) {
         if (categoryRequest != null) {
             Category existingCategory = readByIdEntity(id);// to check if category exist
             Category category = categoryMapper.requestToEntity(categoryRequest, existingCategory);
@@ -59,7 +59,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(UUID id) {
         categoryRepository.delete(readByIdEntity(id));
     }
 
@@ -84,7 +84,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryResponse> getAllByEventId(Long eventId) {
+    public List<CategoryResponse> getAllByEventId(UUID eventId) {
         List<Category> categories = categoryRepository.findAllByEventsId(eventId);
         return categories.stream()
                 .map(categoryMapper::entityToResponse)

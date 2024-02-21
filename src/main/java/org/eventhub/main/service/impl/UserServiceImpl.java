@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 //@RequiredArgsConstructor
@@ -38,14 +39,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse readById(long id) {
+    public UserResponse readById(UUID id) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("User with " + id + " not found"));
         return userDtoMapper.entityToResponse(user);
     }
 
     @Override
-    public User readByIdEntity(long id) {
+    public User readByIdEntity(UUID id) {
         return userRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("User with " + id + " not found"));
     }
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(UUID id) {
         userRepository.delete(readByIdEntity(id));
     }
 

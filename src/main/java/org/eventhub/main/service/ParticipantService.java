@@ -15,6 +15,6 @@ public interface ParticipantService {
     ParticipantResponse readById(UUID id);
     Participant readByIdEntity(UUID id);
     ParticipantResponse update(ParticipantRequest participantRequest, UUID id);
-    void delete(Long id);
+    void delete(UUID id);
     List<ParticipantResponse> getAll();
 }

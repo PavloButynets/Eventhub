@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,13 +65,13 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventResponse readById(long id) {
+    public EventResponse readById(UUID id) {
         Event event = eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
         return eventMapper.entityToResponse(event);
     }
 
     @Override
-    public Event readByIdEntity(long id) {
+    public Event readByIdEntity(UUID id) {
         return eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
     }
 
@@ -105,7 +106,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public void delete(long id) {
+    public void delete(UUID id) {
         eventRepository.delete(readByIdEntity(id));
     }
 

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,19 +43,19 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public ParticipantResponse readById(long id) {
+    public ParticipantResponse readById(UUID id) {
         Participant participant = participantRepository.findById(id)
                 .orElseThrow(()->new EntityNotFoundException("Participant with" + id + " id is not found"));
         return participantMapper.entityToResponse(participant);
     }
 
     @Override
-    public Participant readByIdEntity(long id){
+    public Participant readByIdEntity(UUID id){
         return participantRepository.findById(id)
                 .orElseThrow(()->new EntityNotFoundException("Participant with" + id + " id is not found"));
     }
     @Override
-    public ParticipantResponse update(ParticipantRequest participantRequest, long id) {
+    public ParticipantResponse update(ParticipantRequest participantRequest, UUID id) {
         if(participantRequest != null){
             Participant existingParticipant = readByIdEntity(id);
             Participant participant = participantMapper.requestToEntity(participantRequest, existingParticipant);
@@ -64,7 +65,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         throw new NullDtoReferenceException("Request can't be null");
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         participantRepository.delete(readByIdEntity(id));
     }
 

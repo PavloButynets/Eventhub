@@ -45,8 +45,9 @@ ORDER BY (embedding <=> :user_prompt::vector) LIMIT 15
 """).param("user_prompt", embedding.toString());
 
         return query.query((resultSet, statementContext) -> {
-            long id = resultSet.getLong("id");
+            UUID id = (UUID) resultSet.getObject("id");
             return eventService.readById(id);
         }).list();
+
     }
 }
