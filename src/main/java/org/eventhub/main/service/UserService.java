@@ -5,18 +5,19 @@ import org.eventhub.main.dto.UserRequest;
 import org.eventhub.main.model.User;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
 
     UserResponse create(UserRequest userRequest);
 
-    UserResponse readById(long id);
+    UserResponse readById(UUID id);
 
-    User readByIdEntity(long id);
+    User readByIdEntity(UUID id);
 
     UserResponse update(UserRequest userRequest);
 
-    void delete(long id);
+    void delete(UUID id);
 
     List<UserResponse> getAll();
 

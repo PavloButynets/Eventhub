@@ -5,12 +5,13 @@ import org.eventhub.main.dto.EventPhotoResponse;
 import org.eventhub.main.model.EventPhoto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface PhotoService {
     EventPhotoResponse create(EventPhotoRequest photoRequest);
-    EventPhotoResponse readById(long id);
-    EventPhoto readByIdEntity(long id);
-    EventPhotoResponse update(EventPhotoRequest photoRequest, long id);
-    void delete (long id);
+    EventPhotoResponse readById(UUID id);
+    EventPhoto readByIdEntity(UUID id);
+    EventPhotoResponse update(EventPhotoRequest photoRequest, UUID id);
+    void delete (UUID id);
     List<EventPhotoResponse> getAll();
 }

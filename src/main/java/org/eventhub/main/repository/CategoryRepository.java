@@ -4,8 +4,9 @@ import org.eventhub.main.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     Category findByName(String name);
-    List<Category> findAllByEventsId(Long eventId);
+    List<Category> findAllByEventsId(UUID eventId);
 }
