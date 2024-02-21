@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @Slf4j
@@ -45,7 +46,7 @@ public class PhotoController {
     }
 
     @PutMapping("/{photo_id}")
-    public ResponseEntity<EventPhotoResponse> update(@PathVariable("photo_id") long photoId,
+    public ResponseEntity<EventPhotoResponse> update(@PathVariable("photo_id") UUID photoId,
                                                @Validated @RequestBody EventPhotoRequest eventPhotoRequest, BindingResult result) {
         if (result.hasErrors()) {
             throw new ResponseStatusException("Invalid Input");
@@ -58,7 +59,7 @@ public class PhotoController {
     }
 
     @DeleteMapping("/{photo_id}")
-    public ResponseEntity<OperationResponse> delete(@PathVariable("photo_id") long photoId) {
+    public ResponseEntity<OperationResponse> delete(@PathVariable("photo_id") UUID photoId) {
         String name = photoService.readById(photoId).getPhotoUrl();
         log.info("**/deleted user(id) = " + photoId);
         photoService.delete(photoId);

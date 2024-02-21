@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -48,7 +49,7 @@ public class ParticipantController {
     }
 
     @GetMapping("/{participant_id}")
-    public ResponseEntity<ParticipantResponse> getById(@PathVariable("participant_id")long participantId){
+    public ResponseEntity<ParticipantResponse> getById(@PathVariable("participant_id") UUID participantId){
         ParticipantResponse response = participantService.readById(participantId);
         log.info("**/get by id participant(id) = " + response.getId());
 
@@ -56,7 +57,7 @@ public class ParticipantController {
     }
 
     @PutMapping("/{participant_id}")
-    public ResponseEntity<ParticipantResponse> update(@PathVariable("participant_id") long participantId,
+    public ResponseEntity<ParticipantResponse> update(@PathVariable("participant_id") UUID participantId,
                                                       @Validated @RequestBody ParticipantRequest request,
                                                       BindingResult bindingResult){
         if(bindingResult.hasErrors()){
@@ -69,7 +70,7 @@ public class ParticipantController {
     }
 
     @DeleteMapping("/{participant_id}")
-    public ResponseEntity<OperationResponse> delete(@PathVariable("participant_id") long participantId){
+    public ResponseEntity<OperationResponse> delete(@PathVariable("participant_id") UUID participantId){
         participantService.delete(participantId);
         log.info("**/deleted participant(id) = " + participantId);
         return new ResponseEntity<>(new OperationResponse("Participant deleted successfully"), HttpStatus.OK);

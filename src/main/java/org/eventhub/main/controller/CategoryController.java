@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @Slf4j
@@ -43,7 +44,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{category_id}")
-    public ResponseEntity<CategoryResponse> update(@PathVariable("category_id") long categoryId,
+    public ResponseEntity<CategoryResponse> update(@PathVariable("category_id") UUID categoryId,
                                                    @Validated @RequestBody CategoryRequest categoryRequest, BindingResult result) {
         if (result.hasErrors()) {
             throw new ResponseStatusException("Invalid Input");
@@ -56,7 +57,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{category_id}")
-    public ResponseEntity<OperationResponse> delete(@PathVariable("category_id") long categoryId) {
+    public ResponseEntity<OperationResponse> delete(@PathVariable("category_id") UUID categoryId) {
         String name = categoryService.readById(categoryId).getName();
         log.info("**/deleted category(id) = " + categoryId);
         categoryService.delete(categoryId);
