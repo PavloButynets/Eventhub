@@ -48,7 +48,6 @@ public class UserMapper {
         user.setDescription(userRequest.getDescription());
         user.setCreatedAt(LocalDateTime.now());
         user.setCity(userRequest.getCity());
-        user.setPhoneNumber(userRequest.getPhoneNumber());
         user.setBirthDate(userRequest.getBirthDate());
         user.setGender(userRequest.getGender());
 

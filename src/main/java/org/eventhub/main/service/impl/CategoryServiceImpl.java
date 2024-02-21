@@ -70,4 +70,24 @@ public class CategoryServiceImpl implements CategoryService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Category getByName(String name) {
+        Category category = categoryRepository.findByName(name);
+
+        if(category == null){
+            throw new NullEntityReferenceException("Category can't be null");
+        }
+        else{
+            return category;
+        }
+    }
+
+    @Override
+    public List<CategoryResponse> getAllByEventId(Long eventId) {
+        List<Category> categories = categoryRepository.findAllByEventsId(eventId);
+        return categories.stream()
+                .map(categoryMapper::entityToResponse)
+                .collect(Collectors.toList());
+    }
+
 }

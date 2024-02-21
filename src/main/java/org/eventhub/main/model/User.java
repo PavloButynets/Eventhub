@@ -65,9 +65,6 @@ public class User {
     @Column(name = "location_city", nullable = false)
     private String city;
 
-    @Column(name = "phone_number", nullable = false, unique = true)
-    private String phoneNumber;
-
     @Past
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;

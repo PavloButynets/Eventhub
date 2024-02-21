@@ -1,0 +1,77 @@
+package org.eventhub.main.controller;
+
+import lombok.extern.slf4j.Slf4j;
+import org.eventhub.main.dto.OperationResponse;
+import org.eventhub.main.dto.ParticipantRequest;
+import org.eventhub.main.dto.ParticipantResponse;
+import org.eventhub.main.exception.AccessIsDeniedException;
+import org.eventhub.main.exception.ResponseStatusException;
+import org.eventhub.main.service.ParticipantService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+
+@RestController
+@Slf4j
+@RequestMapping("/events/{event_id}/participants")
+public class ParticipantController {
+    private final ParticipantService participantService;
+
+    @Autowired
+    public ParticipantController(ParticipantService participantService){
+        this.participantService = participantService;
+    }
+
+    @PostMapping
+    public ResponseEntity<ParticipantResponse> create(@Validated @RequestBody ParticipantRequest request,
+                                      BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new ResponseStatusException("Invalid Input");
+        }
+        ParticipantResponse response = participantService.create(request);
+        log.info("**/created participant(id) = " + response.getId());
+
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    ResponseEntity<List<ParticipantResponse>> getAll() {
+        log.info("**/get all participant");
+        return new ResponseEntity<>(participantService.getAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{participant_id}")
+    public ResponseEntity<ParticipantResponse> getById(@PathVariable("participant_id")long participantId){
+        ParticipantResponse response = participantService.readById(participantId);
+        log.info("**/get by id participant(id) = " + response.getId());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/{participant_id}")
+    public ResponseEntity<ParticipantResponse> update(@PathVariable("participant_id") long participantId,
+                                                      @Validated @RequestBody ParticipantRequest request,
+                                                      BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new ResponseStatusException("Invalid Input");
+        }
+        ParticipantResponse response = participantService.update(request, participantId);
+        log.info("**/updated participant(id) = " + response.getId());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{participant_id}")
+    public ResponseEntity<OperationResponse> delete(@PathVariable("participant_id") long participantId){
+        participantService.delete(participantId);
+        log.info("**/deleted participant(id) = " + participantId);
+        return new ResponseEntity<>(new OperationResponse("Participant deleted successfully"), HttpStatus.OK);
+    }
+}
