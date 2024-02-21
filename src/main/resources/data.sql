@@ -1,4 +1,4 @@
-INSERT INTO event_embeddings (id, embedding) VALUES (10, '[
+INSERT INTO event_embeddings (id, embedding) VALUES ('e2269856-a79e-47a9-a45a-6b5c9dbbee63', '[
                 -0.013752565,
                 -0.0038292096,
                 0.02492408,
@@ -1536,7 +1536,7 @@ INSERT INTO event_embeddings (id, embedding) VALUES (10, '[
                 0.018002173,
                 -0.013778636
             ]');
-INSERT INTO event_embeddings (id, embedding) VALUES (11, '[
+INSERT INTO event_embeddings (id, embedding) VALUES ('c45e9c9a-0cef-4eee-8ce3-e3a9d89b5565', '[
                 -0.0027898783,
                 -0.016468657,
                 -0.0005178671,
@@ -3074,7 +3074,7 @@ INSERT INTO event_embeddings (id, embedding) VALUES (11, '[
                 -0.014342423,
                 0.014664579
             ]');
-INSERT INTO event_embeddings (id, embedding) VALUES (12, '[
+INSERT INTO event_embeddings (id, embedding) VALUES ('bb5fd016-1c0a-4365-a11f-c099ec506933', '[
                 -0.0069624214,
                 -0.003872886,
                 0.0059440653,
@@ -4614,35 +4614,35 @@ INSERT INTO event_embeddings (id, embedding) VALUES (12, '[
             ]');
 
 
-INSERT INTO categories (id, name) VALUES (10, 'Sport');
-INSERT INTO categories (id, name) VALUES (11, 'Charity');
+INSERT INTO categories (id, name) VALUES ('d40fbb2f-64ee-4d1f-92a2-c303d047f2dc', 'Sport');
+INSERT INTO categories (id, name) VALUES ('a4d7caf9-50fa-499b-a4ce-19cd5790f686', 'Charity');
 
-INSERT INTO users (id, first_name, last_name, username, email, password, profile_image, description, created_at, location_city, birth_date, gender) VALUES (10, 'Nick', 'Green','nickGreen', 'nick@mail.com', '2222','image 1', 'description 1','2020-09-16 14:00:04.810221','Stryi', '1990-09-11 14:00:04.810221', 'MALE');
-INSERT INTO users (id, first_name, last_name, username, email, password, profile_image, description, created_at, location_city, birth_date, gender) VALUES (11, 'Nora', 'White','noraWhite', 'nora@mail.com', '3333','image 2', 'description 2', '2021-09-16 14:00:04.810221','Lviv', '1990-09-16 14:00:04.810221', 'FEMALE');
-INSERT INTO users (id, first_name, last_name, username, email, password, profile_image, description, created_at, location_city, birth_date, gender) VALUES (12, 'Mike', 'Brown','mikeBrown', 'mike@mail.com', '1111','image 3', 'description 3', '2021-10-16 14:00:04.810221','Las Vegas', '1990-09-16 14:00:04.810221', 'MALE');
-INSERT INTO users (id, first_name, last_name, username, email, password, profile_image, description, created_at, location_city, birth_date, gender) VALUES (13, 'George', 'Black','geoBlack', 'george@mail.com', '4444','image 4', 'description 4', '2021-10-16 14:00:04.810221','Berdychiv', '1990-09-16 14:00:04.810221', 'MALE');
+INSERT INTO users (id, first_name, last_name, username, email, password, profile_image, description, created_at, location_city, birth_date, gender) VALUES ('9a070957-1eb8-4c23-a5f7-d448168e7166', 'Nick', 'Green','nickGreen', 'nick@mail.com', '2222','image 1', 'description 1','2020-09-16 14:00:04.810221','Stryi', '1990-09-11 14:00:04.810221', 'MALE');
+INSERT INTO users (id, first_name, last_name, username, email, password, profile_image, description, created_at, location_city, birth_date, gender) VALUES ('7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc', 'Nora', 'White','noraWhite', 'nora@mail.com', '3333','image 2', 'description 2', '2021-09-16 14:00:04.810221','Lviv', '1990-09-16 14:00:04.810221', 'FEMALE');
+INSERT INTO users (id, first_name, last_name, username, email, password, profile_image, description, created_at, location_city, birth_date, gender) VALUES ('d878867a-fb11-4b24-b87b-18d94feafa18', 'Mike', 'Brown','mikeBrown', 'mike@mail.com', '1111','image 3', 'description 3', '2021-10-16 14:00:04.810221','Las Vegas', '1990-09-16 14:00:04.810221', 'MALE');
+INSERT INTO users (id, first_name, last_name, username, email, password, profile_image, description, created_at, location_city, birth_date, gender) VALUES ('70ba17bc-b7e3-473f-ab22-7689f1a41360', 'George', 'Black','geoBlack', 'george@mail.com', '4444','image 4', 'description 4', '2021-10-16 14:00:04.810221','Berdychiv', '1990-09-16 14:00:04.810221', 'MALE');
 -- INSERT INTO users (id, first_name, last_name, email, password, role_id) VALUES (4, 'Mike', 'Brown', 'mike@mail.com', '$2a$10$CdEJ2PKXgUCIwU4pDQWICuiPjxb1lysoX7jrN.Y4MTMoY9pjfPALO', 1);
 --
 --
-INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES (30, 'Гонки на мопедах', 190, '2020-09-16 14:00:04.810221','2020-09-16 14:30:04.810221','2021-09-16 14:30:04.810221', 'Стрийські гонки на мопедах, кожного місяця подія повторюється, тільки чоловіки', 2, 'UPCOMING', 'Стрий', 10, 10);
-INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES (31, 'Пиво в Броварах', 50, '2020-09-16 14:00:11.480271','2020-10-16 14:00:11.480271','2022-09-16 14:30:04.810221', 'Вживаємо пиво до схочу, кількість обмежена, дрескод - смокінг і спортивки',  1, 'UPCOMING', 'Бровари', 11, 11);
-INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES (32, 'Дурдом 5', 22, '2020-09-16 14:00:16.351238', '2020-11-16 14:00:16.351238','2023-09-16 14:30:04.810221', 'Хто вважає себе псіхом - приходьте, будемо веселитись.', 1, 'UPCOMING', 'Барановічі', 12, 12);
+INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES ('94597192-f3e0-437a-9098-0e21c4abd792', 'Гонки на мопедах', 190, '2020-09-16 14:00:04.810221','2020-09-16 14:30:04.810221','2021-09-16 14:30:04.810221', 'Стрийські гонки на мопедах, кожного місяця подія повторюється, тільки чоловіки', 2, 'UPCOMING', 'Стрий', '9a070957-1eb8-4c23-a5f7-d448168e7166', 'e2269856-a79e-47a9-a45a-6b5c9dbbee63');
+INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES ('d0fbbdff-6469-491e-88fa-3b5912b6cc1c', 'Пиво в Броварах', 50, '2020-09-16 14:00:11.480271','2020-10-16 14:00:11.480271','2022-09-16 14:30:04.810221', 'Вживаємо пиво до схочу, кількість обмежена, дрескод - смокінг і спортивки',  1, 'UPCOMING', 'Бровари', '7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc', 'c45e9c9a-0cef-4eee-8ce3-e3a9d89b5565');
+INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES ('c23a3e3b-7f3c-4cd5-a575-551bc0a58d58', 'Дурдом 5', 22, '2020-09-16 14:00:16.351238', '2020-11-16 14:00:16.351238','2023-09-16 14:30:04.810221', 'Хто вважає себе псіхом - приходьте, будемо веселитись.', 1, 'UPCOMING', 'Барановічі', 'd878867a-fb11-4b24-b87b-18d94feafa18', 'bb5fd016-1c0a-4365-a11f-c099ec506933');
 
-INSERT INTO event_photos (id, photo_url, event_id) VALUES (10, 'Photo 1', 30);
-INSERT INTO event_photos (id, photo_url, event_id) VALUES (11, 'Photo 2', 31);
-INSERT INTO event_photos (id, photo_url, event_id) VALUES (12, 'Photo 3', 32);
-
-
-INSERT INTO event_categories (event_id, category_id) VALUES (30, 10);
-INSERT INTO event_categories (event_id, category_id) VALUES (30, 11);
-INSERT INTO event_categories (event_id, category_id) VALUES (31, 10);
-INSERT INTO event_categories (event_id, category_id) VALUES (32, 11);
+INSERT INTO event_photos (id, photo_url, event_id) VALUES ('80691a78-29db-47d1-a244-6fe7f05b89a8', 'Photo 1', '94597192-f3e0-437a-9098-0e21c4abd792');
+INSERT INTO event_photos (id, photo_url, event_id) VALUES ('8673b573-b6c0-4b4d-ad69-3b707cb12184', 'Photo 2', 'd0fbbdff-6469-491e-88fa-3b5912b6cc1c');
+INSERT INTO event_photos (id, photo_url, event_id) VALUES ('1bf2051b-5b01-4d0c-9b3d-e659baa8c85d', 'Photo 3', 'c23a3e3b-7f3c-4cd5-a575-551bc0a58d58');
 
 
+INSERT INTO event_categories (event_id, category_id) VALUES ('94597192-f3e0-437a-9098-0e21c4abd792', 'd40fbb2f-64ee-4d1f-92a2-c303d047f2dc');
+INSERT INTO event_categories (event_id, category_id) VALUES ('94597192-f3e0-437a-9098-0e21c4abd792', 'a4d7caf9-50fa-499b-a4ce-19cd5790f686');
+INSERT INTO event_categories (event_id, category_id) VALUES ('d0fbbdff-6469-491e-88fa-3b5912b6cc1c', 'd40fbb2f-64ee-4d1f-92a2-c303d047f2dc');
+INSERT INTO event_categories (event_id, category_id) VALUES ('c23a3e3b-7f3c-4cd5-a575-551bc0a58d58', 'a4d7caf9-50fa-499b-a4ce-19cd5790f686');
 
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (10, '2020-11-16 14:00:04.810221', 'false', 30, 11);
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (11, '2020-11-16 14:00:05.810221', 'true', 30, 12);
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (12, '2020-11-16 14:00:05.810222', 'true', 30, 13);
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (13, '2020-11-16 14:00:05.810221', 'true', 31, 10);
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (14, '2020-11-16 14:00:05.810222', 'true', 32, 11);
+
+
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (10, '2020-11-16 14:00:04.810221', 'false', '94597192-f3e0-437a-9098-0e21c4abd792', '7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc');
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (11, '2020-11-16 14:00:05.810221', 'true', '94597192-f3e0-437a-9098-0e21c4abd792', 'd878867a-fb11-4b24-b87b-18d94feafa18');
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (12, '2020-11-16 14:00:05.810222', 'true', '94597192-f3e0-437a-9098-0e21c4abd792', '70ba17bc-b7e3-473f-ab22-7689f1a41360');
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (13, '2020-11-16 14:00:05.810221', 'true', 'd0fbbdff-6469-491e-88fa-3b5912b6cc1c', '9a070957-1eb8-4c23-a5f7-d448168e7166');
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (14, '2020-11-16 14:00:05.810222', 'true', 'c23a3e3b-7f3c-4cd5-a575-551bc0a58d58', '7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc');
 
