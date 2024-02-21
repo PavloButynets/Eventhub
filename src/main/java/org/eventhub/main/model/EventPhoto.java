@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
@@ -15,9 +17,9 @@ import lombok.Setter;
 @Table(name="event_photos")
 public class EventPhoto {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private Long id;
+    private UUID id;
 
     @NotBlank(message = "The 'URL' cannot be empty")
     @Column(name="photo_url")

@@ -10,6 +10,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Setter
@@ -20,8 +21,8 @@ import java.util.List;
 public class Embedding {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "embedding")
     @JdbcTypeCode(SqlTypes.VECTOR)

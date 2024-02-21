@@ -9,6 +9,7 @@ import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Setter
@@ -18,8 +19,8 @@ import java.util.List;
 @Table(name = "events")
 public class Event {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @NotBlank(message = "Name is mandatory")
     @Size(max = 20, min = 5,
