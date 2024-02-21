@@ -4,7 +4,9 @@ import org.eventhub.main.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.UUID;
+
+public interface UserRepository extends JpaRepository<User, UUID> {
 
     User findByEmail(String email);
 }

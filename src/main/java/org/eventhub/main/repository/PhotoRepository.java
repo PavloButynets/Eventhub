@@ -3,5 +3,7 @@ package org.eventhub.main.repository;
 import org.eventhub.main.model.EventPhoto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PhotoRepository extends JpaRepository<EventPhoto, Long> {
+import java.util.UUID;
+
+public interface PhotoRepository extends JpaRepository<EventPhoto, UUID> {
 }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,14 +36,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse readById(long id) {
+    public CategoryResponse readById(UUID id) {
         Category category = categoryRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Category with id " + id + " not found"));
         return categoryMapper.entityToResponse(category);
     }
 
     @Override
-    public Category readByIdEntity(long id){
+    public Category readByIdEntity(UUID id){
         return categoryRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Category with id " + id + " not found"));
     }

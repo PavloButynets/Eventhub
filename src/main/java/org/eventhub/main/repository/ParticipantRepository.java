@@ -4,5 +4,7 @@ import org.eventhub.main.model.Participant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-public interface ParticipantRepository extends JpaRepository<Participant, Long> {
+import java.util.UUID;
+
+public interface ParticipantRepository extends JpaRepository<Participant, UUID> {
 }
