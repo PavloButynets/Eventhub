@@ -6,18 +6,19 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ParticipantResponse {
-    private Long id;
+    private UUID id;
     private LocalDateTime createdAt;
     private boolean isApproved;
     private Long eventId;
     private Long userId;
 
-    public ParticipantResponse(Long id, LocalDateTime localDateTime, boolean isApproved, Long eventId, Long userId) {
+    public ParticipantResponse(UUID id, LocalDateTime localDateTime, boolean isApproved, Long eventId, Long userId) {
         this.id = id;
         this.createdAt = localDateTime;
         this.isApproved = isApproved;

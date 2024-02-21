@@ -6,12 +6,14 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class EventPhotoResponse {
-    private Long id;
+    private UUID id;
     @NotBlank(message = "The 'URL' cannot be empty")
     private String photoUrl;
-    private Long eventId;
+    private UUID eventId;
 }
