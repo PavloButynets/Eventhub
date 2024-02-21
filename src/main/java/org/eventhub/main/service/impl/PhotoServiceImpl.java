@@ -14,6 +14,7 @@ import org.eventhub.main.model.EventPhoto;
 import org.eventhub.main.repository.PhotoRepository;
 import org.eventhub.main.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,6 @@ import java.util.stream.Collectors;
 public class PhotoServiceImpl implements PhotoService {
     private final PhotoRepository photoRepository;
     private final EventPhotoMapper eventPhotoMapper;
-    private static final String connectionString = "DefaultEndpointsProtocol=https;AccountName=eventhubproject;AccountKey=KDM2AysSXKu3dXoifZKlsp0/D3Fz4APx6ySAGEJeFtLpQ/AZG3UhG0wUyIscSPXXVsWjFVYYWbiP+ASt1bCrLw==;EndpointSuffix=core.windows.net";
-    private static final String containerName = "images";
     private final BlobContainerClient blobContainerClient;
 
     @Autowired
@@ -40,9 +39,11 @@ public class PhotoServiceImpl implements PhotoService {
         this.photoRepository = photoRepository;
         this.eventPhotoMapper = eventPhotoMapper;
 
+        String connectionString = String.format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", System.getenv("AccountName"), System.getenv("AccountKey"));
+
         this.blobContainerClient = new BlobContainerClientBuilder()
                 .connectionString(connectionString)
-                .containerName(containerName)
+                .containerName(System.getenv("container_name"))
                 .buildClient();
     }
     @Override
@@ -75,8 +76,8 @@ public class PhotoServiceImpl implements PhotoService {
     }
     @Override
     public void delete(long id) {
-        String blobUrl = this.readById(id).getPhotoUrl();
-        BlockBlobClient blockBlobClient = this.blobContainerClient.getBlobClient(blobUrl).getBlockBlobClient();
+        String blobName = this.readById(id).getPhotoName();
+        BlockBlobClient blockBlobClient = this.blobContainerClient.getBlobClient(blobName).getBlockBlobClient();
         blockBlobClient.delete();
         photoRepository.delete(readByIdEntity(id));
     }
@@ -96,8 +97,9 @@ public class PhotoServiceImpl implements PhotoService {
                     BlockBlobClient blockBlobClient = this.blobContainerClient.getBlobClient(file.getOriginalFilename()).getBlockBlobClient();
                     blockBlobClient.upload(dataStream, file.getSize());
 
-                    String imageUrl = blockBlobClient.getBlobName();
-                    responses.add(this.create(new EventPhotoRequest(imageUrl, eventId)));
+                    String imageName = blockBlobClient.getBlobName();
+                    String imageUrl = blockBlobClient.getBlobUrl();
+                    responses.add(this.create(new EventPhotoRequest(imageName, imageUrl, eventId)));
                 }
                 catch (IOException ex){
                     throw new ResponseStatusException("Failed to download images");

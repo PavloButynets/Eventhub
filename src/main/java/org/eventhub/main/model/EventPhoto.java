@@ -20,6 +20,10 @@ public class EventPhoto {
     private Long id;
 
     @NotBlank(message = "The 'URL' cannot be empty")
+    @Column(name="photo_name")
+    private String photoName;
+
+    @NotBlank(message = "The 'URL' cannot be empty")
     @Column(name="photo_url")
     private String photoUrl;
 

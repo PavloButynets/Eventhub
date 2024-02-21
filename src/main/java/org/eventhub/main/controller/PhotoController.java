@@ -70,7 +70,7 @@ public class PhotoController {
     }
 
     @DeleteMapping("/{photo_id}")
-    public ResponseEntity<OperationResponse> delete(@PathVariable("photo_id") long photoId) throws UnsupportedEncodingException {
+    public ResponseEntity<OperationResponse> delete(@PathVariable("photo_id") long photoId){
         log.info("**/deleted user(id) = " + photoId);
         photoService.delete(photoId);
         return new ResponseEntity<>(new OperationResponse("EventPhoto id:" + photoId + " deleted successfully"), HttpStatus.OK);

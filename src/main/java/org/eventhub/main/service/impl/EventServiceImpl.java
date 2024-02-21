@@ -39,9 +39,6 @@ public class EventServiceImpl implements EventService {
         this.eventMapper = eventMapper;
         this.embeddingClient = embeddingClient;
     }
-
-
-
     @Override
     public EventResponse create(EventRequest eventRequest) {
         LocalDateTime currentTime = LocalDateTime.now();

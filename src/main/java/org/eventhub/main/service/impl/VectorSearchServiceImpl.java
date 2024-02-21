@@ -44,9 +44,8 @@ WHERE 1 - (embedding <=> :user_prompt::vector) >= 0.7
 ORDER BY (embedding <=> :user_prompt::vector) LIMIT 15
 """).param("user_prompt", embedding.toString());
 
-        return query.query((resultSet, statementContext) -> {
-            long id = resultSet.getLong("id");
-            return eventService.readById(id);
-        }).list();
+        return query.query((resultSet, statementContext) ->
+            eventService.readById(resultSet.getLong("id"))
+        ).list();
     }
 }

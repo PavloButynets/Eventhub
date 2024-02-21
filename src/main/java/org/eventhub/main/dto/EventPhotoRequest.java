@@ -12,12 +12,17 @@ import lombok.NoArgsConstructor;
 public class EventPhotoRequest {
     @NotBlank(message = "The 'URL' cannot be empty")
     private String photoUrl;
+
+    @NotBlank(message = "The 'Name' cannot be empty")
+    private String photoName;
+
     private Long eventId;
 
     public EventPhotoRequest(){}
 
-    public EventPhotoRequest(String photoUrl, Long eventId) {
+    public EventPhotoRequest(String photoName, String photoUrl, Long eventId) {
         this.photoUrl = photoUrl;
+        this.photoName = photoName;
         this.eventId = eventId;
     }
 }

@@ -11,15 +11,18 @@ import org.eventhub.main.model.EventPhoto;
 import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EventPhotoMapper {
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
 
+    private final String sasToken;
     @Autowired
     public EventPhotoMapper(EventRepository eventRepository){
         this.eventRepository = eventRepository;
+        this.sasToken = System.getenv("sas_token");
     }
     public EventPhotoResponse entityToResponse(EventPhoto eventPhoto) {
         if (eventPhoto == null) {
@@ -27,7 +30,8 @@ public class EventPhotoMapper {
         }
         return EventPhotoResponse.builder()
                 .id(eventPhoto.getId())
-                .photoUrl(eventPhoto.getPhotoUrl())
+                .photoName(eventPhoto.getPhotoName())
+                .photoUrl(eventPhoto.getPhotoUrl() +"?"+sasToken)
                 .eventId(eventPhoto.getEvent().getId())
                 .build();
     }
@@ -41,6 +45,7 @@ public class EventPhotoMapper {
         }
 
         eventPhoto.setPhotoUrl(request.getPhotoUrl());
+        eventPhoto.setPhotoName(request.getPhotoName());
         eventPhoto.setEvent(eventRepository.findById(request.getEventId()).orElseThrow(()->new NullEntityReferenceException("Event can't be null")));
         return eventPhoto;
     }

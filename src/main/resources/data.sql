@@ -4628,9 +4628,9 @@ INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at
 INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES (31, 'Пиво в Броварах', 50, '2020-09-16 14:00:11.480271','2020-10-16 14:00:11.480271','2022-09-16 14:30:04.810221', 'Вживаємо пиво до схочу, кількість обмежена, дрескод - смокінг і спортивки',  1, 'UPCOMING', 'Бровари', 11, 11);
 INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, state, location, owner_id, embedding_id) VALUES (32, 'Дурдом 5', 22, '2020-09-16 14:00:16.351238', '2020-11-16 14:00:16.351238','2023-09-16 14:30:04.810221', 'Хто вважає себе псіхом - приходьте, будемо веселитись.', 1, 'UPCOMING', 'Барановічі', 12, 12);
 
-INSERT INTO event_photos (id, photo_url, event_id) VALUES (10, 'Photo 1', 30);
-INSERT INTO event_photos (id, photo_url, event_id) VALUES (11, 'Photo 2', 31);
-INSERT INTO event_photos (id, photo_url, event_id) VALUES (12, 'Photo 3', 32);
+INSERT INTO event_photos (id, photo_name, photo_url, event_id) VALUES (10, 'Photo 1', 'Photo 1 Url', 30);
+INSERT INTO event_photos (id, photo_name, photo_url, event_id) VALUES (11, 'Photo 2', 'Photo 2 Url',31);
+INSERT INTO event_photos (id, photo_name, photo_url, event_id) VALUES (12, 'Photo 3', 'Photo 3 Url',32);
 
 
 INSERT INTO event_categories (event_id, category_id) VALUES (30, 10);
