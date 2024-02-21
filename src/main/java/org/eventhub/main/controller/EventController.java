@@ -1,7 +1,8 @@
 package org.eventhub.main.controller;
 
-import groovy.util.logging.Slf4j;
+
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.exception.NullEntityReferenceException;
