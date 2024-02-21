@@ -10,6 +10,7 @@ import org.eventhub.main.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
@@ -44,5 +45,5 @@ public class EventRequest {
     private List<CategoryRequest> categoryRequests;
 
     @NotNull
-    private long ownerId;
+    private UUID ownerId;
 }

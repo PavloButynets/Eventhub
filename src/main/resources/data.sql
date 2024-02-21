@@ -4640,9 +4640,9 @@ INSERT INTO event_categories (event_id, category_id) VALUES ('c23a3e3b-7f3c-4cd5
 
 
 
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (10, '2020-11-16 14:00:04.810221', 'false', '94597192-f3e0-437a-9098-0e21c4abd792', '7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc');
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (11, '2020-11-16 14:00:05.810221', 'true', '94597192-f3e0-437a-9098-0e21c4abd792', 'd878867a-fb11-4b24-b87b-18d94feafa18');
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (12, '2020-11-16 14:00:05.810222', 'true', '94597192-f3e0-437a-9098-0e21c4abd792', '70ba17bc-b7e3-473f-ab22-7689f1a41360');
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (13, '2020-11-16 14:00:05.810221', 'true', 'd0fbbdff-6469-491e-88fa-3b5912b6cc1c', '9a070957-1eb8-4c23-a5f7-d448168e7166');
-INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES (14, '2020-11-16 14:00:05.810222', 'true', 'c23a3e3b-7f3c-4cd5-a575-551bc0a58d58', '7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc');
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES ('6ce9f003-21be-4d81-b235-e79a7675fa24', '2020-11-16 14:00:04.810221', 'false', '94597192-f3e0-437a-9098-0e21c4abd792', '7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc');
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES ('2c2718d8-0614-4b58-b897-1cbe2a9b78bc', '2020-11-16 14:00:05.810221', 'true', '94597192-f3e0-437a-9098-0e21c4abd792', 'd878867a-fb11-4b24-b87b-18d94feafa18');
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES ('dffe9808-af63-4c74-96b7-0d0a17d04ae2', '2020-11-16 14:00:05.810222', 'true', '94597192-f3e0-437a-9098-0e21c4abd792', '70ba17bc-b7e3-473f-ab22-7689f1a41360');
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES ('03d79e7f-f646-4629-b85b-9addbc1f83b2', '2020-11-16 14:00:05.810221', 'true', 'd0fbbdff-6469-491e-88fa-3b5912b6cc1c', '9a070957-1eb8-4c23-a5f7-d448168e7166');
+INSERT INTO participants (id, created_at, is_approved, event_id, user_id) VALUES ('13fc5dcc-75c1-4ea8-82b3-d1f2285582ce', '2020-11-16 14:00:05.810222', 'true', 'c23a3e3b-7f3c-4cd5-a575-551bc0a58d58', '7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc');
 

@@ -48,7 +48,7 @@ public class EventResponse {
     private String location;
 
     @NotNull
-    private long ownerId;
+    private UUID ownerId;
 
     @NotNull
     private List<CategoryResponse> categoryResponses;
@@ -56,7 +56,7 @@ public class EventResponse {
     public EventResponse() {
     }
 
-    public EventResponse(UUID id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, State state, String location, long ownerId, List<CategoryResponse> categoryResponses) {
+    public EventResponse(UUID id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, State state, String location, UUID ownerId, List<CategoryResponse> categoryResponses) {
         this.id = id;
         this.title = title;
         this.maxParticipants = maxParticipants;

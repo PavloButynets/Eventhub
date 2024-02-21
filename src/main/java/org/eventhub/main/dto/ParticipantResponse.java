@@ -15,10 +15,10 @@ public class ParticipantResponse {
     private UUID id;
     private LocalDateTime createdAt;
     private boolean isApproved;
-    private Long eventId;
-    private Long userId;
+    private UUID eventId;
+    private UUID userId;
 
-    public ParticipantResponse(UUID id, LocalDateTime localDateTime, boolean isApproved, Long eventId, Long userId) {
+    public ParticipantResponse(UUID id, LocalDateTime localDateTime, boolean isApproved, UUID eventId, UUID userId) {
         this.id = id;
         this.createdAt = localDateTime;
         this.isApproved = isApproved;

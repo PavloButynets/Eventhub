@@ -8,18 +8,19 @@ import lombok.Data;
 import lombok.NonNull;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ParticipantRequest {
     @NonNull
-    private Long eventId;
+    private UUID eventId;
     @NonNull
-    private Long userId;
+    private UUID userId;
     private Boolean isApproved;
 
-    public ParticipantRequest(Long eventId, Long userId, Boolean isApproved){
+    public ParticipantRequest(UUID eventId, UUID userId, Boolean isApproved){
         this.eventId = eventId;
         this.userId = userId;
         this.isApproved = isApproved;
