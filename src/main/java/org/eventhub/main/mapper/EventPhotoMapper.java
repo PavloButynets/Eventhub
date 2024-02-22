@@ -1,5 +1,9 @@
 package org.eventhub.main.mapper;
 
+import com.azure.storage.blob.BlobContainerClient;
+import com.azure.storage.blob.BlobContainerClientBuilder;
+import com.azure.storage.blob.sas.BlobSasPermission;
+import com.azure.storage.blob.sas.BlobServiceSasSignatureValues;
 import org.eventhub.main.dto.CategoryRequest;
 import org.eventhub.main.dto.CategoryResponse;
 import org.eventhub.main.dto.EventPhotoRequest;
@@ -14,15 +18,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
+
 @Service
 public class EventPhotoMapper {
     private final EventRepository eventRepository;
-
     private final String sasToken;
     @Autowired
     public EventPhotoMapper(EventRepository eventRepository){
         this.eventRepository = eventRepository;
-        this.sasToken = System.getenv("sas_token");
+
+        String connectionString = String.format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", System.getenv("AccountName"), System.getenv("AccountKey"));
+
+        BlobContainerClient blobContainerClient = new BlobContainerClientBuilder()
+                .connectionString(connectionString)
+                .containerName(System.getenv("container_name"))
+                .buildClient();
+
+        OffsetDateTime expiryTime = OffsetDateTime.now().plusDays(1);
+        BlobSasPermission sasPermission = new BlobSasPermission()
+                .setReadPermission(true);
+        BlobServiceSasSignatureValues sasSignatureValues = new BlobServiceSasSignatureValues(expiryTime, sasPermission)
+                .setStartTime(OffsetDateTime.now().minusMinutes(5));
+
+        this.sasToken = blobContainerClient.generateSas(sasSignatureValues);
     }
     public EventPhotoResponse entityToResponse(EventPhoto eventPhoto) {
         if (eventPhoto == null) {
