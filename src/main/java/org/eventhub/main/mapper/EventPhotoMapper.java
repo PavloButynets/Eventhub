@@ -23,12 +23,16 @@ import java.time.OffsetDateTime;
 @Service
 public class EventPhotoMapper {
     private final EventRepository eventRepository;
-    private final String sasToken;
+    private final String connectionString;
     @Autowired
     public EventPhotoMapper(EventRepository eventRepository){
         this.eventRepository = eventRepository;
-
-        String connectionString = String.format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", System.getenv("AccountName"), System.getenv("AccountKey"));
+        this.connectionString = String.format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", System.getenv("AccountName"), System.getenv("AccountKey"));
+    }
+    public EventPhotoResponse entityToResponse(EventPhoto eventPhoto) {
+        if (eventPhoto == null) {
+            throw new NullEntityReferenceException("Event Photo can't be null");
+        }
 
         BlobContainerClient blobContainerClient = new BlobContainerClientBuilder()
                 .connectionString(connectionString)
@@ -41,12 +45,8 @@ public class EventPhotoMapper {
         BlobServiceSasSignatureValues sasSignatureValues = new BlobServiceSasSignatureValues(expiryTime, sasPermission)
                 .setStartTime(OffsetDateTime.now().minusMinutes(5));
 
-        this.sasToken = blobContainerClient.generateSas(sasSignatureValues);
-    }
-    public EventPhotoResponse entityToResponse(EventPhoto eventPhoto) {
-        if (eventPhoto == null) {
-            throw new NullEntityReferenceException("Event Photo can't be null");
-        }
+        String sasToken = blobContainerClient.generateSas(sasSignatureValues);
+
         return EventPhotoResponse.builder()
                 .id(eventPhoto.getId())
                 .photoName(eventPhoto.getPhotoName())

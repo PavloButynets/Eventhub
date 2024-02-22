@@ -26,6 +26,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,9 +37,6 @@ public class PhotoServiceImpl implements PhotoService {
     private final BlobContainerClient blobContainerClient;
     private final EventService eventService;
 
-    private EventPhoto createModel(EventPhotoRequest eventPhotoRequest){
-        return eventPhotoMapper.requestToEntity(eventPhotoRequest, new EventPhoto());
-    }
     @Autowired
     public PhotoServiceImpl(PhotoRepository photoRepository, EventPhotoMapper eventPhotoMapper, EventService eventService){
         this.photoRepository = photoRepository;
@@ -55,7 +53,7 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     public EventPhotoResponse create(EventPhotoRequest eventPhotoRequest) {
         if(eventPhotoRequest != null){
-            EventPhoto photo = createModel(eventPhotoRequest);
+            EventPhoto photo = eventPhotoMapper.requestToEntity(eventPhotoRequest, new EventPhoto());
             return eventPhotoMapper.entityToResponse(photoRepository.save(photo));
         }
         throw new NullDtoReferenceException("Created photo Request can't be null");
@@ -100,14 +98,13 @@ public class PhotoServiceImpl implements PhotoService {
         List<EventPhotoResponse> responses = new ArrayList<>();
             for (MultipartFile file : files) {
                 try (ByteArrayInputStream dataStream = new ByteArrayInputStream(file.getBytes())) {
-                    long photoId = this.create(new EventPhotoRequest("photoName", "photoUrl", eventId)).getId();
-
-                    BlockBlobClient blockBlobClient = this.blobContainerClient.getBlobClient(photoId + file.getOriginalFilename()).getBlockBlobClient();
+                    BlockBlobClient blockBlobClient = this.blobContainerClient.getBlobClient(UUID.randomUUID().toString()).getBlockBlobClient();
                     blockBlobClient.upload(dataStream, file.getSize());
 
                     String imageName = blockBlobClient.getBlobName();
                     String imageUrl = blockBlobClient.getBlobUrl();
-                    responses.add(this.update(new EventPhotoRequest(imageName, imageUrl, eventId), photoId));
+
+                    responses.add(this.create(new EventPhotoRequest(imageName, imageUrl, eventId)));
                 }
                 catch (IOException ex){
                     throw new ResponseStatusException("Failed to download images");
