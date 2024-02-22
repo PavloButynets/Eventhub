@@ -77,7 +77,7 @@ public class Event {
     @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
     private List<Participant> participants;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "event_categories",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
