@@ -1,6 +1,7 @@
 package org.eventhub.main.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.eventhub.main.dto.CategoryRequest;
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.exception.NotValidDateException;
@@ -134,7 +135,16 @@ public class EventServiceImpl implements EventService {
 
     Embedding setVector(EventRequest eventRequest) {
         Embedding embedding = new Embedding();
-        embedding.setEmbedding(embeddingClient.embed(eventRequest.getDescription()));
+        embedding.setEmbedding(embeddingClient.embed(String.format("%s. %s. %s. %s", eventRequest.getTitle(), eventRequest.getDescription(), eventRequest.getLocation(), getCategoriesFromList(eventRequest.getCategoryRequests()))));
         return embedding;
+    }
+
+    String getCategoriesFromList(List<CategoryRequest> requests) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < requests.size() - 1; i++) {
+            stringBuilder.append(requests.get(i).getName()).append(", ");
+        }
+        stringBuilder.append(requests.get(requests.size() - 1).getName());
+        return stringBuilder.toString();
     }
 }
