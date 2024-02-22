@@ -1,5 +1,10 @@
 package org.eventhub.main.controller;
 
+import com.azure.storage.blob.BlobClient;
+import com.azure.storage.blob.BlobClientBuilder;
+import com.azure.storage.blob.BlobContainerClient;
+import com.azure.storage.blob.BlobContainerClientBuilder;
+import com.azure.storage.blob.specialized.BlockBlobClient;
 import lombok.extern.slf4j.Slf4j;
 import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.ResponseStatusException;
@@ -12,7 +17,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,10 +72,17 @@ public class PhotoController {
 
     @DeleteMapping("/{photo_id}")
     public ResponseEntity<OperationResponse> delete(@PathVariable("photo_id") UUID photoId) {
-        String name = photoService.readById(photoId).getPhotoUrl();
-        log.info("**/deleted user(id) = " + photoId);
+        log.info("**/deleted user(id) = " + photoId.toString());
         photoService.delete(photoId);
-        return new ResponseEntity<>(new OperationResponse("EventPhoto " + name + " deleted successfully"), HttpStatus.OK);
+        return new ResponseEntity<>(new OperationResponse("EventPhoto id:" + photoId + " deleted successfully"), HttpStatus.OK);
     }
+
+    @PostMapping("/upload")
+    public ResponseEntity<List<EventPhotoResponse>> uploadImages(@PathVariable(name = "event_id") UUID eventId,
+                                               @RequestPart("files") List<MultipartFile> files){
+        log.info("Uploading photos");
+        return new ResponseEntity<>(this.photoService.uploadPhotos(eventId, files), HttpStatus.CREATED);
+    }
+
 }
 

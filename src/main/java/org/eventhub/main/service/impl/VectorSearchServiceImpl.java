@@ -44,6 +44,7 @@ WHERE 1 - (embedding <=> :user_prompt::vector) >= 0.7
 ORDER BY (embedding <=> :user_prompt::vector) LIMIT 15
 """).param("user_prompt", embedding.toString());
 
+
         return query.query((resultSet, statementContext) -> {
             UUID id = (UUID) resultSet.getObject("id");
             return eventService.readById(id);
