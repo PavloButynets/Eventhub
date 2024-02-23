@@ -49,13 +49,13 @@ public class ParticipantServiceImpl implements ParticipantService {
             throw new AccessIsDeniedException("Event " + event.getTitle() + " is full.");
         }
 
-
-        Participant participant = participantMapper.requestToEntity(participantRequest, new Participant());
-
-        if (event.getParticipants().contains(participant)) {
-            throw new AccessIsDeniedException("You have already requested to join to " + event.getTitle());
+        for (Participant participant1 : event.getParticipants()) {
+            if (participant1.getUser().getId() == participantRequest.getUserId()) {
+                throw new AccessIsDeniedException("You have already requested to join to " + event.getTitle());
+            }
         }
 
+        Participant participant = participantMapper.requestToEntity(participantRequest, new Participant());
         participant.setCreatedAt(LocalDateTime.now());
         return participantMapper.entityToResponse( participantRepository.save(participant));
     }
