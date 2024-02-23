@@ -114,4 +114,12 @@ public class ParticipantServiceImpl implements ParticipantService {
                 .collect(Collectors.toList());
     }
 
+    public List<ParticipantResponse> getAllByEventId(UUID eventId) {
+        Event event = eventService.readByIdEntity(eventId);
+        return event.getParticipants()
+                .stream()
+                .map(participantMapper::entityToResponse)
+                .collect(Collectors.toList());
+    }
+
 }
