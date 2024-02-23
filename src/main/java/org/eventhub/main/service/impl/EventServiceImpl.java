@@ -27,13 +27,41 @@ import java.util.stream.Collectors;
 @Service
 public class EventServiceImpl implements EventService {
 
-
-    @Autowired
     private final EventRepository eventRepository;
 
     private final EventMapper eventMapper;
 
-    private EmbeddingClient embeddingClient;
+    private final EmbeddingClient embeddingClient;
+
+    private void checkState(Event event, LocalDateTime currentTime, LocalDateTime startAt, LocalDateTime expireAt) {
+
+        int dateComparisonResultStartAt = currentTime.compareTo(startAt);
+        int dateComparisonResultExpireAt = currentTime.compareTo(expireAt);
+
+        //Exceptions
+        if (!startAt.isBefore(expireAt)) {
+            throw new NotValidDateException("Choose correct date");
+        }
+
+        if (dateComparisonResultStartAt < 0) {event.setState(State.UPCOMING);}
+        else if (dateComparisonResultExpireAt <= 0) {event.setState(State.LIVE);}
+        else {event.setState(State.PAST);}
+    }
+
+    private Embedding setVector(EventRequest eventRequest) {
+        Embedding embedding = new Embedding();
+        embedding.setEmbedding(embeddingClient.embed(String.format("%s. %s. %s. %s", eventRequest.getTitle(), eventRequest.getDescription(), eventRequest.getLocation(), getCategoriesFromList(eventRequest.getCategoryRequests()))));
+        return embedding;
+    }
+
+    private String getCategoriesFromList(List<CategoryRequest> requests) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < requests.size() - 1; i++) {
+            stringBuilder.append(requests.get(i).getName()).append(", ");
+        }
+        stringBuilder.append(requests.get(requests.size() - 1).getName());
+        return stringBuilder.toString();
+    }
 
     @Autowired
     public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EmbeddingClient embeddingClient) {
@@ -114,35 +142,5 @@ public class EventServiceImpl implements EventService {
                 .stream()
                 .map(eventMapper::entityToResponse)
                 .collect(Collectors.toList());
-    }
-
-    void checkState(Event event, LocalDateTime currentTime, LocalDateTime startAt, LocalDateTime expireAt) {
-
-        int dateComparisonResultStartAt = currentTime.compareTo(startAt);
-        int dateComparisonResultExpireAt = currentTime.compareTo(expireAt);
-
-        //Exceptions
-        if (!startAt.isBefore(expireAt)) {
-            throw new NotValidDateException("Choose correct date");
-        }
-
-        if (dateComparisonResultStartAt < 0) {event.setState(State.UPCOMING);}
-        else if (dateComparisonResultExpireAt <= 0) {event.setState(State.LIVE);}
-        else {event.setState(State.PAST);}
-    }
-
-    Embedding setVector(EventRequest eventRequest) {
-        Embedding embedding = new Embedding();
-        embedding.setEmbedding(embeddingClient.embed(String.format("%s. %s. %s. %s", eventRequest.getTitle(), eventRequest.getDescription(), eventRequest.getLocation(), getCategoriesFromList(eventRequest.getCategoryRequests()))));
-        return embedding;
-    }
-
-    String getCategoriesFromList(List<CategoryRequest> requests) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < requests.size() - 1; i++) {
-            stringBuilder.append(requests.get(i).getName()).append(", ");
-        }
-        stringBuilder.append(requests.get(requests.size() - 1).getName());
-        return stringBuilder.toString();
     }
 }
