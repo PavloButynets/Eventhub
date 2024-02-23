@@ -50,7 +50,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         }
 
         for (Participant participant1 : event.getParticipants()) {
-            if (participant1.getUser().getId() == participantRequest.getUserId()) {
+            if (participant1.getUser().getId().equals(participantRequest.getUserId())) {
                 throw new AccessIsDeniedException("You have already requested to join to " + event.getTitle());
             }
         }
