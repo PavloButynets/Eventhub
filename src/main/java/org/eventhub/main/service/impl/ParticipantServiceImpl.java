@@ -49,12 +49,15 @@ public class ParticipantServiceImpl implements ParticipantService {
             throw new AccessIsDeniedException("Event " + event.getTitle() + " is full.");
         }
 
-        if(participantRequest != null){
-            Participant participant = participantMapper.requestToEntity(participantRequest, new Participant());
-            participant.setCreatedAt(LocalDateTime.now());
-            return participantMapper.entityToResponse( participantRepository.save(participant));
+
+        Participant participant = participantMapper.requestToEntity(participantRequest, new Participant());
+
+        if (event.getParticipants().contains(participant)) {
+            throw new AccessIsDeniedException("You have already requested to join to " + event.getTitle());
         }
-        throw new NullDtoReferenceException("Request can't be null");
+
+        participant.setCreatedAt(LocalDateTime.now());
+        return participantMapper.entityToResponse( participantRepository.save(participant));
     }
 
     @Override
