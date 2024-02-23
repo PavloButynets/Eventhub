@@ -19,4 +19,5 @@ public interface ParticipantService {
     ParticipantResponse update(ParticipantRequest participantRequest, UUID id);
     void delete(UUID id);
     List<ParticipantResponse> getAll();
+    List<ParticipantResponse> getAllByEventId(UUID eventId);
 }
