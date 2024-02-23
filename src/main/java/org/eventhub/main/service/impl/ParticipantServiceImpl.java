@@ -51,12 +51,14 @@ public class ParticipantServiceImpl implements ParticipantService {
 
         for (Participant participant1 : event.getParticipants()) {
             if (participant1.getUser().getId().equals(participantRequest.getUserId())) {
-                throw new AccessIsDeniedException("You have already requested to join to " + event.getTitle());
+                throw new AccessIsDeniedException("Duplicate request for " + event.getTitle());
             }
         }
 
         Participant participant = participantMapper.requestToEntity(participantRequest, new Participant());
         participant.setCreatedAt(LocalDateTime.now());
+        participant.setApproved(false);
+
         return participantMapper.entityToResponse( participantRepository.save(participant));
     }
 
