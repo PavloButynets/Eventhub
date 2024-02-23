@@ -12,6 +12,8 @@ import java.util.function.Predicate;
 
 public interface ParticipantService {
     ParticipantResponse create(ParticipantRequest participantRequest);
+
+    ParticipantResponse addParticipant(ParticipantRequest participantRequest, UUID participantId);
     ParticipantResponse readById(UUID id);
     Participant readByIdEntity(UUID id);
     ParticipantResponse update(ParticipantRequest participantRequest, UUID id);
