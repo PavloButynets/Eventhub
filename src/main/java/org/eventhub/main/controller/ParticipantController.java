@@ -42,7 +42,7 @@ public class ParticipantController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     ResponseEntity<List<ParticipantResponse>> getAll() {
         log.info("**/get all participant");
         return new ResponseEntity<>(participantService.getAll(), HttpStatus.OK);
@@ -56,7 +56,7 @@ public class ParticipantController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/{event_id}")
+    @GetMapping
     public ResponseEntity<List<ParticipantResponse>> getByEventId(@PathVariable("event_id") UUID eventId){
         List<ParticipantResponse> responses = participantService.getAllByEventId(eventId);
         log.info("**/get by event id: " + eventId + " participants");
