@@ -119,6 +119,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         Event event = eventService.readByIdEntity(eventId);
         return event.getParticipants()
                 .stream()
+                .filter(Participant::isApproved)
                 .map(participantMapper::entityToResponse)
                 .collect(Collectors.toList());
     }
