@@ -37,7 +37,7 @@ public class Participant {
     private Event event;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", unique = true)
+    @JoinColumn(name = "user_id")
     @NotNull
     private User user;
 
