@@ -58,8 +58,11 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public ParticipantResponse addParticipant(ParticipantRequest participantRequest, UUID participantId) {
-        Event event = eventService.readByIdEntity(participantRequest.getEventId());
+    public ParticipantResponse addParticipant(UUID participantId) {
+        Participant existingParticipant = readByIdEntity(participantId);
+
+
+        Event event = existingParticipant.getEvent();
 
         if (event.getParticipantCount() >= event.getMaxParticipants()) {
             throw new AccessIsDeniedException("Event " + event.getTitle() + " is full.");
@@ -67,12 +70,9 @@ public class ParticipantServiceImpl implements ParticipantService {
 
         event.setParticipantCount(event.getParticipantCount() + 1);
 
-        Participant existingParticipant = readByIdEntity(participantId);
+        existingParticipant.setApproved(true);
 
-        Participant participant = participantMapper.requestToEntity(participantRequest, existingParticipant);
-        participant.setApproved(true);
-
-        return participantMapper.entityToResponse(participantRepository.save(participant));
+        return participantMapper.entityToResponse(participantRepository.save(existingParticipant));
     }
 
     @Override
