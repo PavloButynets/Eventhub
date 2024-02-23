@@ -82,7 +82,7 @@ public class ParticipantServiceImpl implements ParticipantService {
     @Override
     public ParticipantResponse readById(UUID id) {
         Participant participant = participantRepository.findById(id)
-                .orElseThrow(()->new EntityNotFoundException("Participant with" + id + " id is not found"));
+                .orElseThrow(()->new EntityNotFoundException("Participant with " + id + " id is not found"));
         return participantMapper.entityToResponse(participant);
     }
 
