@@ -63,8 +63,8 @@ public class ParticipantController {
         if(bindingResult.hasErrors()){
             throw new ResponseStatusException("Invalid Input");
         }
-        ParticipantResponse response = participantService.update(request, participantId);
-        log.info("**/updated participant(id) = " + response.getId());
+        ParticipantResponse response = participantService.addParticipant(request, participantId);
+        log.info("**/Added participant(id) = " + response.getId());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
