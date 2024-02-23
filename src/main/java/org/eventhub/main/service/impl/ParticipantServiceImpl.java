@@ -61,7 +61,6 @@ public class ParticipantServiceImpl implements ParticipantService {
     public ParticipantResponse addParticipant(UUID participantId) {
         Participant existingParticipant = readByIdEntity(participantId);
 
-
         Event event = existingParticipant.getEvent();
 
         if (event.getParticipantCount() >= event.getMaxParticipants()) {

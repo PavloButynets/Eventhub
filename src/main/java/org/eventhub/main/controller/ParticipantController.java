@@ -57,13 +57,9 @@ public class ParticipantController {
     }
 
     @PutMapping("/{participant_id}")
-    public ResponseEntity<ParticipantResponse> update(@PathVariable("participant_id") UUID participantId,
-                                                      @Validated @RequestBody ParticipantRequest request,
-                                                      BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            throw new ResponseStatusException("Invalid Input");
-        }
-        ParticipantResponse response = participantService.addParticipant(request, participantId);
+    public ResponseEntity<ParticipantResponse> update(@PathVariable("participant_id") UUID participantId){
+
+        ParticipantResponse response = participantService.addParticipant(participantId);
         log.info("**/Added participant(id) = " + response.getId());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
