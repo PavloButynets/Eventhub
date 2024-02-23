@@ -3,11 +3,15 @@ package org.eventhub.main.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.ParticipantRequest;
 import org.eventhub.main.dto.ParticipantResponse;
+import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.mapper.ParticipantMapper;
+import org.eventhub.main.model.Event;
 import org.eventhub.main.model.Participant;
+import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.repository.ParticipantRepository;
+import org.eventhub.main.service.EventService;
 import org.eventhub.main.service.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,15 +29,26 @@ public class ParticipantServiceImpl implements ParticipantService {
     private final ParticipantRepository participantRepository;
     private final ParticipantMapper participantMapper;
 
+    private  final EventRepository eventRepository;
+    private final EventService eventService;
+
     @Autowired
-    public ParticipantServiceImpl(ParticipantRepository participantRepository, ParticipantMapper participantMapper) {
+    public ParticipantServiceImpl(ParticipantRepository participantRepository, ParticipantMapper participantMapper, EventRepository eventRepository, EventService eventService) {
         this.participantRepository = participantRepository;
         this.participantMapper = participantMapper;
+        this.eventRepository = eventRepository;
+        this.eventService = eventService;
     }
 
 
     @Override
     public ParticipantResponse create(ParticipantRequest participantRequest) {
+        Event event = eventService.readByIdEntity(participantRequest.getEventId());
+
+        if (event.getParticipantCount() >= event.getMaxParticipants()) {
+            throw new AccessIsDeniedException("Event " + event.getTitle() + " is full.");
+        }
+
         if(participantRequest != null){
             Participant participant = participantMapper.requestToEntity(participantRequest, new Participant());
             participant.setCreatedAt(LocalDateTime.now());
