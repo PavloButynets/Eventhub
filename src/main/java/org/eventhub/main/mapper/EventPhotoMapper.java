@@ -23,21 +23,21 @@ import java.time.OffsetDateTime;
 @Service
 public class EventPhotoMapper {
     private final EventRepository eventRepository;
-    private final String connectionString;
+    private final BlobContainerClient blobContainerClient;
     @Autowired
     public EventPhotoMapper(EventRepository eventRepository){
         this.eventRepository = eventRepository;
-        this.connectionString = String.format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", System.getenv("AccountName"), System.getenv("AccountKey"));
+        String connectionString = String.format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", System.getenv("AccountName"), System.getenv("AccountKey"));
+
+        blobContainerClient = new BlobContainerClientBuilder()
+                .connectionString(connectionString)
+                .containerName(System.getenv("container_name"))
+                .buildClient();
     }
     public EventPhotoResponse entityToResponse(EventPhoto eventPhoto) {
         if (eventPhoto == null) {
             throw new NullEntityReferenceException("Event Photo can't be null");
         }
-
-        BlobContainerClient blobContainerClient = new BlobContainerClientBuilder()
-                .connectionString(connectionString)
-                .containerName(System.getenv("container_name"))
-                .buildClient();
 
         OffsetDateTime expiryTime = OffsetDateTime.now().plusDays(1);
         BlobSasPermission sasPermission = new BlobSasPermission()
