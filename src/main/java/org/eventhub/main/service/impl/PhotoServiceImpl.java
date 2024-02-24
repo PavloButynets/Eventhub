@@ -14,6 +14,7 @@ import org.eventhub.main.model.EventPhoto;
 import org.eventhub.main.repository.PhotoRepository;
 import org.eventhub.main.service.EventService;
 import org.eventhub.main.service.PhotoService;
+import org.eventhub.main.utility.BlobContainerClientSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -42,13 +43,7 @@ public class PhotoServiceImpl implements PhotoService {
         this.photoRepository = photoRepository;
         this.eventPhotoMapper = eventPhotoMapper;
         this.eventService = eventService;
-
-        String connectionString = String.format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", System.getenv("AccountName"), System.getenv("AccountKey"));
-
-        this.blobContainerClient = new BlobContainerClientBuilder()
-                .connectionString(connectionString)
-                .containerName(System.getenv("container_name"))
-                .buildClient();
+        this.blobContainerClient = BlobContainerClientSingleton.getInstance().getBlobContainerClient();
     }
     @Override
     public EventPhotoResponse create(EventPhotoRequest eventPhotoRequest) {
@@ -101,7 +96,7 @@ public class PhotoServiceImpl implements PhotoService {
                     EventPhoto photo = new EventPhoto();
                     photo.setId(UUID.randomUUID());
 
-                    BlockBlobClient blockBlobClient = this.blobContainerClient.getBlobClient(photo.getId().toString()).getBlockBlobClient();
+                    BlockBlobClient blockBlobClient = this.blobContainerClient.getBlobClient(photo.getId().toString() + ".png").getBlockBlobClient();
                     blockBlobClient.upload(dataStream, file.getSize());
 
                     photo.setPhotoName(blockBlobClient.getBlobName());
