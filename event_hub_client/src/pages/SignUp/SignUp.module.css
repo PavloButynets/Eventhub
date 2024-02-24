@@ -1,6 +1,5 @@
 .container {
     display: flex;
-    grid-template-columns: 1fr 1fr; /* Фото - перший стовпчик, форма - другий */
     align-items: center; /* Вирівнювання елементів по центру по вертикалі */
     justify-content: center; /* Вирівнювання елементів по центру по горизонталі */
     position: absolute;
@@ -9,12 +8,13 @@
     transform: translate(-50%, -50%);
     gap: 40px;
 
-    width: 70%; /* Ширина блоку */
+    width: 55%; /* Ширина блоку */
     margin: auto; /* Автоматичне центрування */
     background-color: #EFEFEF; /* Колір фону блоку */
     padding: 20px; /* Відступи всередині блоку */
     border: 2px solid #ccc; /* Товщина та колір меж блоку */
     border-radius: 15px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   }
   
   .SignUpForm {
@@ -38,8 +38,6 @@
     height: 40px;
     font-size: 15px;
     right: 25%;
+    background-color:rgb(7, 104, 159)
   }
 
-  .Item{
-    height: 60px;
-  }

@@ -1,8 +1,11 @@
 import styles from './SignUp.module.css';
-import React, { useState } from 'react';
-import axios from "axios";
+import React, {useState } from 'react';
+import axios from "../../api/axios";
 import { useNavigate, Link } from 'react-router-dom';
 import LogIn from '../LogIn/LogIn';
+import { checkEmail, checkName, checkPassword } from './validation';
+import useAuth from '../../hooks/useAuth';
+
 import {
   Button,
   Checkbox,
@@ -11,11 +14,13 @@ import {
   Input,
   Row,
   Select,
+  message,
 } from 'antd';
 
 
 
 const { Option } = Select;
+const REGISTER_URL = '/register'
 
 const formItemLayout = {
   labelCol: {
@@ -48,6 +53,7 @@ const tailFormItemLayout = {
   },
 };
 const SignUp = () => {
+  const {setAuth} = useAuth();
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
@@ -65,7 +71,9 @@ const SignUp = () => {
   const [city, setCity] = useState('');
   const [email, setEmail] = useState('');
 
+
   const handleSubmit = async()=>{
+    
      const userData = {
         firstName,
         lastName,
@@ -76,23 +84,72 @@ const SignUp = () => {
         email,
      }
      try{
-      const res = await axios.post('http://localhost:3500/users', userData);
+      
+      const res = await axios.post(REGISTER_URL, userData, 
+        {
+          headers:{'Content-Type':'application/json'},
+          withCredentials: true
+        }
+      );
+      const accessToken = res?.data?.accessToken;
+      localStorage.setItem("token", accessToken);
+      setAuth({email, password, accessToken})
       console.log(res)
       console.log('Response:', res.data);
-      // navigate('/');
+      message.success('Registration successful!');      
+      navigate('/');
 
      }
      catch(err){
-      console.log(err)
+      if (!err.response) {
+        // Помилка з'єднання з сервером
+        message.error('No server response');
+      } else {
+        const status = err.response.status;
+      switch (status) {
+        case 400:
+          // Помилка валідації даних на сервері
+          message.error('Invalid data. Please check your input.');
+          break;
+        case 401:
+          // Користувач не авторизований
+          message.error('Unauthorized: Please check your credentials.');
+          break;
+        case 403:
+          // Доступ заборонено
+          message.error('Forbidden: You do not have permission to access this resource.');
+          break;
+        case 404:
+          // URL не знайдено
+          message.error('Not Found: The requested resource was not found.');
+          break;
+        case 409:
+          // Конфлікт
+          message.error('Conflict: The resource already exists.');
+          break;
+        case 422:
+          // Невірні вхідні дані
+          message.error('Unprocessable Entity: The request was well-formed but unable to be followed due to semantic errors.');
+          break;
+        case 500:
+          // Внутрішня помилка сервера
+          message.error('Internal Server Error: Something went wrong on the server.');
+          break;
+        default:
+          // Інші типи помилок
+          console.error(err);
+          message.error('Registration failed: ' + err.response.data);
+          break;
+      }
      }
 
+   }
+  
   }
-
 
   return (
     <div className= {styles.RegisterPage}>
     <div className= {styles.container}>
-    <img className={styles.Photo} src="/images/EventHub_loginPhoto.jpg" alt="Your Photo" />
     <Form className={styles.SignUpForm}
       {...formItemLayout}
       labelCol={{ span: 24 }}  // Лейбл займає всю ширину
@@ -108,7 +165,7 @@ const SignUp = () => {
       }}
       scrollToFirstError
     >
-  <h1 style={{margin:"0px"}}>Register</h1>
+  <h1 style={{margin:"15px 0px"}}>Register</h1>
   <Row gutter={16}> {/* Встановлюємо проміжок між елементами */}
   <Col xs={24} sm={12}> {/* Перший колонка, яка займає половину рядка */}
     <Form.Item
@@ -118,8 +175,8 @@ const SignUp = () => {
       rules={[
         {
           required: true,
-          message: 'Please input your First name!',
           whitespace: true,
+          validator: checkName
         },
       ]}
     >
@@ -134,8 +191,8 @@ const SignUp = () => {
       rules={[
         {
           required: true,
-          message: 'Please input your Last name!',
           whitespace: true,
+          validator: checkName
         },
       ]}
     >
@@ -152,7 +209,7 @@ const SignUp = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your password!',
+            validator: checkPassword,
           },
         ]}
         hasFeedback
@@ -242,7 +299,7 @@ const SignUp = () => {
         rules={[
           {
             required: true,
-            message: 'Please input your phone email!',
+            validator:checkEmail,
             whitespace: true,
           },
         ]}

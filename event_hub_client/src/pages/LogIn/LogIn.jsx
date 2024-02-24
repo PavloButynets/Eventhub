@@ -1,67 +1,23 @@
-import React, {useState} from 'react';
+import React from 'react';
 import axios from 'axios';
 import styles from './LogIn.module.css';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
-
-
-
 const LogIn = () => {
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [navigate, setNavigate] = useState(false);
-    const onFinish = async (e) => {
-        // try {
-        //     const response = await axios.post('http://localhost:3500/login', {
-        //         email: e.email,
-        //         password: e.password
-        //     }, {withCredentials: true});
-        //     console.log(response.data); // Assuming your server responds with user data upon successful login
-        //     // Redirect the user to the dashboard or perform any other necessary actions upon successful login
-        //      // Зберегти токен у куках з терміном дії 7 днів
-        // } catch (error) {
-        //     console.error('Login failed:', error);
-        //     // Handle login failure, e.g., show error message to the user
-        // }
-        // e.preventDefault();
-        //
-        const {data} = await axios.post('http://localhost:3500/login', {
-            email, password
-        }, {withCredentials: true});
-        console.log(data)
-
-        axios.defaults.headers.common['Authorization'] = `Bearer ${data['token']}`;
-
-        // setNavigate(true);
+    const onFinish = async (values) => {
+        try {
+            const response = await axios.post('http://localhost:3001/users', {
+                email: values.email,
+                password: values.password
+            });
+            console.log(response.data); // Assuming your server responds with user data upon successful login
+            // Redirect the user to the dashboard or perform any other necessary actions upon successful login
+        } catch (error) {
+            console.error('Login failed:', error);
+            // Handle login failure, e.g., show error message to the user
+        }
     };
-
-    // if (navigate) {
-    //     return <Navigate to="/"/>;
-    // }
-
-    // const onFinish = async () => {
-    //     try {
-    //         const { data } = await axios.post('http://localhost:3500/users/login', {
-    //             email,
-    //             password
-    //         }, { withCredentials: true });
-    //
-    //         axios.defaults.headers.common['Authorization'] = `Bearer ${data['token']}`;
-    //
-    //         setNavigate(true);
-    //     } catch (error) {
-    //         console.error('Login failed:', error);
-    //         // Handle login failure, e.g., show error message to the user
-    //     }
-    // };
-    //
-    // if (navigate) {
-    //     return <Navigate to="/"/>;
-    // }
-
-
 
 
 
@@ -93,9 +49,7 @@ const LogIn = () => {
                             },
                         ]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon"/>}
-                               onChange={e => setEmail(e.target.value)}
-                               placeholder="Email"/>
+                        <Input prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="Email"/>
                     </Form.Item>
                     <Form.Item
                         name="password"
@@ -108,7 +62,6 @@ const LogIn = () => {
                     >
                         <Input.Password
                             prefix={<LockOutlined className="site-form-item-icon"/>}
-                            onChange={e => setPassword(e.target.value)}
 
                             type="password"
                             placeholder="Password"
@@ -159,7 +112,7 @@ const LogIn = () => {
                         </div>
 
                     </Form.Item>
-                    <p style={{textAlign: "center", fontSize:"12px"}}>Don’t have an account in EventHub yet? <Link to="/register">Register!</Link></p>
+                    <p style={{textAlign: "center", fontSize:"12px"}}>Don’t have an account in EventHub yet? <a href="/register">Register!</a></p>
 
                 </Form>
             </div>
