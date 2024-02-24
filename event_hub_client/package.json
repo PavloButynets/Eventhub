@@ -45,7 +45,8 @@
     ]
   },
   "devDependencies": {
-    "json-server": "^1.0.0-alpha.23",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "json-server": "^0.17.4",
     "json-server-auth": "^2.1.0"
   }
 }

@@ -40,6 +40,41 @@
       "gender": "male",
       "city": "Pidor",
       "email": "@gmail.com.ivan"
+    },
+    {
+      "email": "viktorpehun@gmail.com",
+      "password": "$2a$10$CoRePoEiQo6Q9LembIwBEOb.cyhgkzLe3xFM1rhCJUoNZo8zwllLK",
+      "firstName": "Viktor",
+      "lastName": "Pekhun",
+      "nickname": "ewewe",
+      "gender": "other",
+      "city": "Lviv",
+      "id": "FZHEl-f"
+    },
+    {
+      "email": "viktorpekhun@gmail.com",
+      "password": "$2a$10$M.xWEqIson7rBFom4NVG3eK.0b5s2PyGK6uD2PW0.yF1SE9qLqRNi",
+      "firstName": "Віктор",
+      "lastName": "Пехунь",
+      "nickname": "matrix",
+      "gender": "male",
+      "city": "dav",
+      "id": "IXcz3_n"
+    },
+    {
+      "email": "newpost@gmail.com",
+      "password": "$2a$10$NSStDx6Spf2m5Bwjqxg9t.QN/M3N3nqPjZLDpY6zQpMQtybm6D106",
+      "firstName": "ffgg",
+      "lastName": "ggdgg",
+      "nickname": "ewewe",
+      "gender": "female",
+      "city": "rrrr",
+      "id": "-XP69_H"
+    }
+  ],
+  "messages": [
+    {
+      "title": "asassas"
     }
   ]
 }
