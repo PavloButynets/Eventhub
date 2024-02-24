@@ -5,19 +5,19 @@ import { Link } from 'react-router-dom';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 const LogIn = () => {
-    // const onFinish = async (values) => {
-    //     try {
-    //         const response = await axios.post('http://localhost:3001/users', {
-    //             email: values.email,
-    //             password: values.password
-    //         });
-    //         console.log(response.data); // Assuming your server responds with user data upon successful login
-    //         // Redirect the user to the dashboard or perform any other necessary actions upon successful login
-    //     } catch (error) {
-    //         console.error('Login failed:', error);
-    //         // Handle login failure, e.g., show error message to the user
-    //     }
-    // };
+    const onFinish = async (values) => {
+        try {
+            const response = await axios.post('http://localhost:3001/users', {
+                email: values.email,
+                password: values.password
+            });
+            console.log(response.data); // Assuming your server responds with user data upon successful login
+            // Redirect the user to the dashboard or perform any other necessary actions upon successful login
+        } catch (error) {
+            console.error('Login failed:', error);
+            // Handle login failure, e.g., show error message to the user
+        }
+    };
 
 
 
