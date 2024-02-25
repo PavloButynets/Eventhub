@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/authentication**")
+                .requestMatchers("/authentication/login")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -37,13 +37,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-
-
-
-
-
-
 
 //    @Bean
 //    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
