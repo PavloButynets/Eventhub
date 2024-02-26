@@ -64,6 +64,14 @@ public class ParticipantController {
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
+    @GetMapping("/requests")
+    public ResponseEntity<List<ParticipantResponse>> getRequestsByEventId(@PathVariable("event_id") UUID eventId){
+        List<ParticipantResponse> responses = participantService.getAllRequestsByEventId(eventId);
+        log.info("**/get all requests by event id: " + eventId + " participants");
+
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
     @PutMapping("/{participant_id}")
     public ResponseEntity<ParticipantResponse> update(@PathVariable("participant_id") UUID participantId){
 
