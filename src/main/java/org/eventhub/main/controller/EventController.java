@@ -28,7 +28,7 @@ public class EventController {
     private final ParticipantService participantService;
 
     @Autowired
-    public EventController(EventService eventService, UserService userService, ParticipantService participantService){
+    public EventController(EventService eventService, ParticipantService participantService){
         this.eventService = eventService;
         this.participantService = participantService;
     }
