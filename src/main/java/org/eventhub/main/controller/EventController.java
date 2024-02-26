@@ -35,12 +35,12 @@ public class EventController {
     }
     @PostMapping("/{user_id}/events")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<EventResponse> create(@Validated @RequestBody EventRequest request,
+    public ResponseEntity<EventResponse> create(@RequestParam("count") int count, @Validated @RequestBody EventRequest request,
                                                 BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new ResponseStatusException("Invalid Input");
         }
-        EventResponse response = eventService.create(request);
+        EventResponse response = eventService.create(request, count);
         log.info("**/created event(id) = " + response.getId());
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface EventService {
-    EventResponse create(EventRequest eventRequest);
+    EventResponse create(EventRequest eventRequest, int count);
     EventResponse readById(UUID id);
 
     Event readByIdEntity(UUID id);

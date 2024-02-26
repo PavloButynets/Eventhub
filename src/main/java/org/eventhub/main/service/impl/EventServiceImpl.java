@@ -42,12 +42,12 @@ public class EventServiceImpl implements EventService {
         this.embeddingClient = embeddingClient;
     }
     @Override
-    public EventResponse create(EventRequest eventRequest) {
+    public EventResponse create(EventRequest eventRequest, int count) {
         LocalDateTime currentTime = LocalDateTime.now();
         Event event = new Event();
 
         event.setCreatedAt(currentTime);
-        event.setParticipantCount(0);
+        event.setParticipantCount(count);
 
         checkState(event, currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
