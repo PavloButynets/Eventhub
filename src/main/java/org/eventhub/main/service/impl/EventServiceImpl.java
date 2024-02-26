@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.CategoryRequest;
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventRequest;
+import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.NotValidDateException;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
@@ -59,6 +60,9 @@ public class EventServiceImpl implements EventService {
 
 
         Event eventToSave = eventMapper.requestToEntity(eventRequest, event);
+        if (count >= eventToSave.getParticipantCount()) {
+            throw new AccessIsDeniedException("Event " + eventToSave.getTitle() + " is full.");
+        }
         return eventMapper.entityToResponse(eventRepository.save(eventToSave));
     }
 
