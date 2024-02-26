@@ -7,6 +7,7 @@ import org.eventhub.main.exception.NotValidDateException;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.mapper.EventMapper;
+import org.eventhub.main.mapper.ParticipantMapper;
 import org.eventhub.main.model.Embedding;
 import org.eventhub.main.model.Event;
 import org.eventhub.main.model.Participant;
@@ -29,21 +30,17 @@ import java.util.stream.Collectors;
 public class EventServiceImpl implements EventService {
 
 
-    @Autowired
     private final EventRepository eventRepository;
 
     private final EventMapper eventMapper;
 
-    private EmbeddingClient embeddingClient;
-
-    private ParticipantService participantService;
+    private final EmbeddingClient embeddingClient;
 
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EmbeddingClient embeddingClient, ParticipantService participantService) {
+    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EmbeddingClient embeddingClient, ParticipantService participantService, ParticipantMapper participantMapper) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
         this.embeddingClient = embeddingClient;
-        this.participantService = participantService;
     }
     @Override
     public EventResponse create(EventRequest eventRequest, int count) {
@@ -64,21 +61,12 @@ public class EventServiceImpl implements EventService {
 
         Event eventToSave = eventMapper.requestToEntity(eventRequest, event);
 
-        if (eventRequest.isOwnerPresent()) {
-            UUID eventId = eventToSave.getId();
-            UUID userId = eventToSave.getOwner().getId();
-
-            ParticipantRequest participantRequest = new ParticipantRequest(eventId, userId);
-
-            ParticipantResponse participantResponse = participantService.create(participantRequest);
-            participantService.addParticipant(participantResponse.getId());
-        }
         if (count >= eventToSave.getMaxParticipants()) {
             throw new AccessIsDeniedException("Event " + eventToSave.getTitle() + " is full.");
         }
+
         return eventMapper.entityToResponse(eventRepository.save(eventToSave));
     }
-
     @Override
     public EventResponse readById(UUID id) {
         Event event = eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));

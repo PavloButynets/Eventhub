@@ -46,7 +46,4 @@ public class EventRequest {
 
     @NotNull
     private UUID ownerId;
-
-    @NotNull
-    private boolean isOwnerPresent;
 }

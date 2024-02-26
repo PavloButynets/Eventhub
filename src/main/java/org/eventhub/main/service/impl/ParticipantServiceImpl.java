@@ -28,15 +28,12 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     private final ParticipantRepository participantRepository;
     private final ParticipantMapper participantMapper;
-
-    private  final EventRepository eventRepository;
     private final EventService eventService;
 
     @Autowired
     public ParticipantServiceImpl(ParticipantRepository participantRepository, ParticipantMapper participantMapper, EventRepository eventRepository, EventService eventService) {
         this.participantRepository = participantRepository;
         this.participantMapper = participantMapper;
-        this.eventRepository = eventRepository;
         this.eventService = eventService;
     }
 
