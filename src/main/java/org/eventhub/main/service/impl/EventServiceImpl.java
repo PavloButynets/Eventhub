@@ -7,14 +7,12 @@ import org.eventhub.main.exception.NotValidDateException;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.mapper.EventMapper;
-import org.eventhub.main.mapper.ParticipantMapper;
 import org.eventhub.main.model.Embedding;
 import org.eventhub.main.model.Event;
-import org.eventhub.main.model.Participant;
 import org.eventhub.main.model.State;
 import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.service.EventService;
-import org.eventhub.main.service.ParticipantService;
+
 import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +35,7 @@ public class EventServiceImpl implements EventService {
     private final EmbeddingClient embeddingClient;
 
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EmbeddingClient embeddingClient, ParticipantService participantService, ParticipantMapper participantMapper) {
+    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EmbeddingClient embeddingClient) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
         this.embeddingClient = embeddingClient;
