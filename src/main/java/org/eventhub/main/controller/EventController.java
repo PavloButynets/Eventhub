@@ -42,8 +42,10 @@ public class EventController {
         EventResponse response = eventService.create(request, count);
 
         if(withOwner) {
-            participantService.create(new ParticipantRequest(response.getId(), userId));
+            ParticipantResponse participantResponse = participantService.create(new ParticipantRequest(response.getId(), userId));
+            participantService.addParticipant(participantResponse.getId());
         }
+
         log.info("**/created event(id) = " + response.getId());
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
