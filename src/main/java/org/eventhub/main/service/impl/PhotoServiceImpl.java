@@ -4,6 +4,7 @@ import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobContainerClientBuilder;
 import com.azure.storage.blob.specialized.BlockBlobClient;
 import jakarta.persistence.EntityNotFoundException;
+import org.apache.commons.lang3.StringUtils;
 import org.eventhub.main.dto.EventPhotoRequest;
 import org.eventhub.main.dto.EventPhotoResponse;
 import org.eventhub.main.exception.NullDtoReferenceException;
@@ -25,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -96,7 +99,9 @@ public class PhotoServiceImpl implements PhotoService {
                     EventPhoto photo = new EventPhoto();
                     photo.setId(UUID.randomUUID());
 
-                    BlockBlobClient blockBlobClient = this.blobContainerClient.getBlobClient(photo.getId().toString() + ".png").getBlockBlobClient();
+                    String fileExtension = StringUtils.substringAfterLast(file.getOriginalFilename(), ".");
+
+                    BlockBlobClient blockBlobClient = this.blobContainerClient.getBlobClient(photo.getId().toString() + "." + fileExtension).getBlockBlobClient();
                     blockBlobClient.upload(dataStream, file.getSize());
 
                     photo.setPhotoName(blockBlobClient.getBlobName());
