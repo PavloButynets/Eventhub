@@ -1,9 +1,7 @@
 package org.eventhub.main.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.eventhub.main.dto.CategoryRequest;
-import org.eventhub.main.dto.EventResponse;
-import org.eventhub.main.dto.EventRequest;
+import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.NotValidDateException;
 import org.eventhub.main.exception.NullDtoReferenceException;
@@ -11,9 +9,11 @@ import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.mapper.EventMapper;
 import org.eventhub.main.model.Embedding;
 import org.eventhub.main.model.Event;
+import org.eventhub.main.model.Participant;
 import org.eventhub.main.model.State;
 import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.service.EventService;
+import org.eventhub.main.service.ParticipantService;
 import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,11 +36,14 @@ public class EventServiceImpl implements EventService {
 
     private EmbeddingClient embeddingClient;
 
+    private ParticipantService participantService;
+
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EmbeddingClient embeddingClient) {
+    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EmbeddingClient embeddingClient, ParticipantService participantService) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
         this.embeddingClient = embeddingClient;
+        this.participantService = participantService;
     }
     @Override
     public EventResponse create(EventRequest eventRequest, int count) {
@@ -60,6 +63,16 @@ public class EventServiceImpl implements EventService {
 
 
         Event eventToSave = eventMapper.requestToEntity(eventRequest, event);
+
+        if (eventRequest.isOwnerPresent()) {
+            UUID eventId = eventToSave.getId();
+            UUID userId = eventToSave.getOwner().getId();
+
+            ParticipantRequest participantRequest = new ParticipantRequest(eventId, userId);
+
+            ParticipantResponse participantResponse = participantService.create(participantRequest);
+            participantService.addParticipant(participantResponse.getId());
+        }
         if (count >= eventToSave.getMaxParticipants()) {
             throw new AccessIsDeniedException("Event " + eventToSave.getTitle() + " is full.");
         }
