@@ -100,6 +100,11 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     public void delete(UUID id) {
+        Participant participant = readByIdEntity(id);
+
+        Event event = eventService.readByIdEntity(participant.getEvent().getId());
+        event.setParticipantCount(event.getParticipantCount() - 1);
+
         participantRepository.delete(readByIdEntity(id));
     }
 
