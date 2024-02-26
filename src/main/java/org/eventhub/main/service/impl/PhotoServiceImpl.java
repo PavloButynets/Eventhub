@@ -4,6 +4,7 @@ import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.BlobContainerClientBuilder;
 import com.azure.storage.blob.specialized.BlockBlobClient;
 import jakarta.persistence.EntityNotFoundException;
+import org.apache.commons.lang3.StringUtils;
 import org.eventhub.main.dto.EventPhotoRequest;
 import org.eventhub.main.dto.EventPhotoResponse;
 import org.eventhub.main.exception.NullDtoReferenceException;
@@ -14,6 +15,7 @@ import org.eventhub.main.model.EventPhoto;
 import org.eventhub.main.repository.PhotoRepository;
 import org.eventhub.main.service.EventService;
 import org.eventhub.main.service.PhotoService;
+import org.eventhub.main.utility.BlobContainerClientSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -42,13 +46,7 @@ public class PhotoServiceImpl implements PhotoService {
         this.photoRepository = photoRepository;
         this.eventPhotoMapper = eventPhotoMapper;
         this.eventService = eventService;
-
-        String connectionString = String.format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", System.getenv("AccountName"), System.getenv("AccountKey"));
-
-        this.blobContainerClient = new BlobContainerClientBuilder()
-                .connectionString(connectionString)
-                .containerName(System.getenv("container_name"))
-                .buildClient();
+        this.blobContainerClient = BlobContainerClientSingleton.getInstance().getBlobContainerClient();
     }
     @Override
     public EventPhotoResponse create(EventPhotoRequest eventPhotoRequest) {
@@ -101,7 +99,9 @@ public class PhotoServiceImpl implements PhotoService {
                     EventPhoto photo = new EventPhoto();
                     photo.setId(UUID.randomUUID());
 
-                    BlockBlobClient blockBlobClient = this.blobContainerClient.getBlobClient(photo.getId().toString()).getBlockBlobClient();
+                    String fileExtension = StringUtils.substringAfterLast(file.getOriginalFilename(), ".");
+
+                    BlockBlobClient blockBlobClient = this.blobContainerClient.getBlobClient(photo.getId().toString() + "." + fileExtension).getBlockBlobClient();
                     blockBlobClient.upload(dataStream, file.getSize());
 
                     photo.setPhotoName(blockBlobClient.getBlobName());

@@ -1,21 +1,16 @@
 package org.eventhub.main.mapper;
 
 import com.azure.storage.blob.BlobContainerClient;
-import com.azure.storage.blob.BlobContainerClientBuilder;
 import com.azure.storage.blob.sas.BlobSasPermission;
 import com.azure.storage.blob.sas.BlobServiceSasSignatureValues;
-import org.eventhub.main.dto.CategoryRequest;
-import org.eventhub.main.dto.CategoryResponse;
 import org.eventhub.main.dto.EventPhotoRequest;
 import org.eventhub.main.dto.EventPhotoResponse;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
-import org.eventhub.main.model.Category;
 import org.eventhub.main.model.EventPhoto;
 import org.eventhub.main.repository.EventRepository;
-import org.eventhub.main.service.EventService;
+import org.eventhub.main.utility.BlobContainerClientSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
@@ -27,12 +22,7 @@ public class EventPhotoMapper {
     @Autowired
     public EventPhotoMapper(EventRepository eventRepository){
         this.eventRepository = eventRepository;
-        String connectionString = String.format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", System.getenv("AccountName"), System.getenv("AccountKey"));
-
-        blobContainerClient = new BlobContainerClientBuilder()
-                .connectionString(connectionString)
-                .containerName(System.getenv("container_name"))
-                .buildClient();
+        this.blobContainerClient = BlobContainerClientSingleton.getInstance().getBlobContainerClient();
     }
     public EventPhotoResponse entityToResponse(EventPhoto eventPhoto) {
         if (eventPhoto == null) {
