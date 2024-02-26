@@ -60,7 +60,7 @@ public class EventServiceImpl implements EventService {
 
 
         Event eventToSave = eventMapper.requestToEntity(eventRequest, event);
-        if (count >= eventToSave.getParticipantCount()) {
+        if (count >= eventToSave.getMaxParticipants()) {
             throw new AccessIsDeniedException("Event " + eventToSave.getTitle() + " is full.");
         }
         return eventMapper.entityToResponse(eventRepository.save(eventToSave));
