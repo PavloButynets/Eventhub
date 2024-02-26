@@ -51,7 +51,7 @@ public class ParticipantServiceImpl implements ParticipantService {
 
         for (Participant participant1 : event.getParticipants()) {
             if (participant1.getUser().getId().equals(participantRequest.getUserId())) {
-                throw new AccessIsDeniedException("Duplicate request for " + event.getTitle());
+                throw new AccessIsDeniedException("Duplicate join-request for " + event.getTitle());
             }
         }
 
