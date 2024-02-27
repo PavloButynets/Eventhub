@@ -1,10 +1,17 @@
-import { useContext, useDebugValue } from "react";
 import AuthContext from "../context/authProvider";
-
+import { useContext, useEffect } from "react";
 const useAuth = () => {
-    const { auth } = useContext(AuthContext);
-    useDebugValue(auth, auth => auth?.user ? "Logged In" : "Logged Out")
-    return useContext(AuthContext);
-}
+    const { auth, setAuth } = useContext(AuthContext);
+    
+    // Оновлення стану автентифікації при зміні токена в локальному сховищі
+    useEffect(() => {
+        const savedToken = localStorage.getItem('token');
+        if (savedToken !== auth.token) {
+            setAuth({ token: savedToken });
+        }
+    }, [auth.token, setAuth]);
 
-export default useAuth;
+    return { auth, setAuth };
+  };
+  
+  export default useAuth;

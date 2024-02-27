@@ -57,11 +57,6 @@ const SignUp = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
-
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-  };
-
  
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -93,7 +88,6 @@ const SignUp = () => {
       );
       const accessToken = res?.data?.accessToken;
       localStorage.setItem("token", accessToken);
-      setAuth({email, password, accessToken})
       console.log(res)
       console.log('Response:', res.data);
       message.success('Registration successful!');      
