@@ -1,14 +1,12 @@
 package org.eventhub.main.service.impl;
 
 import com.azure.storage.blob.BlobContainerClient;
-import com.azure.storage.blob.BlobContainerClientBuilder;
 import com.azure.storage.blob.specialized.BlockBlobClient;
 import jakarta.persistence.EntityNotFoundException;
 import org.apache.commons.lang3.StringUtils;
 import org.eventhub.main.dto.EventPhotoRequest;
 import org.eventhub.main.dto.EventPhotoResponse;
 import org.eventhub.main.exception.NullDtoReferenceException;
-import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.exception.ResponseStatusException;
 import org.eventhub.main.mapper.EventPhotoMapper;
 import org.eventhub.main.model.EventPhoto;
@@ -17,17 +15,12 @@ import org.eventhub.main.service.EventService;
 import org.eventhub.main.service.PhotoService;
 import org.eventhub.main.utility.BlobContainerClientSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
