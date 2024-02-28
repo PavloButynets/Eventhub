@@ -42,7 +42,7 @@ public class ParticipantController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     ResponseEntity<List<ParticipantResponse>> getAll() {
         log.info("**/get all participant");
         return new ResponseEntity<>(participantService.getAll(), HttpStatus.OK);
@@ -56,15 +56,27 @@ public class ParticipantController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<List<ParticipantResponse>> getByEventId(@PathVariable("event_id") UUID eventId){
+        List<ParticipantResponse> responses = participantService.getAllByEventId(eventId);
+        log.info("**/get by event id: " + eventId + " participants");
+
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    @GetMapping("/requests")
+    public ResponseEntity<List<ParticipantResponse>> getRequestsByEventId(@PathVariable("event_id") UUID eventId){
+        List<ParticipantResponse> responses = participantService.getAllRequestsByEventId(eventId);
+        log.info("**/get all requests by event id: " + eventId + " participants");
+
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
     @PutMapping("/{participant_id}")
-    public ResponseEntity<ParticipantResponse> update(@PathVariable("participant_id") UUID participantId,
-                                                      @Validated @RequestBody ParticipantRequest request,
-                                                      BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            throw new ResponseStatusException("Invalid Input");
-        }
-        ParticipantResponse response = participantService.update(request, participantId);
-        log.info("**/updated participant(id) = " + response.getId());
+    public ResponseEntity<ParticipantResponse> update(@PathVariable("participant_id") UUID participantId){
+
+        ParticipantResponse response = participantService.addParticipant(participantId);
+        log.info("**/Added participant(id) = " + response.getId());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

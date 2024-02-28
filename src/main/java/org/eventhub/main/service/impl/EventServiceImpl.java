@@ -1,9 +1,8 @@
 package org.eventhub.main.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.eventhub.main.dto.CategoryRequest;
-import org.eventhub.main.dto.EventResponse;
-import org.eventhub.main.dto.EventRequest;
+import org.eventhub.main.dto.*;
+import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.NotValidDateException;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
@@ -13,6 +12,7 @@ import org.eventhub.main.model.Event;
 import org.eventhub.main.model.State;
 import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.service.EventService;
+
 import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl implements EventService {
-
     private final EventRepository eventRepository;
 
     private final EventMapper eventMapper;
@@ -63,6 +62,7 @@ public class EventServiceImpl implements EventService {
         return stringBuilder.toString();
     }
 
+
     @Autowired
     public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EmbeddingClient embeddingClient) {
         this.eventRepository = eventRepository;
@@ -75,7 +75,6 @@ public class EventServiceImpl implements EventService {
         Event event = new Event();
 
         event.setCreatedAt(currentTime);
-        event.setParticipantCount(0);
 
         checkState(event, currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
@@ -87,9 +86,13 @@ public class EventServiceImpl implements EventService {
 
 
         Event eventToSave = eventMapper.requestToEntity(eventRequest, event);
+
+        if (event.getParticipantCount() >= eventToSave.getMaxParticipants()) {
+            throw new AccessIsDeniedException("Event " + eventToSave.getTitle() + " is full.");
+        }
+
         return eventMapper.entityToResponse(eventRepository.save(eventToSave));
     }
-
     @Override
     public EventResponse readById(UUID id) {
         Event event = eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));

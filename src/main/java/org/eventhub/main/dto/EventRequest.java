@@ -42,8 +42,44 @@ public class EventRequest {
     private String location;
 
     @NotNull
+    private int currentCount;
+
+    @NotNull
+    private boolean withOwner;
+    @NotNull
     private List<CategoryRequest> categoryRequests;
 
     @NotNull
     private UUID ownerId;
+
+
+    public EventRequest(){}
+
+    public EventRequest(String title, int maxParticipants, LocalDateTime startAt, LocalDateTime expireAt, String description, String location, boolean withOwner, List<CategoryRequest> categoryRequests, UUID ownerId) {
+        this.title = title;
+        this.maxParticipants = maxParticipants;
+        this.startAt = startAt;
+        this.expireAt = expireAt;
+        this.description = description;
+        this.location = location;
+        this.withOwner = withOwner;
+        this.currentCount = 0;
+        this.categoryRequests = categoryRequests;
+        this.ownerId = ownerId;
+
+    }
+
+    public EventRequest(String title, int maxParticipants, LocalDateTime startAt, LocalDateTime expireAt, String description, String location, int current_count, boolean withOwner, List<CategoryRequest> categoryRequests, UUID ownerId) {
+        this.title = title;
+        this.maxParticipants = maxParticipants;
+        this.startAt = startAt;
+        this.expireAt = expireAt;
+        this.description = description;
+        this.location = location;
+        this.withOwner = withOwner;
+        this.currentCount = current_count;
+        this.categoryRequests = categoryRequests;
+        this.ownerId = ownerId;
+
+    }
 }
