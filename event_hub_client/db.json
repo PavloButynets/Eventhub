@@ -279,6 +279,16 @@
       "gender": "female",
       "city": "a",
       "id": 28
+    },
+    {
+      "email": "viktorpekhun@gmail.com",
+      "password": "$2a$10$8gqVcRKiVgpMyxxTBjNtS.Nhq17bCl7zZcp0r.eNtGE2m0RQbo02i",
+      "firstName": "Viktor",
+      "lastName": "Pekhun",
+      "nickname": "ewewe",
+      "gender": "other",
+      "city": "ggdgd",
+      "id": 29
     }
   ]
 }
