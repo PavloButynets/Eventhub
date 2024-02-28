@@ -70,12 +70,11 @@ public class EventServiceImpl implements EventService {
         this.embeddingClient = embeddingClient;
     }
     @Override
-    public EventResponse create(EventRequest eventRequest, int count) {
+    public EventResponse create(EventRequest eventRequest) {
         LocalDateTime currentTime = LocalDateTime.now();
         Event event = new Event();
 
         event.setCreatedAt(currentTime);
-        event.setParticipantCount(count);
 
         checkState(event, currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
@@ -88,7 +87,7 @@ public class EventServiceImpl implements EventService {
 
         Event eventToSave = eventMapper.requestToEntity(eventRequest, event);
 
-        if (count >= eventToSave.getMaxParticipants()) {
+        if (event.getParticipantCount() >= eventToSave.getMaxParticipants()) {
             throw new AccessIsDeniedException("Event " + eventToSave.getTitle() + " is full.");
         }
 

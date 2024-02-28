@@ -68,9 +68,9 @@ public class ParticipantServiceImpl implements ParticipantService {
         if (event.getParticipantCount() >= event.getMaxParticipants()) {
             throw new AccessIsDeniedException("Event " + event.getTitle() + " is full.");
         }
-
+        System.out.println("Participant count: " + event.getParticipantCount());
         event.setParticipantCount(event.getParticipantCount() + 1);
-
+        System.out.println("Participant count: " + event.getParticipantCount());
         existingParticipant.setApproved(true);
 
         return participantMapper.entityToResponse(participantRepository.save(existingParticipant));

@@ -34,16 +34,17 @@ public class EventController {
     }
     @PostMapping("/{user_id}/events")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<EventResponse> create(@RequestParam("count") int count, @RequestParam("with_owner") boolean withOwner, @PathVariable("user_id") UUID userId, @Validated @RequestBody EventRequest request,
+    public ResponseEntity<EventResponse> create(@PathVariable("user_id") UUID userId, @Validated @RequestBody EventRequest request,
                                                 BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new ResponseStatusException("Invalid Input");
         }
-        EventResponse response = eventService.create(request, count);
+        EventResponse response = eventService.create(request);
 
-        if(withOwner) {
+        if(request.isWithOwner()) {
             ParticipantResponse participantResponse = participantService.create(new ParticipantRequest(response.getId(), userId));
             participantService.addParticipant(participantResponse.getId());
+            response.setParticipantCount(response.getParticipantCount() + 1);
         }
 
         log.info("**/created event(id) = " + response.getId());

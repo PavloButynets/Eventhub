@@ -61,6 +61,7 @@ public class EventMapper {
         event.setExpireAt(eventRequest.getExpireAt());
         event.setDescription(eventRequest.getDescription());
         event.setLocation(eventRequest.getLocation());
+        event.setParticipantCount(eventRequest.getCurrentCount());
         event.setCategories(eventRequest.getCategoryRequests().stream()
                 .map(categoryRequest -> categoryService.getByName(categoryRequest.getName()))
                 .collect(Collectors.toList()));
