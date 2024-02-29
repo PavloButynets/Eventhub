@@ -5,11 +5,9 @@ import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.NotValidDateException;
 import org.eventhub.main.exception.NullDtoReferenceException;
-import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.mapper.EventMapper;
 import org.eventhub.main.model.Embedding;
 import org.eventhub.main.model.Event;
-import org.eventhub.main.model.State;
 import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.service.EventService;
 
@@ -32,7 +30,7 @@ public class EventServiceImpl implements EventService {
 
     private final EmbeddingClient embeddingClient;
 
-    private void checkState(Event event, LocalDateTime currentTime, LocalDateTime startAt, LocalDateTime expireAt) {
+    private void checkDate(Event event, LocalDateTime currentTime, LocalDateTime startAt, LocalDateTime expireAt) {
 
         int dateComparisonResultStartAt = currentTime.compareTo(startAt);
         int dateComparisonResultExpireAt = currentTime.compareTo(expireAt);
@@ -41,10 +39,6 @@ public class EventServiceImpl implements EventService {
         if (!startAt.isBefore(expireAt)) {
             throw new NotValidDateException("Choose correct date");
         }
-
-        if (dateComparisonResultStartAt < 0) {event.setState(State.UPCOMING);}
-        else if (dateComparisonResultExpireAt <= 0) {event.setState(State.LIVE);}
-        else {event.setState(State.PAST);}
     }
 
     private Embedding setVector(EventRequest eventRequest) {
@@ -76,7 +70,7 @@ public class EventServiceImpl implements EventService {
 
         event.setCreatedAt(currentTime);
 
-        checkState(event, currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
+        checkDate(event, currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
         event.setParticipants(new ArrayList<>());
 
@@ -120,7 +114,7 @@ public class EventServiceImpl implements EventService {
             LocalDateTime currentTime = LocalDateTime.now();
             Event event = readByTitle(eventRequest.getTitle());
 
-            checkState(event,currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
+            checkDate(event,currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
             Embedding embedding = setVector(eventRequest);
 

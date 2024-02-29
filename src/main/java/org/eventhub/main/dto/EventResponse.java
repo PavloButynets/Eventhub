@@ -42,7 +42,7 @@ public class EventResponse {
     private int participantCount;
 
     @NotNull
-    private State state;
+    private String state;
 
     @NotNull
     private String location;
@@ -56,7 +56,7 @@ public class EventResponse {
     public EventResponse() {
     }
 
-    public EventResponse(UUID id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, State state, String location, UUID ownerId, List<CategoryResponse> categoryResponses) {
+    public EventResponse(UUID id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, String state, String location, UUID ownerId, List<CategoryResponse> categoryResponses) {
         this.id = id;
         this.title = title;
         this.maxParticipants = maxParticipants;

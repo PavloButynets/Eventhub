@@ -58,10 +58,9 @@ public class Event {
     @Column(name = "participant_count")
     private int participantCount;
 
-    @Enumerated(EnumType.STRING)
     @NotNull
     @Column(name = "state")
-    private State state;
+    private String state;
 
     @NotNull
     @Column(name = "location")
