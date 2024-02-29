@@ -38,6 +38,7 @@ public class EventMapper {
                 .description(event.getDescription())
                 .participantCount(event.getParticipantCount())
                 .location(event.getLocation())
+                .state(getState(event))
                 .categoryResponses(event.getCategories()
                         .stream()
                         .map(categoryMapper::entityToResponse)
