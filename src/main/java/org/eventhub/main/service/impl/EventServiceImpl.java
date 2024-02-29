@@ -30,13 +30,11 @@ public class EventServiceImpl implements EventService {
 
     private final EmbeddingClient embeddingClient;
 
-    private void checkDate(Event event, LocalDateTime currentTime, LocalDateTime startAt, LocalDateTime expireAt) {
+    private void checkDate( LocalDateTime currentTime, LocalDateTime startAt, LocalDateTime expireAt) {
 
-        int dateComparisonResultStartAt = currentTime.compareTo(startAt);
-        int dateComparisonResultExpireAt = currentTime.compareTo(expireAt);
 
         //Exceptions
-        if (!startAt.isBefore(expireAt)) {
+        if (!startAt.isBefore(expireAt) || !startAt.isBefore(currentTime)) {
             throw new NotValidDateException("Choose correct date");
         }
     }
@@ -70,7 +68,7 @@ public class EventServiceImpl implements EventService {
 
         event.setCreatedAt(currentTime);
 
-        checkDate(event, currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
+        checkDate(currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
         event.setParticipants(new ArrayList<>());
 
@@ -114,7 +112,7 @@ public class EventServiceImpl implements EventService {
             LocalDateTime currentTime = LocalDateTime.now();
             Event event = readByTitle(eventRequest.getTitle());
 
-            checkDate(event,currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
+            checkDate(currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
             Embedding embedding = setVector(eventRequest);
 
