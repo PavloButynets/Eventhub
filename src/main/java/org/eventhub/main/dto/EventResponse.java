@@ -42,7 +42,7 @@ public class EventResponse {
     private int participantCount;
 
     @NotNull
-    private String state;
+    private State state;
 
     @NotNull
     private String location;
