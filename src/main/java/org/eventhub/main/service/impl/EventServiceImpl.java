@@ -34,7 +34,7 @@ public class EventServiceImpl implements EventService {
 
 
         //Exceptions
-        if (!startAt.isBefore(expireAt) || !startAt.isBefore(currentTime)) {
+        if (!startAt.isBefore(expireAt) || !startAt.isAfter(currentTime)) {
             throw new NotValidDateException("Choose correct date");
         }
     }
