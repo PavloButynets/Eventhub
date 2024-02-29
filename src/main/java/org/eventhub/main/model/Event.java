@@ -59,10 +59,6 @@ public class Event {
     private int participantCount;
 
     @NotNull
-    @Column(name = "state")
-    private String state;
-
-    @NotNull
     @Column(name = "location")
     private String location;
 

@@ -35,7 +35,6 @@ public class EventMapper {
                 .expireAt(event.getExpireAt())
                 .description(event.getDescription())
                 .participantCount(event.getParticipantCount())
-                .state(event.getState())
                 .location(event.getLocation())
                 .categoryResponses(event.getCategories()
                         .stream()
