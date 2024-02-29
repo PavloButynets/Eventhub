@@ -2,14 +2,13 @@ package org.eventhub.main.controller;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.eventhub.main.dto.EventRequest;
-import org.eventhub.main.dto.EventResponse;
-import org.eventhub.main.dto.OperationResponse;
-import org.eventhub.main.dto.UserRequest;
+import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.ResponseStatusException;
 import org.eventhub.main.model.Event;
+import org.eventhub.main.model.Participant;
 import org.eventhub.main.service.EventService;
+import org.eventhub.main.service.ParticipantService;
 import org.eventhub.main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,21 +25,28 @@ import java.util.UUID;
 @RequestMapping("/users")
 public class EventController {
     private final EventService eventService;
-    private final UserService userService;
+    private final ParticipantService participantService;
 
     @Autowired
-    public EventController(EventService eventService, UserService userService){
+    public EventController(EventService eventService, ParticipantService participantService){
         this.eventService = eventService;
-        this.userService = userService;
+        this.participantService = participantService;
     }
     @PostMapping("/{user_id}/events")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<EventResponse> create(@Validated @RequestBody EventRequest request,
+    public ResponseEntity<EventResponse> create(@PathVariable("user_id") UUID userId, @Validated @RequestBody EventRequest request,
                                                 BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new ResponseStatusException("Invalid Input");
         }
         EventResponse response = eventService.create(request);
+
+        if(request.isWithOwner()) {
+            ParticipantResponse participantResponse = participantService.create(new ParticipantRequest(response.getId(), userId));
+            participantService.addParticipant(participantResponse.getId());
+            response.setParticipantCount(response.getParticipantCount() + 1);
+        }
+
         log.info("**/created event(id) = " + response.getId());
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);

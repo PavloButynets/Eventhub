@@ -4,13 +4,13 @@ import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
-import org.eventhub.main.model.Category;
 import org.eventhub.main.model.Event;
 import org.eventhub.main.model.State;
 import org.eventhub.main.service.CategoryService;
 import org.eventhub.main.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,8 +37,8 @@ public class EventMapper {
                 .expireAt(event.getExpireAt())
                 .description(event.getDescription())
                 .participantCount(event.getParticipantCount())
-                .state(event.getState())
                 .location(event.getLocation())
+                .state(getState(event))
                 .categoryResponses(event.getCategories()
                         .stream()
                         .map(categoryMapper::entityToResponse)
@@ -61,10 +61,20 @@ public class EventMapper {
         event.setExpireAt(eventRequest.getExpireAt());
         event.setDescription(eventRequest.getDescription());
         event.setLocation(eventRequest.getLocation());
+        event.setParticipantCount(eventRequest.getCurrentCount());
         event.setCategories(eventRequest.getCategoryRequests().stream()
                 .map(categoryRequest -> categoryService.getByName(categoryRequest.getName()))
                 .collect(Collectors.toList()));
         event.setOwner(userService.readByIdEntity(eventRequest.getOwnerId()));
         return event;
+    }
+
+    private State getState(Event event) {
+        int dateComparisonResultStartAt = LocalDateTime.now().compareTo(event.getStartAt());
+        int dateComparisonResultExpireAt = LocalDateTime.now().compareTo(event.getExpireAt());
+
+        if (dateComparisonResultStartAt < 0) {return State.UPCOMING;}
+        else if (dateComparisonResultExpireAt <= 0) {return State.LIVE;}
+        else {return State.PAST;}
     }
 }

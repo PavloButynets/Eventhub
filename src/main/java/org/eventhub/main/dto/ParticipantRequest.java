@@ -16,13 +16,12 @@ import java.util.UUID;
 public class ParticipantRequest {
     @NonNull
     private UUID eventId;
+
     @NonNull
     private UUID userId;
-    private Boolean isApproved;
 
-    public ParticipantRequest(UUID eventId, UUID userId, Boolean isApproved){
+    public ParticipantRequest(UUID eventId, UUID userId){
         this.eventId = eventId;
         this.userId = userId;
-        this.isApproved = isApproved;
     }
 }

@@ -12,9 +12,13 @@ import java.util.function.Predicate;
 
 public interface ParticipantService {
     ParticipantResponse create(ParticipantRequest participantRequest);
+
+    ParticipantResponse addParticipant(UUID participantId);
     ParticipantResponse readById(UUID id);
     Participant readByIdEntity(UUID id);
     ParticipantResponse update(ParticipantRequest participantRequest, UUID id);
     void delete(UUID id);
     List<ParticipantResponse> getAll();
+    List<ParticipantResponse> getAllByEventId(UUID eventId);
+    List<ParticipantResponse> getAllRequestsByEventId(UUID eventId);
 }

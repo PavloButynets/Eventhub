@@ -1,9 +1,6 @@
 package org.eventhub.main.service.impl;
 
-import org.eventhub.main.dto.CategoryResponse;
 import org.eventhub.main.dto.EventResponse;
-import org.eventhub.main.model.State;
-import org.eventhub.main.service.CategoryService;
 import org.eventhub.main.service.EventService;
 import org.eventhub.main.service.VectorSearchService;
 import org.springframework.ai.embedding.EmbeddingClient;
@@ -11,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class VectorSearchServiceImpl implements VectorSearchService{
