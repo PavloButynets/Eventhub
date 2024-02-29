@@ -6,7 +6,6 @@ import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.exception.NotValidDateException;
 import org.eventhub.main.mapper.EventMapper;
 import org.eventhub.main.model.Event;
-import org.eventhub.main.model.State;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
