@@ -7,13 +7,18 @@ import lombok.Getter;
 @Getter
 public class BlobContainerClientSingleton {
     private static volatile BlobContainerClientSingleton instance;
-    private final BlobContainerClient blobContainerClient;
+    private final BlobContainerClient blobContainerClientEvent;
+    private final BlobContainerClient blobContainerClientUser;
     private BlobContainerClientSingleton() {
         String connectionString = String.format("DefaultEndpointsProtocol=https;AccountName=%s;AccountKey=%s;EndpointSuffix=core.windows.net", System.getenv("AccountName"), System.getenv("AccountKey"));
-
-        this.blobContainerClient = new BlobContainerClientBuilder()
+        this.blobContainerClientEvent = new BlobContainerClientBuilder()
                 .connectionString(connectionString)
-                .containerName(System.getenv("container_name"))
+                .containerName(System.getenv("container_name_images"))
+                .buildClient();
+
+        this.blobContainerClientUser = new BlobContainerClientBuilder()
+                .connectionString(connectionString)
+                .containerName(System.getenv("container_name_user_images"))
                 .buildClient();
     }
     public static BlobContainerClientSingleton getInstance() {

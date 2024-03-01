@@ -22,7 +22,6 @@ public class UserMapper {
                 .lastName(user.getLastName())
                 .username(user.getUsername())
                 .email(user.getEmail())
-                .profileImage(user.getProfileImage())
                 .description(user.getDescription())
                 .createdAt(user.getCreatedAt())
                 .city(user.getCity())
@@ -44,7 +43,6 @@ public class UserMapper {
         user.setUsername(userRequest.getUsername());
         user.setEmail(userRequest.getEmail());
         user.setPassword(userRequest.getPassword());
-        user.setProfileImage(userRequest.getProfileImage());
         user.setDescription(userRequest.getDescription());
         user.setCreatedAt(LocalDateTime.now());
         user.setCity(userRequest.getCity());

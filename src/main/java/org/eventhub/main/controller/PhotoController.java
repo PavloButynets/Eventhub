@@ -1,15 +1,9 @@
 package org.eventhub.main.controller;
 
-import com.azure.storage.blob.BlobClient;
-import com.azure.storage.blob.BlobClientBuilder;
-import com.azure.storage.blob.BlobContainerClient;
-import com.azure.storage.blob.BlobContainerClientBuilder;
-import com.azure.storage.blob.specialized.BlockBlobClient;
 import lombok.extern.slf4j.Slf4j;
 import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.ResponseStatusException;
 import org.eventhub.main.service.PhotoService;
-import org.eventhub.main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -19,18 +13,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @Slf4j
-@RequestMapping("/users/{user_id}/events/{event_id}/photos")
+@RequestMapping("/users/{user_id}")
 public class PhotoController {
     private final PhotoService photoService;
 
@@ -39,49 +27,65 @@ public class PhotoController {
         this.photoService = photoService;
     }
 
-    @GetMapping
-    List<EventPhotoResponse> getAll() {
+    @GetMapping("/photos")
+    List<PhotoResponse> getAll() {
         return photoService.getAll();
     }
 
-    @PostMapping
+    @PostMapping("/photos")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<EventPhotoResponse> create(@Validated @RequestBody EventPhotoRequest eventPhotoRequest, BindingResult result) {
+    public ResponseEntity<PhotoResponse> create(@Validated @RequestBody PhotoRequest photoRequest, BindingResult result) {
         if (result.hasErrors()) {
             throw new ResponseStatusException("Invalid Input");
         }
 
-        EventPhotoResponse eventPhotoResponse = photoService.create(eventPhotoRequest);
-        log.info("**/created eventPhoto(id) = " + eventPhotoResponse.getId());
+        PhotoResponse photoResponse = photoService.create(photoRequest);
+        log.info("**/created eventPhoto(id) = " + photoResponse.getId());
 
-        return new ResponseEntity<>(eventPhotoResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(photoResponse, HttpStatus.CREATED);
     }
 
     @PutMapping("/{photo_id}")
-    public ResponseEntity<EventPhotoResponse> update(@PathVariable("photo_id") UUID photoId,
-                                               @Validated @RequestBody EventPhotoRequest eventPhotoRequest, BindingResult result) {
+    public ResponseEntity<PhotoResponse> update(@PathVariable("photo_id") UUID photoId,
+                                                @Validated @RequestBody PhotoRequest photoRequest, BindingResult result) {
         if (result.hasErrors()) {
             throw new ResponseStatusException("Invalid Input");
         }
 
-        EventPhotoResponse eventPhotoResponse = photoService.update(eventPhotoRequest, photoId);
+        PhotoResponse photoResponse = photoService.update(photoRequest, photoId);
         log.info("**/updated eventPhoto(id) = " + photoId);
 
-        return new ResponseEntity<>(eventPhotoResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(photoResponse, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{photo_id}")
-    public ResponseEntity<OperationResponse> delete(@PathVariable("photo_id") UUID photoId) {
+    @DeleteMapping("/events/{event_id}/photos/{photo_id}")
+    public ResponseEntity<OperationResponse> deleteEventImage(@PathVariable("photo_id") UUID photoId,
+                                                              @PathVariable("event_id") UUID evenId) {
         log.info("**/deleted user(id) = " + photoId.toString());
-        photoService.delete(photoId);
-        return new ResponseEntity<>(new OperationResponse("EventPhoto id:" + photoId + " deleted successfully"), HttpStatus.OK);
+        photoService.deleteEventImage(evenId,photoId);
+        return new ResponseEntity<>(new OperationResponse("Photo id:" + photoId + " deleted successfully"), HttpStatus.OK);
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<List<EventPhotoResponse>> uploadImages(@PathVariable(name = "event_id") UUID eventId,
-                                               @RequestPart("files") List<MultipartFile> files){
+    @PostMapping("/events/{event_id}/photos/upload")
+    public ResponseEntity<List<PhotoResponse>> uploadEventImages(@PathVariable(name = "event_id") UUID eventId,
+                                                            @RequestPart("files") List<MultipartFile> files){
         log.info("Uploading photos");
-        return new ResponseEntity<>(this.photoService.uploadPhotos(eventId, files), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.photoService.uploadEventPhotos(eventId, files), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/photos/{photo_id}")
+    public ResponseEntity<OperationResponse> deleteProfileImage(@PathVariable("photo_id") UUID photoId,
+                                                                @PathVariable("user_id") UUID userId) {
+        log.info("**/deleted user(id) = " + photoId.toString());
+        photoService.deleteProfileImage(userId, photoId);
+        return new ResponseEntity<>(new OperationResponse("Photo id:" + photoId + " deleted successfully"), HttpStatus.OK);
+    }
+
+    @PostMapping("/photos/upload")
+    public ResponseEntity<PhotoResponse> uploadProfileImage(@PathVariable(name = "user_id") UUID userId,
+                                                                 @RequestPart("file") MultipartFile file){
+        log.info("Uploading photos");
+        return new ResponseEntity<>(this.photoService.uploadProfilePhotos(userId, file), HttpStatus.CREATED);
     }
 
 }

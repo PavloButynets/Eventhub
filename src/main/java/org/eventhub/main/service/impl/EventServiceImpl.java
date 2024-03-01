@@ -8,9 +8,11 @@ import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.mapper.EventMapper;
 import org.eventhub.main.model.Embedding;
 import org.eventhub.main.model.Event;
+import org.eventhub.main.model.Photo;
 import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.service.EventService;
 
+import org.eventhub.main.service.PhotoService;
 import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -137,5 +139,16 @@ public class EventServiceImpl implements EventService {
                 .stream()
                 .map(eventMapper::entityToResponse)
                 .collect(Collectors.toList());
+    }
+    @Override
+    public void addImage(UUID eventId, Photo image) {
+        Event event = this.readByIdEntity(eventId);
+        event.getPhotos().add(image);
+    }
+
+    @Override
+    public void deleteImage(UUID eventId, Photo image){
+        Event event = this.readByIdEntity(eventId);
+        event.getPhotos().remove(image);
     }
 }
