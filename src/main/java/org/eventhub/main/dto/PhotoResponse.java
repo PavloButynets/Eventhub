@@ -11,13 +11,11 @@ import java.util.UUID;
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class EventPhotoResponse {
+public class PhotoResponse {
     private UUID id;
     @NotBlank(message = "The 'URL' cannot be empty")
     private String photoUrl;
 
     @NotBlank(message = "The 'Name' cannot be empty")
     private String photoName;
-
-    private UUID eventId;
 }

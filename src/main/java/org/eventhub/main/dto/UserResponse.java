@@ -22,7 +22,6 @@ public class UserResponse {
     private String lastName;
     private String username;
     private String email;
-    private String profileImage;
     private String description;
     private LocalDateTime createdAt;
     private String city;
@@ -33,13 +32,12 @@ public class UserResponse {
 
     }
 
-    public UserResponse(UUID id, String firstName, String lastName, String username, String email, String profileImage, String description, LocalDateTime createdAt, String city, LocalDate birthDate, Gender gender) {
+    public UserResponse(UUID id, String firstName, String lastName, String username, String email, String description, LocalDateTime createdAt, String city, LocalDate birthDate, Gender gender) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
-        this.profileImage = profileImage;
         this.description = description;
         this.createdAt = createdAt;
         this.city = city;

@@ -14,8 +14,8 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="event_photos")
-public class EventPhoto {
+@Table(name="photos")
+public class Photo {
     @Id
     //@GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -28,8 +28,4 @@ public class EventPhoto {
     @NotBlank(message = "The 'URL' cannot be empty")
     @Column(name="photo_url")
     private String photoUrl;
-
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
 }

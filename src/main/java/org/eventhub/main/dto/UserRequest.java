@@ -46,8 +46,6 @@ public class UserRequest {
             message = "Must contain at least one lowercase letter")
     private String password;
 
-    private String profileImage;
-
     private String description;
 
     private String city;
@@ -60,13 +58,12 @@ public class UserRequest {
 
     public UserRequest() {}
 
-    public UserRequest(String firstName, String lastName, String username, String email, String password, String profileImage, String description, String city, LocalDate birthDate, Gender gender) {
+    public UserRequest(String firstName, String lastName, String username, String email, String password, String description, String city, LocalDate birthDate, Gender gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.profileImage = profileImage;
         this.description = description;
         this.city = city;
         this.birthDate = birthDate;

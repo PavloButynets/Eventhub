@@ -3,28 +3,23 @@ package org.eventhub.main.dto;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class EventPhotoRequest {
+public class PhotoRequest {
     @NotBlank(message = "The 'URL' cannot be empty")
     private String photoUrl;
 
     @NotBlank(message = "The 'Name' cannot be empty")
     private String photoName;
 
-    private UUID eventId;
+    public PhotoRequest(){}
 
-    public EventPhotoRequest(){}
-
-    public EventPhotoRequest(String photoName, String photoUrl,  UUID eventId) {
+    public PhotoRequest(String photoName, String photoUrl) {
         this.photoUrl = photoUrl;
         this.photoName = photoName;
-        this.eventId = eventId;
     }
 }
