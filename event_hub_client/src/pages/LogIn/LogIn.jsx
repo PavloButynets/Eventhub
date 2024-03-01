@@ -4,7 +4,7 @@ import styles from './LogIn.module.css';
 import { Link, Navigate } from 'react-router-dom';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import {Button, Checkbox, Form, Input, message} from 'antd';
-
+import {checkEmail} from "../SignUp/validation";
 
 
 const LogIn = () => {
@@ -12,14 +12,22 @@ const LogIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [navigate, setNavigate] = useState(false);
-    const onFinish = async (e) => {
+    const onFinish = async () => {
         try {
-            const response = await axios.post('http://localhost:3001/login', {
-                email: e.email,
-                password: e.password
-            }, {withCredentials: true});
-            console.log(response.data);
-            message.success('Registration successful!');
+            const res = await axios.post('http://localhost:3001/login', {
+                email, password
+            }, {
+                headers:{'Content-Type':'application/json'},
+                withCredentials: true
+            });
+            const accessToken = res?.data?.accessToken;
+            localStorage.setItem("token", accessToken);
+            console.log(res.data)
+
+
+            axios.defaults.headers.common['Authorization'] = `Bearer ${res.data['token']}`;
+
+            message.success('Login successful!');
             setNavigate(true);
         } catch (err) {
             if (!err.response) {
@@ -30,7 +38,7 @@ const LogIn = () => {
                 switch (status) {
                     case 400:
                         // Помилка валідації даних на сервері
-                        message.error('Invalid data. Please check your input.');
+                        message.error('Invalid email or password. Please check your input.');
                         break;
                     case 401:
                         // Користувач не авторизований
@@ -100,13 +108,15 @@ const LogIn = () => {
                     rules={[
                         {
                             required: true,
+                            validator: checkEmail,
                             message: 'Please input your email!',
                         },
                     ]}
                 >
                     <Input prefix={<UserOutlined className="site-form-item-icon" />}
                            onChange={e => setEmail(e.target.value)}
-                           placeholder="Email" />
+                           placeholder="Email"
+                           className={styles.input}/>
                 </Form.Item>
                 <Form.Item
                     name="password"
@@ -118,6 +128,7 @@ const LogIn = () => {
                     ]}
                 >
                     <Input.Password
+                        className={styles.input}
                         prefix={<LockOutlined className="site-form-item-icon" />}
                         onChange={e => setPassword(e.target.value)}
                         type="password"

@@ -66,6 +66,10 @@
 
 /*}*/
 
+.input{
+    height: 40px;
+}
+
 .loginButtonContainer{
     display: flex;
     justify-content: center;
