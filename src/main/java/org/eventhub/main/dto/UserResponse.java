@@ -10,18 +10,18 @@ import org.eventhub.main.model.Gender;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class UserResponse {
 
-    private Long id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private String username;
     private String email;
-    private String profileImage;
     private String description;
     private LocalDateTime createdAt;
     private String city;
@@ -32,13 +32,12 @@ public class UserResponse {
 
     }
 
-    public UserResponse(Long id, String firstName, String lastName, String username, String email, String profileImage, String description, LocalDateTime createdAt, String city, LocalDate birthDate, Gender gender) {
+    public UserResponse(UUID id, String firstName, String lastName, String username, String email, String description, LocalDateTime createdAt, String city, LocalDate birthDate, Gender gender) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
-        this.profileImage = profileImage;
         this.description = description;
         this.createdAt = createdAt;
         this.city = city;

@@ -3,9 +3,11 @@ package org.eventhub.main.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.hibernate.engine.internal.Cascade;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Setter
@@ -15,8 +17,8 @@ import java.util.List;
 @Table(name = "events")
 public class Event {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @NotBlank(message = "Name is mandatory")
     @Size(max = 20, min = 5,
@@ -54,23 +56,18 @@ public class Event {
     @Column(name = "participant_count")
     private int participantCount;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    @Column(name = "state")
-    private State state;
-
     @NotNull
     @Column(name = "location")
     private String location;
 
-    @OneToMany(mappedBy = "event")
-    private List<EventPhoto> photos;
+    @OneToMany(cascade = CascadeType.REMOVE)
+    private List<Photo> photos;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
     private List<Participant> participants;
 
     @ManyToMany
@@ -79,4 +76,7 @@ public class Event {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "embedding_id")
+    private Embedding embedding;
 }

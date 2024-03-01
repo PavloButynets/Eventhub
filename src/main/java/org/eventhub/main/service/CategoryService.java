@@ -5,14 +5,18 @@ import org.eventhub.main.dto.CategoryResponse;
 import org.eventhub.main.model.Category;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface CategoryService {
     CategoryResponse create(CategoryRequest category);
-    CategoryResponse readById(long id);
+    CategoryResponse readById(UUID id);
 
-    Category readByIdEntity(long id);
-    CategoryResponse update(CategoryRequest category, long id);
-    void delete(long id);
+    Category readByIdEntity(UUID id);
+    CategoryResponse update(CategoryRequest category, UUID id);
+    void delete(UUID id);
     List<CategoryResponse> getAll();
+    Category getByName(String name);
+
+    List<CategoryResponse> getAllByEventId(UUID eventId);
 
 }

@@ -42,7 +42,6 @@ public class ParticipantMapper {
             throw  new NullEntityReferenceException("Participant cat't be null");
         }
 
-        participant.setApproved(participantRequest.isApproved());
         participant.setUser(userRepository.findById(participantRequest.getUserId()).orElseThrow(()->new NullEntityReferenceException("User cant be null")));
         participant.setEvent(eventRepository.findById(participantRequest.getEventId()).orElseThrow(()->new NullEntityReferenceException("Event cant be null")));
         return participant;

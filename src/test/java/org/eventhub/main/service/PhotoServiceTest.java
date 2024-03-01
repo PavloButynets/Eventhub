@@ -3,18 +3,12 @@ package org.eventhub.main.service;
 import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.NullDtoReferenceException;
-import org.eventhub.main.mapper.EventPhotoMapper;
-import org.eventhub.main.mapper.UserMapper;
-import org.eventhub.main.model.Category;
-import org.eventhub.main.model.EventPhoto;
-import org.eventhub.main.model.Gender;
-import org.eventhub.main.model.User;
+import org.eventhub.main.model.Photo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @SpringBootTest
@@ -28,8 +22,8 @@ public class PhotoServiceTest {
 
     @Test
     public void createValidPhotoTest() {
-        EventPhotoRequest request = new EventPhotoRequest("New Photo #1", 30L);
-        EventPhotoResponse response = photoService.create(request);
+        PhotoRequest request = new PhotoRequest("New Photo #1", 30L);
+        PhotoResponse response = photoService.create(request);
 
         Assertions.assertNotNull(response);
         Assertions.assertEquals(request.getPhotoUrl(),response.getPhotoUrl());
@@ -45,7 +39,7 @@ public class PhotoServiceTest {
     }
     @Test
     public void readByIdValidPhotoResponseTest(){
-        EventPhotoResponse response = photoService.readById(10);
+        PhotoResponse response = photoService.readById(10);
         Assertions.assertNotNull(response);
         Assertions.assertEquals("Photo 1", response.getPhotoUrl());
         Assertions.assertEquals(3, photoService.getAll().size());
@@ -56,7 +50,7 @@ public class PhotoServiceTest {
     }
     @Test
     public void readByIdEntityValidPhotoTest(){
-        EventPhoto photo = photoService.readByIdEntity(10);
+        Photo photo = photoService.readByIdEntity(10);
         Assertions.assertNotNull(photo);
         Assertions.assertEquals("Photo 1", photo.getPhotoUrl());
         Assertions.assertEquals(3, photoService.getAll().size());
@@ -68,9 +62,9 @@ public class PhotoServiceTest {
 
     @Test
     public void updateValidPhotoTest(){
-        EventPhotoResponse response = photoService.create(new EventPhotoRequest("Created Photo#2", 30L));
-        EventPhotoRequest request = new EventPhotoRequest("Updated photo", 30L);
-        EventPhotoResponse updatedResponse = photoService.update(request, response.getId());
+        PhotoResponse response = photoService.create(new PhotoRequest("Created Photo#2", 30L));
+        PhotoRequest request = new PhotoRequest("Updated photo", 30L);
+        PhotoResponse updatedResponse = photoService.update(request, response.getId());
 
         Assertions.assertNotNull(updatedResponse);
         Assertions.assertEquals(request.getPhotoUrl(), updatedResponse.getPhotoUrl());
@@ -84,12 +78,12 @@ public class PhotoServiceTest {
     }
     @Test
     void updateInvalidPhotoTest2(){
-        Assertions.assertThrows(EntityNotFoundException.class, () -> photoService.update(new EventPhotoRequest("Created Photo#2", 30L), 100));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> photoService.update(new PhotoRequest("Created Photo#2", 30L), 100));
     }
     @Test
     void deleteValidParticipantTest(){
-        EventPhotoRequest request = new EventPhotoRequest("New Photo #3",30L);
-        EventPhotoResponse response = photoService.create(request);
+        PhotoRequest request = new PhotoRequest("New Photo #3",30L);
+        PhotoResponse response = photoService.create(request);
 
         Assertions.assertNotNull(response);
         Assertions.assertEquals(4, photoService.getAll().size());
@@ -100,8 +94,8 @@ public class PhotoServiceTest {
     }
     @Test
     void getAllValidCategoryTest(){
-        EventPhotoResponse response = photoService.create(new EventPhotoRequest("New Photo #4",30L));
-        List<EventPhotoResponse> all = photoService.getAll();
+        PhotoResponse response = photoService.create(new PhotoRequest("New Photo #4",30L));
+        List<PhotoResponse> all = photoService.getAll();
 
         Assertions.assertEquals(4, all.size());
         Assertions.assertEquals("Photo 1", all.get(0).getPhotoUrl());

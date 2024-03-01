@@ -6,11 +6,21 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class CategoryResponse {
-    private Long id;
+    private UUID id;
     @NotBlank(message = "Name of Category can't be blank")
     private String name;
+
+    public CategoryResponse() {
+    }
+
+    public CategoryResponse(UUID id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

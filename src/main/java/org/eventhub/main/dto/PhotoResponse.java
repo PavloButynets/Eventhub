@@ -5,19 +5,17 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Data
+@Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class EventPhotoRequest {
+public class PhotoResponse {
+    private UUID id;
     @NotBlank(message = "The 'URL' cannot be empty")
     private String photoUrl;
-    private Long eventId;
 
-    public EventPhotoRequest(){}
-
-    public EventPhotoRequest(String photoUrl, Long eventId) {
-        this.photoUrl = photoUrl;
-        this.eventId = eventId;
-    }
+    @NotBlank(message = "The 'Name' cannot be empty")
+    private String photoName;
 }

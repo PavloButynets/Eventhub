@@ -10,6 +10,7 @@ import org.eventhub.main.model.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -17,7 +18,7 @@ import java.util.List;
 public class EventResponse {
 
     @NotNull
-    private long id;
+    private UUID id;
 
     @NotBlank(message = "Title cannot be blank")
     private String title;
@@ -47,5 +48,26 @@ public class EventResponse {
     private String location;
 
     @NotNull
-    private long ownerId;
+    private UUID ownerId;
+
+    @NotNull
+    private List<CategoryResponse> categoryResponses;
+
+    public EventResponse() {
+    }
+
+    public EventResponse(UUID id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, State state, String location, UUID ownerId, List<CategoryResponse> categoryResponses) {
+        this.id = id;
+        this.title = title;
+        this.maxParticipants = maxParticipants;
+        this.createdAt = createdAt;
+        this.startAt = startAt;
+        this.expireAt = expireAt;
+        this.description = description;
+        this.participantCount = participantCount;
+        this.state = state;
+        this.location = location;
+        this.ownerId = ownerId;
+        this.categoryResponses = categoryResponses;
+    }
 }

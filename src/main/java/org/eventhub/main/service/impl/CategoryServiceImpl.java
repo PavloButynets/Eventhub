@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,20 +36,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse readById(long id) {
+    public CategoryResponse readById(UUID id) {
         Category category = categoryRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Category with id " + id + " not found"));
         return categoryMapper.entityToResponse(category);
     }
 
     @Override
-    public Category readByIdEntity(long id){
+    public Category readByIdEntity(UUID id){
         return categoryRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Category with id " + id + " not found"));
     }
 
     @Override
-    public CategoryResponse update(CategoryRequest categoryRequest, long id) {
+    public CategoryResponse update(CategoryRequest categoryRequest, UUID id) {
         if (categoryRequest != null) {
             Category existingCategory = readByIdEntity(id);// to check if category exist
             Category category = categoryMapper.requestToEntity(categoryRequest, existingCategory);
@@ -58,7 +59,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(UUID id) {
         categoryRepository.delete(readByIdEntity(id));
     }
 
@@ -66,6 +67,26 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryResponse> getAll() {
         return categoryRepository.findAll()
                 .stream()
+                .map(categoryMapper::entityToResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Category getByName(String name) {
+        Category category = categoryRepository.findByName(name);
+
+        if(category == null){
+            throw new NullEntityReferenceException("Category can't be null");
+        }
+        else{
+            return category;
+        }
+    }
+
+    @Override
+    public List<CategoryResponse> getAllByEventId(UUID eventId) {
+        List<Category> categories = categoryRepository.findAllByEventsId(eventId);
+        return categories.stream()
                 .map(categoryMapper::entityToResponse)
                 .collect(Collectors.toList());
     }

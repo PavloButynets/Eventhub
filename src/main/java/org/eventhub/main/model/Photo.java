@@ -7,23 +7,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="event_photos")
-public class EventPhoto {
+@Table(name="photos")
+public class Photo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private Long id;
+    private UUID id;
+
+    @NotBlank(message = "The 'URL' cannot be empty")
+    @Column(name="photo_name")
+    private String photoName;
 
     @NotBlank(message = "The 'URL' cannot be empty")
     @Column(name="photo_url")
     private String photoUrl;
-
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
 }
