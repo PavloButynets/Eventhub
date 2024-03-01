@@ -15,7 +15,7 @@ export default function IntroMap() {
   return (
     <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
       <div style={{ height: "100vh", width: "100%" }}>
-        <Map zoom={9} center={position} mapId={process.env.REACT_APP_MAP_ID} >
+        <Map zoom={9}  mapId={process.env.REACT_APP_MAP_ID} >
           <AdvancedMarker position={position} onClick={() => setOpen(true)}>
             <Pin
               background={"grey"}

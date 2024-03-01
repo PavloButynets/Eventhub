@@ -78,20 +78,20 @@
 }
 
 
-.socialMediaLogin{
-    width: 48px;
-    height: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 16px;
-    margin-left: 16px;
+/*.socialMediaLogin{*/
+/*    width: 48px;*/
+/*    height: 48px;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    margin-right: 16px;*/
+/*    margin-left: 16px;*/
 
-    background-color: white;
-    border-color: #D9D9D9;
-}
+/*    background-color: white;*/
+/*    border-color: #D9D9D9;*/
+/*}*/
 
-.loginImg{
-    width: 24px;
-    height: 24px;
-}
+/*.loginImg{*/
+/*    width: 24px;*/
+/*    height: 24px;*/
+/*}*/

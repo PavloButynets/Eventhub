@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from "../../api/axios";
 import styles from './LogIn.module.css';
 import { Link, Navigate } from 'react-router-dom';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -7,6 +7,7 @@ import {Button, Checkbox, Form, Input, message} from 'antd';
 import {checkEmail} from "../SignUp/validation";
 
 
+const REGISTER_URL = '/login'
 const LogIn = () => {
 
     const [email, setEmail] = useState('');
@@ -14,7 +15,7 @@ const LogIn = () => {
     const [navigate, setNavigate] = useState(false);
     const onFinish = async () => {
         try {
-            const res = await axios.post('http://localhost:3001/login', {
+            const res = await axios.post(REGISTER_URL, {
                 email, password
             }, {
                 headers:{'Content-Type':'application/json'},
@@ -75,14 +76,6 @@ const LogIn = () => {
         }
 
 
-        // const { data } = await axios.post('/login', {
-        //     email, password
-        // }, { withCredentials: true });
-        // console.log(data)
-        //
-        // axios.defaults.headers.common['Authorization'] = `Bearer ${data['token']}`;
-
-        // setNavigate(true);
     };
 
     if (navigate) {
@@ -93,7 +86,7 @@ const LogIn = () => {
 
     return (
         <div className={styles.container}>
-            {/*<img className={styles.Photo} src="/images/EventHub_loginPhoto.jpg" alt="Your Photo"/>*/}
+
             <Form
                 name="normal_login"
                 className="login-form"
@@ -150,23 +143,23 @@ const LogIn = () => {
                         Login
                     </Button>
                 </Form.Item>
-                <p style={{ textAlign: "center" }}>Or</p>
-                <Form.Item style={{ marginBottom: "0px" }}>
-                    <div className={styles.loginButtonContainer}>
-                        <Button type="link" htmlType="button" className={styles.socialMediaLogin}>
-                            <img className={styles.loginImg} src="/images/fb_logo.png"
-                                 alt="Continue with Facebook" />
-                        </Button>
-                        <Button type="link" htmlType="button" className={styles.socialMediaLogin}>
-                            <img className={styles.loginImg} src="/images/apple_logo.png"
-                                 alt="Continue with Apple" />
-                        </Button>
-                        <Button type="link" htmlType="button" className={styles.socialMediaLogin}>
-                            <img className={styles.loginImg} src="/images/google_logo.png"
-                                 alt="Continue with Google" />
-                        </Button>
-                    </div>
-                </Form.Item>
+                {/*<p style={{ textAlign: "center" }}>Or</p>*/}
+                {/*<Form.Item style={{ marginBottom: "0px" }}>*/}
+                {/*    <div className={styles.loginButtonContainer}>*/}
+                {/*        <Button type="link" htmlType="button" className={styles.socialMediaLogin}>*/}
+                {/*            <img className={styles.loginImg} src="/images/fb_logo.png"*/}
+                {/*                 alt="Continue with Facebook" />*/}
+                {/*        </Button>*/}
+                {/*        <Button type="link" htmlType="button" className={styles.socialMediaLogin}>*/}
+                {/*            <img className={styles.loginImg} src="/images/apple_logo.png"*/}
+                {/*                 alt="Continue with Apple" />*/}
+                {/*        </Button>*/}
+                {/*        <Button type="link" htmlType="button" className={styles.socialMediaLogin}>*/}
+                {/*            <img className={styles.loginImg} src="/images/google_logo.png"*/}
+                {/*                 alt="Continue with Google" />*/}
+                {/*        </Button>*/}
+                {/*    </div>*/}
+                {/*</Form.Item>*/}
                 <p style={{ textAlign: "center", fontSize: "12px" }}>Don’t have an account in EventHub yet? <Link to="/register">Register!</Link></p>
             </Form>
         </div>
