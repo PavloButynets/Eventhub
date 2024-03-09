@@ -328,7 +328,7 @@ const SignUp = () => {
           Register
         </Button>
         <span style={{ marginTop: '10px' }}>
-          Already have an account? <Link to="/LogIn">Login</Link>
+          Already have an account? <Link to="/login">Login</Link>
         </span>
       </Form.Item>
     </Form>
