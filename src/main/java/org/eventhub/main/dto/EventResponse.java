@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.eventhub.main.model.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -48,6 +49,12 @@ public class EventResponse {
     private String location;
 
     @NotNull
+    private BigDecimal latitude;
+
+    @NotNull
+    private BigDecimal longitude;
+
+    @NotNull
     private UUID ownerId;
 
     @NotNull
@@ -56,7 +63,7 @@ public class EventResponse {
     public EventResponse() {
     }
 
-    public EventResponse(UUID id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, State state, String location, UUID ownerId, List<CategoryResponse> categoryResponses) {
+    public EventResponse(UUID id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, State state, String location, BigDecimal latitude, BigDecimal longitude, UUID ownerId, List<CategoryResponse> categoryResponses) {
         this.id = id;
         this.title = title;
         this.maxParticipants = maxParticipants;
@@ -67,6 +74,8 @@ public class EventResponse {
         this.participantCount = participantCount;
         this.state = state;
         this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.ownerId = ownerId;
         this.categoryResponses = categoryResponses;
     }
