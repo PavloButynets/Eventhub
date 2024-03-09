@@ -1,36 +1,61 @@
-"use client"
-import { useState } from "react";
-import {
-  APIProvider,
-  Map,
-  AdvancedMarker,
-  Pin,
-  InfoWindow,
-} from "@vis.gl/react-google-maps";
+import React, {useState, useRef, useCallback } from 'react';
+import { GoogleMap } from '@react-google-maps/api';
+import styles from  './Map.module.css'
+import {light} from "./Theme"
 
-export default function IntroMap() { 
-  const position = { lat: 53.54, lng: 10 };
-  const [open, setOpen] = useState(false);
+
+const MAP_API_KEY =  process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+const containerStyle = {
+  width: '100%',
+  height: '100%',
+
+};
+
+const defaultOption = {
+  panControl: true,
+  zoomControl: false,
+  mapTypeControl: false,
+  scaleControl: false,
+  streetViewControl: false,
+  rotateControl: false,
+  fullscreenControl: false,
+  clicableIcons:  false,
+  scrollwheel: true,
+  disableDoubleClickZoom: true,
+  styles: light ,
+  
+}
+
+const Map = ({center})=> {
+
+  
+
+  const mapRef = useRef(undefined)
+
+  const onLoad = useCallback(function callback(map) {
+    mapRef.current = map;
+  }, [])
+
+  const onUnmount = useCallback(function callback(map) {
+    mapRef.current=map;
+  }, [])
 
   return (
-    <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
-      <div style={{ height: "100vh", width: "100%" }}>
-        <Map zoom={9}  mapId={process.env.REACT_APP_MAP_ID} >
-          <AdvancedMarker position={position} onClick={() => setOpen(true)}>
-            <Pin
-              background={"grey"}
-              borderColor={"green"}
-              glyphColor={"purple"}
-            />
-          </AdvancedMarker>
-
-          {open && (
-            <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
-              <p>I'm in Hamburg</p>
-            </InfoWindow>
-          )}
-        </Map>
-      </div>
-    </APIProvider>
+    <div className= {styles.mapcontainer}>
+    <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={10}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+        options={defaultOption}
+      >
+        
+        { /* Child components, such as markers, info windows, etc. */ }
+        <></>
+      </GoogleMap>
+    </div>
   );
 }
+
+export {Map};

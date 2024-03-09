@@ -1,6 +1,7 @@
 import SignUp from './pages/SignUp/SignUp';
 import LogIn from './pages/LogIn/LogIn';
-import Home from "./pages/Home/Home";
+import {Home} from "./pages/Home/Home";
+import styles from "./App.css"
 import './App.css';
 
 import {

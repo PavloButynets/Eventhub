@@ -1,0 +1,38 @@
+/* ProfileInfo.module.css */
+
+.profileInfoContainer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    background-color: var(--popup-background); 
+    font-family: var(--font-family);
+    border-radius: 40px;
+    width: 220px;
+    height: 44px; 
+    padding: 0 12px; 
+  }
+  
+  .profileText {
+    margin-left: 16px; 
+  }
+  
+  .profileText span {
+    display: block;
+    margin: 8px 0px;
+    font-size: 12px; 
+    color: var(--text-color); 
+  }
+  
+  .profileText span:first-child {
+    font-weight: bold; 
+  }
+
+  .avatarButton {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+  }

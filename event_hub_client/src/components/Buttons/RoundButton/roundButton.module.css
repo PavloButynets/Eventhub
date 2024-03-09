@@ -1,0 +1,20 @@
+@import '../../../App.css';
+.roundButton {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; 
+    background-color: var(--primary-color); 
+    border: none; 
+    color: white; 
+    font-size: 16px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease; 
+  }
+  
+  .roundButton:hover {
+    background-color: var(--primary-color-hover); 
+  }
+  

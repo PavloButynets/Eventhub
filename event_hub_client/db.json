@@ -289,6 +289,46 @@
       "gender": "other",
       "city": "ggdgd",
       "id": 29
+    },
+    {
+      "email": "aaaaaaa@gmail.com",
+      "password": "$2a$10$N6/GPcpF7Fn6LnIg3R5GW.Mx3prIZaUqpb6Q6PSGkcmxLBv8TyIqO",
+      "firstName": "Pavlo",
+      "lastName": "Butynets",
+      "nickname": "rrr",
+      "gender": "male",
+      "city": "Львів",
+      "id": 30
+    },
+    {
+      "email": "1a@gmail.com",
+      "password": "$2a$10$3kI0SF9ZO.AnM9WuiBgG8.8cTpGRhwFiuWYSXH1glMVAzFtRG.6DW",
+      "firstName": "Pavlo",
+      "lastName": "Butynets",
+      "nickname": "rrr",
+      "gender": "male",
+      "city": "Львів",
+      "id": 31
+    },
+    {
+      "email": "pavlob@gmail.com",
+      "password": "$2a$10$OwupaUrwL1OCPEbn7unExuXZxmyOU1KkGmzrBP/r35yrpt0cIncjy",
+      "firstName": "Pavlo",
+      "lastName": "Butynets",
+      "nickname": "rrr",
+      "gender": "male",
+      "city": "Львів",
+      "id": 32
+    },
+    {
+      "email": "pavloB@gmail.com",
+      "password": "$2a$10$X2XDvTza2vkWzY04aapTa.FP7Cj4g5IOlO5gAdJZ3BeoxUS8DPSoG",
+      "firstName": "Pavlo",
+      "lastName": "Butynets",
+      "nickname": "Pavlo",
+      "gender": "male",
+      "city": "Львів",
+      "id": 33
     }
   ]
 }
