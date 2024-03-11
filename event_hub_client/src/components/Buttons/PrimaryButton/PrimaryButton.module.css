@@ -13,6 +13,7 @@
     transition: background-color 0.3s ease;
     font-family: var(--font-family);
     text-align: center;
+    
   }
   
   .PrimaryButton:hover {
