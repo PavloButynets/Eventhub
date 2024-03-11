@@ -20,7 +20,7 @@ import {
 
 
 const { Option } = Select;
-const REGISTER_URL = '/register'
+const REGISTER_URL = '/users'
 
 const formItemLayout = {
   labelCol: {

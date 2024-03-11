@@ -1,334 +1,51 @@
 {
   "users": [
     {
-      "email": "pavlo@gmail.com",
-      "password": "$2a$10$LnjTsltcM0PTRxdn855EE.WLLp50r/hN/TPodxHP8ZuBEhWXmmt22",
+      "email": "pbutynez@gmail.com",
+      "password": "$2a$10$UIMp2mAEZDv52Vcw7ONJA.kX/gHwH2fSsKjtWASKImx2U41xv4j1a",
       "firstName": "Pavlo",
-      "lastName": "Pavlo",
-      "nickname": "rrr",
-      "gender": "other",
-      "city": "Lviv",
+      "lastName": "Butynets",
+      "nickname": "sofia",
+      "gender": "male",
+      "city": "Львів",
       "id": 1
+    }
+  ],
+  "eventData": [
+    {
+      "eventID": 1,
+      "eventName": "Concert in the Park",
+      "location": "Lviv",
+      "latitude": 49.839019,
+      "longitude": 24.020853
     },
     {
-      "email": "pavlo_b@gmail.com",
-      "password": "$2a$10$A.fzycKa7t3mMG6I35rCJOoCZ7fsJmx5HF104skRe79zUilnb2DrG",
-      "firstName": "Pavlo",
-      "lastName": "Pavlo",
-      "nickname": "rrr",
-      "gender": "other",
-      "city": "Lviv",
-      "id": 2
+      "eventID": 2,
+      "eventName": "Food Festival",
+      "location": "Lviv",
+      "latitude": 49.823001,
+      "longitude": 24.022161
     },
     {
-      "email": "pavlo_@gmail.com",
-      "password": "$2a$10$nGqsNGcGPUjPm6vKzSUwxuArG/zM8lFOzVTiwKWH4rSw/iCDlSLn.",
-      "firstName": "Pavlo",
-      "lastName": "Pavlo",
-      "nickname": "rrr",
-      "gender": "other",
-      "city": "Lviv",
-      "id": 3
+      "eventID": 3,
+      "eventName": "Art Exhibition",
+      "location": "Lviv",
+      "latitude": 49.811598,
+      "longitude": 24.062853
     },
     {
-      "email": "pavl_@gmail.com",
-      "password": "$2a$10$8fn.fpPCl7gxLSYsQyMXWedcH8dGLetm8/efbEjw8KRje7y.BsMDy",
-      "firstName": "Pavlo",
-      "lastName": "Pavlo",
-      "nickname": "",
-      "gender": "other",
-      "city": "Lviv",
-      "id": 4
+      "eventID": 4,
+      "eventName": "Historical Tour",
+      "location": "Lviv",
+      "latitude": 49.842636,
+      "longitude": 24.030208
     },
     {
-      "email": "pavlobutynez@gmail.com",
-      "password": "$2a$10$VyCru1DAJ3qCxzB/rd6FUO45POWu4BG0E463B9j8OOvduslyub7dy",
-      "firstName": "Pavlo",
-      "lastName": "Butynets",
-      "nickname": "Name",
-      "gender": "female",
-      "city": "с. Глиниці",
-      "id": 5
-    },
-    {
-      "email": "pavlobutynets@gmail.com",
-      "password": "$2a$10$GH4.pAejaJhFb1nVGMyCwerojX6ZEouPNK5Onu.OfDfCZkbjLfwxS",
-      "firstName": "Pavlo",
-      "lastName": "Butynets",
-      "nickname": "Name",
-      "gender": "female",
-      "city": "с. Глиниці",
-      "id": 6
-    },
-    {
-      "email": "pavlobutynet@gmail.com",
-      "password": "$2a$10$5oxZ5zce9ytyP2WjIX4pd.T47ddCAq.qVAmUZYKN/ZZwoJTsNfJMW",
-      "firstName": "Pavlo",
-      "lastName": "Butynets",
-      "nickname": "Name",
-      "gender": "female",
-      "city": "с. Глиниці",
-      "id": 7
-    },
-    {
-      "email": "pvlobutynet@gmail.com",
-      "password": "$2a$10$l0R2X2ZTu2psNxYBHUAmZehHTGOmtNR0RHNU.c7U./Iiq.QK/TnW6",
-      "firstName": "Pavlo",
-      "lastName": "Butynets",
-      "nickname": "Name",
-      "gender": "female",
-      "city": "с. Глиниці",
-      "id": 8
-    },
-    {
-      "email": "pavlobut@gmail.com",
-      "password": "$2a$10$cYXDSy.Hr3HlNgbaXdjoEeshh73eFg.MQ4TJ5VRJDKoY4JYQv0xgi",
-      "firstName": "Pavlo",
-      "lastName": "Butynets",
-      "nickname": "Name",
-      "gender": "other",
-      "city": "с. Глиниці",
-      "id": 9
-    },
-    {
-      "email": "2@gmail.com",
-      "password": "$2a$10$5gtPyunbCWTHWrawnDOaoeVpL6lB5qqeyxq6iO.U3jsyGEvTpCE3m",
-      "firstName": "Ivan",
-      "lastName": "IIva",
-      "nickname": "Ivan",
-      "gender": "male",
-      "city": "Львів",
-      "id": 10
-    },
-    {
-      "email": "a@gmail.com",
-      "password": "$2a$10$GcuoLTn4/8n.fCnoDdQJhuFJMKLRRRGnvQtNazjcSgd86Jw7VFmL2",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "male",
-      "city": "a",
-      "id": 11
-    },
-    {
-      "email": "ab@gmail.com",
-      "password": "$2a$10$knknPt/XeCq6rhz0fyCwgeD8k6Waso/jiFRRpjrx20ewwYaGwGSNW",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "male",
-      "city": "a",
-      "id": 12
-    },
-    {
-      "email": "abb@gmail.com",
-      "password": "$2a$10$8aRrBauJDG3VI38D67XT/uZf.xbOkxISxNbPs4atI.XpKWaagqGpW",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "male",
-      "city": "a",
-      "id": 13
-    },
-    {
-      "email": "abbb@gmail.com",
-      "password": "$2a$10$kP54PuQKSmTxO0JnAYNeZOmHSpbcikYXPq8QEzjNePifUKgHKPYea",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "male",
-      "city": "a",
-      "id": 14
-    },
-    {
-      "email": "abbbbb@gmail.com",
-      "password": "$2a$10$xlAQXlVPCti3c7da.BaNUeWBQrN8aU7phuEhWMdKLFVy2aJ22qsom",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "male",
-      "city": "a",
-      "id": 15
-    },
-    {
-      "email": "abbbsbb@gmail.com",
-      "password": "$2a$10$k.5yqf15hJTxoCPiGTrk9OrFp3hMZ41NGZLpE18Jd.GV15EIrATn6",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "male",
-      "city": "a",
-      "id": 16
-    },
-    {
-      "email": "abbbssbb@gmail.com",
-      "password": "$2a$10$.hIau8gEFqEtaaRMENBXgeduG4qusY.Z//X29.idO1BY.j2/hFFn.",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "male",
-      "city": "a",
-      "id": 17
-    },
-    {
-      "email": "absbbssbb@gmail.com",
-      "password": "$2a$10$sjX/Mi.PyMNbdgyinpPE9.QMOOMeKUCUIfGM0q.xj9gp23Pu1KzK.",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "male",
-      "city": "a",
-      "id": 18
-    },
-    {
-      "email": "aa@gmail.com",
-      "password": "$2a$10$dHhb5ViRs.Dh16W/z8kLcOLwfboBC5eVSTIGJmnMcBZE63On8ViUK",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "female",
-      "city": "a",
-      "id": 19
-    },
-    {
-      "email": "aaa@gmail.com",
-      "password": "$2a$10$9QemLa0jw4uy9nJCcSpnfekzcAHxSn7eSTcX5msJGJqGsQkE8Nv5q",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "female",
-      "city": "a",
-      "id": 20
-    },
-    {
-      "email": "aaaa@gmail.com",
-      "password": "$2a$10$FO/D5wDU15w/FIT.ELOGJOW6ip/miv71iww1EvpfIIwJ0ID5EXyzi",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "female",
-      "city": "a",
-      "id": 21
-    },
-    {
-      "email": "abasbbssbb@gmail.com",
-      "password": "$2a$10$gtr6gdMjvRKRFJTiYXrJje54XT/Vo2ZpqCUYKbnDXrs/4K6BX/Vi.",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "male",
-      "city": "a",
-      "id": 22
-    },
-    {
-      "email": "abasbssssbb@gmail.com",
-      "password": "$2a$10$bcuYvip0sevaM5CxZIZI/eXm/qHC3jC499AcT7w1S6CKea26X8MuW",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "male",
-      "city": "a",
-      "id": 23
-    },
-    {
-      "email": "aq@gmail.com",
-      "password": "$2a$10$EWBKcCDVB8Cb2GB7GxOMhewaTtJXA68yTU6GexYm6jQzZ76V9phMS",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "male",
-      "city": "a",
-      "id": 24
-    },
-    {
-      "email": "aaq@gmail.com",
-      "password": "$2a$10$e8Z2G3d3vSRLzP7bnUg6/e/etzKJeecIJ68MNYe7vlDeyzyb5AFmu",
-      "firstName": "N",
-      "lastName": "n",
-      "nickname": "N",
-      "gender": "female",
-      "city": "a",
-      "id": 25
-    },
-    {
-      "email": "123124@gmail.com",
-      "password": "$2a$10$rF3agkLm8U8CaphRWnTSzehrDS4FP6xCKgVzKcgVVQJ8Fz5UAj7IO",
-      "firstName": "Pavlo",
-      "lastName": "Butyn",
-      "nickname": "q",
-      "gender": "male",
-      "city": "1",
-      "id": 26
-    },
-    {
-      "email": "1231224@gmail.com",
-      "password": "$2a$10$Jtg7apqUGxnZS3Hyn1X.Te/4vmKdBLOLGuIEusOV.Ji0.ysP3TNQq",
-      "firstName": "Pavlo",
-      "lastName": "Butyn",
-      "nickname": "q",
-      "gender": "male",
-      "city": "1",
-      "id": 27
-    },
-    {
-      "email": "vvv@gmail.com",
-      "password": "$2a$10$T.Fbg0yiQOnGJDQuBSNNWOu8oxM6JMBVfv6zU34JOUy9He1H/Oyu6",
-      "firstName": "Vikctor",
-      "lastName": "loh",
-      "nickname": "123321",
-      "gender": "female",
-      "city": "a",
-      "id": 28
-    },
-    {
-      "email": "viktorpekhun@gmail.com",
-      "password": "$2a$10$8gqVcRKiVgpMyxxTBjNtS.Nhq17bCl7zZcp0r.eNtGE2m0RQbo02i",
-      "firstName": "Viktor",
-      "lastName": "Pekhun",
-      "nickname": "ewewe",
-      "gender": "other",
-      "city": "ggdgd",
-      "id": 29
-    },
-    {
-      "email": "aaaaaaa@gmail.com",
-      "password": "$2a$10$N6/GPcpF7Fn6LnIg3R5GW.Mx3prIZaUqpb6Q6PSGkcmxLBv8TyIqO",
-      "firstName": "Pavlo",
-      "lastName": "Butynets",
-      "nickname": "rrr",
-      "gender": "male",
-      "city": "Львів",
-      "id": 30
-    },
-    {
-      "email": "1a@gmail.com",
-      "password": "$2a$10$3kI0SF9ZO.AnM9WuiBgG8.8cTpGRhwFiuWYSXH1glMVAzFtRG.6DW",
-      "firstName": "Pavlo",
-      "lastName": "Butynets",
-      "nickname": "rrr",
-      "gender": "male",
-      "city": "Львів",
-      "id": 31
-    },
-    {
-      "email": "pavlob@gmail.com",
-      "password": "$2a$10$OwupaUrwL1OCPEbn7unExuXZxmyOU1KkGmzrBP/r35yrpt0cIncjy",
-      "firstName": "Pavlo",
-      "lastName": "Butynets",
-      "nickname": "rrr",
-      "gender": "male",
-      "city": "Львів",
-      "id": 32
-    },
-    {
-      "email": "pavloB@gmail.com",
-      "password": "$2a$10$X2XDvTza2vkWzY04aapTa.FP7Cj4g5IOlO5gAdJZ3BeoxUS8DPSoG",
-      "firstName": "Pavlo",
-      "lastName": "Butynets",
-      "nickname": "Pavlo",
-      "gender": "male",
-      "city": "Львів",
-      "id": 33
+      "eventID": 5,
+      "eventName": "Film ",
+      "location": "Lviv",
+      "latitude": 49.807816544945574,
+      "longitude": 23.977995666545425
     }
   ]
 }
