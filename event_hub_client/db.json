@@ -1,0 +1,51 @@
+{
+  "users": [
+    {
+      "email": "pbutynez@gmail.com",
+      "password": "$2a$10$UIMp2mAEZDv52Vcw7ONJA.kX/gHwH2fSsKjtWASKImx2U41xv4j1a",
+      "firstName": "Pavlo",
+      "lastName": "Butynets",
+      "nickname": "sofia",
+      "gender": "male",
+      "city": "Львів",
+      "id": 1
+    }
+  ],
+  "eventData": [
+    {
+      "eventID": 1,
+      "eventName": "Concert in the Park",
+      "location": "Lviv",
+      "latitude": 49.839019,
+      "longitude": 24.020853
+    },
+    {
+      "eventID": 2,
+      "eventName": "Food Festival",
+      "location": "Lviv",
+      "latitude": 49.823001,
+      "longitude": 24.022161
+    },
+    {
+      "eventID": 3,
+      "eventName": "Art Exhibition",
+      "location": "Lviv",
+      "latitude": 49.811598,
+      "longitude": 24.062853
+    },
+    {
+      "eventID": 4,
+      "eventName": "Historical Tour",
+      "location": "Lviv",
+      "latitude": 49.842636,
+      "longitude": 24.030208
+    },
+    {
+      "eventID": 5,
+      "eventName": "Film ",
+      "location": "Lviv",
+      "latitude": 49.807816544945574,
+      "longitude": 23.977995666545425
+    }
+  ]
+}
