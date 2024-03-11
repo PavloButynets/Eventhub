@@ -38,6 +38,8 @@ public class EventMapper {
                 .description(event.getDescription())
                 .participantCount(event.getParticipantCount())
                 .location(event.getLocation())
+                .latitude(event.getLatitude())
+                .longitude(event.getLongitude())
                 .state(getState(event))
                 .categoryResponses(event.getCategories()
                         .stream()
@@ -61,6 +63,8 @@ public class EventMapper {
         event.setExpireAt(eventRequest.getExpireAt());
         event.setDescription(eventRequest.getDescription());
         event.setLocation(eventRequest.getLocation());
+        event.setLatitude(eventRequest.getLatitude());
+        event.setLongitude(eventRequest.getLongitude());
         event.setParticipantCount(eventRequest.getCurrentCount());
         event.setCategories(eventRequest.getCategoryRequests().stream()
                 .map(categoryRequest -> categoryService.getByName(categoryRequest.getName()))

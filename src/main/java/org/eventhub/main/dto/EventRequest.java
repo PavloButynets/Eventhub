@@ -2,9 +2,13 @@ package org.eventhub.main.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
+import jakarta.persistence.Column;
+
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -39,10 +43,17 @@ public class EventRequest {
     private String location;
 
     @NotNull
+    private BigDecimal latitude;
+
+    @NotNull
+    private BigDecimal longitude;
+
+    @NotNull
     private int currentCount;
 
     @NotNull
     private boolean withOwner;
+  
     @NotNull
     private List<CategoryRequest> categoryRequests;
 
@@ -52,13 +63,15 @@ public class EventRequest {
 
     public EventRequest(){}
 
-    public EventRequest(String title, int maxParticipants, LocalDateTime startAt, LocalDateTime expireAt, String description, String location, boolean withOwner, List<CategoryRequest> categoryRequests, UUID ownerId) {
+    public EventRequest(String title, int maxParticipants, LocalDateTime startAt, LocalDateTime expireAt, String description, String location, BigDecimal latitude, BigDecimal longitude, boolean withOwner, List<CategoryRequest> categoryRequests, UUID ownerId) {
         this.title = title;
         this.maxParticipants = maxParticipants;
         this.startAt = startAt;
         this.expireAt = expireAt;
         this.description = description;
         this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.withOwner = withOwner;
         this.currentCount = 0;
         this.categoryRequests = categoryRequests;
@@ -66,13 +79,15 @@ public class EventRequest {
 
     }
 
-    public EventRequest(String title, int maxParticipants, LocalDateTime startAt, LocalDateTime expireAt, String description, String location, int current_count, boolean withOwner, List<CategoryRequest> categoryRequests, UUID ownerId) {
+    public EventRequest(String title, int maxParticipants, LocalDateTime startAt, LocalDateTime expireAt, String description, String location, BigDecimal latitude, BigDecimal longitude, int current_count, boolean withOwner, List<CategoryRequest> categoryRequests, UUID ownerId) {
         this.title = title;
         this.maxParticipants = maxParticipants;
         this.startAt = startAt;
         this.expireAt = expireAt;
         this.description = description;
         this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.withOwner = withOwner;
         this.currentCount = current_count;
         this.categoryRequests = categoryRequests;

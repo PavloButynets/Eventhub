@@ -5,6 +5,9 @@ import jakarta.validation.constraints.*;
 import lombok.*;
 import org.hibernate.engine.internal.Cascade;
 
+import org.hibernate.engine.internal.Cascade;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -59,6 +62,14 @@ public class Event {
     @NotNull
     @Column(name = "location")
     private String location;
+
+    @NotNull
+    @Column(name = "latitude", precision = 8, scale = 6)
+    private BigDecimal latitude;
+
+    @NotNull
+    @Column(name = "longitude", precision = 9, scale = 6)
+    private BigDecimal longitude;
 
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<Photo> photos;
