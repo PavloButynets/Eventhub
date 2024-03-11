@@ -4628,6 +4628,7 @@ INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at
 INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, location, latitude, longitude, owner_id, embedding_id) VALUES ('d0fbbdff-6469-491e-88fa-3b5912b6cc1c', 'Пиво в Броварах', 50, '2025-09-16 14:00:11.480271','2022-10-16 14:00:11.480271','2026-09-16 14:30:04.810221', 'Вживаємо пиво до схочу, кількість обмежена, дрескод - смокінг і спортивки',  1, 'Бровари', 50.507848, 30.795741, '7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc', 'c45e9c9a-0cef-4eee-8ce3-e3a9d89b5565');
 INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, location, latitude, longitude, owner_id, embedding_id) VALUES ('c23a3e3b-7f3c-4cd5-a575-551bc0a58d58', 'Дурдом 5', 22, '2020-09-16 14:00:16.351238', '2020-11-16 14:00:16.351238','2021-09-16 14:30:04.810221', 'Хто вважає себе псіхом - приходьте, будемо веселитись.', 1, 'Барановічі', 37.7749, -122.4194, 'd878867a-fb11-4b24-b87b-18d94feafa18', 'bb5fd016-1c0a-4365-a11f-c099ec506933');
 
+
 INSERT INTO photos (id, photo_name, photo_url) VALUES ('80691a78-29db-47d1-a244-6fe7f05b89a8', 'userPhoto 1', 'Photo 1 Url');
 INSERT INTO photos (id, photo_name, photo_url) VALUES ('8673b573-b6c0-4b4d-ad69-3b707cb12184', 'eventPhoto 2', 'Photo 2 Url');
 INSERT INTO photos (id, photo_name, photo_url) VALUES ('1bf2051b-5b01-4d0c-9b3d-e659baa8c85d', 'userPhoto 3', 'Photo 3 Url');

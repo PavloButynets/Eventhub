@@ -2,7 +2,9 @@ package org.eventhub.main.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import jakarta.persistence.Column;
+
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -51,6 +53,7 @@ public class EventRequest {
 
     @NotNull
     private boolean withOwner;
+  
     @NotNull
     private List<CategoryRequest> categoryRequests;
 
