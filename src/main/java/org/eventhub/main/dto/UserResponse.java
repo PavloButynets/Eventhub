@@ -2,6 +2,7 @@ package org.eventhub.main.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,12 +28,13 @@ public class UserResponse {
     private String city;
     private LocalDate birthDate;
     private Gender gender;
-
+    @NotNull
+    List<PhotoResponse> photoResponses;
     public UserResponse(){
 
     }
 
-    public UserResponse(UUID id, String firstName, String lastName, String username, String email, String description, LocalDateTime createdAt, String city, LocalDate birthDate, Gender gender) {
+    public UserResponse(UUID id, String firstName, String lastName, String username, String email, String description, LocalDateTime createdAt, String city, LocalDate birthDate, Gender gender, List<PhotoResponse> photoResponses) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,6 +45,7 @@ public class UserResponse {
         this.city = city;
         this.birthDate = birthDate;
         this.gender = gender;
+        this.photoResponses = photoResponses;
     }
 
 }
