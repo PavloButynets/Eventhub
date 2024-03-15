@@ -60,10 +60,11 @@ public class EventResponse {
     @NotNull
     private List<CategoryResponse> categoryResponses;
 
+    @NotNull List<PhotoResponse> photoResponses;
     public EventResponse() {
     }
 
-    public EventResponse(UUID id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, State state, String location, BigDecimal latitude, BigDecimal longitude, UUID ownerId, List<CategoryResponse> categoryResponses) {
+    public EventResponse(UUID id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, State state, String location, BigDecimal latitude, BigDecimal longitude, UUID ownerId, List<CategoryResponse> categoryResponses, List<PhotoResponse> photoResponses) {
         this.id = id;
         this.title = title;
         this.maxParticipants = maxParticipants;
@@ -78,5 +79,6 @@ public class EventResponse {
         this.longitude = longitude;
         this.ownerId = ownerId;
         this.categoryResponses = categoryResponses;
+        this.photoResponses = photoResponses;
     }
 }

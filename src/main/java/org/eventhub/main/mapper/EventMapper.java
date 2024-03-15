@@ -8,6 +8,7 @@ import org.eventhub.main.model.Event;
 import org.eventhub.main.model.State;
 import org.eventhub.main.service.CategoryService;
 import org.eventhub.main.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,10 +19,14 @@ public class EventMapper {
     UserService userService;
     CategoryService categoryService;
     CategoryMapper categoryMapper;
-    public EventMapper(UserService userService, CategoryService categoryService, CategoryMapper categoryMapper) {
+    PhotoMapper photoMapper;
+
+    @Autowired
+    public EventMapper(UserService userService, CategoryService categoryService, CategoryMapper categoryMapper, PhotoMapper photoMapper) {
         this.userService = userService;
         this.categoryService = categoryService;
         this.categoryMapper = categoryMapper;
+        this.photoMapper = photoMapper;
     }
 
     public EventResponse entityToResponse(Event event) {
@@ -45,7 +50,10 @@ public class EventMapper {
                         .stream()
                         .map(categoryMapper::entityToResponse)
                         .collect(Collectors.toList()))
-
+                .photoResponses(event.getPhotos()
+                        .stream()
+                        .map(photoMapper::entityToResponse)
+                        .collect(Collectors.toList()))
                 .ownerId(event.getOwner().getId())
                 .build();
     }
