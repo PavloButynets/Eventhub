@@ -20,7 +20,7 @@ import {
 
 
 const { Option } = Select;
-const REGISTER_URL = '/users'
+const REGISTER_URL = '/authentication/register'
 
 const formItemLayout = {
   labelCol: {
@@ -58,35 +58,36 @@ const SignUp = () => {
   const navigate = useNavigate();
 
  
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
   const [password, setPassword] = useState('');
-  const [nickname, setNickname] = useState('');
+  const [username, setNickname] = useState('');
   const [gender, setGender] = useState('');
   const [city, setCity] = useState('');
   const [email, setEmail] = useState('');
 
 
   const handleSubmit = async()=>{
-    
      const userData = {
-        firstName,
-        lastName,
-        password,
-        nickname,
-        gender,
-        city,
-        email,
-     }
+      first_name ,
+      last_name,
+      username,
+      email,
+      password,
+      description: "description 1",
+      phone_number: "0162609247",
+      city,
+      birth_date: "1990-09-11",
+      gender: "MALE"
+  }
      try{
       
       const res = await axios.post(REGISTER_URL, userData, 
         {
           headers:{'Content-Type':'application/json'},
-          withCredentials: true
         }
       );
-      const accessToken = res?.data?.accessToken;
+      const accessToken = res?.data?.token;
       localStorage.setItem("token", accessToken);
       console.log(res)
       console.log('Response:', res.data);
@@ -109,10 +110,10 @@ const SignUp = () => {
           // Користувач не авторизований
           message.error('Unauthorized: Please check your credentials.');
           break;
-        case 403:
-          // Доступ заборонено
-          message.error('Forbidden: You do not have permission to access this resource.');
-          break;
+        // case 403:
+        //   // Доступ заборонено
+        //   message.error('Forbidden: You do not have permission to access this resource.');
+        //  break;
         case 404:
           // URL не знайдено
           message.error('Not Found: The requested resource was not found.');
@@ -203,7 +204,7 @@ const SignUp = () => {
         rules={[
           {
             required: true,
-            validator: checkPassword,
+            //validator: checkPassword,
           },
         ]}
         hasFeedback

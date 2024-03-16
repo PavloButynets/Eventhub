@@ -56,6 +56,9 @@ const Map = ({ center }) => {
     setSelectedEvent(event);
   };
 
+  const onMapClick = () => {
+    setSelectedEvent(null);
+  };
   return (
     <div className={styles.mapcontainer}>
       <GoogleMap
@@ -65,16 +68,19 @@ const Map = ({ center }) => {
         onLoad={onLoad}
         onUnmount={onUnmount}
         options={defaultOption}
+        onClick={onMapClick}
       >
 
         <></>
-        {events.map(event => (
+        {events && events.map(event => (
           <Marker
             key={event.eventID}
             position={{ lat: Number(event.latitude), lng: Number(event.longitude) }}
 
-            icon={{ url: '/images/pin.svg', scaledSize: new window.google.maps.Size(40, 40) }}
-            onClick={() => onMarkerClick(event)}
+            icon={{ url: '/images/pin.svg', 
+            scaledSize: new window.google.maps.Size(40, 40) }}
+            onClick={() => onMarkerClick(event)
+            }
           />
         ))}
         {selectedEvent && (
@@ -83,7 +89,7 @@ const Map = ({ center }) => {
             onCloseClick={() => setSelectedEvent(null)} 
           >
             <div>
-              <h3>{selectedEvent.eventName}</h3>
+              <h3>{selectedEvent.title}</h3>
               <p>{selectedEvent.location}</p>
             </div>
           </InfoWindow>
