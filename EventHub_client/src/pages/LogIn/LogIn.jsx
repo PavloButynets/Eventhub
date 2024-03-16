@@ -7,7 +7,7 @@ import {Button, Checkbox, Form, Input, message} from 'antd';
 import {checkEmail} from "../SignUp/validation";
 
 
-const REGISTER_URL = '/login'
+const REGISTER_URL = '/authentication/login'
 const LogIn = () => {
 
     const [email, setEmail] = useState('');
@@ -19,9 +19,8 @@ const LogIn = () => {
                 email, password
             }, {
                 headers:{'Content-Type':'application/json'},
-                withCredentials: true
             });
-            const accessToken = res?.data?.accessToken;
+            const accessToken = res?.data?.token;
             localStorage.setItem("token", accessToken);
             console.log(res.data)
 

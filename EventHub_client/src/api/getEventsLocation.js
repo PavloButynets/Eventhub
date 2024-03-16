@@ -1,6 +1,7 @@
 import axios from "./axios"
 
-const DATA_URL =  '/eventData'
+//const DATA_URL =  '/eventData'
+const DATA_URL = "/users/events"
 
 export const getEventsData = async() =>{
 
