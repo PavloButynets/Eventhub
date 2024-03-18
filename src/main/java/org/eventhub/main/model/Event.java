@@ -9,6 +9,7 @@ import org.hibernate.engine.internal.Cascade;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -72,7 +73,7 @@ public class Event {
     private BigDecimal longitude;
 
     @OneToMany(cascade = CascadeType.REMOVE)
-    private List<Photo> photos;
+    private List<Photo> photos = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
