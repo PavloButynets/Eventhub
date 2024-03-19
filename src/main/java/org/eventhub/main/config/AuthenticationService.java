@@ -21,13 +21,14 @@ import java.net.PasswordAuthentication;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
 
     public AuthenticationResponce register(UserRequest request) {
+        request.setPassword(passwordEncoder.encode(request.getPassword()));
         UserResponse userResponse = userService.create(request);
         var user = userRepository.findByEmail(request.getEmail());
 
