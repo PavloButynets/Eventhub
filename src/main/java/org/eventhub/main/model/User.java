@@ -13,10 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -83,7 +80,7 @@ public class User implements UserDetails {
     private List<Participant> userParticipants;
 
     @OneToMany(cascade = CascadeType.REMOVE)
-    private List<Photo> profileImages;
+    private List<Photo> profileImages = new ArrayList<>();
 
 //    @Enumerated(EnumType.STRING)
 //    Role role;
