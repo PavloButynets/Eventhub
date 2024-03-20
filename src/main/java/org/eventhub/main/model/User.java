@@ -44,14 +44,14 @@ public class User implements UserDetails {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Pattern(regexp = "[A-Za-z\\d]{6,}",
-            message = "Must be minimum 6 symbols long, using digits and latin letters")
-    @Pattern(regexp = ".*\\d.*",
-            message = "Must contain at least one digit")
-    @Pattern(regexp = ".*[A-Z].*",
-            message = "Must contain at least one uppercase letter")
-    @Pattern(regexp = ".*[a-z].*",
-            message = "Must contain at least one lowercase letter")
+//    @Pattern(regexp = "[A-Za-z\\d]{6,}",
+//            message = "Must be minimum 6 symbols long, using digits and latin letters")
+//    @Pattern(regexp = ".*\\d.*",
+//            message = "Must contain at least one digit")
+//    @Pattern(regexp = ".*[A-Z].*",
+//            message = "Must contain at least one uppercase letter")
+//    @Pattern(regexp = ".*[a-z].*",
+//            message = "Must contain at least one lowercase letter")
     @Column(name = "password", nullable = false)
     private String password;
 
