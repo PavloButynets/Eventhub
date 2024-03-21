@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @RestController
 @Slf4j
-@RequestMapping("/users/{user_id}")
+@RequestMapping
 public class PhotoController {
     private final PhotoService photoService;
 
@@ -73,7 +73,7 @@ public class PhotoController {
         return new ResponseEntity<>(this.photoService.uploadEventPhotos(eventId, files), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/photos/{photo_id}")
+    @DeleteMapping("/users/{user_id}/photos/{photo_id}")
     public ResponseEntity<OperationResponse> deleteProfileImage(@PathVariable("photo_id") UUID photoId,
                                                                 @PathVariable("user_id") UUID userId) {
         log.info("**/deleted user(id) = " + photoId.toString());
@@ -81,7 +81,7 @@ public class PhotoController {
         return new ResponseEntity<>(new OperationResponse("Photo id:" + photoId + " deleted successfully"), HttpStatus.OK);
     }
 
-    @PostMapping("/photos/upload")
+    @PostMapping("/users/{user_id}/photos/upload")
     public ResponseEntity<PhotoResponse> uploadProfileImage(@PathVariable(name = "user_id") UUID userId,
                                                                  @RequestPart("file") MultipartFile file){
         log.info("Uploading photos");

@@ -4,11 +4,14 @@ import org.eventhub.main.dto.UserResponse;
 import org.eventhub.main.dto.UserRequest;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
+import org.eventhub.main.model.Photo;
 import org.eventhub.main.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,7 +62,6 @@ public class UserMapper {
         user.setCity(userRequest.getCity());
         user.setBirthDate(userRequest.getBirthDate());
         user.setGender(userRequest.getGender());
-
         return user;
     }
 }
