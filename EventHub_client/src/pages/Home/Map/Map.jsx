@@ -94,7 +94,10 @@ const Map = ({ center }) => {
             </div>
           </InfoWindow>
         )}
+
+        
       </GoogleMap>
+      
     </div>
   );
 }

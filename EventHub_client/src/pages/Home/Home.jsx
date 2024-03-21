@@ -12,6 +12,7 @@ import SearchInput from  "./Search/Search"
 import CreateEventButton from './CreateEvent/CreateEventButton'
 import EventFilter from "./Filter/Filter";
 import MyEvents from './MyEvents/MyEvents'
+import EventInfoSideBar from "./EventInfoSideBar/EventInfoSideBar";
 
 const MAP_API_KEY =  process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
@@ -45,6 +46,7 @@ const Home = () => {
       ) : (
         <h1>Loading</h1>
       )}
+      <EventInfoSideBar />
     </div>
   );
 }
