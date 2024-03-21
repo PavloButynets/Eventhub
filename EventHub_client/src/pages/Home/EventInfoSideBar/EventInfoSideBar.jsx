@@ -33,6 +33,16 @@ const EventInfoSideBar = ({event}) => {
                 </div>) :
                 (<img className={styles['event-photo']} src='https://eventhub12.blob.core.windows.net/images/default.jpg?sp=r&st=2024-03-18T06:52:24Z&se=2024-03-24T14:52:24Z&spr=https&sv=2022-11-02&sr=b&sig=nWb0Dzb9%2FWPfAZ6X5MRrwoi%2FxHU8OLe0I6nPtwpBkbQ%3D' alt='Event img' />)
             }
+
+            <div className={styles['category-container']}>
+                {event.category_responses.map((category) => (
+                    <div className={styles['category']}>{category.name}</div>
+                ))}
+            </div>
+
+            <div className={styles['date-container']}>
+                
+            </div>
         </div>
      );
 }
