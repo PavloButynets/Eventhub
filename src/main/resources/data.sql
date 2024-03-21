@@ -6180,7 +6180,8 @@ INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at
 --INSERT INTO photos (id, photo_name, photo_url) VALUES ('8673b573-b6c0-4b4d-ad69-3b707cb12184', 'eventdefault', 'eventdefault.png');
 --INSERT INTO photos (id, photo_name, photo_url) VALUES ('1bf2051b-5b01-4d0c-9b3d-e659baa8c85d', 'userPhoto 3', 'Photo 3 Url');
 
-
+INSERT INTO photos(id, photo_name, photo_url) VALUES ('80691a78-29db-47d1-a244-6fe7f05b89a8','eventDefaultImage','https://eventhubproject.blob.core.windows.net/images/eventDefaultImage.png');
+INSERT INTO photos(id, photo_name, photo_url) VALUES ('1bf2051b-5b01-4d0c-9b3d-e659baa8c85d','userDefaultImage','https://eventhubproject.blob.core.windows.net/userimages/userDefaultImage.jpg');
 
 INSERT INTO event_categories (event_id, category_id) VALUES ('94597192-f3e0-437a-9098-0e21c4abd792', 'd40fbb2f-64ee-4d1f-92a2-c303d047f2dc');
 INSERT INTO event_categories (event_id, category_id) VALUES ('94597192-f3e0-437a-9098-0e21c4abd792', 'a4d7caf9-50fa-499b-a4ce-19cd5790f686');

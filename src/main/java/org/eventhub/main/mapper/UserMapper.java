@@ -1,10 +1,14 @@
 package org.eventhub.main.mapper;
 
+import org.eventhub.main.dto.PhotoResponse;
 import org.eventhub.main.dto.UserResponse;
 import org.eventhub.main.dto.UserRequest;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
+import org.eventhub.main.model.Photo;
 import org.eventhub.main.model.User;
+import org.eventhub.main.repository.PhotoRepository;
+import org.eventhub.main.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +18,17 @@ import java.util.stream.Collectors;
 @Service
 public class UserMapper {
     private final PhotoMapper photoMapper;
+    private final PhotoRepository photoRepository;
     @Autowired
-    public UserMapper(PhotoMapper photoMapper){
+    public UserMapper(PhotoMapper photoMapper, PhotoRepository photoRepository){
         this.photoMapper = photoMapper;
+        this.photoRepository = photoRepository;
     }
     public UserResponse entityToResponse(User user) {
         if (user == null) {
             throw new NullEntityReferenceException("User can't be found");
         }
-
-        return UserResponse.builder()
+        UserResponse response = UserResponse.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
@@ -39,6 +44,11 @@ public class UserMapper {
                         .map(photoMapper::entityToResponse)
                         .collect(Collectors.toList()))
                 .build();
+        if(response.getPhotoResponses().isEmpty()){
+            Photo photo = photoRepository.findPhotoByPhotoName("userDefaultImage");
+            response.getPhotoResponses().add(photoMapper.entityToResponse(photo));
+        }
+        return response;
     }
 
     public User requestToEntity(UserRequest userRequest, User user) {
