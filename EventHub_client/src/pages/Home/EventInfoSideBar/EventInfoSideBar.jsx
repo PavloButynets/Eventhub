@@ -77,6 +77,10 @@ const EventInfoSideBar = ({event}) => {
                 </div>
                 <MdOutlineDateRange />
             </div>
+            <h3 className={styles['participants-text']}>Participants</h3>
+            <div className={styles['participant-container']}>
+                
+            </div>
         </div>
      );
 }
