@@ -4,6 +4,7 @@ import { GoogleMap, Marker,InfoWindow } from '@react-google-maps/api';
 import styles from './Map.module.css'
 import { EnvironmentOutlined } from '@ant-design/icons';
 import { light } from "./Theme"
+import EventInfoSideBar from '../EventInfoSideBar/EventInfoSideBar';
 
 
 
@@ -61,6 +62,7 @@ const Map = ({ center }) => {
   };
   return (
     <div className={styles.mapcontainer}>
+      {selectedEvent && <EventInfoSideBar event = {selectedEvent} />}
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
@@ -72,6 +74,7 @@ const Map = ({ center }) => {
       >
 
         <></>
+        
         {events && events.map(event => (
           <Marker
             key={event.eventID}

@@ -1,0 +1,15 @@
+.side-bar-container {
+    width: 376px;
+    height: 896px;
+    border: solid;
+    padding: 10px;
+    z-index: 999;
+    right: 0;
+    top: 10%;
+    position: absolute;
+}
+
+.event-photo {
+    width: 350px;
+    height: 190px;
+}

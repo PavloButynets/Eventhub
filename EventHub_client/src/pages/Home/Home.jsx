@@ -46,7 +46,7 @@ const Home = () => {
       ) : (
         <h1>Loading</h1>
       )}
-      <EventInfoSideBar />
+      {/* <EventInfoSideBar /> */}
     </div>
   );
 }
