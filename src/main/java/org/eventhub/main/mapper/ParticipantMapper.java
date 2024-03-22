@@ -52,12 +52,12 @@ public class ParticipantMapper {
         return participant;
     }
 
-    public ParticipantWithPhotoResponse responseToPhotoResponse(ParticipantResponse participantResponse) {
+    public ParticipantWithPhotoResponse entityToPhotoResponse(Participant participant) {
 
         return ParticipantWithPhotoResponse.builder()
-                .id(participantResponse.getId())
-                .userId(participantResponse.getUserId())
-                .photoUrl(userService.readById(participantResponse.getUserId()).getPhotoResponses().get(0).getPhotoUrl())
+                .id(participant.getId())
+                .userId(participant.getUser().getId())
+                .photoUrl(userService.readById(participant.getUser().getId()).getPhotoResponses().get(0).getPhotoUrl())
                 .build();
     }
 }
