@@ -57,7 +57,7 @@ public class ParticipantController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/photos")
+    @GetMapping
     public ResponseEntity<List<ParticipantResponse>> getByEventId(@PathVariable("event_id") UUID eventId){
         List<ParticipantResponse> responses = participantService.getAllByEventId(eventId);
         log.info("**/get by event id: " + eventId + " participants");
@@ -65,7 +65,7 @@ public class ParticipantController {
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/photos")
     public ResponseEntity<List<ParticipantWithPhotoResponse>> getByEventIdWithPhotos(@PathVariable("event_id") UUID eventId){
         List<ParticipantWithPhotoResponse> responses = participantService.getAllByEventIdWithPhotos(eventId);
         log.info("**/get participants with photos by event id: " + eventId);
