@@ -12,6 +12,7 @@ const EventInfoSideBar = ({event}) => {
     const [participants, setParticipants] = useState([]);
 
     useEffect(() => {
+        
         getParticipantsWithPhotos(event.id)
         .then(data => {
             console.log(data);
@@ -90,7 +91,8 @@ const EventInfoSideBar = ({event}) => {
                 </div>
                 <MdOutlineDateRange />
             </div>
-            <h3 className={styles['participants-text']}>Participants</h3>
+
+            <h3 className={styles['heading']}>Participants</h3>
             <div className={styles['participant-container']}>
                 <div className={styles['participants-photos']}>
                     {participants.map(participant => (
@@ -100,6 +102,15 @@ const EventInfoSideBar = ({event}) => {
                     ))}    
                 </div>
                 <button><IoIosMore /></button>
+            </div>
+
+            <h3 className={styles['heading']}>About this event</h3>
+            <div className={styles['about-container']}>
+                <div className={styles['about-text']}>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Repellendus distinctio obcaecati eos enim ad mollitia ut, iure vitae unde in, recusandae saepe voluptate illo! Culpa rem necessitatibus illo ducimus atque.
+                </div>
+                <button className={styles['show-more']}>Show more</button>
             </div>
             
         </div>

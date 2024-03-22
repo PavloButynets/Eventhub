@@ -15,6 +15,7 @@
     height: 190px;
 }
 
+/* Participants */
 .participants-photos img{
     border: solid;
 }
@@ -22,4 +23,9 @@
 .participants-photos .item img{
     width: 20px;
     height: 20px;
+}
+
+/* About section */
+.about-text {
+    height: 80px;
 }
