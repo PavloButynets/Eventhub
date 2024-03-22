@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.eventhub.main.dto.OperationResponse;
 import org.eventhub.main.dto.ParticipantRequest;
 import org.eventhub.main.dto.ParticipantResponse;
+import org.eventhub.main.dto.ParticipantWithPhotoResponse;
 import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.ResponseStatusException;
 import org.eventhub.main.service.ParticipantService;
@@ -60,6 +61,14 @@ public class ParticipantController {
     public ResponseEntity<List<ParticipantResponse>> getByEventId(@PathVariable("event_id") UUID eventId){
         List<ParticipantResponse> responses = participantService.getAllByEventId(eventId);
         log.info("**/get by event id: " + eventId + " participants");
+
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ParticipantWithPhotoResponse>> getByEventIdWithPhotos(@PathVariable("event_id") UUID eventId){
+        List<ParticipantWithPhotoResponse> responses = participantService.getAllByEventIdWithPhotos(eventId);
+        log.info("**/get participants with photos by event id: " + eventId);
 
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
