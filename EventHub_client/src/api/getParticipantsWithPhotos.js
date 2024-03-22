@@ -1,6 +1,6 @@
 import axios from "./axios"
 
-export const getEventsData = async(eventId) =>{
+export const getParticipantsWithPhotos = async(eventId) =>{
 
     try{
         const response = await axios(`events/${eventId}/participants/photos`)

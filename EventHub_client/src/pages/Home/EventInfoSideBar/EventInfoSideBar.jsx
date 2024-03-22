@@ -3,6 +3,7 @@ import styles from './EventInfoSideBar.module.css'
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
 import { MdOutlineDateRange } from "react-icons/md";
+import {getParticipantsWithPhotos} from '../../../api/getParticipantsWithPhotos';
 
 const EventInfoSideBar = ({event}) => {
 
