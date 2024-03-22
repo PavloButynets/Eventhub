@@ -16,6 +16,13 @@
     height: 190px;
 }
 
+/* Categories */
+.category-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
 /* Participants */
 .participants-photos img{
     border: solid;

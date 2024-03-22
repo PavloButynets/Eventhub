@@ -23,6 +23,8 @@ const EventInfoSideBar = ({event}) => {
         });
     }, [event.id]);
 
+    const ownerParticipant = participants.find(participant => participant.user_id === event.owner_id);
+
     const month = new Map();
     month.set('01', 'Jan');
     month.set('02', 'Feb');
@@ -102,6 +104,7 @@ const EventInfoSideBar = ({event}) => {
 
             <h3 className={styles['heading']}>Participants</h3>
             <div className={styles['participant-container']}>
+                
                 <div className={styles['participants-photos']}>
                     {participants.map(participant => (
                         <div className={styles['item']} key={participant.id}>
