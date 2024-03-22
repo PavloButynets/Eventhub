@@ -14,3 +14,12 @@
     width: 350px;
     height: 190px;
 }
+
+.participants-photos img{
+    border: solid;
+}
+
+.participants-photos .item img{
+    width: 20px;
+    height: 20px;
+}
