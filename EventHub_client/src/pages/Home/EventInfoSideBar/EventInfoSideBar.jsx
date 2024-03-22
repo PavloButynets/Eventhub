@@ -3,6 +3,7 @@ import styles from './EventInfoSideBar.module.css'
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
 import { MdOutlineDateRange } from "react-icons/md";
+import { IoIosMore } from "react-icons/io";
 import {getParticipantsWithPhotos} from '../../../api/getParticipantsWithPhotos';
 
 const EventInfoSideBar = ({event}) => {
@@ -80,8 +81,17 @@ const EventInfoSideBar = ({event}) => {
             </div>
             <h3 className={styles['participants-text']}>Participants</h3>
             <div className={styles['participant-container']}>
-                
+                <div className={styles['participants-photos']}>
+                    {getParticipantsWithPhotos(event.id)
+                    .then(data => data.map(participant => (
+                        <div className={styles['participant-photo']} key={participant.id}>
+                            <img src={participant.photo_url} alt="Participant photo" />
+                        </div>
+                    )))}
+                </div>
+                <button><IoIosMore /></button>
             </div>
+            
         </div>
      );
 }
