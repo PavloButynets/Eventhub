@@ -2,6 +2,7 @@ package org.eventhub.main.service;
 
 import org.eventhub.main.dto.ParticipantRequest;
 import org.eventhub.main.dto.ParticipantResponse;
+import org.eventhub.main.dto.ParticipantWithPhotoResponse;
 import org.eventhub.main.model.Participant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,5 +21,7 @@ public interface ParticipantService {
     void delete(UUID id);
     List<ParticipantResponse> getAll();
     List<ParticipantResponse> getAllByEventId(UUID eventId);
+
+    List<ParticipantWithPhotoResponse> getAllByEventIdWithPhotos(UUID eventId);
     List<ParticipantResponse> getAllRequestsByEventId(UUID eventId);
 }

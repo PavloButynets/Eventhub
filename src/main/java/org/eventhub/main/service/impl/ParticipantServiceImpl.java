@@ -3,6 +3,7 @@ package org.eventhub.main.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.ParticipantRequest;
 import org.eventhub.main.dto.ParticipantResponse;
+import org.eventhub.main.dto.ParticipantWithPhotoResponse;
 import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
@@ -123,6 +124,16 @@ public class ParticipantServiceImpl implements ParticipantService {
                 .stream()
                 .filter(Participant::isApproved)
                 .map(participantMapper::entityToResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ParticipantWithPhotoResponse> getAllByEventIdWithPhotos(UUID eventId) {
+        Event event = eventService.readByIdEntity(eventId);
+        return event.getParticipants()
+                .stream()
+                .filter(Participant::isApproved)
+                .map(participantMapper::entityToPhotoResponse)
                 .collect(Collectors.toList());
     }
 
