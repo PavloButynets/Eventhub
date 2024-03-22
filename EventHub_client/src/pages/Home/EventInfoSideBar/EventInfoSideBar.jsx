@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './EventInfoSideBar.module.css'
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
@@ -9,6 +9,15 @@ import {getParticipantsWithPhotos} from '../../../api/getParticipantsWithPhotos'
 const EventInfoSideBar = ({event}) => {
 
     const [photoIndex, setPhotoIndex] = useState(0);
+    const [participants, setParticipants] = useState([]);
+
+    useEffect(() => {
+        getParticipantsWithPhotos(event.id)
+        .then(data => {
+            console.log(data);
+            setParticipants(data)
+        });
+    }, [event.id]);
 
     const month = new Map();
     month.set('01', 'Jan');
@@ -35,6 +44,8 @@ const EventInfoSideBar = ({event}) => {
             setPhotoIndex(prev => prev - 1);
         }
     }
+
+    
 
     return ( 
         <div className={styles['side-bar-container']}>
@@ -82,12 +93,11 @@ const EventInfoSideBar = ({event}) => {
             <h3 className={styles['participants-text']}>Participants</h3>
             <div className={styles['participant-container']}>
                 <div className={styles['participants-photos']}>
-                    {getParticipantsWithPhotos(event.id)
-                    .then(data => data.map(participant => (
-                        <div className={styles['participant-photo']} key={participant.id}>
-                            <img src={participant.photo_url} alt="Participant photo" />
+                    {participants.map(participant => (
+                        <div className={styles['item']} key={participant.id}>
+                            <img src={participant.photo_url} alt="Participant Img" />
                         </div>
-                    )))}
+                    ))}    
                 </div>
                 <button><IoIosMore /></button>
             </div>
