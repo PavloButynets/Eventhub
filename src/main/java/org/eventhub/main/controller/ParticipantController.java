@@ -57,7 +57,7 @@ public class ParticipantController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/photos")
     public ResponseEntity<List<ParticipantResponse>> getByEventId(@PathVariable("event_id") UUID eventId){
         List<ParticipantResponse> responses = participantService.getAllByEventId(eventId);
         log.info("**/get by event id: " + eventId + " participants");
