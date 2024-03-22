@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './EventInfoSideBar.module.css'
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
@@ -10,6 +10,9 @@ const EventInfoSideBar = ({event}) => {
 
     const [photoIndex, setPhotoIndex] = useState(0);
     const [participants, setParticipants] = useState([]);
+    const [isShowMore, setIsShowMore] = useState(false);
+
+    const showMoreBtn = useRef(null);
 
     useEffect(() => {
         
@@ -44,6 +47,11 @@ const EventInfoSideBar = ({event}) => {
         if (photoIndex > 0) {
             setPhotoIndex(prev => prev - 1);
         }
+    }
+
+    const handleShowMore = () => {
+        setIsShowMore(prev => !prev);
+        showMoreBtn.current.innerHTML = isShowMore ? 'Show more' : 'Show less';
     }
 
     
@@ -106,11 +114,19 @@ const EventInfoSideBar = ({event}) => {
 
             <h3 className={styles['heading']}>About this event</h3>
             <div className={styles['about-container']}>
-                <div className={styles['about-text']}>
+                <div className={styles[isShowMore ? 'about-text-more' : 'about-text']}>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Repellendus distinctio obcaecati eos enim ad mollitia ut, iure vitae unde in, recusandae saepe voluptate illo! Culpa rem necessitatibus illo ducimus atque.
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Repellendus distinctio obcaecati eos enim ad mollitia ut, iure vitae unde in, recusandae saepe voluptate illo! Culpa rem necessitatibus illo ducimus atque.
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    Repellendus distinctio obcaecati eos enim ad mollitia ut, iure vitae unde in, recusandae saepe voluptate illo! Culpa rem necessitatibus illo ducimus atque.
+                    Repellendus distinctio obcaecati eos enim ad mollitia ut, iure vitae unde in, recusandae saepe voluptate illo! Culpa rem necessitatibus illo ducimus atque.
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                     Repellendus distinctio obcaecati eos enim ad mollitia ut, iure vitae unde in, recusandae saepe voluptate illo! Culpa rem necessitatibus illo ducimus atque.
                 </div>
-                <button className={styles['show-more']}>Show more</button>
+                {!isShowMore && (<div className={styles['three-dots']}>...</div>)}
+                <button onClick={handleShowMore} className={styles['show-more-btn']} ref={showMoreBtn}>Show more</button>
             </div>
             
         </div>

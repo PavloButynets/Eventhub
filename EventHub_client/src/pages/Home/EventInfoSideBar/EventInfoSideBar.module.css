@@ -3,11 +3,12 @@
     width: 376px;
     height: 896px;
     border: solid;
-    padding: 10px;
+    padding: 20px;
     z-index: 999;
     right: 0;
     top: 10%;
     position: absolute;
+    overflow: auto;
 }
 
 .event-photo {
@@ -27,5 +28,11 @@
 
 /* About section */
 .about-text {
-    height: 80px;
+    height: 75px;
+    overflow: hidden;
+}
+
+.about-text-more {
+    height: auto;
+    overflow: auto;
 }
