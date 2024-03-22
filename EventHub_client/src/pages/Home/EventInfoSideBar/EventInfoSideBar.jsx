@@ -128,6 +128,13 @@ const EventInfoSideBar = ({event}) => {
                 {!isShowMore && (<div className={styles['three-dots']}>...</div>)}
                 <button onClick={handleShowMore} className={styles['show-more-btn']} ref={showMoreBtn}>Show more</button>
             </div>
+            <div className={styles['lower-container']}>
+                <div className={styles['spots']}>
+                        {event.max_participants - event.participant_count} Spots left
+                </div>
+
+                <button className={styles['action-btn']}>Action</button>
+            </div>
             
         </div>
      );
