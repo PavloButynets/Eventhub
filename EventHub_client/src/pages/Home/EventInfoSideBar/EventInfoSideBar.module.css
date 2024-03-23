@@ -56,7 +56,7 @@
 .participant-container {
     display: flex;
     border: solid;
-    width: 80%;
+    width: 90%;
 }
 
 .participants-photos {
@@ -68,7 +68,7 @@
 }
 
 .owner-photo img {
-    border: solid;;
+    border: solid;
 }
 
 .participants-photos .item {
@@ -80,13 +80,24 @@
 }
 
 .participants-photos .item img{
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
 }
 
 .owner-photo img {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
+}
+
+.show-more-participants {
+    width: 40px;
+    height: 40px;
+    border: solid;
+}
+
+.show-more-participants button {
+    width: 40px;
+    height: 40px;;
 }
 
 /* About section */

@@ -25,7 +25,7 @@ const EventInfoSideBar = ({event}) => {
             setParticipants(data)
             if (data.length > 4) {
                 setIsShowMoreParticipants(true);
-                setParticipantsToShow(data.slice(0,5));
+                setParticipantsToShow(data.slice(0,4));
             }
             else {
                 setParticipantsToShow(data);
@@ -42,6 +42,10 @@ const EventInfoSideBar = ({event}) => {
     useEffect(() => {
         console.log('participants to show: ',participantsToShow);
     }, [participantsToShow]);
+
+    useEffect(() => {
+        console.log('participants: ',participants);
+    }, [participants]);
 
 
     const month = new Map();
@@ -142,7 +146,7 @@ const EventInfoSideBar = ({event}) => {
                             <img src={participant.photo_url} alt="Participant Img" />
                         </div>
                     ))}    
-                    { isShowMoreParticipants && <button><IoIosMore /></button>}
+                    { isShowMoreParticipants && <div className={styles['show-more-participants']}><button ><IoIosMore /></button></div>}
                 </div>
                 
             </div>
