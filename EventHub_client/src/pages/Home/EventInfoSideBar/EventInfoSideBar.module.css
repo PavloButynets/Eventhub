@@ -4,7 +4,7 @@
     height: 896px;
     border: solid;
     padding: 20px;
-    z-index: 999;
+    z-index: 998;
     right: 0;
     top: 10%;
     position: absolute;
@@ -108,5 +108,22 @@
 
 .about-text-more {
     height: auto;
+    overflow: auto;
+}
+
+
+
+
+
+/* Participants list */
+.participants-list-container {
+    width: 376px;
+    height: 896px;
+    border: solid;
+    background-color: #fff;
+    z-index: 999;
+    
+    position: absolute;
+    top: 10%;
     overflow: auto;
 }

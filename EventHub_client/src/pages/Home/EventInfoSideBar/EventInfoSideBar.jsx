@@ -5,6 +5,7 @@ import { SlArrowRight } from "react-icons/sl";
 import { MdOutlineDateRange } from "react-icons/md";
 import { IoIosMore } from "react-icons/io";
 import {getParticipantsWithPhotos} from '../../../api/getParticipantsWithPhotos';
+import ParticipantsList from './ParticipantsList';
 
 const EventInfoSideBar = ({event}) => {
 
@@ -14,6 +15,7 @@ const EventInfoSideBar = ({event}) => {
     const [isOverflowAboutText, setIsOverflowAboutText] = useState(false);
     const [isShowMoreParticipants, setIsShowMoreParticipants] = useState(false);
     const [participantsToShow, setParticipantsToShow] = useState([]);
+    const [showAllParticipants, setShowAllParticipants] = useState(false);
 
     const showMoreBtn = useRef(null);
     const aboutText = useRef(null);
@@ -146,7 +148,7 @@ const EventInfoSideBar = ({event}) => {
                             <img src={participant.photo_url} alt="Participant Img" />
                         </div>
                     ))}    
-                    { isShowMoreParticipants && <div className={styles['show-more-participants']}><button ><IoIosMore /></button></div>}
+                    { isShowMoreParticipants && <div className={styles['show-more-participants']}><button onClick={() => setShowAllParticipants(!showAllParticipants)} ><IoIosMore /></button></div>}
                 </div>
                 
             </div>
@@ -183,6 +185,8 @@ const EventInfoSideBar = ({event}) => {
 
                 <button className={styles['action-btn']}>Action</button>
             </div>
+
+            {showAllParticipants && <ParticipantsList event={event} />}
             
         </div>
      );
