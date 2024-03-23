@@ -7,6 +7,7 @@ import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.model.Participant;
 import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.repository.UserRepository;
+import org.eventhub.main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,13 @@ public class ParticipantMapper {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
 
+    private final UserService userService;
+
     @Autowired
-    public ParticipantMapper(UserRepository userRepository, EventRepository eventRepository){
+    public ParticipantMapper(UserRepository userRepository, EventRepository eventRepository, UserService userService){
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
+        this.userService = userService;
     }
     public ParticipantResponse entityToResponse(Participant participant) {
         if (participant == null) {
@@ -29,6 +33,7 @@ public class ParticipantMapper {
                 .id(participant.getId())
                 .createdAt(participant.getCreatedAt())
                 .userId(participant.getUser().getId())
+                .participantPhoto(userService.readById(participant.getId()).getPhotoResponses().get(0))
                 .build();
     }
 
