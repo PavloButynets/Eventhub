@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 public class ParticipantMapper {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
-
     private final UserService userService;
 
     @Autowired
@@ -33,7 +32,7 @@ public class ParticipantMapper {
                 .id(participant.getId())
                 .createdAt(participant.getCreatedAt())
                 .userId(participant.getUser().getId())
-                .participantPhoto(userService.readById(participant.getId()).getPhotoResponses().get(0))
+                .participantPhoto(userService.readById(participant.getUser().getId()).getPhotoResponses().get(0))
                 .build();
     }
 
