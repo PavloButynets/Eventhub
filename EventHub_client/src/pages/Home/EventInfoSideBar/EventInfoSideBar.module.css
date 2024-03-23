@@ -19,11 +19,62 @@
 /* Categories */
 .category-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    overflow-x: auto;
 }
 
+.category {
+    margin-right: 15px;
+}
+
+/* Date */
+.date-container {
+    margin-top: 10px;
+    display: flex;
+    position: relative;
+}
+
+.start-at {
+    display: flex;
+}
+
+.expire-at {
+    display: flex;
+}
+
+.day {
+    margin-right: 5px;
+}
+
+.date-icon {
+    align-self: center;
+    position: absolute;
+    right: 10px;
+}
 
 /* Participants */
+.participant-container {
+    display: flex;
+    border: solid;
+    width: 80%;
+}
+
+.participants-photos {
+    display: flex;
+}
+
+.owner-photo {
+    margin-right: 10px;
+}
+
+.owner-photo img {
+    border: solid;;
+}
+
+.participants-photos .item {
+    margin-right: 10px;
+}
+
 .participants-photos img{
     border: solid;
 }

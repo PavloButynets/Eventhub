@@ -12,6 +12,7 @@ const EventInfoSideBar = ({event}) => {
     const [participants, setParticipants] = useState([]);
     const [isShowMore, setIsShowMore] = useState(false);
     const [isOverflowAboutText, setIsOverflowAboutText] = useState(false);
+    const [isShowMoreParticipants, setIsShowMoreParticipants] = useState(false);
 
     const showMoreBtn = useRef(null);
     const aboutText = useRef(null);
@@ -21,13 +22,14 @@ const EventInfoSideBar = ({event}) => {
         .then(data => {
             console.log(data);
             setParticipants(data)
+            if (participants.length > 5) {
+                setIsShowMoreParticipants(true);
+            }
         });
         
         if (aboutText.current.scrollHeight > aboutText.current.clientHeight) {
             setIsOverflowAboutText(true);
-            console.log(isOverflowAboutText);
         }
-        console.log(isOverflowAboutText);
     }, [event.id]);
 
 
@@ -67,6 +69,8 @@ const EventInfoSideBar = ({event}) => {
     return ( 
         <div className={styles['side-bar-container']}>
             <h2 className={styles['event-title']}>side-bar-container</h2>
+
+            {/* Photo */}
             {
                 (event.photo_responses.length !== 0) ? 
                 (<div className={styles['photo-container']}>
@@ -79,12 +83,14 @@ const EventInfoSideBar = ({event}) => {
                 (<img className={styles['event-photo']} src='https://eventhub12.blob.core.windows.net/images/default.jpg?sp=r&st=2024-03-18T06:52:24Z&se=2024-03-24T14:52:24Z&spr=https&sv=2022-11-02&sr=b&sig=nWb0Dzb9%2FWPfAZ6X5MRrwoi%2FxHU8OLe0I6nPtwpBkbQ%3D' alt='Event img' />)
             }
 
+            {/* Category */}
             <div className={styles['category-container']}>
                 {event.category_responses.map((category) => (
-                    <div className={styles['category']}>{category.name}</div>
+                    <div key={category.id} className={styles['category']}>{category.name}</div>
                 ))}
             </div>
 
+            {/* Date */}
             <div className={styles['date-container']}>
                 <div className={styles['date-range-container']}>
                     <div className={styles['start-at']}>
@@ -96,6 +102,8 @@ const EventInfoSideBar = ({event}) => {
                         </div>
                     </div>
 
+                    <hr />
+
                     <div className={styles['expire-at']}>
                         <div className={styles['day']}>
                             {month.get(event.expire_at.slice(5,7)) + ' ' + event.expire_at.slice(8,10)}
@@ -105,9 +113,13 @@ const EventInfoSideBar = ({event}) => {
                         </div>
                     </div>
                 </div>
-                <MdOutlineDateRange />
+                <div className={styles['date-icon']}>
+                    <MdOutlineDateRange size='3em' />
+                </div>
+                
             </div>
 
+            {/* Participants */}
             <h3 className={styles['heading']}>Participants</h3>
             <div className={styles['participant-container']}>
                 <div className={styles['owner-photo']}>
@@ -119,10 +131,12 @@ const EventInfoSideBar = ({event}) => {
                             <img src={participant.photo_url} alt="Participant Img" />
                         </div>
                     ))}    
+                    { isShowMoreParticipants && <button><IoIosMore /></button>}
                 </div>
-                <button><IoIosMore /></button>
+                
             </div>
 
+            {/* About section */}
             <h3 className={styles['heading']}>About this event</h3>
             <div className={styles['about-container']}>
                 <div className={styles[isShowMore ? 'about-text-more' : 'about-text']} ref={aboutText}>
@@ -145,6 +159,8 @@ const EventInfoSideBar = ({event}) => {
                 {isOverflowAboutText && !isShowMore && <div className={styles['three-dots']}>...</div>}
                 {isOverflowAboutText &&  <button onClick={handleShowMore} className={styles['show-more-btn']} ref={showMoreBtn}>Show more</button>}
             </div>
+
+            {/* Lower section */}
             <div className={styles['lower-container']}>
                 <div className={styles['spots']}>
                         {event.max_participants - event.participant_count} Spots left
