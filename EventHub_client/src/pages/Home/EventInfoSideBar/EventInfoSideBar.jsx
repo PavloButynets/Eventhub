@@ -11,19 +11,25 @@ const EventInfoSideBar = ({event}) => {
     const [photoIndex, setPhotoIndex] = useState(0);
     const [participants, setParticipants] = useState([]);
     const [isShowMore, setIsShowMore] = useState(false);
+    const [isOverflowAboutText, setIsOverflowAboutText] = useState(false);
 
     const showMoreBtn = useRef(null);
+    const aboutText = useRef(null);
 
     useEffect(() => {
-        
         getParticipantsWithPhotos(event.id)
         .then(data => {
             console.log(data);
             setParticipants(data)
         });
+        
+        if (aboutText.current.scrollHeight > aboutText.current.clientHeight) {
+            setIsOverflowAboutText(true);
+            console.log(isOverflowAboutText);
+        }
+        console.log(isOverflowAboutText);
     }, [event.id]);
 
-    const ownerParticipant = participants.find(participant => participant.user_id === event.owner_id);
 
     const month = new Map();
     month.set('01', 'Jan');
@@ -104,7 +110,9 @@ const EventInfoSideBar = ({event}) => {
 
             <h3 className={styles['heading']}>Participants</h3>
             <div className={styles['participant-container']}>
-                
+                <div className={styles['owner-photo']}>
+                    <img src="https://eventhub12.blob.core.windows.net/images/default.jpg?sp=r&st=2024-03-18T06:52:24Z&se=2024-03-24T14:52:24Z&spr=https&sv=2022-11-02&sr=b&sig=nWb0Dzb9%2FWPfAZ6X5MRrwoi%2FxHU8OLe0I6nPtwpBkbQ%3D" alt="" />
+                </div>
                 <div className={styles['participants-photos']}>
                     {participants.map(participant => (
                         <div className={styles['item']} key={participant.id}>
@@ -117,19 +125,25 @@ const EventInfoSideBar = ({event}) => {
 
             <h3 className={styles['heading']}>About this event</h3>
             <div className={styles['about-container']}>
-                <div className={styles[isShowMore ? 'about-text-more' : 'about-text']}>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Repellendus distinctio obcaecati eos enim ad mollitia ut, iure vitae unde in, recusandae saepe voluptate illo! Culpa rem necessitatibus illo ducimus atque.
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Repellendus distinctio obcaecati eos enim ad mollitia ut, iure vitae unde in, recusandae saepe voluptate illo! Culpa rem necessitatibus illo ducimus atque.
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Repellendus distinctio obcaecati eos enim ad mollitia ut, iure vitae unde in, recusandae saepe voluptate illo! Culpa rem necessitatibus illo ducimus atque.
-                    Repellendus distinctio obcaecati eos enim ad mollitia ut, iure vitae unde in, recusandae saepe voluptate illo! Culpa rem necessitatibus illo ducimus atque.
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Repellendus distinctio obcaecati eos enim ad mollitia ut, iure vitae unde in, recusandae saepe voluptate illo! Culpa rem necessitatibus illo ducimus atque.
+                <div className={styles[isShowMore ? 'about-text-more' : 'about-text']} ref={aboutText}>
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                    e.
                 </div>
-                {!isShowMore && (<div className={styles['three-dots']}>...</div>)}
-                <button onClick={handleShowMore} className={styles['show-more-btn']} ref={showMoreBtn}>Show more</button>
+                {isOverflowAboutText && !isShowMore && <div className={styles['three-dots']}>...</div>}
+                {isOverflowAboutText &&  <button onClick={handleShowMore} className={styles['show-more-btn']} ref={showMoreBtn}>Show more</button>}
             </div>
             <div className={styles['lower-container']}>
                 <div className={styles['spots']}>
