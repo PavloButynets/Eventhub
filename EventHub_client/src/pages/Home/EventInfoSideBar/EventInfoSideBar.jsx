@@ -13,6 +13,7 @@ const EventInfoSideBar = ({event}) => {
     const [isShowMore, setIsShowMore] = useState(false);
     const [isOverflowAboutText, setIsOverflowAboutText] = useState(false);
     const [isShowMoreParticipants, setIsShowMoreParticipants] = useState(false);
+    const [participantsToShow, setParticipantsToShow] = useState([]);
 
     const showMoreBtn = useRef(null);
     const aboutText = useRef(null);
@@ -20,17 +21,27 @@ const EventInfoSideBar = ({event}) => {
     useEffect(() => {
         getParticipantsWithPhotos(event.id)
         .then(data => {
-            console.log(data);
+            console.log('Data: ',data);
             setParticipants(data)
-            if (participants.length > 5) {
+            if (data.length > 4) {
                 setIsShowMoreParticipants(true);
+                setParticipantsToShow(data.slice(0,5));
+            }
+            else {
+                setParticipantsToShow(data);
+            }
+
+            if (aboutText.current.scrollHeight > aboutText.current.clientHeight) {
+                setIsOverflowAboutText(true);
             }
         });
         
-        if (aboutText.current.scrollHeight > aboutText.current.clientHeight) {
-            setIsOverflowAboutText(true);
-        }
+        
     }, [event.id]);
+
+    useEffect(() => {
+        console.log('participants to show: ',participantsToShow);
+    }, [participantsToShow]);
 
 
     const month = new Map();
@@ -126,7 +137,7 @@ const EventInfoSideBar = ({event}) => {
                     <img src="https://eventhub12.blob.core.windows.net/images/default.jpg?sp=r&st=2024-03-18T06:52:24Z&se=2024-03-24T14:52:24Z&spr=https&sv=2022-11-02&sr=b&sig=nWb0Dzb9%2FWPfAZ6X5MRrwoi%2FxHU8OLe0I6nPtwpBkbQ%3D" alt="" />
                 </div>
                 <div className={styles['participants-photos']}>
-                    {participants.map(participant => (
+                    {participantsToShow.map(participant => (
                         <div className={styles['item']} key={participant.id}>
                             <img src={participant.photo_url} alt="Participant Img" />
                         </div>
