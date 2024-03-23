@@ -15,10 +15,12 @@ public class ParticipantResponse {
     private UUID id;
     private LocalDateTime createdAt;
     private UUID userId;
+    private PhotoResponse photoResponse;
 
-    public ParticipantResponse(UUID id, LocalDateTime localDateTime, UUID userId) {
+    public ParticipantResponse(UUID id, LocalDateTime localDateTime, UUID userId, PhotoResponse photoResponse) {
         this.id = id;
         this.createdAt = localDateTime;
         this.userId = userId;
+        this.photoResponse = photoResponse;
     }
 }

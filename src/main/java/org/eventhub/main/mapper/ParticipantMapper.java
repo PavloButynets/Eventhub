@@ -28,8 +28,6 @@ public class ParticipantMapper {
         return ParticipantResponse.builder()
                 .id(participant.getId())
                 .createdAt(participant.getCreatedAt())
-                .isApproved((participant.isApproved()))
-                .eventId(participant.getEvent().getId())
                 .userId(participant.getUser().getId())
                 .build();
     }
