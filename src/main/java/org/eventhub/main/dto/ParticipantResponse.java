@@ -14,15 +14,11 @@ import java.util.UUID;
 public class ParticipantResponse {
     private UUID id;
     private LocalDateTime createdAt;
-    private boolean isApproved;
-    private UUID eventId;
     private UUID userId;
 
-    public ParticipantResponse(UUID id, LocalDateTime localDateTime, boolean isApproved, UUID eventId, UUID userId) {
+    public ParticipantResponse(UUID id, LocalDateTime localDateTime, UUID userId) {
         this.id = id;
         this.createdAt = localDateTime;
-        this.isApproved = isApproved;
-        this.eventId = eventId;
         this.userId = userId;
     }
 }
