@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class EventMapper {
     private final UserService userService;
     private final CategoryService categoryService;
-    private final Photo defaultEventPhoto;
+    private final PhotoRepository photoRepository;
     private final CategoryMapper categoryMapper;
     private final PhotoMapper photoMapper;
 
@@ -30,7 +30,7 @@ public class EventMapper {
     public EventMapper(UserService userService, CategoryService categoryService,PhotoRepository photoRepository ,CategoryMapper categoryMapper, PhotoMapper photoMapper) {
         this.userService = userService;
         this.categoryService = categoryService;
-        this.defaultEventPhoto = photoRepository.findPhotoByPhotoName("eventDefaultImage");
+        this.photoRepository = photoRepository;
         this.categoryMapper = categoryMapper;
         this.photoMapper = photoMapper;
     }
@@ -64,7 +64,8 @@ public class EventMapper {
                 .build();
 
         if(response.getPhotoResponses().isEmpty()){
-            response.getPhotoResponses().add(photoMapper.entityToResponse(this.defaultEventPhoto));
+            Photo photo = photoRepository.findPhotoByPhotoName("eventDefaultImage");
+            response.getPhotoResponses().add(photoMapper.entityToResponse(photo));
         }
         return response;
     }
@@ -89,7 +90,8 @@ public class EventMapper {
             response.setPhotoResponse(photoMapper.entityToResponse(image));
         }
         catch(IndexOutOfBoundsException e){
-            response.setPhotoResponse(photoMapper.entityToResponse(this.defaultEventPhoto));
+            Photo defaultEventPhoto = this.photoRepository.findPhotoByPhotoName("eventDefaultImage");
+            response.setPhotoResponse(photoMapper.entityToResponse(defaultEventPhoto));
         }
         return response;
     }

@@ -32,7 +32,7 @@ public class PhotoMapper {
         BlobServiceSasSignatureValues sasSignatureValues = new BlobServiceSasSignatureValues(expiryTime, sasPermission)
                 .setStartTime(OffsetDateTime.now().minusMinutes(5));
 
-        String sasToken;
+        String sasToken ;
         if(photo.getPhotoName().startsWith("event")) {
             sasToken = blobContainerClientEvent.generateSas(sasSignatureValues);
         }

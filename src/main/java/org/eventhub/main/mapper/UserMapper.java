@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
 @Service
 public class UserMapper {
     private final PhotoMapper photoMapper;
-    private final Photo defaultEventPhoto;
+    private final PhotoRepository photoRepository;
     @Autowired
     public UserMapper(PhotoMapper photoMapper, PhotoRepository photoRepository){
         this.photoMapper = photoMapper;
-        this.defaultEventPhoto = photoRepository.findPhotoByPhotoName("userDefaultImage");
+        this.photoRepository = photoRepository;
     }
     public UserResponse entityToResponse(User user) {
         if (user == null) {
@@ -47,7 +47,8 @@ public class UserMapper {
                         .collect(Collectors.toList()))
                 .build();
         if(response.getPhotoResponses().isEmpty()){
-            response.getPhotoResponses().add(photoMapper.entityToResponse(this.defaultEventPhoto));
+            Photo photo = photoRepository.findPhotoByPhotoName("userDefaultImage");
+            response.getPhotoResponses().add(photoMapper.entityToResponse(photo));
         }
         return response;
     }
