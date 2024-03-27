@@ -151,4 +151,10 @@ public class EventServiceImpl implements EventService {
         Event event = this.readByIdEntity(eventId);
         event.getPhotos().remove(image);
     }
+
+    @Override
+    public EventSearchResponse search(UUID id){
+        Event event = eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
+        return eventMapper.entityToSearchResponse(event);
+    }
 }

@@ -2,6 +2,7 @@ package org.eventhub.main.mapper;
 
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventRequest;
+import org.eventhub.main.dto.EventSearchResponse;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.model.Event;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 public class EventMapper {
     private final UserService userService;
     private final CategoryService categoryService;
-    private final PhotoRepository photoRepository;
+    private final Photo defaultEventPhoto;
     private final CategoryMapper categoryMapper;
     private final PhotoMapper photoMapper;
 
@@ -29,7 +30,7 @@ public class EventMapper {
     public EventMapper(UserService userService, CategoryService categoryService,PhotoRepository photoRepository ,CategoryMapper categoryMapper, PhotoMapper photoMapper) {
         this.userService = userService;
         this.categoryService = categoryService;
-        this.photoRepository = photoRepository;
+        this.defaultEventPhoto = photoRepository.findPhotoByPhotoName("eventDefaultImage");
         this.categoryMapper = categoryMapper;
         this.photoMapper = photoMapper;
     }
@@ -63,8 +64,32 @@ public class EventMapper {
                 .build();
 
         if(response.getPhotoResponses().isEmpty()){
-            Photo photo = photoRepository.findPhotoByPhotoName("eventDefaultImage");
-            response.getPhotoResponses().add(photoMapper.entityToResponse(photo));
+            response.getPhotoResponses().add(photoMapper.entityToResponse(this.defaultEventPhoto));
+        }
+        return response;
+    }
+
+    public EventSearchResponse entityToSearchResponse(Event event){
+        if (event == null) {
+            throw new NullEntityReferenceException("Event can't be found");
+        }
+        EventSearchResponse response = EventSearchResponse.builder()
+                .id(event.getId())
+                .title(event.getTitle())
+                .maxParticipants(event.getMaxParticipants())
+                .startAt(event.getStartAt())
+                .expireAt(event.getExpireAt())
+                .participantCount(event.getParticipantCount())
+                .location(event.getLocation())
+                .latitude(event.getLatitude())
+                .longitude(event.getLongitude())
+                .build();
+        try{
+            Photo image = event.getPhotos().get(0);
+            response.setPhotoResponse(photoMapper.entityToResponse(image));
+        }
+        catch(IndexOutOfBoundsException e){
+            response.setPhotoResponse(photoMapper.entityToResponse(this.defaultEventPhoto));
         }
         return response;
     }

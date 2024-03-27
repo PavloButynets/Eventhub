@@ -2,6 +2,7 @@ package org.eventhub.main.service;
 
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventRequest;
+import org.eventhub.main.dto.EventSearchResponse;
 import org.eventhub.main.dto.PhotoResponse;
 import org.eventhub.main.model.Event;
 import org.eventhub.main.model.Photo;
@@ -22,4 +23,5 @@ public interface EventService {
 
     void addImage(UUID eventId, Photo image);
     void deleteImage(UUID eventId, Photo image);
+    EventSearchResponse search(UUID eventId);
 }
