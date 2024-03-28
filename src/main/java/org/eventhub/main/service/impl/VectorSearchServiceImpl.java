@@ -41,7 +41,7 @@ ORDER BY (embedding <=> :user_prompt::vector) LIMIT 15
 
         return query.query((resultSet, statementContext) -> {
             UUID id = (UUID) resultSet.getObject("id");
-            return eventService.searchById(id);
+            return eventService.readByIdSearch(id);
         }).list();
 
     }

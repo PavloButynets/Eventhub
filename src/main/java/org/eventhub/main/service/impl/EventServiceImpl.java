@@ -153,7 +153,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventSearchResponse searchById(UUID id){
+    public EventSearchResponse readByIdSearch(UUID id){
         Event event = eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
         return eventMapper.entityToSearchResponse(event);
     }
