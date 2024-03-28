@@ -62,7 +62,7 @@ const Map = ({ center }) => {
   };
   return (
     <div className={styles.mapcontainer}>
-      {selectedEvent && <EventInfoSideBar event = {selectedEvent} />}
+      {selectedEvent && <EventInfoSideBar event = {selectedEvent} handleCloseWindow={onMapClick} />}
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}

@@ -9,7 +9,7 @@ import {getUserById} from '../../../api/getUserById';
 import ParticipantsList from './ParticipantsList';
 import { CgCloseR } from "react-icons/cg";
 
-const EventInfoSideBar = ({event}) => {
+const EventInfoSideBar = ({event, handleCloseWindow}) => {
 
     const [photoIndex, setPhotoIndex] = useState(0);
     const [participants, setParticipants] = useState([]);
@@ -98,7 +98,7 @@ const EventInfoSideBar = ({event}) => {
         <div className={styles['side-bar-container']}>
             <div className={styles['header']}>
                 <h2 className={styles['event-title']}>side-bar-container</h2>
-                <CgCloseR size="2.5em" />
+                <button onClick={handleCloseWindow}><CgCloseR size="2.5em" /></button>
             </div>
             
 
