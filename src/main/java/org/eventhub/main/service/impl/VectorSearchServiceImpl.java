@@ -1,6 +1,6 @@
 package org.eventhub.main.service.impl;
 
-import org.eventhub.main.dto.EventResponse;
+import org.eventhub.main.dto.EventFullInfoResponse;
 import org.eventhub.main.service.EventService;
 import org.eventhub.main.service.VectorSearchService;
 import org.springframework.ai.embedding.EmbeddingClient;
@@ -24,7 +24,7 @@ public class VectorSearchServiceImpl implements VectorSearchService{
     }
 
     @Override
-    public List<EventResponse> searchEvents(String prompt) {
+    public List<EventFullInfoResponse> searchEvents(String prompt) {
         List<Double> embedding = embeddingClient.embed(prompt);
 
         JdbcClient.StatementSpec query = jdbcClient.sql(

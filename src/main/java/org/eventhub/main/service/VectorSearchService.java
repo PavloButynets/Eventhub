@@ -1,9 +1,9 @@
 package org.eventhub.main.service;
 
-import org.eventhub.main.dto.EventResponse;
+import org.eventhub.main.dto.EventFullInfoResponse;
 
 import java.util.List;
 
 public interface VectorSearchService {
-    List<EventResponse> searchEvents(String prompt);
+    List<EventFullInfoResponse> searchEvents(String prompt);
 }

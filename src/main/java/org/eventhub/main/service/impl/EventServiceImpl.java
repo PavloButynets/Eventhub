@@ -12,7 +12,6 @@ import org.eventhub.main.model.Photo;
 import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.service.EventService;
 
-import org.eventhub.main.service.PhotoService;
 import org.springframework.ai.embedding.EmbeddingClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,7 +63,7 @@ public class EventServiceImpl implements EventService {
         this.embeddingClient = embeddingClient;
     }
     @Override
-    public EventResponse create(EventRequest eventRequest) {
+    public EventFullInfoResponse create(EventRequest eventRequest) {
         LocalDateTime currentTime = LocalDateTime.now();
         Event event = new Event();
 
@@ -85,12 +84,12 @@ public class EventServiceImpl implements EventService {
             throw new AccessIsDeniedException("Event " + eventToSave.getTitle() + " is full.");
         }
 
-        return eventMapper.entityToResponse(eventRepository.save(eventToSave));
+        return eventMapper.entityToFullInfoResponse(eventRepository.save(eventToSave));
     }
     @Override
-    public EventResponse readById(UUID id) {
+    public EventFullInfoResponse readById(UUID id) {
         Event event = eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
-        return eventMapper.entityToResponse(event);
+        return eventMapper.entityToFullInfoResponse(event);
     }
 
     @Override
@@ -109,7 +108,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public EventResponse update(EventRequest eventRequest) {
+    public EventFullInfoResponse update(EventRequest eventRequest) {
         if(eventRequest != null) {
             LocalDateTime currentTime = LocalDateTime.now();
             Event event = readByTitle(eventRequest.getTitle());
@@ -122,7 +121,7 @@ public class EventServiceImpl implements EventService {
 
             Event eventToUpdate = eventMapper.requestToEntity(eventRequest, event);
 
-            return eventMapper.entityToResponse(eventRepository.save(eventToUpdate));
+            return eventMapper.entityToFullInfoResponse(eventRepository.save(eventToUpdate));
         }
         throw new NullDtoReferenceException("Cannot update null event");
     }
@@ -134,7 +133,14 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventResponse> getAll() {
+    public List<EventFullInfoResponse> getAllFullInfo() {
+        return eventRepository.findAll()
+                .stream()
+                .map(eventMapper::entityToFullInfoResponse)
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<EventResponseXY> getAll(){
         return eventRepository.findAll()
                 .stream()
                 .map(eventMapper::entityToResponse)

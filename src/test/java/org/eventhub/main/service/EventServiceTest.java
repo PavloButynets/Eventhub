@@ -2,7 +2,7 @@ package org.eventhub.main.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.EventRequest;
-import org.eventhub.main.dto.EventResponse;
+import org.eventhub.main.dto.EventFullInfoResponse;
 import org.eventhub.main.exception.NotValidDateException;
 import org.eventhub.main.mapper.EventMapper;
 import org.eventhub.main.model.Event;
@@ -44,16 +44,16 @@ class EventServiceTest {
         eventRequest.setOwnerId(10);
 
 
-        EventResponse actual = eventService.create(eventRequest);
+        EventFullInfoResponse actual = eventService.create(eventRequest);
 
         Event event = eventMapper.requestToEntity(eventRequest, new Event());
-        EventResponse expected = eventMapper.entityToResponse(event);
+        EventFullInfoResponse expected = eventMapper.entityToFullInfoResponse(event);
         expected.setCreatedAt(actual.getCreatedAt());
         expected.setId(actual.getId());
         expected.setState(actual.getState());
 
         Assertions.assertNotNull(actual);
-        Assertions.assertEquals(eventService.getAll().size(), 4);
+        Assertions.assertEquals(eventService.getAllFullInfo().size(), 4);
         Assertions.assertEquals(expected, actual);
 
 
@@ -74,7 +74,7 @@ class EventServiceTest {
 
         Assertions.assertThrows(NotValidDateException.class,
                 () -> {
-                    EventResponse actual = eventService.create(eventRequest);
+                    EventFullInfoResponse actual = eventService.create(eventRequest);
                 });
 
 
@@ -112,11 +112,11 @@ class EventServiceTest {
         eventRequest3.setLocation("37.0902 95.7129");
         eventRequest3.setOwnerId(10);
 
-        EventResponse actual = eventService.create(eventRequest);
+        EventFullInfoResponse actual = eventService.create(eventRequest);
 
-        EventResponse actual2 = eventService.create(eventRequest2);
+        EventFullInfoResponse actual2 = eventService.create(eventRequest2);
 
-        EventResponse actual3 = eventService.create(eventRequest3);
+        EventFullInfoResponse actual3 = eventService.create(eventRequest3);
 
         Assertions.assertEquals(State.UPCOMING, actual.getState());
         Assertions.assertEquals(State.LIVE, actual2.getState());
@@ -141,13 +141,13 @@ class EventServiceTest {
         eventRequest.setOwnerId(10);
 
 
-        EventResponse expected = eventService.create(eventRequest);
-        EventResponse actual = eventService.readById(expected.getId());
+        EventFullInfoResponse expected = eventService.create(eventRequest);
+        EventFullInfoResponse actual = eventService.readById(expected.getId());
         actual.setCreatedAt(expected.getCreatedAt());
 
         System.out.println("\n\n\n");
         System.out.println(actual);
-        System.out.println(eventService.getAll());
+        System.out.println(eventService.getAllFullInfo());
         System.out.println("\n\n");
 
 
@@ -183,15 +183,15 @@ class EventServiceTest {
         eventRequest2.setOwnerId(10);
 
 
-        EventResponse actual = eventService.create(eventRequest);
+        EventFullInfoResponse actual = eventService.create(eventRequest);
         long idToCheck = actual.getId();
 
-        EventResponse updatedEvent = eventService.update(eventRequest2);
+        EventFullInfoResponse updatedEvent = eventService.update(eventRequest2);
 
 
         Assertions.assertNotNull(actual);
         Assertions.assertNotNull(updatedEvent);
-        Assertions.assertEquals(eventService.getAll().size(), 4);
+        Assertions.assertEquals(eventService.getAllFullInfo().size(), 4);
         Assertions.assertEquals("Top football near school 34 NEWWW", updatedEvent.getDescription());
 
 
@@ -221,7 +221,7 @@ class EventServiceTest {
         eventRequest2.setOwnerId(10);
 
 
-        EventResponse actual = eventService.create(eventRequest);
+        EventFullInfoResponse actual = eventService.create(eventRequest);
         long idToCheck = actual.getId();
 
 
@@ -229,7 +229,7 @@ class EventServiceTest {
 
         Assertions.assertThrows(NotValidDateException.class,
                 () -> {
-                    EventResponse updatedEvent = eventService.update(eventRequest2);
+                    EventFullInfoResponse updatedEvent = eventService.update(eventRequest2);
                 });
 
         eventService.delete(actual.getId());
@@ -306,9 +306,9 @@ class EventServiceTest {
         eventService.create(eventRequest3);
 
 
-        EventResponse updated11 = eventService.update(eventRequest11);
-        EventResponse updated22 = eventService.update(eventRequest22);
-        EventResponse updated33 = eventService.update(eventRequest33);
+        EventFullInfoResponse updated11 = eventService.update(eventRequest11);
+        EventFullInfoResponse updated22 = eventService.update(eventRequest22);
+        EventFullInfoResponse updated33 = eventService.update(eventRequest33);
 
         Assertions.assertEquals(State.LIVE, updated11.getState());
         Assertions.assertEquals(State.UPCOMING, updated22.getState());
@@ -332,12 +332,12 @@ class EventServiceTest {
         eventRequest.setOwnerId(10);
 
 
-        EventResponse actual = eventService.create(eventRequest);
+        EventFullInfoResponse actual = eventService.create(eventRequest);
 
         eventService.delete(actual.getId());
-        System.out.println("\n\n"+ eventService.getAll()+"\n\n");
+        System.out.println("\n\n"+ eventService.getAllFullInfo()+"\n\n");
 
-        Assertions.assertEquals(3, eventService.getAll().size());
+        Assertions.assertEquals(3, eventService.getAllFullInfo().size());
     }
 
     @Test
