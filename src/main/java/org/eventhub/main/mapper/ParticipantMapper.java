@@ -22,7 +22,6 @@ public class ParticipantMapper {
     private final EventRepository eventRepository;
     private final UserService userService;
 
-    private final UserService userService;
 
     @Autowired
     public ParticipantMapper(UserRepository userRepository, EventRepository eventRepository, UserService userService){
@@ -53,16 +52,5 @@ public class ParticipantMapper {
         participant.setUser(userRepository.findById(participantRequest.getUserId()).orElseThrow(()->new NullEntityReferenceException("User cant be null")));
         participant.setEvent(eventRepository.findById(participantRequest.getEventId()).orElseThrow(()->new NullEntityReferenceException("Event cant be null")));
         return participant;
-    }
-
-    public ParticipantWithPhotoResponse entityToPhotoResponse(Participant participant) {
-        ParticipantWithPhotoResponse response = ParticipantWithPhotoResponse.builder()
-                .id(participant.getId())
-                .userId(participant.getUser().getId())
-                .build();
-        List<PhotoResponse> photoResponses = userService.readById(participant.getUser().getId()).getPhotoResponses();
-        String photoUrl =  (photoResponses.isEmpty()) ? "https://eventhub12.blob.core.windows.net/images/userDefault.jpeg?sp=r&st=2024-03-22T11:44:03Z&se=2024-03-31T18:44:03Z&spr=https&sv=2022-11-02&sr=b&sig=QWt0H3SUlf34ITOzw2lWV4EdIUz1bZ3MZg94jEw9N6o%3D" : photoResponses.get(0).getPhotoUrl();
-        response.setPhotoUrl(photoUrl);
-        return response;
     }
 }

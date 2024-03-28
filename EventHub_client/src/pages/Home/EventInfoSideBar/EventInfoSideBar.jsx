@@ -4,7 +4,8 @@ import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
 import { MdOutlineDateRange } from "react-icons/md";
 import { IoIosMore } from "react-icons/io";
-import {getParticipantsWithPhotos} from '../../../api/getParticipantsWithPhotos';
+import {getParticipants} from '../../../api/getParticipants';
+import {getUserById} from '../../../api/getUserById';
 import ParticipantsList from './ParticipantsList';
 
 const EventInfoSideBar = ({event}) => {
@@ -16,12 +17,13 @@ const EventInfoSideBar = ({event}) => {
     const [isShowMoreParticipants, setIsShowMoreParticipants] = useState(false);
     const [participantsToShow, setParticipantsToShow] = useState([]);
     const [showAllParticipants, setShowAllParticipants] = useState(false);
+    const [owner, setOwner] = useState(null);
 
     const showMoreBtn = useRef(null);
     const aboutText = useRef(null);
 
     useEffect(() => {
-        getParticipantsWithPhotos(event.id)
+        getParticipants(event.id)
         .then(data => {
             console.log('Data: ',data);
             setParticipants(data)
@@ -39,7 +41,15 @@ const EventInfoSideBar = ({event}) => {
         });
         
         
-    }, [event.id]);
+    }, [event]);
+
+    useEffect(() => {
+        getUserById(event.owner_id)
+        .then(data => {
+            setOwner(data);
+            console.log(`Owner photo response: ${data.photo_responses[0].photo_url}`)
+        })
+    }, [event])
 
     useEffect(() => {
         console.log('participants to show: ',participantsToShow);
@@ -140,12 +150,12 @@ const EventInfoSideBar = ({event}) => {
             <h3 className={styles['heading']}>Participants</h3>
             <div className={styles['participant-container']}>
                 <div className={styles['owner-photo']}>
-                    <img src="https://eventhub12.blob.core.windows.net/images/default.jpg?sp=r&st=2024-03-18T06:52:24Z&se=2024-03-24T14:52:24Z&spr=https&sv=2022-11-02&sr=b&sig=nWb0Dzb9%2FWPfAZ6X5MRrwoi%2FxHU8OLe0I6nPtwpBkbQ%3D" alt="" />
+                    {owner && <img src={owner.photo_responses[0].photo_url} alt="" />}
                 </div>
                 <div className={styles['participants-photos']}>
                     {participantsToShow.map(participant => (
                         <div className={styles['item']} key={participant.id}>
-                            <img src={participant.photo_url} alt="Participant Img" />
+                            <img src={participant.participant_photo.photo_url} alt="Participant Img" />
                         </div>
                     ))}    
                     { isShowMoreParticipants && <div className={styles['show-more-participants']}><button onClick={() => setShowAllParticipants(!showAllParticipants)} ><IoIosMore /></button></div>}
