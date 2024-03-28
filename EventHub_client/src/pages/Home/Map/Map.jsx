@@ -5,6 +5,7 @@ import styles from './Map.module.css'
 import { EnvironmentOutlined } from '@ant-design/icons';
 import { light } from "./Theme"
 import EventInfoSideBar from '../EventInfoSideBar/EventInfoSideBar';
+import ParticipantsList from '../EventInfoSideBar/ParticipantsList';
 
 
 
