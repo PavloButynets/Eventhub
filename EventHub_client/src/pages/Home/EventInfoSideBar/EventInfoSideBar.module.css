@@ -9,11 +9,21 @@
     top: 10%;
     position: absolute;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .event-photo {
     width: 350px;
     height: 190px;
+}
+
+/* Header */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 /* Categories */
@@ -125,4 +135,13 @@
     
     
     overflow: auto;
+}
+
+/* Lower Container */
+
+.lower-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
 }

@@ -7,6 +7,7 @@ import { IoIosMore } from "react-icons/io";
 import {getParticipants} from '../../../api/getParticipants';
 import {getUserById} from '../../../api/getUserById';
 import ParticipantsList from './ParticipantsList';
+import { CgCloseR } from "react-icons/cg";
 
 const EventInfoSideBar = ({event}) => {
 
@@ -95,7 +96,11 @@ const EventInfoSideBar = ({event}) => {
 
     return ( 
         <div className={styles['side-bar-container']}>
-            <h2 className={styles['event-title']}>side-bar-container</h2>
+            <div className={styles['header']}>
+                <h2 className={styles['event-title']}>side-bar-container</h2>
+                <CgCloseR size="2.5em" />
+            </div>
+            
 
             {/* Photo */}
             
@@ -107,7 +112,7 @@ const EventInfoSideBar = ({event}) => {
                         <button onClick={handleRightPhotoClick}> <SlArrowRight /> </button>
                     </div>}
                  </div>
-                 
+
                 {/*(<img className={styles['event-photo']} src={event.photo_responses[0].photo_url} alt='Event img' />) */}
             
 
