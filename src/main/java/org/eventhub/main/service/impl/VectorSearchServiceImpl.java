@@ -1,6 +1,5 @@
 package org.eventhub.main.service.impl;
 
-import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventSearchResponse;
 import org.eventhub.main.service.EventService;
 import org.eventhub.main.service.VectorSearchService;
@@ -42,7 +41,7 @@ ORDER BY (embedding <=> :user_prompt::vector) LIMIT 15
 
         return query.query((resultSet, statementContext) -> {
             UUID id = (UUID) resultSet.getObject("id");
-            return eventService.search(id);
+            return eventService.searchById(id);
         }).list();
 
     }
