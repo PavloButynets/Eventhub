@@ -178,21 +178,21 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
             <h3 className={styles['heading']}>About this event</h3>
             <div className={styles['about-container']}>
                 <div className={styles[isShowMore ? 'about-text-more' : 'about-text']} ref={aboutText}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adiing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adig elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
                 
                 </div>
                 {isOverflowAboutText && !isShowMore && <div className={styles['three-dots']}>...</div>}

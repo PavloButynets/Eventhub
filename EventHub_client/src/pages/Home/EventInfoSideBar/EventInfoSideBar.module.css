@@ -130,7 +130,7 @@
 .participant-container {
     display: flex;
     align-items: center;
-    border: solid;
+    /* border: solid; */
     width: 90%;
 }
 
@@ -184,7 +184,6 @@
 .show-more-participants {
     width: 60px;
     height: 60px;
-    /* border: solid; */
 }
 
 .show-more-participants button {
@@ -195,7 +194,10 @@
 /* About section */
 
 .about-container {
-    border: solid;
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
 }
 
 .about-text {
@@ -207,6 +209,19 @@
 .about-text-more {
     height: auto;
     overflow: auto;
+}
+
+.show-more-btn {
+    border: none;
+    background: transparent;
+    color: #002462;
+    font-weight: 800;
+    align-self: flex-start;
+    padding: 0;
+    margin: 3% 0;
+
+
+    cursor: pointer;
 }
 
 
@@ -238,5 +253,24 @@
     border: none;
     padding: 0;
     background: transparent;
+    cursor: pointer;
+}
+
+.spots {
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    color: #AAAAAA;
+    font-size: 20px;
+}
+
+.action-btn {
+    padding: 0;
+    border: none;
+    background-color: #002462;
+    color: #fff;
+    font-size: 23px;
+    width: 35%;
+    height: 140%;
+    border-radius: 40px;
     cursor: pointer;
 }
