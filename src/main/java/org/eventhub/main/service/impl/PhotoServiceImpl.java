@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.eventhub.main.dto.PhotoRequest;
 import org.eventhub.main.dto.PhotoResponse;
 import org.eventhub.main.exception.NullDtoReferenceException;
+import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.exception.ResponseStatusException;
 import org.eventhub.main.mapper.PhotoMapper;
 import org.eventhub.main.model.Photo;
@@ -35,7 +36,6 @@ public class PhotoServiceImpl implements PhotoService {
     private final EventService eventService;
     private final UserService userService;
     private final BlobContainerClient blobContainerClientEvent;
-
     private final BlobContainerClient blobContainerClientUser;
     @Autowired
     public PhotoServiceImpl(PhotoRepository photoRepository, PhotoMapper photoMapper, EventService eventService, UserService userService){

@@ -20,6 +20,7 @@ import java.util.List;
 public class ParticipantMapper {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
+    private final UserService userService;
 
     private final UserService userService;
 
@@ -36,9 +37,8 @@ public class ParticipantMapper {
         return ParticipantResponse.builder()
                 .id(participant.getId())
                 .createdAt(participant.getCreatedAt())
-                .isApproved((participant.isApproved()))
-                .eventId(participant.getEvent().getId())
                 .userId(participant.getUser().getId())
+                .participantPhoto(userService.readById(participant.getUser().getId()).getPhotoResponses().get(0))
                 .build();
     }
 
