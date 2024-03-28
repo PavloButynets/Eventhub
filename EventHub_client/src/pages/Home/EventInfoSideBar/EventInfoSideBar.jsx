@@ -177,7 +177,7 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
             {/* About section */}
             <h3 className={styles['heading']}>About this event</h3>
             <div className={styles['about-container']}>
-                <div className={styles[isShowMore ? 'about-text-more' : 'about-text']} ref={aboutText}>
+                <div className={styles[isShowMore ? null : 'about-text']} ref={aboutText}>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
@@ -195,7 +195,6 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
                 
                 </div>
-                {isOverflowAboutText && !isShowMore && <div className={styles['three-dots']}>...</div>}
                 {isOverflowAboutText &&  <button onClick={handleShowMore} className={styles['show-more-btn']} ref={showMoreBtn}>Show more</button>}
             </div>
 

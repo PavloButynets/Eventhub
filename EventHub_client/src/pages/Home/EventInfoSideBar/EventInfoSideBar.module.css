@@ -225,15 +225,13 @@
 }
 
 .about-text {
-    height: 150px;
-    /* height: 100%; */
+    /* height: 150px; */
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
     overflow: hidden;
 }
 
-.about-text-more {
-    height: auto;
-    overflow: auto;
-}
 
 .show-more-btn {
     border: none;
