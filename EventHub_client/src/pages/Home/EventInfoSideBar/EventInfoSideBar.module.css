@@ -25,6 +25,23 @@
     justify-content: space-between;
 }
 
+.close-btn {
+    /* border: solid; */
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    border: none;
+    
+    
+}
+
+.close-btn-icon {
+    font-size: 1.25em;
+    color: #fff;
+    background-color: #002462;
+    border-radius: 10px;
+}
+
 /* Photo */
 .photo-container {
     position: relative;
@@ -116,6 +133,13 @@
     align-self: center;
     position: absolute;
     right: 10px;
+}
+
+.date-btn-icon {
+    font-size: 3em;
+    color: #002462;
+    stroke-width: 1px;
+
 }
 
 .date-btn {
@@ -247,13 +271,6 @@
     align-items: center;
     justify-content: space-between;
     margin-top: auto;
-}
-
-.close-btn {
-    border: none;
-    padding: 0;
-    background: transparent;
-    cursor: pointer;
 }
 
 .spots {

@@ -2,13 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import styles from './EventInfoSideBar.module.css'
 import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
-import { MdOutlineDateRange } from "react-icons/md";
 import { IoIosMore } from "react-icons/io";
 import {getParticipants} from '../../../api/getParticipants';
 import {getUserById} from '../../../api/getUserById';
 import ParticipantsList from './ParticipantsList';
-import { CgCloseR } from "react-icons/cg";
 import { RiVipCrownLine } from "react-icons/ri";
+import { IoClose } from "react-icons/io5";
+import { CiCalendar } from "react-icons/ci";
 
 const EventInfoSideBar = ({event, handleCloseWindow}) => {
 
@@ -99,7 +99,7 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
         <div className={styles['side-bar-container']}>
             <div className={styles['header']}>
                 <h2 className={styles['event-title']}>{event.title}</h2>
-                <button className={styles['close-btn']} onClick={handleCloseWindow}><CgCloseR size="2.5em" /></button>
+                <button className={styles['close-btn']} onClick={handleCloseWindow}><IoClose className={styles['close-btn-icon']} size="2.5em" /></button>
             </div>
             
 
@@ -148,7 +148,7 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
                     </div>
                 </div>
                 <div className={styles['date-icon']}>
-                    <button className={styles['date-btn']}><MdOutlineDateRange size='3em' color='#002462' /></button>
+                    <button className={styles['date-btn']}><CiCalendar className={styles['date-btn-icon']} /></button>
                 </div>
                 
             </div>
