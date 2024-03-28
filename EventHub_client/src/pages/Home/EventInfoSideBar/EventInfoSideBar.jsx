@@ -97,8 +97,8 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
     return ( 
         <div className={styles['side-bar-container']}>
             <div className={styles['header']}>
-                <h2 className={styles['event-title']}>side-bar-container</h2>
-                <button onClick={handleCloseWindow}><CgCloseR size="2.5em" /></button>
+                <h2 className={styles['event-title']}>{event.title}</h2>
+                <button className={styles['close-btn']} onClick={handleCloseWindow}><CgCloseR size="2.5em" /></button>
             </div>
             
 
@@ -108,8 +108,8 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
                 <div className={styles['photo-container']}>
                     <img className={styles['event-photo']} src={event.photo_responses[photoIndex].photo_url} alt="Event img" />
                     {event.photo_responses.length > 1 && <div className={styles['arrow-container']}>
-                        <button onClick={handleLeftPhotoClick}> <SlArrowLeft /> </button>
-                        <button onClick={handleRightPhotoClick}> <SlArrowRight /> </button>
+                        <button className={styles['left-arrow']} onClick={handleLeftPhotoClick}> <SlArrowLeft className={styles['arrow-icon']} /> </button>
+                        <button className={styles['right-arrow']} onClick={handleRightPhotoClick}> <SlArrowRight className={styles['arrow-icon']} /> </button>
                     </div>}
                  </div>
 
@@ -187,7 +187,8 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    e.
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                
                 </div>
                 {isOverflowAboutText && !isShowMore && <div className={styles['three-dots']}>...</div>}
                 {isOverflowAboutText &&  <button onClick={handleShowMore} className={styles['show-more-btn']} ref={showMoreBtn}>Show more</button>}
