@@ -1,7 +1,7 @@
 .side-bar-container {
     background-color: #fff;
-    width: 376px;
-    height: 896px;
+    width: 20%;
+    height: 85%;
     padding: 20px;
     z-index: 990;
     right: 0;
@@ -91,6 +91,10 @@
     font-style: normal;
 }
 
+.date-container hr {
+    width: 115%;
+}
+
 .start-at {
     display: flex;
 }
@@ -101,7 +105,11 @@
 
 .day {
     margin-right: 5px;
-    font-weight: 500;
+    font-weight: 550;
+}
+
+.time {
+    font-weight: 400;
 }
 
 .date-icon {
@@ -110,9 +118,18 @@
     right: 10px;
 }
 
+.date-btn {
+    background: transparent;
+    border-radius: 8px;
+    border: solid #002462;
+    cursor: pointer;
+    padding: 3px 5px;
+}
+
 /* Participants */
 .participant-container {
     display: flex;
+    align-items: center;
     border: solid;
     width: 90%;
 }
@@ -122,43 +139,65 @@
 }
 
 .owner-photo {
+    position: relative;
     margin-right: 10px;
 }
 
 .owner-photo img {
-    border: solid;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: solid #FFD700;
 }
+
+.crown-container {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+}
+
+.crown-icon {
+    color: #FFFF00;
+    stroke: #FFD700;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1px;
+} 
 
 .participants-photos .item {
     margin-right: 10px;
+    
 }
 
 .participants-photos img{
-    border: solid;
+    /* border: solid; */
+    border-radius: 50%;
 }
 
 .participants-photos .item img{
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
 }
 
-.owner-photo img {
-    width: 40px;
-    height: 40px;
-}
+
 
 .show-more-participants {
-    width: 40px;
-    height: 40px;
-    border: solid;
+    width: 60px;
+    height: 60px;
+    /* border: solid; */
 }
 
 .show-more-participants button {
-    width: 40px;
-    height: 40px;;
+    width: 60px;
+    height: 60px;;
 }
 
 /* About section */
+
+.about-container {
+    border: solid;
+}
+
 .about-text {
     height: 150px;
     /* height: 100%; */

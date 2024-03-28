@@ -8,6 +8,7 @@ import {getParticipants} from '../../../api/getParticipants';
 import {getUserById} from '../../../api/getUserById';
 import ParticipantsList from './ParticipantsList';
 import { CgCloseR } from "react-icons/cg";
+import { RiVipCrownLine } from "react-icons/ri";
 
 const EventInfoSideBar = ({event, handleCloseWindow}) => {
 
@@ -147,7 +148,7 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
                     </div>
                 </div>
                 <div className={styles['date-icon']}>
-                    <MdOutlineDateRange size='3em' />
+                    <button className={styles['date-btn']}><MdOutlineDateRange size='3em' color='#002462' /></button>
                 </div>
                 
             </div>
@@ -157,6 +158,10 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
             <div className={styles['participant-container']}>
                 <div className={styles['owner-photo']}>
                     {owner && <img src={owner.photo_responses[0].photo_url} alt="" />}
+                    <div className={styles['crown-container']}>
+                        <RiVipCrownLine className={styles['crown-icon']} />
+                    </div>
+                    
                 </div>
                 <div className={styles['participants-photos']}>
                     {participantsToShow.map(participant => (
