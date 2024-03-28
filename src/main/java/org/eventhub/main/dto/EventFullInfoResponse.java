@@ -16,7 +16,7 @@ import java.util.UUID;
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class EventResponse {
+public class EventFullInfoResponse {
 
     @NotNull
     private UUID id;
@@ -61,10 +61,10 @@ public class EventResponse {
     private List<CategoryResponse> categoryResponses;
 
     @NotNull List<PhotoResponse> photoResponses;
-    public EventResponse() {
+    public EventFullInfoResponse() {
     }
 
-    public EventResponse(UUID id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, State state, String location, BigDecimal latitude, BigDecimal longitude, UUID ownerId, List<CategoryResponse> categoryResponses, List<PhotoResponse> photoResponses) {
+    public EventFullInfoResponse(UUID id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, State state, String location, BigDecimal latitude, BigDecimal longitude, UUID ownerId, List<CategoryResponse> categoryResponses, List<PhotoResponse> photoResponses) {
         this.id = id;
         this.title = title;
         this.maxParticipants = maxParticipants;

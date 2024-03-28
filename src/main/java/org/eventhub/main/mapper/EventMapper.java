@@ -1,8 +1,12 @@
 package org.eventhub.main.mapper;
 
-import org.eventhub.main.dto.EventResponse;
+import org.eventhub.main.dto.EventFullInfoResponse;
 import org.eventhub.main.dto.EventRequest;
+<<<<<<< HEAD
 import org.eventhub.main.dto.EventSearchResponse;
+=======
+import org.eventhub.main.dto.EventResponseXY;
+>>>>>>> 699e1ae2b7ca0669ebc94120bc06292b692cd64c
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.model.Event;
@@ -10,7 +14,6 @@ import org.eventhub.main.model.Photo;
 import org.eventhub.main.model.State;
 import org.eventhub.main.repository.PhotoRepository;
 import org.eventhub.main.service.CategoryService;
-import org.eventhub.main.service.PhotoService;
 import org.eventhub.main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,11 +38,11 @@ public class EventMapper {
         this.photoMapper = photoMapper;
     }
 
-    public EventResponse entityToResponse(Event event) {
+    public EventFullInfoResponse entityToFullInfoResponse(Event event) {
         if (event == null) {
             throw new NullEntityReferenceException("Event can't be found");
         }
-        EventResponse response = EventResponse.builder()
+        EventFullInfoResponse response = EventFullInfoResponse.builder()
                 .id(event.getId())
                 .title(event.getTitle())
                 .maxParticipants(event.getMaxParticipants())
@@ -70,6 +73,7 @@ public class EventMapper {
         return response;
     }
 
+<<<<<<< HEAD
     public EventSearchResponse entityToSearchResponse(Event event){
         if (event == null) {
             throw new NullEntityReferenceException("Event can't be found");
@@ -94,6 +98,14 @@ public class EventMapper {
             response.setPhotoResponse(photoMapper.entityToResponse(defaultEventPhoto));
         }
         return response;
+=======
+    public EventResponseXY entityToResponse(Event event){
+        return EventResponseXY.builder()
+                .id(event.getId())
+                .latitude(event.getLatitude())
+                .longitude(event.getLongitude())
+                .build();
+>>>>>>> 699e1ae2b7ca0669ebc94120bc06292b692cd64c
     }
 
     public Event requestToEntity(EventRequest eventRequest, Event event) {

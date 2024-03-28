@@ -1,8 +1,12 @@
 package org.eventhub.main.controller;
 
 import groovy.util.logging.Slf4j;
+<<<<<<< HEAD
 import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.EventSearchResponse;
+=======
+import org.eventhub.main.dto.EventFullInfoResponse;
+>>>>>>> 699e1ae2b7ca0669ebc94120bc06292b692cd64c
 import org.eventhub.main.service.VectorSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,8 +33,13 @@ public class VectorSearchController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+<<<<<<< HEAD
     public ResponseEntity<List<EventSearchResponse>> search(@RequestParam(name = "prompt") String prompt) {
         List<EventSearchResponse> eventsResponse = vectorSearchService.searchEvents(prompt);
+=======
+    public ResponseEntity<List<EventFullInfoResponse>> search(@RequestParam(name = "prompt") String prompt) {
+        List<EventFullInfoResponse> eventsResponse = vectorSearchService.searchEvents(prompt);
+>>>>>>> 699e1ae2b7ca0669ebc94120bc06292b692cd64c
         logger.info("**Searching for prompt: " + prompt);
         return new ResponseEntity<>(eventsResponse, HttpStatus.OK);
     }
