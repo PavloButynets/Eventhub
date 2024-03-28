@@ -87,6 +87,8 @@
     margin-top: 10px;
     display: flex;
     position: relative;
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
 }
 
 .start-at {
@@ -99,6 +101,7 @@
 
 .day {
     margin-right: 5px;
+    font-weight: 500;
 }
 
 .date-icon {
