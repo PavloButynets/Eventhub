@@ -1,6 +1,7 @@
 package org.eventhub.main.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.eventhub.main.dto.EventResponse;
 import org.eventhub.main.dto.OperationResponse;
 import org.eventhub.main.dto.UserRequest;
 import org.eventhub.main.dto.UserResponse;
@@ -45,6 +46,14 @@ public class UserController {
         log.info("**/created user(id) = " + userResponse.getId());
 
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{user_id}")
+    public ResponseEntity<UserResponse> getById(@PathVariable("user_id") UUID userId) {
+        UserResponse response = userService.readById(userId);
+        log.info("**/get by id user(id) = " + response.getId());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("/{user_id}")
