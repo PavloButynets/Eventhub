@@ -5,6 +5,7 @@ import styles from './Map.module.css'
 import { EnvironmentOutlined } from '@ant-design/icons';
 import { light } from "./Theme"
 import EventInfoSideBar from '../EventInfoSideBar/EventInfoSideBar';
+import ParticipantsList from '../EventInfoSideBar/ParticipantsList';
 
 
 
@@ -44,7 +45,11 @@ const Map = ({ center }) => {
 
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showAllParticipants, setShowAllParticipants] = useState(false);
 
+  const handleShowAllParticipants = () => {
+    setShowAllParticipants(prev => !prev);
+  }
   useEffect(() => {
     getEventsData()
       .then(data => {
@@ -62,7 +67,8 @@ const Map = ({ center }) => {
   };
   return (
     <div className={styles.mapcontainer}>
-      {selectedEvent && <EventInfoSideBar event = {selectedEvent} handleCloseWindow={onMapClick} />}
+      {selectedEvent && <EventInfoSideBar event = {selectedEvent} handleCloseWindow={onMapClick} handleShowAllParticipants={handleShowAllParticipants} />}
+      {showAllParticipants && <ParticipantsList event={selectedEvent} />}
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}

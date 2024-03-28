@@ -10,7 +10,7 @@ import { RiVipCrownLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
 
-const EventInfoSideBar = ({event, handleCloseWindow}) => {
+const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants}) => {
 
     const [photoIndex, setPhotoIndex] = useState(0);
     const [participants, setParticipants] = useState([]);
@@ -18,7 +18,7 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
     const [isOverflowAboutText, setIsOverflowAboutText] = useState(false);
     const [isShowMoreParticipants, setIsShowMoreParticipants] = useState(false);
     const [participantsToShow, setParticipantsToShow] = useState([]);
-    const [showAllParticipants, setShowAllParticipants] = useState(false);
+    
     const [owner, setOwner] = useState(null);
 
     const showMoreBtn = useRef(null);
@@ -169,7 +169,7 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
                             <img src={participant.participant_photo.photo_url} alt="Participant Img" />
                         </div>
                     ))}    
-                    { isShowMoreParticipants && <div className={styles['show-more-participants']}><button onClick={() => setShowAllParticipants(!showAllParticipants)} ><IoIosMore /></button></div>}
+                    { isShowMoreParticipants && <div className={styles['show-more-participants']}><button onClick={handleShowAllParticipants} className={styles['show-more-participants-btn']} ><IoIosMore className={styles['show-more-participants-btn-icon']} /></button></div>}
                 </div>
                 
             </div>
@@ -207,7 +207,7 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
                 <button className={styles['action-btn']}>Action</button>
             </div>
 
-            {showAllParticipants && <ParticipantsList event={event} />}
+            
             
         </div>
      );
