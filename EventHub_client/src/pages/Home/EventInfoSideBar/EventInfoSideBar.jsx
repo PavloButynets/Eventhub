@@ -12,7 +12,6 @@ import { CiCalendar } from "react-icons/ci";
 const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants}) => {
 
     const [photoIndex, setPhotoIndex] = useState(0);
-    const [participants, setParticipants] = useState([]);
     const [isShowMore, setIsShowMore] = useState(false);
     const [isOverflowAboutText, setIsOverflowAboutText] = useState(false);
     const [isShowMoreParticipants, setIsShowMoreParticipants] = useState(false);
@@ -27,8 +26,7 @@ const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants})
         getParticipants(event.id)
         .then(data => {
             console.log('Data: ',data);
-            setParticipants(data)
-            if (data.length > 4) {
+            if (data.length > 1) {
                 setIsShowMoreParticipants(true);
                 setParticipantsToShow(data.slice(0,4));
             }
@@ -57,10 +55,6 @@ const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants})
     useEffect(() => {
         console.log('participants to show: ',participantsToShow);
     }, [participantsToShow]);
-
-    useEffect(() => {
-        console.log('participants: ',participants);
-    }, [participants]);
 
 
     const month = new Map();
