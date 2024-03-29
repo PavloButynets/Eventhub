@@ -22,19 +22,29 @@
 .header {
     display: flex;
     justify-content: space-between;
+    margin-top: 3.2%;
+    /* height: 3%; */
 }
 
 .btn {
+
+    
     border: none;
     background: transparent;
     cursor: pointer;
+    border-radius: 10px;
+    /* box-shadow: 1px 1px 1px 1px; */
+    padding: 0;
+    margin: 0;
 }
 
 .btn-icon {
     background-color: #002462;
     color: #fff;
-    font-size: 3em;
+    font-size: 2.15rem;
     border-radius: 10px;
+    padding: 0;
+    margin: 0;
 }
 
 /* Participants list */
@@ -48,6 +58,7 @@
 
 .participant-container {
     width: 85%;
+    height: 20%;
     border: solid #AAAAAA;
     margin-bottom: 2%;
     display: flex;
@@ -57,8 +68,8 @@
 }
 
 .participant-photo {
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
 }
 
@@ -75,7 +86,7 @@
     font-weight: 600;
     height: 30px;
     position: relative;
-    top: -20px;
+    top: -10px;
 }
 
 .full-name p {
@@ -85,5 +96,5 @@
 
 .email {
     position: absolute;
-    top: 10px;
+    top: 1px;
 }
