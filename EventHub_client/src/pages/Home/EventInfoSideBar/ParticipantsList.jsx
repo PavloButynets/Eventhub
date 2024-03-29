@@ -27,8 +27,15 @@ const ParticipantsList = ({event, handleGoBackToSideBar, handleCloseWindow}) => 
 
             <div className={styles['participants-container']}>
                 {participants.map(participant => (
-                    <div>
-                        {participant.email}
+                    <div className={styles['participant-container']}>
+                        <img src={participant.participant_photo.photo_url} alt="User participant img" />
+                        <div className={styles['participant-info-container']}>
+                            <div className={styles['full-name']}>
+                                <p>{participant.first_name}</p>
+                                <p>{participant.last_name}</p>
+                            </div>
+                            <p>{participant.email}</p>
+                        </div>
                     </div>
                 ))}
             </div>
