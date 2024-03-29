@@ -101,13 +101,19 @@ const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants})
             {/* Photo */}
             
                 
-                <div className={styles['photo-container']}>
-                    <img className={styles['event-photo']} src={event.photo_responses[photoIndex].photo_url} alt="Event img" />
-                    {event.photo_responses.length > 1 && <div className={styles['arrow-container']}>
-                        <button className={styles['left-arrow']} onClick={handleLeftPhotoClick}> <SlArrowLeft className={styles['arrow-icon']} /> </button>
-                        <button className={styles['right-arrow']} onClick={handleRightPhotoClick}> <SlArrowRight className={styles['arrow-icon']} /> </button>
-                    </div>}
-                 </div>
+            <div className={styles['photo-container']}>
+                <div className={styles['img-list-container']}>
+                    {event.photo_responses.map((photo, index) => (
+                        <img className={`${styles['event-photo']} ${(index === photoIndex) ? styles['active'] : styles['inactive']}`} src={photo.photo_url} alt="Event img" />
+                    ))}
+                </div>
+                
+                
+                {event.photo_responses.length > 1 && <div className={styles['arrow-container']}>
+                    <button className={styles['left-arrow']} onClick={handleLeftPhotoClick}> <SlArrowLeft className={styles['arrow-icon']} /> </button>
+                    <button className={styles['right-arrow']} onClick={handleRightPhotoClick}> <SlArrowRight className={styles['arrow-icon']} /> </button>
+                </div>}
+            </div>
 
                 {/*(<img className={styles['event-photo']} src={event.photo_responses[0].photo_url} alt='Event img' />) */}
             
