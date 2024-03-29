@@ -5,7 +5,6 @@ import { SlArrowRight } from "react-icons/sl";
 import { IoIosMore } from "react-icons/io";
 import {getParticipants} from '../../../api/getParticipants';
 import {getUserById} from '../../../api/getUserById';
-import ParticipantsList from './ParticipantsList';
 import { RiVipCrownLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
