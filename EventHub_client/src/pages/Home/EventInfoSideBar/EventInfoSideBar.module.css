@@ -1,5 +1,7 @@
 .side-bar-container {
-    background-color: #fff;
+    /* background-color: #fff; */
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(5px);
     width: 20%;
     height: 85%;
     padding: 20px;
@@ -13,6 +15,7 @@
     border-radius: 30px;
     font-family: 'Roboto', sans-serif;
     box-shadow: 0px 0 4px 1px #AAAAAA;
+    /* opacity: 0.7; */
 }
 
 
