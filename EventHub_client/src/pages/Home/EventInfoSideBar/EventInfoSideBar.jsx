@@ -40,6 +40,8 @@ const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants})
                 setIsOverflowAboutText(true);
             }
         });
+
+        return () => setIsShowMoreParticipants(false);
         
         
     }, [event]);
