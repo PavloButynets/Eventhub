@@ -5,7 +5,6 @@ import {getParticipants} from '../../../api/getParticipants';
 import {getUserById} from '../../../api/getUserById';
 import { RiVipCrownLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
-import { CiCalendar } from "react-icons/ci";
 import ImageSlider from '../../../components/ImageSlider/ImageSlider';
 
 
