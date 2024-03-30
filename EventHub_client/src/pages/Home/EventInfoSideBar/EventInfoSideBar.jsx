@@ -102,7 +102,9 @@ const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants})
             </div>
 
             {/* Date */}
+            <h3 className={styles['heading']}>Date and time</h3>
             <div className={styles['date-container']}>
+                
                 <div className={styles['date-range-container']}>
                     <div className={styles['start-at']}>
                         <div className={styles['day']}>
@@ -112,8 +114,7 @@ const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants})
                             {event.start_at.slice(11,16)}
                         </div>
                     </div>
-
-                    <hr />
+                    
 
                     <div className={styles['expire-at']}>
                         <div className={styles['day']}>
@@ -124,8 +125,10 @@ const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants})
                         </div>
                     </div>
                 </div>
-                <div className={styles['date-icon']}>
-                    <button className={styles['date-btn']}><CiCalendar className={styles['date-btn-icon']} /></button>
+
+                <div className={styles['vl']}></div>
+                <div className={styles['location']}>
+                    {event.location}
                 </div>
                 
             </div>
