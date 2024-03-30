@@ -45,15 +45,7 @@ const Map = ({ center }) => {
 
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [showAllParticipants, setShowAllParticipants] = useState(false);
-
-  const handleShowAllParticipants = () => {
-    setShowAllParticipants(prev => !prev);
-  }
-
-  const handleGoBackToSideBar = () => {
-    setShowAllParticipants(prev => !prev);
-  }
+  
 
   useEffect(() => {
     getEventsData()
@@ -65,7 +57,7 @@ const Map = ({ center }) => {
 
   const onMarkerClick = (event) => {
     setSelectedEvent(event);
-    setShowAllParticipants(false);
+    // setShowAllParticipants(false);
   };
 
   const onMapClick = () => {
@@ -73,8 +65,6 @@ const Map = ({ center }) => {
   };
   return (
     <div className={styles.mapcontainer}>
-      {selectedEvent && !showAllParticipants && <EventInfoSideBar event = {selectedEvent} handleCloseWindow={onMapClick} handleShowAllParticipants={handleShowAllParticipants} />}
-      {selectedEvent && showAllParticipants && <ParticipantsList event={selectedEvent} handleGoBackToSideBar={handleGoBackToSideBar} handleCloseWindow={onMapClick} />}
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}

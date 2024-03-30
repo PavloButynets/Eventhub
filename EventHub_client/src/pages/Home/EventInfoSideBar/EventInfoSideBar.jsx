@@ -6,23 +6,52 @@ import {getUserById} from '../../../api/getUserById';
 import { RiVipCrownLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 import ImageSlider from '../../../components/ImageSlider/ImageSlider';
+import { useParams } from 'react-router-dom';
+import { getEventById } from '../../../api/getEventById';
+import ParticipantsList from './ParticipantsList';
 
 
-const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants}) => {
+const EventInfoSideBar = () => {
 
     
     const [isShowMore, setIsShowMore] = useState(false);
     const [isOverflowAboutText, setIsOverflowAboutText] = useState(false);
     const [isShowMoreParticipants, setIsShowMoreParticipants] = useState(false);
     const [participantsToShow, setParticipantsToShow] = useState([]);
+    const [event, setEvent] = useState(null);
     
     const [owner, setOwner] = useState(null);
+
+    const [showAllParticipants, setShowAllParticipants] = useState(false);
+
+    const handleGoBackToSideBar = () => {
+        setShowAllParticipants(prev => !prev);
+    }
+
+    const handleShowAllParticipants = () => {
+        setShowAllParticipants(prev => !prev);
+    }
+
+    const handleCloseWindow = () => {
+        setEvent(null);
+    }
 
     const showMoreBtn = useRef(null);
     const aboutText = useRef(null);
 
+    const {ownerId, eventId} = useParams();
+
     useEffect(() => {
-        getParticipants(event.id)
+        getEventById(ownerId, eventId)
+        
+        .then(data => {
+            
+            setEvent(data);
+        })
+    }, [ownerId, eventId]);
+    
+    useEffect(() => {
+        event && getParticipants(event.id)
         .then(data => {
             console.log('Data: ',data);
             if (data.length > 1) {
@@ -44,7 +73,7 @@ const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants})
     }, [event]);
 
     useEffect(() => {
-        getUserById(event.owner_id)
+        event && getUserById(event.owner_id)
         .then(data => {
             setOwner(data);
             console.log(`Owner photo response: ${data.photo_responses[0].photo_url}`)
@@ -80,7 +109,7 @@ const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants})
     
 
     return ( 
-        <div className={styles['side-bar-container']}>
+        event && <div className={styles['side-bar-container']}>
             <div className={styles['header']}>
                 <h2 className={styles['event-title']}>{event.title}</h2>
                 <button className={styles['close-btn']} onClick={handleCloseWindow}><IoClose className={styles['close-btn-icon']} size="2.5em" /></button>
@@ -187,7 +216,7 @@ const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants})
             </div>
 
             
-            
+            {event && showAllParticipants && <ParticipantsList event={event} handleGoBackToSideBar={handleGoBackToSideBar} handleCloseWindow={handleCloseWindow} />}
         </div>
      );
 }
