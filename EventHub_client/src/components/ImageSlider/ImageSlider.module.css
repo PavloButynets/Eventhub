@@ -41,7 +41,7 @@
 .arrow {
     all: unset;
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     height: 100%;
     width: 7%;
     display: flex;
@@ -54,4 +54,8 @@
 
 .arrow:hover {
     backdrop-filter: blur(0px);
+}
+
+.arrow-icon {
+    stroke-width: 70px;
 }

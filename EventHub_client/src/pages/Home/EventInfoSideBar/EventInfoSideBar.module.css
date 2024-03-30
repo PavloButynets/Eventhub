@@ -1,5 +1,10 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
 .side-bar-container {
-    /* background-color: #fff; */
     background-color: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(5px);
     width: 20%;
@@ -47,75 +52,7 @@
 
 /* Photo */
 .photo-container {
-    position: relative;
     height: 25%;
-}
-
-.event-photo {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    transition: transform 0.7s;
-}
-
-.event-photo.active {
-    transform: translateX(0);
-}
-
-.event-photo.inactive {
-    transform: translateX(+110%);
-}
-
-
-
-.arrow-container {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-
-.left-arrow {
-    /* position: relative; */
-    padding: 0;
-    background: transparent;
-    cursor: pointer;
-    left: 1.5%;
-    height: 100%;
-    width: 8%;
-    backdrop-filter: blur(2px);
-    border: none;
-    transition: backdrop-filter 0.4s, font-size 0.3s;
-}
-
-.left-arrow:hover {
-    backdrop-filter: blur(0px);
-    font-size: 1.2rem;
-}
-
-.right-arrow {
-    /* position: absolute; */
-    right: 1.5%;
-    padding: 0;
-    background: transparent;
-    cursor: pointer;
-    border: none;
-    width: 8%;
-    backdrop-filter: blur(2px);
-    transition: backdrop-filter 0.4s, font-size 0.3s;
-}
-
-.right-arrow:hover {
-    backdrop-filter: blur(0px);
-    font-size: 1.2rem;
-}
-
-.arrow-icon {
-    color: #fff;
-    font-size: 1.5em;
-    stroke-width: 70px;
 }
 
 /* Categories */

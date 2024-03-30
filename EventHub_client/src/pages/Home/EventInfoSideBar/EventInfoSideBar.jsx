@@ -89,13 +89,9 @@ const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants})
             
 
             {/* Photo */}
-            
-                
             <div className={styles['photo-container']}>
                 <ImageSlider images={event.photo_responses}/>
             </div>
-
-                {/*(<img className={styles['event-photo']} src={event.photo_responses[0].photo_url} alt='Event img' />) */}
             
 
             {/* Category */}
