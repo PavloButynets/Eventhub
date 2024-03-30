@@ -49,7 +49,7 @@ public class ParticipantMapper {
                 .userId(participant.getUser().getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
-                .participantPhoto(userService.readById(participant.getUser().getId()).getPhotoResponses().get(0))
+                .participantPhoto(user.getPhotoResponses().get(0))
                 .email(user.getEmail())
                 .createdAt(participant.getCreatedAt())
                 .build();
