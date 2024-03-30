@@ -48,4 +48,10 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    backdrop-filter: blur(2px);
+    transition: backdrop-filter 0.4s, font-size 0.3s;
+}
+
+.arrow:hover {
+    backdrop-filter: blur(0px);
 }
