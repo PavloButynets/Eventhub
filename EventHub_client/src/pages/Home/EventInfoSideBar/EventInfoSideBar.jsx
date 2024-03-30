@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './EventInfoSideBar.module.css'
-import { SlArrowLeft } from "react-icons/sl";
-import { SlArrowRight } from "react-icons/sl";
 import { IoIosMore } from "react-icons/io";
 import {getParticipants} from '../../../api/getParticipants';
 import {getUserById} from '../../../api/getUserById';
 import { RiVipCrownLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 import { CiCalendar } from "react-icons/ci";
+import ImageSlider from '../../../components/ImageSlider/ImageSlider';
+
 
 const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants}) => {
 
-    const [photoIndex, setPhotoIndex] = useState(0);
+    
     const [isShowMore, setIsShowMore] = useState(false);
     const [isOverflowAboutText, setIsOverflowAboutText] = useState(false);
     const [isShowMoreParticipants, setIsShowMoreParticipants] = useState(false);
@@ -71,17 +71,7 @@ const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants})
     month.set('11', 'Oct');
     month.set('12', 'Dec');
 
-    const handleRightPhotoClick = () => {
-        if (photoIndex < event.photo_responses.length-1) {
-            setPhotoIndex(prev => prev + 1);
-        }
-    }
-
-    const handleLeftPhotoClick = () => {
-        if (photoIndex > 0) {
-            setPhotoIndex(prev => prev - 1);
-        }
-    }
+    
 
     const handleShowMore = () => {
         setIsShowMore(prev => !prev);
@@ -102,17 +92,7 @@ const EventInfoSideBar = ({event, handleCloseWindow, handleShowAllParticipants})
             
                 
             <div className={styles['photo-container']}>
-                <div className={styles['img-list-container']}>
-                    {event.photo_responses.map((photo, index) => (
-                        <img className={`${styles['event-photo']} ${(index === photoIndex) ? styles['active'] : styles['inactive']}`} src={photo.photo_url} alt="Event img" />
-                    ))}
-                </div>
-                
-                
-                {event.photo_responses.length > 1 && <div className={styles['arrow-container']}>
-                    <button className={styles['left-arrow']} onClick={handleLeftPhotoClick}> <SlArrowLeft className={styles['arrow-icon']} /> </button>
-                    <button className={styles['right-arrow']} onClick={handleRightPhotoClick}> <SlArrowRight className={styles['arrow-icon']} /> </button>
-                </div>}
+                <ImageSlider images={event.photo_responses}/>
             </div>
 
                 {/*(<img className={styles['event-photo']} src={event.photo_responses[0].photo_url} alt='Event img' />) */}
