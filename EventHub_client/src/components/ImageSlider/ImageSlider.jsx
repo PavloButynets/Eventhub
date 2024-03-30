@@ -28,9 +28,12 @@ const ImageSlider = ({images}) => {
 
     return ( 
         <div className={styles['image-slider']}>
-            {images.map(image => (
-                <img className={styles['image-slider-img']} key={image.id} src={image.photo_url} alt="Event img" />
-            ))}
+            <div className={styles['images-container']}>
+                {images.map(image => (
+                    <img className={styles['image-slider-img']} key={image.id} src={image.photo_url} style={{translate : `${-100 * imageIndex}%`}} alt="Event img" />
+                ))}
+            </div>
+            
             {images.length > 1 && <div className={styles['arrow-container']}>
                     <button className={styles['arrow']} onClick={showPrev}> <SlArrowLeft className={styles['arrow-icon']} /> </button>
                     <button className={styles['arrow']} onClick={showNext}> <SlArrowRight className={styles['arrow-icon']} /> </button>
