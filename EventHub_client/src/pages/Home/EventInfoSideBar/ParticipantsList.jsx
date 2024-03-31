@@ -5,21 +5,31 @@ import {getUserParticipants} from '../../../api/getUserParticipants';
 
 import { IoArrowBackOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
+import { useParams } from 'react-router-dom';
+import { getEventById } from '../../../api/getEventById';
 
 
 
 
-const ParticipantsList = ({event, handleGoBackToSideBar, handleCloseWindow}) => {
+const ParticipantsList = ({handleGoBackToSideBar, handleCloseWindow}) => {
 
     const [participants, setParticipants] = useState([]);
+    const [event, setEvent] = useState(null);
+
+    const {ownerId, eventId} = useParams();
 
     useEffect(() => {
-        getUserParticipants(event.id)
+        getEventById(ownerId, eventId)
+        .then(data => setEvent(data));
+    }, [ownerId, eventId]);
+
+    useEffect(() => {
+        event && getUserParticipants(event.id)
         .then(data => setParticipants(data));
     }, [event]);
 
     return ( 
-        <div className={styles['participants-list-container']}>
+        event && <div className={styles['participants-list-container']}>
             <div className={styles['header']}>
                 <button className={styles['btn']} onClick={handleGoBackToSideBar}><IoArrowBackOutline className={styles['btn-icon']} /></button>
                 <button className={styles['btn']} onClick={handleCloseWindow}><IoClose className={styles['btn-icon']} /></button>

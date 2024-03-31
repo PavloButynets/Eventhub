@@ -9,15 +9,12 @@
 .participants-list-container {
     background-color: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(5px);
-    /* width: 20%;
-    height: 85%; */
-    
-    /* width: 100%;
-    height: 100%; */
+    width: 20%;
+    height: 85%;
+    top: 10%;
     padding: 20px;
     z-index: 991;
     right: 0;
-    top: 10%;
     position: absolute;
     overflow: auto;
     display: flex;
