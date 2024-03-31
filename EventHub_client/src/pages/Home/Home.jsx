@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/authProvider";
-import { Link, useParams } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import {Map} from "./Map/Map";
 import  useAuth  from "../../hooks/useAuth";
 import { Button } from "antd";
@@ -12,8 +12,6 @@ import SearchInput from  "./Search/Search"
 import CreateEventButton from './CreateEvent/CreateEventButton'
 import EventFilter from "./Filter/Filter";
 import MyEvents from './MyEvents/MyEvents'
-import EventInfoSideBar from "./EventInfoSideBar/EventInfoSideBar";
-import ParticipantsList from "./EventInfoSideBar/ParticipantsList";
 
 const MAP_API_KEY =  process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
@@ -32,9 +30,6 @@ const Home = () => {
   })
 
   
-  // useEffect(() => {
-    
-  // })
 
   return (
     <div className={styles.Home}>
@@ -48,13 +43,12 @@ const Home = () => {
           {/* <CreateEventButton /> */}
           <EventFilter />
           <MyEvents />
-          {/* {eventId && !showAllParticipants && <EventInfoSideBar event = {selectedEvent} handleCloseWindow={onMapClick} handleShowAllParticipants={handleShowAllParticipants} />}
-          {eventId && showAllParticipants && <ParticipantsList event={selectedEvent} handleGoBackToSideBar={handleGoBackToSideBar} handleCloseWindow={onMapClick} />} */}
+          
+          <Outlet />
         </>
       ) : (
         <h1>Loading</h1>
       )}
-      {/* <EventInfoSideBar /> */}
     </div>
   );
 }

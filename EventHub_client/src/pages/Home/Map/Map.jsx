@@ -4,8 +4,7 @@ import { GoogleMap, Marker,InfoWindow } from '@react-google-maps/api';
 import styles from './Map.module.css'
 import { EnvironmentOutlined } from '@ant-design/icons';
 import { light } from "./Theme"
-import EventInfoSideBar from '../EventInfoSideBar/EventInfoSideBar';
-import ParticipantsList from '../EventInfoSideBar/ParticipantsList';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -35,6 +34,8 @@ const Map = ({ center }) => {
 
   const mapRef = useRef(undefined)
 
+  const navigate = useNavigate();
+
   const onLoad = useCallback(function callback(map) {
     mapRef.current = map;
   }, [])
@@ -57,7 +58,7 @@ const Map = ({ center }) => {
 
   const onMarkerClick = (event) => {
     setSelectedEvent(event);
-    // setShowAllParticipants(false);
+    navigate(`/event/${event.owner_id}/${event.id}`);
   };
 
   const onMapClick = () => {

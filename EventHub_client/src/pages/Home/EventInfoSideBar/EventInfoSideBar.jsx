@@ -6,7 +6,7 @@ import {getUserById} from '../../../api/getUserById';
 import { RiVipCrownLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 import ImageSlider from '../../../components/ImageSlider/ImageSlider';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getEventById } from '../../../api/getEventById';
 import ParticipantsList from './ParticipantsList';
 
@@ -24,13 +24,15 @@ const EventInfoSideBar = () => {
 
     const [showAllParticipants, setShowAllParticipants] = useState(false);
 
+    const navigate = useNavigate();
+
     const handleShowAllParticipants = () => {
         setShowAllParticipants(prev => !prev);
         
     }
 
     const handleCloseWindow = () => {
-        setEvent(null);
+        navigate('../');
     }
 
     const sideBar = useRef(null);
@@ -186,22 +188,7 @@ const EventInfoSideBar = () => {
                         <h3 className={styles['heading']}>About this event</h3>
                         <div className={styles['about-container']}>
                             <div className={styles[isShowMore ? null : 'about-text']} ref={aboutText}>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adiing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adig elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.sdfssdsfsdfssddsdsdfsfsdfsdf
-                            
+                                {event.description}
                             </div>
                             {isOverflowAboutText &&  <button onClick={handleShowMore} className={styles['show-more-btn']} ref={showMoreBtn}>Show more</button>}
                         </div>

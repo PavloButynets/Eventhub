@@ -21,10 +21,8 @@ function App() {
         <div>
           <Routes>
             <Route path="/" element={<Home/>}>
-              
+              <Route path="event/:ownerId/:eventId" element={<EventInfoSideBar />} />
             </Route>
-            <Route path="event/:ownerId/:eventId" element={<EventInfoSideBar />} />
-
             <Route path="/register" element={<SignUp/>}/>
             <Route path="/login" element={<LogIn/>}/> 
           </Routes>
