@@ -36,10 +36,11 @@
 }
 
 .close-btn {
-  padding: 0;
+  all: unset;
   background: transparent;
   cursor: pointer;
-  border: none;
+  box-shadow: 0 0 3px 0;
+  border-radius: 10px;
 }
 
 .close-btn:hover {
@@ -51,6 +52,9 @@
   color: var(--popup-background);
   background-color: var(--primary-color);
   border-radius: 10px;
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 /* Photo */
