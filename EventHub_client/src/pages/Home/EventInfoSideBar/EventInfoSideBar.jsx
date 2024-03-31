@@ -29,6 +29,7 @@ const EventInfoSideBar = () => {
   };
 
   const handleCloseWindow = () => {
+    // setEvent(null);
     navigate("../");
   };
 
@@ -102,6 +103,7 @@ const EventInfoSideBar = () => {
 
   return (
     <AnimatePresence>
+      (
       {event && (
         <motion.div
           initial={{
@@ -114,7 +116,7 @@ const EventInfoSideBar = () => {
             opacity: 0,
           }}
           transition={{
-            duration: 1,
+            duration: 1.2,
           }}
         >
           <div className={styles["side-bar-container"]} ref={sideBar}>
@@ -237,6 +239,7 @@ const EventInfoSideBar = () => {
               <button className={styles["action-btn"]}>Action</button>
             </div>
           </div>
+
           {event && showAllParticipants && (
             <ParticipantsList
               event={event}
@@ -246,6 +249,7 @@ const EventInfoSideBar = () => {
           )}
         </motion.div>
       )}
+      )
     </AnimatePresence>
   );
 };
