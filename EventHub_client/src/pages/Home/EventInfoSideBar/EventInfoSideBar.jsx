@@ -13,7 +13,6 @@ import ParticipantsList from './ParticipantsList';
 
 const EventInfoSideBar = () => {
 
-    
     const [isShowMore, setIsShowMore] = useState(false);
     const [isOverflowAboutText, setIsOverflowAboutText] = useState(false);
     const [isShowMoreParticipants, setIsShowMoreParticipants] = useState(false);
@@ -54,7 +53,7 @@ const EventInfoSideBar = () => {
         event && getParticipants(event.id)
         .then(data => {
             console.log('Data: ',data);
-            if (data.length > 1) {
+            if (data.length > 4) {
                 setIsShowMoreParticipants(true);
                 setParticipantsToShow(data.slice(0,4));
             }
@@ -166,14 +165,15 @@ const EventInfoSideBar = () => {
                         {/* Participants */}
                         <h3 className={styles['heading']}>Participants</h3>
                         <div className={styles['participant-container']}>
-                            <div className={styles['owner-photo']}>
-                                {owner && <img src={owner.photo_responses[0].photo_url} alt="" />}
-                                <div className={styles['crown-container']}>
-                                    <RiVipCrownLine className={styles['crown-icon']} />
-                                </div>
-                                
-                            </div>
+                            
                             <div className={styles['participants-photos']}>
+                                <div className={styles['owner-photo']}>
+                                    {owner && <img src={owner.photo_responses[0].photo_url} alt="" />}
+                                    <div className={styles['crown-container']}>
+                                        <RiVipCrownLine className={styles['crown-icon']} />
+                                    </div>
+                                    
+                                </div>
                                 {participantsToShow.map(participant => (
                                     <div className={styles['item']} key={participant.id}>
                                         <img src={participant.participant_photo.photo_url} alt="Participant Img" />

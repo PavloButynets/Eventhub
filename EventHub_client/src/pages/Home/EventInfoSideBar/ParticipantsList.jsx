@@ -9,8 +9,6 @@ import { useParams } from 'react-router-dom';
 import { getEventById } from '../../../api/getEventById';
 
 
-
-
 const ParticipantsList = ({handleGoBackToSideBar, handleCloseWindow}) => {
 
     const [participants, setParticipants] = useState([]);
