@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/authProvider";
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import {Map} from "./Map/Map";
 import  useAuth  from "../../hooks/useAuth";
 import { Button } from "antd";
@@ -12,7 +12,6 @@ import SearchInput from  "./Search/Search"
 import CreateEventButton from './CreateEvent/CreateEventButton'
 import EventFilter from "./Filter/Filter";
 import MyEvents from './MyEvents/MyEvents'
-import EventInfoSideBar from "./EventInfoSideBar/EventInfoSideBar";
 
 const MAP_API_KEY =  process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
@@ -30,6 +29,8 @@ const Home = () => {
     libraries
   })
 
+  
+
   return (
     <div className={styles.Home}>
       {isLoaded ? (
@@ -42,11 +43,12 @@ const Home = () => {
           {/* <CreateEventButton /> */}
           <EventFilter />
           <MyEvents />
+          
+          <Outlet />
         </>
       ) : (
         <h1>Loading</h1>
       )}
-      {/* <EventInfoSideBar /> */}
     </div>
   );
 }

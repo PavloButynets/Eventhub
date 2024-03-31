@@ -11,6 +11,8 @@ import {
   Link,
 } from "react-router-dom";
 
+import EventInfoSideBar from './pages/Home/EventInfoSideBar/EventInfoSideBar';
+
 
 
 function App() {
@@ -18,7 +20,9 @@ function App() {
       <Router>
         <div>
           <Routes>
-            <Route path="/" element={<Home/>}/>
+            <Route path="/" element={<Home/>}>
+              <Route path="event/:ownerId/:eventId" element={<EventInfoSideBar />} />
+            </Route>
             <Route path="/register" element={<SignUp/>}/>
             <Route path="/login" element={<LogIn/>}/> 
           </Routes>

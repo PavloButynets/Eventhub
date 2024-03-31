@@ -4,8 +4,7 @@ import { GoogleMap, Marker,InfoWindow } from '@react-google-maps/api';
 import styles from './Map.module.css'
 import { EnvironmentOutlined } from '@ant-design/icons';
 import { light } from "./Theme"
-import EventInfoSideBar from '../EventInfoSideBar/EventInfoSideBar';
-import ParticipantsList from '../EventInfoSideBar/ParticipantsList';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -35,6 +34,8 @@ const Map = ({ center }) => {
 
   const mapRef = useRef(undefined)
 
+  const navigate = useNavigate();
+
   const onLoad = useCallback(function callback(map) {
     mapRef.current = map;
   }, [])
@@ -45,6 +46,7 @@ const Map = ({ center }) => {
 
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  
 
   useEffect(() => {
     getEventsData()
@@ -56,6 +58,7 @@ const Map = ({ center }) => {
 
   const onMarkerClick = (event) => {
     setSelectedEvent(event);
+    navigate(`/event/${event.owner_id}/${event.id}`);
   };
 
   const onMapClick = () => {
@@ -63,7 +66,6 @@ const Map = ({ center }) => {
   };
   return (
     <div className={styles.mapcontainer}>
-      {selectedEvent && <EventInfoSideBar event = {selectedEvent} handleCloseWindow={onMapClick} />}
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}

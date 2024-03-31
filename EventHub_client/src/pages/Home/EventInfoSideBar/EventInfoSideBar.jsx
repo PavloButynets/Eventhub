@@ -1,34 +1,59 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './EventInfoSideBar.module.css'
-import { SlArrowLeft } from "react-icons/sl";
-import { SlArrowRight } from "react-icons/sl";
-import { MdOutlineDateRange } from "react-icons/md";
 import { IoIosMore } from "react-icons/io";
 import {getParticipants} from '../../../api/getParticipants';
 import {getUserById} from '../../../api/getUserById';
+import { RiVipCrownLine } from "react-icons/ri";
+import { IoClose } from "react-icons/io5";
+import ImageSlider from '../../../components/ImageSlider/ImageSlider';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getEventById } from '../../../api/getEventById';
 import ParticipantsList from './ParticipantsList';
-// import { CgCloseR } from "react-icons/cg";
 
-const EventInfoSideBar = ({event, handleCloseWindow}) => {
 
-    const [photoIndex, setPhotoIndex] = useState(0);
-    const [participants, setParticipants] = useState([]);
+const EventInfoSideBar = () => {
+
     const [isShowMore, setIsShowMore] = useState(false);
     const [isOverflowAboutText, setIsOverflowAboutText] = useState(false);
     const [isShowMoreParticipants, setIsShowMoreParticipants] = useState(false);
     const [participantsToShow, setParticipantsToShow] = useState([]);
-    const [showAllParticipants, setShowAllParticipants] = useState(false);
+    const [event, setEvent] = useState(null);
+    
     const [owner, setOwner] = useState(null);
 
+    const [showAllParticipants, setShowAllParticipants] = useState(false);
+
+    const navigate = useNavigate();
+
+    const handleShowAllParticipants = () => {
+        setShowAllParticipants(prev => !prev);
+        
+    }
+
+    const handleCloseWindow = () => {
+        navigate('../');
+    }
+
+    const sideBar = useRef(null);
     const showMoreBtn = useRef(null);
     const aboutText = useRef(null);
 
+    const {ownerId, eventId} = useParams();
+
     useEffect(() => {
-        getParticipants(event.id)
+        getEventById(ownerId, eventId)
+        
+        .then(data => {
+            
+            setEvent(data);
+        })
+    }, [ownerId, eventId]);
+    
+    useEffect(() => {
+        event && getParticipants(event.id)
         .then(data => {
             console.log('Data: ',data);
-            setParticipants(data)
-            if (data.length > 4) {
+            if (data.length > 1) {
                 setIsShowMoreParticipants(true);
                 setParticipantsToShow(data.slice(0,4));
             }
@@ -40,12 +65,14 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
                 setIsOverflowAboutText(true);
             }
         });
+
+        return () => setIsShowMoreParticipants(false);
         
         
     }, [event]);
 
     useEffect(() => {
-        getUserById(event.owner_id)
+        event && getUserById(event.owner_id)
         .then(data => {
             setOwner(data);
             console.log(`Owner photo response: ${data.photo_responses[0].photo_url}`)
@@ -53,12 +80,9 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
     }, [event])
 
     useEffect(() => {
-        console.log('participants to show: ',participantsToShow);
-    }, [participantsToShow]);
-
-    useEffect(() => {
-        console.log('participants: ',participants);
-    }, [participants]);
+        console.log('Show All: ',showAllParticipants);
+        event && ((showAllParticipants) ? sideBar.current.style.opacity = 0 : sideBar.current.style.opacity = 1);
+    }, [showAllParticipants, event]);
 
 
     const month = new Map();
@@ -75,17 +99,7 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
     month.set('11', 'Oct');
     month.set('12', 'Dec');
 
-    const handleRightPhotoClick = () => {
-        if (photoIndex < event.photo_responses.length-1) {
-            setPhotoIndex(prev => prev + 1);
-        }
-    }
-
-    const handleLeftPhotoClick = () => {
-        if (photoIndex > 0) {
-            setPhotoIndex(prev => prev - 1);
-        }
-    }
+    
 
     const handleShowMore = () => {
         setIsShowMore(prev => !prev);
@@ -95,117 +109,104 @@ const EventInfoSideBar = ({event, handleCloseWindow}) => {
     
 
     return ( 
-        <div className={styles['side-bar-container']}>
-            <div className={styles['header']}>
-                <h2 className={styles['event-title']}>{event.title}</h2>
-                {/* <button className={styles['close-btn']} onClick={handleCloseWindow}><CgCloseR size="2.5em" /></button> */}
-            </div>
-            
-
-            {/* Photo */}
-            
-                
-                <div className={styles['photo-container']}>
-                    <img className={styles['event-photo']} src={event.photo_responses[photoIndex].photo_url} alt="Event img" />
-                    {event.photo_responses.length > 1 && <div className={styles['arrow-container']}>
-                        <button className={styles['left-arrow']} onClick={handleLeftPhotoClick}> <SlArrowLeft className={styles['arrow-icon']} /> </button>
-                        <button className={styles['right-arrow']} onClick={handleRightPhotoClick}> <SlArrowRight className={styles['arrow-icon']} /> </button>
-                    </div>}
-                 </div>
-
-                {/*(<img className={styles['event-photo']} src={event.photo_responses[0].photo_url} alt='Event img' />) */}
-            
-
-            {/* Category */}
-            <div className={styles['category-container']}>
-                {event.category_responses.map((category) => (
-                    <div key={category.id} className={styles['category']}>{category.name}</div>
-                ))}
-            </div>
-
-            {/* Date */}
-            <div className={styles['date-container']}>
-                <div className={styles['date-range-container']}>
-                    <div className={styles['start-at']}>
-                        <div className={styles['day']}>
-                            {month.get(event.start_at.slice(5,7)) + ' ' + event.start_at.slice(8,10)}
+        event && <div>
+                    <div className={styles['side-bar-container']} ref={sideBar}>
+                        <div className={styles['header']}>
+                            <h2 className={styles['event-title']}>{event.title}</h2>
+                            <button className={styles['close-btn']} onClick={handleCloseWindow}><IoClose className={styles['close-btn-icon']} size="2.5em" /></button>
                         </div>
-                        <div className={styles['time']}>
-                            {event.start_at.slice(11,16)}
+                        
+
+                        {/* Photo */}
+                        <div className={styles['photo-container']}>
+                            <ImageSlider images={event.photo_responses}/>
                         </div>
-                    </div>
+                        
 
-                    <hr />
-
-                    <div className={styles['expire-at']}>
-                        <div className={styles['day']}>
-                            {month.get(event.expire_at.slice(5,7)) + ' ' + event.expire_at.slice(8,10)}
+                        {/* Category */}
+                        <div className={styles['category-container']}>
+                            {event.category_responses.map((category) => (
+                                <div key={category.id} className={styles['category']}>{category.name}</div>
+                            ))}
                         </div>
-                        <div className={styles['time']}>
-                            {event.expire_at.slice(11,16)}
+
+                        {/* Date */}
+                        <h3 className={styles['heading']}>Date and time</h3>
+                        <div className={styles['date-container']}>
+                            
+                            <div className={styles['date-range-container']}>
+                                <div className={styles['start-at']}>
+                                    <div className={styles['day']}>
+                                        {month.get(event.start_at.slice(5,7)) + ' ' + event.start_at.slice(8,10)}
+                                    </div>
+                                    <div className={styles['time']}>
+                                        {event.start_at.slice(11,16)}
+                                    </div>
+                                </div>
+                                
+
+                                <div className={styles['expire-at']}>
+                                    <div className={styles['day']}>
+                                        {month.get(event.expire_at.slice(5,7)) + ' ' + event.expire_at.slice(8,10)}
+                                    </div>
+                                    <div className={styles['time']}>
+                                        {event.expire_at.slice(11,16)}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className={styles['vl']}></div>
+                            <div className={styles['location']}>
+                                {event.location}
+                            </div>
+                            
                         </div>
-                    </div>
-                </div>
-                <div className={styles['date-icon']}>
-                    <MdOutlineDateRange size='3em' />
-                </div>
-                
-            </div>
 
-            {/* Participants */}
-            <h3 className={styles['heading']}>Participants</h3>
-            <div className={styles['participant-container']}>
-                <div className={styles['owner-photo']}>
-                    {owner && <img src={owner.photo_responses[0].photo_url} alt="" />}
-                </div>
-                <div className={styles['participants-photos']}>
-                    {participantsToShow.map(participant => (
-                        <div className={styles['item']} key={participant.id}>
-                            <img src={participant.participant_photo.photo_url} alt="Participant Img" />
+                        {/* Participants */}
+                        <h3 className={styles['heading']}>Participants</h3>
+                        <div className={styles['participant-container']}>
+                            
+                            <div className={styles['participants-photos']}>
+                                <div className={styles['owner-photo']}>
+                                    {owner && <img src={owner.photo_responses[0].photo_url} alt="" />}
+                                    <div className={styles['crown-container']}>
+                                        <RiVipCrownLine className={styles['crown-icon']} />
+                                    </div>
+                                    
+                                </div>
+                                {participantsToShow.map(participant => (
+                                    <div className={styles['item']} key={participant.id}>
+                                        <img src={participant.participant_photo.photo_url} alt="Participant Img" />
+                                    </div>
+                                ))}    
+                                { isShowMoreParticipants && <div className={styles['show-more-participants']}><button onClick={handleShowAllParticipants} className={styles['show-more-participants-btn']} ><IoIosMore className={styles['show-more-participants-btn-icon']} /></button></div>}
+                            </div>
+                            
                         </div>
-                    ))}    
-                    { isShowMoreParticipants && <div className={styles['show-more-participants']}><button onClick={() => setShowAllParticipants(!showAllParticipants)} ><IoIosMore /></button></div>}
+
+                        {/* About section */}
+                        <h3 className={styles['heading']}>About this event</h3>
+                        <div className={styles['about-container']}>
+                            <div className={styles[isShowMore ? null : 'about-text']} ref={aboutText}>
+                                {event.description}
+                            </div>
+                            {isOverflowAboutText &&  <button onClick={handleShowMore} className={styles['show-more-btn']} ref={showMoreBtn}>Show more</button>}
+                        </div>
+
+                        {/* Lower section */}
+                        <div className={styles['lower-container']}>
+                            <div className={styles['spots']}>
+                                    {event.max_participants - event.participant_count} Spots left
+                            </div>
+
+                            <button className={styles['action-btn']}>Action</button>
+                        </div>
+
+                    
+                    
                 </div>
-                
+                {event && showAllParticipants && <ParticipantsList event={event} handleGoBackToSideBar={handleShowAllParticipants} handleCloseWindow={handleCloseWindow} />}
             </div>
-
-            {/* About section */}
-            <h3 className={styles['heading']}>About this event</h3>
-            <div className={styles['about-container']}>
-                <div className={styles[isShowMore ? 'about-text-more' : 'about-text']} ref={aboutText}>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                
-                </div>
-                {isOverflowAboutText && !isShowMore && <div className={styles['three-dots']}>...</div>}
-                {isOverflowAboutText &&  <button onClick={handleShowMore} className={styles['show-more-btn']} ref={showMoreBtn}>Show more</button>}
-            </div>
-
-            {/* Lower section */}
-            <div className={styles['lower-container']}>
-                <div className={styles['spots']}>
-                        {event.max_participants - event.participant_count} Spots left
-                </div>
-
-                <button className={styles['action-btn']}>Action</button>
-            </div>
-
-            {showAllParticipants && <ParticipantsList event={event} />}
-            
-        </div>
      );
 }
  

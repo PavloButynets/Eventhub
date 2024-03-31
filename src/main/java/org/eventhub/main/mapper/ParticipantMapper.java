@@ -1,9 +1,6 @@
 package org.eventhub.main.mapper;
 
-import org.eventhub.main.dto.ParticipantRequest;
-import org.eventhub.main.dto.ParticipantResponse;
-import org.eventhub.main.dto.ParticipantWithPhotoResponse;
-import org.eventhub.main.dto.PhotoResponse;
+import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.model.Participant;
@@ -38,6 +35,23 @@ public class ParticipantMapper {
                 .createdAt(participant.getCreatedAt())
                 .userId(participant.getUser().getId())
                 .participantPhoto(userService.readById(participant.getUser().getId()).getPhotoResponses().get(0))
+                .build();
+    }
+
+    public UserParticipantResponse entityToUserParticipantResponse(Participant participant) {
+        if (participant == null) {
+            throw new NullEntityReferenceException("Participant can't be null");
+        }
+        UserResponse user = userService.readById(participant.getUser().getId());
+
+        return UserParticipantResponse.builder()
+                .id(participant.getId())
+                .userId(participant.getUser().getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .participantPhoto(user.getPhotoResponses().get(0))
+                .email(user.getEmail())
+                .createdAt(participant.getCreatedAt())
                 .build();
     }
 
