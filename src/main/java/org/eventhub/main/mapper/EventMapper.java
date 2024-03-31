@@ -5,8 +5,11 @@ import org.eventhub.main.dto.EventRequest;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.model.Event;
+import org.eventhub.main.model.Photo;
 import org.eventhub.main.model.State;
+import org.eventhub.main.repository.PhotoRepository;
 import org.eventhub.main.service.CategoryService;
+import org.eventhub.main.service.PhotoService;
 import org.eventhub.main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,15 +19,17 @@ import java.util.stream.Collectors;
 
 @Service
 public class EventMapper {
-    UserService userService;
-    CategoryService categoryService;
-    CategoryMapper categoryMapper;
-    PhotoMapper photoMapper;
+    private final UserService userService;
+    private final CategoryService categoryService;
+    private final PhotoRepository photoRepository;
+    private final CategoryMapper categoryMapper;
+    private final PhotoMapper photoMapper;
 
     @Autowired
-    public EventMapper(UserService userService, CategoryService categoryService, CategoryMapper categoryMapper, PhotoMapper photoMapper) {
+    public EventMapper(UserService userService, CategoryService categoryService,PhotoRepository photoRepository ,CategoryMapper categoryMapper, PhotoMapper photoMapper) {
         this.userService = userService;
         this.categoryService = categoryService;
+        this.photoRepository = photoRepository;
         this.categoryMapper = categoryMapper;
         this.photoMapper = photoMapper;
     }
@@ -33,7 +38,7 @@ public class EventMapper {
         if (event == null) {
             throw new NullEntityReferenceException("Event can't be found");
         }
-        return EventResponse.builder()
+        EventResponse response = EventResponse.builder()
                 .id(event.getId())
                 .title(event.getTitle())
                 .maxParticipants(event.getMaxParticipants())
@@ -56,6 +61,12 @@ public class EventMapper {
                         .collect(Collectors.toList()))
                 .ownerId(event.getOwner().getId())
                 .build();
+
+        if(response.getPhotoResponses().isEmpty()){
+            Photo photo = photoRepository.findPhotoByPhotoName("eventDefaultImage");
+            response.getPhotoResponses().add(photoMapper.entityToResponse(photo));
+        }
+        return response;
     }
 
     public Event requestToEntity(EventRequest eventRequest, Event event) {

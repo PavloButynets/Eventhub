@@ -128,16 +128,6 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public List<ParticipantWithPhotoResponse> getAllByEventIdWithPhotos(UUID eventId) {
-        Event event = eventService.readByIdEntity(eventId);
-        return event.getParticipants()
-                .stream()
-                .filter(Participant::isApproved)
-                .map(participantMapper::entityToPhotoResponse)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<ParticipantResponse> getAllRequestsByEventId(UUID eventId) {
         Event event = eventService.readByIdEntity(eventId);
         return event.getParticipants()
