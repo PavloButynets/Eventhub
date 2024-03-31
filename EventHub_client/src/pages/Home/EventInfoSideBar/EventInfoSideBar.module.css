@@ -40,9 +40,11 @@
     padding: 0;
     background: transparent;
     cursor: pointer;
-    border: none;
-    
-    
+    border: none;    
+}
+
+.close-btn:hover {
+    opacity: 0.8;
 }
 
 .close-btn-icon {

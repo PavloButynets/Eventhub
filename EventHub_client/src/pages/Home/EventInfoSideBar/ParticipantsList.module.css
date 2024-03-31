@@ -44,6 +44,10 @@
     margin: 0;
 }
 
+.btn:hover {
+    opacity: 0.8;
+}
+
 .btn-icon {
     background-color: var(--primary-color);
     color: var(--popup-background);
