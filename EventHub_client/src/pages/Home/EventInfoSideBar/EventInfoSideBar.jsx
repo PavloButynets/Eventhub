@@ -25,7 +25,7 @@ const EventInfoSideBar = () => {
   const navigate = useNavigate();
 
   const handleShowAllParticipants = () => {
-    setShowAllParticipants((prev) => !prev);
+    setShowAllParticipants(!showAllParticipants);
   };
 
   const handleCloseWindow = () => {
@@ -74,13 +74,13 @@ const EventInfoSideBar = () => {
       });
   }, [event]);
 
-  useEffect(() => {
-    console.log("Show All: ", showAllParticipants);
-    event &&
-      (showAllParticipants
-        ? (sideBar.current.style.opacity = 0)
-        : (sideBar.current.style.opacity = 1));
-  }, [showAllParticipants, event]);
+  // useEffect(() => {
+  //   console.log("Show All: ", showAllParticipants);
+  //   event &&
+  //     (showAllParticipants
+  //       ? (sideBar.current.style.opacity = 0)
+  //       : (sideBar.current.style.opacity = 1));
+  // }, [showAllParticipants, event]);
 
   const month = new Map();
   month.set("01", "Jan");
@@ -97,7 +97,7 @@ const EventInfoSideBar = () => {
   month.set("12", "Dec");
 
   const handleShowMore = () => {
-    setIsShowMore((prev) => !prev);
+    setIsShowMore(!isShowMore);
     showMoreBtn.current.innerHTML = isShowMore ? "Show more" : "Show less";
   };
 
@@ -105,142 +105,146 @@ const EventInfoSideBar = () => {
     <AnimatePresence>
       (
       {event && (
-        <motion.div
-          initial={{
-            opacity: 0,
-          }}
-          animate={{
-            opacity: 1,
-          }}
-          exit={{
-            opacity: 0,
-          }}
-          transition={{
-            duration: 1,
-          }}
-        >
-          <div className={styles["side-bar-container"]} ref={sideBar}>
-            <div className={styles["header"]}>
-              <h2 className={styles["event-title"]}>{event.title}</h2>
-              <button
-                className={styles["close-btn"]}
-                onClick={handleCloseWindow}
-              >
-                <IoClose className={styles["close-btn-icon"]} size="2.5em" />
-              </button>
-            </div>
-
-            {/* Photo */}
-            <div className={styles["photo-container"]}>
-              <ImageSlider images={event.photo_responses} />
-            </div>
-
-            {/* Category */}
-            <div className={styles["category-container"]}>
-              {event.category_responses.map((category) => (
-                <div key={category.id} className={styles["category"]}>
-                  {category.name}
-                </div>
-              ))}
-            </div>
-
-            {/* Date */}
-            <h3 className={styles["heading"]}>Date and time</h3>
-            <div className={styles["date-container"]}>
-              <div className={styles["date-range-container"]}>
-                <div className={styles["start-at"]}>
-                  <div className={styles["day"]}>
-                    {month.get(event.start_at.slice(5, 7)) +
-                      " " +
-                      event.start_at.slice(8, 10)}
-                  </div>
-                  <div className={styles["time"]}>
-                    {event.start_at.slice(11, 16)}
-                  </div>
-                </div>
-
-                <div className={styles["expire-at"]}>
-                  <div className={styles["day"]}>
-                    {month.get(event.expire_at.slice(5, 7)) +
-                      " " +
-                      event.expire_at.slice(8, 10)}
-                  </div>
-                  <div className={styles["time"]}>
-                    {event.expire_at.slice(11, 16)}
-                  </div>
-                </div>
+        <motion.div>
+          {!showAllParticipants && (
+            <motion.div
+              className={styles["side-bar-container"]}
+              ref={sideBar}
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              exit={{
+                opacity: 0,
+              }}
+              transition={{
+                duration: 0.7,
+              }}
+            >
+              <div className={styles["header"]}>
+                <h2 className={styles["event-title"]}>{event.title}</h2>
+                <button
+                  className={styles["close-btn"]}
+                  onClick={handleCloseWindow}
+                >
+                  <IoClose className={styles["close-btn-icon"]} size="2.5em" />
+                </button>
               </div>
 
-              <div className={styles["vl"]}></div>
-              <div className={styles["location"]}>{event.location}</div>
-            </div>
+              {/* Photo */}
+              <div className={styles["photo-container"]}>
+                <ImageSlider images={event.photo_responses} />
+              </div>
 
-            {/* Participants */}
-            <h3 className={styles["heading"]}>Participants</h3>
-            <div className={styles["participant-container"]}>
-              <div className={styles["participants-photos"]}>
-                <div className={styles["owner-photo"]}>
-                  {owner && (
-                    <img src={owner.photo_responses[0].photo_url} alt="" />
-                  )}
-                  <div className={styles["crown-container"]}>
-                    <RiVipCrownLine className={styles["crown-icon"]} />
-                  </div>
-                </div>
-                {participantsToShow.map((participant) => (
-                  <div className={styles["item"]} key={participant.id}>
-                    <img
-                      src={participant.participant_photo.photo_url}
-                      alt="Participant Img"
-                    />
+              {/* Category */}
+              <div className={styles["category-container"]}>
+                {event.category_responses.map((category) => (
+                  <div key={category.id} className={styles["category"]}>
+                    {category.name}
                   </div>
                 ))}
-                {isShowMoreParticipants && (
-                  <div className={styles["show-more-participants"]}>
-                    <button
-                      onClick={handleShowAllParticipants}
-                      className={styles["show-more-participants-btn"]}
-                    >
-                      <IoIosMore
-                        className={styles["show-more-participants-btn-icon"]}
-                      />
-                    </button>
+              </div>
+
+              {/* Date */}
+              <h3 className={styles["heading"]}>Date and time</h3>
+              <div className={styles["date-container"]}>
+                <div className={styles["date-range-container"]}>
+                  <div className={styles["start-at"]}>
+                    <div className={styles["day"]}>
+                      {month.get(event.start_at.slice(5, 7)) +
+                        " " +
+                        event.start_at.slice(8, 10)}
+                    </div>
+                    <div className={styles["time"]}>
+                      {event.start_at.slice(11, 16)}
+                    </div>
                   </div>
+
+                  <div className={styles["expire-at"]}>
+                    <div className={styles["day"]}>
+                      {month.get(event.expire_at.slice(5, 7)) +
+                        " " +
+                        event.expire_at.slice(8, 10)}
+                    </div>
+                    <div className={styles["time"]}>
+                      {event.expire_at.slice(11, 16)}
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles["vl"]}></div>
+                <div className={styles["location"]}>{event.location}</div>
+              </div>
+
+              {/* Participants */}
+              <h3 className={styles["heading"]}>Participants</h3>
+              <div className={styles["participant-container"]}>
+                <div className={styles["participants-photos"]}>
+                  <div className={styles["owner-photo"]}>
+                    {owner && (
+                      <img src={owner.photo_responses[0].photo_url} alt="" />
+                    )}
+                    <div className={styles["crown-container"]}>
+                      <RiVipCrownLine className={styles["crown-icon"]} />
+                    </div>
+                  </div>
+                  {participantsToShow.map((participant) => (
+                    <div className={styles["item"]} key={participant.id}>
+                      <img
+                        src={participant.participant_photo.photo_url}
+                        alt="Participant Img"
+                      />
+                    </div>
+                  ))}
+                  {isShowMoreParticipants && (
+                    <div className={styles["show-more-participants"]}>
+                      <button
+                        onClick={handleShowAllParticipants}
+                        className={styles["show-more-participants-btn"]}
+                      >
+                        <IoIosMore
+                          className={styles["show-more-participants-btn-icon"]}
+                        />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* About section */}
+              <h3 className={styles["heading"]}>About this event</h3>
+              <div className={styles["about-container"]}>
+                <div
+                  className={styles[isShowMore ? null : "about-text"]}
+                  ref={aboutText}
+                >
+                  {event.description}
+                </div>
+                {isOverflowAboutText && (
+                  <button
+                    onClick={handleShowMore}
+                    className={styles["show-more-btn"]}
+                    ref={showMoreBtn}
+                  >
+                    Show more
+                  </button>
                 )}
               </div>
-            </div>
 
-            {/* About section */}
-            <h3 className={styles["heading"]}>About this event</h3>
-            <div className={styles["about-container"]}>
-              <div
-                className={styles[isShowMore ? null : "about-text"]}
-                ref={aboutText}
-              >
-                {event.description}
+              {/* Lower section */}
+              <div className={styles["lower-container"]}>
+                <div className={styles["spots"]}>
+                  {event.max_participants - event.participant_count} Spots left
+                </div>
+
+                <button className={styles["action-btn"]}>Action</button>
               </div>
-              {isOverflowAboutText && (
-                <button
-                  onClick={handleShowMore}
-                  className={styles["show-more-btn"]}
-                  ref={showMoreBtn}
-                >
-                  Show more
-                </button>
-              )}
-            </div>
+            </motion.div>
+          )}
 
-            {/* Lower section */}
-            <div className={styles["lower-container"]}>
-              <div className={styles["spots"]}>
-                {event.max_participants - event.participant_count} Spots left
-              </div>
-
-              <button className={styles["action-btn"]}>Action</button>
-            </div>
-          </div>
-
-          {event && showAllParticipants && (
+          {showAllParticipants && (
             <ParticipantsList
               event={event}
               handleGoBackToSideBar={handleShowAllParticipants}
