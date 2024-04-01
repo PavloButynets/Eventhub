@@ -1,14 +1,15 @@
 :root {
   --primary-color: #002462;
-  --primary-color-hover:  #003898;
+  --primary-color-hover: #003898;
+  --primary-color-hover-2: #11557c;
   --secondary-color: #dddfe0;
   --secondary-color-hover: #002462;
-  --third-color:#AAAAAA;
-  --third-color-hover:#eeeeee;
-  --highlight-color:#FFFF00;
-  --highlight-color-stroke:#FFD700;
-  --text-secondary-color:#A6A6A6;
-  --popup-background: #FFFFFF;
-  --primary-font-family: 'Poppins';
-  --secondary-font-family:'Roboto';
+  --third-color: #aaaaaa;
+  --third-color-hover: #eeeeee;
+  --highlight-color: #ffff00;
+  --highlight-color-stroke: #ffd700;
+  --text-secondary-color: #a6a6a6;
+  --popup-background: #ffffff;
+  --primary-font-family: "Poppins";
+  --secondary-font-family: "Roboto";
 }

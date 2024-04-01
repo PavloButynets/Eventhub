@@ -43,10 +43,6 @@
   border-radius: 10px;
 }
 
-.close-btn:hover {
-  opacity: 0.8;
-}
-
 .close-btn-icon {
   font-size: 0.85rem;
   color: var(--popup-background);
@@ -55,6 +51,11 @@
   display: block;
   flex-grow: 0;
   flex-shrink: 0;
+}
+
+.close-btn-icon:hover {
+  background-color: var(--primary-color-hover-2);
+  /* background-color: red; */
 }
 
 /* Photo */

@@ -40,10 +40,6 @@
   box-shadow: 0 0 3px 0;
 }
 
-.btn:hover {
-  opacity: 0.8;
-}
-
 .btn-icon {
   background-color: var(--primary-color);
   color: var(--popup-background);
@@ -52,6 +48,11 @@
   display: block;
   flex-grow: 0;
   flex-shrink: 0;
+}
+
+.btn-icon:hover {
+  background-color: var(--primary-color-hover-2);
+  /* background-color: red; */
 }
 
 /* Participants list */
