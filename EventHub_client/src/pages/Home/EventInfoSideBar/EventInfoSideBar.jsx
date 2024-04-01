@@ -116,7 +116,7 @@ const EventInfoSideBar = () => {
             opacity: 0,
           }}
           transition={{
-            duration: 1.2,
+            duration: 1,
           }}
         >
           <div className={styles["side-bar-container"]} ref={sideBar}>

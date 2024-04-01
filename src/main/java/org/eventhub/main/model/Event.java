@@ -61,6 +61,10 @@ public class Event {
     private int participantCount;
 
     @NotNull
+    @Column(name = "with_owner")
+    private boolean withOwner;
+
+    @NotNull
     @Column(name = "location")
     private String location;
 
