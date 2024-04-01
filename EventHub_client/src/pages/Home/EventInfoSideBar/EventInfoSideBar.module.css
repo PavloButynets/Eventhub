@@ -180,6 +180,13 @@
 
 .participants-photos .item {
   margin-right: 10px;
+  position: relative;
+}
+
+.pop-up-participant-info {
+  background-color: red;
+  position: absolute;
+  left: 20%;
 }
 
 .participants-photos img {

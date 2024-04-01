@@ -20,6 +20,8 @@ const EventInfoSideBar = () => {
 
   const [owner, setOwner] = useState(null);
 
+  const [hoveredParticipant, setHoveredParticipant] = useState(null);
+
   const [showAllParticipants, setShowAllParticipants] = useState(false);
 
   const navigate = useNavigate();
@@ -191,11 +193,26 @@ const EventInfoSideBar = () => {
                     </div>
                   </div>
                   {participantsToShow.map((participant) => (
-                    <div className={styles["item"]} key={participant.id}>
+                    <div
+                      className={styles["item"]}
+                      key={participant.id}
+                      onMouseEnter={() => {
+                        getUserById(participant.user_id).then((data) => {
+                          setHoveredParticipant(data);
+                        });
+                      }}
+                      onMouseLeave={() => setHoveredParticipant(null)}
+                    >
                       <img
                         src={participant.participant_photo.photo_url}
                         alt="Participant Img"
                       />
+                      {hoveredParticipant &&
+                        hoveredParticipant.id === participant.user_id && (
+                          <div className={styles["pop-up-participant-info"]}>
+                            {hoveredParticipant.first_name}
+                          </div>
+                        )}
                     </div>
                   ))}
                   {isShowMoreParticipants && (
