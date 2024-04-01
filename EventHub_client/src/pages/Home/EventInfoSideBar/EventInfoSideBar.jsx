@@ -7,7 +7,7 @@ import { RiVipCrownLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 import ImageSlider from "../../../components/ImageSlider/ImageSlider";
 import { useNavigate, useParams } from "react-router-dom";
-import { getEventById } from "../../../api/getEventById";
+import { getFullEventById } from "../../../api/getFullEventById";
 import ParticipantsList from "./ParticipantsList";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -40,7 +40,7 @@ const EventInfoSideBar = () => {
   const { ownerId, eventId } = useParams();
 
   useEffect(() => {
-    getEventById(ownerId, eventId).then((data) => {
+    getFullEventById(ownerId, eventId).then((data) => {
       setEvent(data);
     });
   }, [ownerId, eventId]);

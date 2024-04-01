@@ -46,6 +46,9 @@ public class EventFullInfoResponse {
     private State state;
 
     @NotNull
+    private boolean withOwner;
+
+    @NotNull
     private String location;
 
     @NotNull
@@ -64,7 +67,7 @@ public class EventFullInfoResponse {
     public EventFullInfoResponse() {
     }
 
-    public EventFullInfoResponse(UUID id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, State state, String location, BigDecimal latitude, BigDecimal longitude, UUID ownerId, List<CategoryResponse> categoryResponses, List<PhotoResponse> photoResponses) {
+    public EventFullInfoResponse(UUID id, String title, int maxParticipants, LocalDateTime createdAt, LocalDateTime startAt, LocalDateTime expireAt, String description, int participantCount, State state, boolean withOwner, String location, BigDecimal latitude, BigDecimal longitude, UUID ownerId, List<CategoryResponse> categoryResponses, List<PhotoResponse> photoResponses) {
         this.id = id;
         this.title = title;
         this.maxParticipants = maxParticipants;
@@ -74,6 +77,7 @@ public class EventFullInfoResponse {
         this.description = description;
         this.participantCount = participantCount;
         this.state = state;
+        this.withOwner = withOwner;
         this.location = location;
         this.latitude = latitude;
         this.longitude = longitude;

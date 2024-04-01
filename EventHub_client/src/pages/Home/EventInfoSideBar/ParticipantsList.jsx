@@ -8,7 +8,7 @@ import { RiVipCrownLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 
 import { useParams } from "react-router-dom";
-import { getEventById } from "../../../api/getEventById";
+import { getFullEventById } from "../../../api/getFullEventById";
 import { getUserById } from "../../../api/getUserById";
 
 const ParticipantsList = ({ handleGoBackToSideBar, handleCloseWindow }) => {
@@ -19,7 +19,7 @@ const ParticipantsList = ({ handleGoBackToSideBar, handleCloseWindow }) => {
   const { ownerId, eventId } = useParams();
 
   useEffect(() => {
-    getEventById(ownerId, eventId).then((data) => setEvent(data));
+    getFullEventById(ownerId, eventId).then((data) => setEvent(data));
   }, [ownerId, eventId]);
 
   useEffect(() => {
