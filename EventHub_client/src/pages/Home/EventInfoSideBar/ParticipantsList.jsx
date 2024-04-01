@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import styles from "./ParticipantsList.module.css";
 
 import { getUserParticipants } from "../../../api/getUserParticipants";
+import { getFullEventById } from "../../../api/getFullEventById";
+import { getUserById } from "../../../api/getUserById";
 
 import { IoArrowBackOutline } from "react-icons/io5";
 import { RiVipCrownLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 
-import { useParams } from "react-router-dom";
-import { getFullEventById } from "../../../api/getFullEventById";
-import { getUserById } from "../../../api/getUserById";
-
 const ParticipantsList = ({ handleGoBackToSideBar, handleCloseWindow }) => {
+  // States
   const [participants, setParticipants] = useState([]);
   const [event, setEvent] = useState(null);
   const [owner, setOwner] = useState(null);
 
+  // Params
   const { ownerId, eventId } = useParams();
 
+  // Effects
   useEffect(() => {
     getFullEventById(ownerId, eventId).then((data) => setEvent(data));
   }, [ownerId, eventId]);

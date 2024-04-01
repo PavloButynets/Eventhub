@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../context/authProvider";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import { Map } from "./Map/Map";
 import useAuth from "../../hooks/useAuth";
 import { Button } from "antd";
@@ -12,6 +12,7 @@ import SearchInput from "./Search/Search";
 import CreateEventButton from "./CreateEvent/CreateEventButton";
 import EventFilter from "./Filter/Filter";
 import MyEvents from "./MyEvents/MyEvents";
+import EventInfoSideBar from "./EventInfoSideBar/EventInfoSideBar";
 
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
@@ -22,6 +23,7 @@ const defaultCenter = {
 const libraries = ["places"];
 const Home = () => {
   const { auth, setAuth } = useAuth();
+  const { ownerId, eventId } = useParams();
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -40,7 +42,9 @@ const Home = () => {
           <EventFilter />
           <MyEvents />
 
-          <Outlet />
+          {ownerId && eventId && (
+            <EventInfoSideBar ownerId={ownerId} eventId={eventId} />
+          )}
         </>
       ) : (
         <h1>Loading</h1>

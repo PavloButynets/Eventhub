@@ -1,17 +1,22 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./EventInfoSideBar.module.css";
+
 import { IoIosMore } from "react-icons/io";
-import { getParticipants } from "../../../api/getParticipants";
-import { getUserById } from "../../../api/getUserById";
 import { RiVipCrownLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
-import ImageSlider from "../../../components/ImageSlider/ImageSlider";
-import { useNavigate, useParams } from "react-router-dom";
+
+import { getParticipants } from "../../../api/getParticipants";
+import { getUserById } from "../../../api/getUserById";
 import { getFullEventById } from "../../../api/getFullEventById";
+
+import ImageSlider from "../../../components/ImageSlider/ImageSlider";
 import ParticipantsList from "./ParticipantsList";
+
 import { AnimatePresence, motion } from "framer-motion";
 
-const EventInfoSideBar = () => {
+const EventInfoSideBar = ({ ownerId, eventId }) => {
+  // States
   const [isShowMore, setIsShowMore] = useState(false);
   const [isOverflowAboutText, setIsOverflowAboutText] = useState(false);
   const [isShowMoreParticipants, setIsShowMoreParticipants] = useState(false);
@@ -26,21 +31,20 @@ const EventInfoSideBar = () => {
 
   const navigate = useNavigate();
 
-  const handleShowAllParticipants = () => {
-    setShowAllParticipants(!showAllParticipants);
-  };
-
   const handleCloseWindow = () => {
     // setEvent(null);
     navigate("../");
   };
 
+  // Refs
   const sideBar = useRef(null);
   const showMoreBtn = useRef(null);
   const aboutText = useRef(null);
 
-  const { ownerId, eventId } = useParams();
+  // Params
+  // const { ownerId, eventId } = useParams();
 
+  // Effects
   useEffect(() => {
     getFullEventById(ownerId, eventId).then((data) => {
       setEvent(data);
@@ -76,6 +80,8 @@ const EventInfoSideBar = () => {
       });
   }, [event]);
 
+  //TODO Fix opacity when allParticipants is toggled
+
   // useEffect(() => {
   //   console.log("Show All: ", showAllParticipants);
   //   event &&
@@ -98,6 +104,11 @@ const EventInfoSideBar = () => {
   month.set("11", "Oct");
   month.set("12", "Dec");
 
+  // Funcs
+  const handleShowAllParticipants = () => {
+    setShowAllParticipants(!showAllParticipants);
+  };
+
   const handleShowMore = () => {
     setIsShowMore(!isShowMore);
     showMoreBtn.current.innerHTML = isShowMore ? "Show more" : "Show less";
@@ -107,7 +118,7 @@ const EventInfoSideBar = () => {
     <AnimatePresence>
       (
       {event && (
-        <motion.div>
+        <div>
           {!showAllParticipants && (
             <motion.div
               className={styles["side-bar-container"]}
@@ -268,7 +279,7 @@ const EventInfoSideBar = () => {
               handleCloseWindow={handleCloseWindow}
             />
           )}
-        </motion.div>
+        </div>
       )}
       )
     </AnimatePresence>

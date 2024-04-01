@@ -14,10 +14,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />}>
-          <Route
-            path="event/:ownerId/:eventId"
-            element={<EventInfoSideBar />}
-          />
+          <Route path="event/:ownerId/:eventId" />
         </Route>
         <Route path="/register" element={<SignUp />} />
         <Route path="/login" element={<LogIn />} />
