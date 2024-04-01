@@ -1,8 +1,9 @@
 package org.eventhub.main.service;
 
-import org.eventhub.main.dto.EventResponse;
+import org.eventhub.main.dto.EventFullInfoResponse;
 import org.eventhub.main.dto.EventRequest;
-import org.eventhub.main.dto.PhotoResponse;
+import org.eventhub.main.dto.EventSearchResponse;
+import org.eventhub.main.dto.EventResponseXY;
 import org.eventhub.main.model.Event;
 import org.eventhub.main.model.Photo;
 
@@ -10,16 +11,17 @@ import java.util.List;
 import java.util.UUID;
 
 public interface EventService {
-    EventResponse create(EventRequest eventRequest);
-    EventResponse readById(UUID id);
+    EventFullInfoResponse create(EventRequest eventRequest);
+    EventFullInfoResponse readById(UUID id);
 
     Event readByIdEntity(UUID id);
 
     Event readByTitle(String title);
-    EventResponse update(EventRequest eventRequest);
+    EventFullInfoResponse update(EventRequest eventRequest);
     void delete(UUID id);
-    List<EventResponse> getAll();
-
+    List<EventFullInfoResponse> getAllFullInfo();
+    List<EventResponseXY> getAll();
     void addImage(UUID eventId, Photo image);
     void deleteImage(UUID eventId, Photo image);
+    EventSearchResponse readByIdSearch(UUID eventId);
 }

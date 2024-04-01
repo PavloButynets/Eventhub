@@ -1,15 +1,10 @@
 package org.eventhub.main.controller;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.eventhub.main.dto.*;
-import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.ResponseStatusException;
-import org.eventhub.main.model.Event;
-import org.eventhub.main.model.Participant;
 import org.eventhub.main.service.EventService;
 import org.eventhub.main.service.ParticipantService;
-import org.eventhub.main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,12 +29,12 @@ public class EventController {
     }
     @PostMapping("/{user_id}/events")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<EventResponse> create(@PathVariable("user_id") UUID userId, @Validated @RequestBody EventRequest request,
-                                                BindingResult bindingResult){
+    public ResponseEntity<EventFullInfoResponse> create(@PathVariable("user_id") UUID userId, @Validated @RequestBody EventRequest request,
+                                                        BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new ResponseStatusException("Invalid Input");
         }
-        EventResponse response = eventService.create(request);
+        EventFullInfoResponse response = eventService.create(request);
 
         if(request.isWithOwner()) {
             ParticipantResponse participantResponse = participantService.create(new ParticipantRequest(response.getId(), userId));
@@ -52,26 +47,32 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @GetMapping("/events/info")
+    public ResponseEntity<List<EventFullInfoResponse>> getAllFullInfo(){
+        log.info("**/get all events");
+        return new ResponseEntity<>(eventService.getAllFullInfo(), HttpStatus.OK);
+    }
+
     @GetMapping("/events")
-    public ResponseEntity<List<EventResponse>> getAll(){
+    public ResponseEntity<List<EventResponseXY>> getAll(){
         log.info("**/get all events");
         return new ResponseEntity<>(eventService.getAll(), HttpStatus.OK);
     }
     @GetMapping("/{owner_id}/events/{event_id}")
-    public ResponseEntity<EventResponse> getById(@PathVariable("event_id") UUID eventId){
-        EventResponse response = eventService.readById(eventId);
+    public ResponseEntity<EventFullInfoResponse> getById(@PathVariable("event_id") UUID eventId){
+        EventFullInfoResponse response = eventService.readById(eventId);
         log.info("**/get by id event(id) = " + response.getId());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("/{owner_id}/events/{event_id}")
-    public ResponseEntity<EventResponse> update(@Validated @RequestBody EventRequest request,
-                                                BindingResult bindingResult){
+    public ResponseEntity<EventFullInfoResponse> update(@Validated @RequestBody EventRequest request,
+                                                        BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new ResponseStatusException("Invalid Input");
         }
-        EventResponse response = eventService.update(request);
+        EventFullInfoResponse response = eventService.update(request);
         log.info("**/updated event(id) = " + response.getId());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
