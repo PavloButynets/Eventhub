@@ -2,6 +2,9 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { getEventsData } from '../../../api/getEventsLocation';
 import { GoogleMap, Marker,InfoWindow } from '@react-google-maps/api';
 import styles from './Map.module.css'
+import { useParams, useSearchParams } from 'react-router-dom';
+import { getEventsDataSearch } from '../../../api/getEventsData';
+import { useLocation } from 'react-router-dom';
 import { EnvironmentOutlined } from '@ant-design/icons';
 import { light } from "./Theme"
 
@@ -40,18 +43,35 @@ const Map = ({ center }) => {
   const onUnmount = useCallback(function callback(map) {
     mapRef.current = map;
   }, [])
-
+  
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    getEventsData()
-      .then(data => {
-        console.log("Event Data", data);
-        setEvents(data)
-      })
-  }, [])
+    const searchValue = searchParams.get('search');
 
+    const fetchData = async () => {
+      if (searchValue) {
+        try {
+          const data = await getEventsDataSearch(searchValue);
+          setEvents(data);
+        } catch(error) {
+          console.error('Error getting events data:', error);
+        }
+      } else {
+        getEventsData()
+          .then(data => {
+            setEvents(data);
+          })
+          .catch(error => {
+            console.error('Error getting events data:', error);
+          });
+      }
+    };
+
+    fetchData();
+  }, [searchParams]);
   const onMarkerClick = (event) => {
     setSelectedEvent(event);
   };
@@ -72,21 +92,20 @@ const Map = ({ center }) => {
       >
 
         <></>
-        {events && events.map(event => (
-          <Marker
-            key={event.eventID}
-            position={{ lat: Number(event.latitude), lng: Number(event.longitude) }}
-
-            icon={{ url: '/images/pin.svg', 
-            scaledSize: new window.google.maps.Size(40, 40) }}
-            onClick={() => onMarkerClick(event)
-            }
-          />
-        ))}
+        {events && events.map(event => {
+          return (
+            <Marker
+              key={event.id}
+              position={{ lat: Number(event.latitude), lng: Number(event.longitude) }}
+              icon={{ url: '/images/pin.svg', scaledSize: new window.google.maps.Size(40, 40) }}
+              onClick={() => onMarkerClick(event)}
+            />
+          );
+        })}
         {selectedEvent && (
           <InfoWindow
             position={{ lat: Number(selectedEvent.latitude), lng: Number(selectedEvent.longitude) }}
-            onCloseClick={() => setSelectedEvent(null)} 
+            onCloseClick={() => setSelectedEvent(null)}
           >
             <div>
               <h3>{selectedEvent.title}</h3>

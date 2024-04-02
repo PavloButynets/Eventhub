@@ -8,7 +8,7 @@ import styles from './Home.module.css';
 import { useJsApiLoader } from '@react-google-maps/api';
 import MenuButton from "./ProfileORlogin/ProfileButton";
 import LoginRegisterButton from "./ProfileORlogin/LoginRegisterButton";
-import SearchInput from  "./Search/Search"
+import SearchEvents from  "./Search/Search"
 import CreateEventButton from './CreateEvent/CreateEventButton'
 import EventFilter from "./Filter/Filter";
 import MyEvents from './MyEvents/MyEvents'
@@ -37,7 +37,8 @@ const Home = () => {
           {auth.token ? (
               <MenuButton />
           ) : <LoginRegisterButton />}
-          <SearchInput />
+          
+          <SearchEvents />
           {/* <CreateEventButton /> */}
           <EventFilter />
           <MyEvents />
