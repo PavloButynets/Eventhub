@@ -15,6 +15,7 @@ import ParticipantsList from "./ParticipantsList";
 
 import { AnimatePresence, motion } from "framer-motion";
 import ParticipantInfoPopUp from "../../../components/PopUp/ParticipantInfoPopUp";
+import PrimaryButton from "../../../components/Buttons/PrimaryButton/PrimaryButton";
 
 const EventInfoSideBar = ({ ownerId, eventId }) => {
   // States
@@ -273,7 +274,9 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
                   {event.max_participants - event.participant_count} Spots left
                 </div>
 
-                <button className={styles["action-btn"]}>Action</button>
+                <PrimaryButton className={styles["action-btn"]}>
+                  Action
+                </PrimaryButton>
               </div>
             </motion.div>
           )}

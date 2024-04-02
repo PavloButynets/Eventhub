@@ -1,7 +1,31 @@
 .pop-up-container {
+  display: flex;
+  flex-direction: column;
   width: 700%;
-  background-color: blue;
+  background-color: var(--popup-background);
   position: absolute;
   border: solid;
   left: -450%;
+}
+
+.header-container {
+  display: flex;
+  gap: 12px;
+}
+
+.email {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.birth-date {
+  display: flex;
+  align-items: center;
+}
+
+.show-more-btn {
+  align-self: flex-end;
+  width: 30%;
+  margin: 10px;
 }

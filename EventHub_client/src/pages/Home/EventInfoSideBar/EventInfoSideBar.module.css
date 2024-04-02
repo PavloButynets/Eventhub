@@ -47,10 +47,10 @@
   justify-content: flex-start;
   overflow-x: auto;
   margin-top: 3%;
+  gap: 15px;
 }
 
 .category {
-  margin-right: 15px;
   padding: 1px 8px;
   border: 1.5px var(--third-color) solid;
   border-radius: 5px;
@@ -248,13 +248,7 @@
 }
 
 .action-btn {
-  padding: 0;
-  border: none;
-  background-color: var(--primary-color);
-  color: var(--popup-background);
   font-size: 23px;
   width: 35%;
-  height: 140%;
-  border-radius: 40px;
-  cursor: pointer;
+  height: 100%;
 }

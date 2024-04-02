@@ -3,6 +3,8 @@ import styles from "./ParticipantInfoPopUp.module.css";
 import { MdOutlineEmail } from "react-icons/md";
 import { SlLocationPin } from "react-icons/sl";
 import { CiCalendar } from "react-icons/ci";
+import { RoundButton } from "../Buttons/RoundButton/roundButton";
+import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
 
 const ParticipantInfoPopUp = ({ participant }) => {
   return (
@@ -20,7 +22,7 @@ const ParticipantInfoPopUp = ({ participant }) => {
         </div>
       </div>
       <div className={styles["info-container"]}>
-        <p className={styles["heading"]}>Information</p>
+        <p className={styles["heading"]}>Information:</p>
         <div className={styles["information"]}>
           <div className={styles["location"]}>
             <SlLocationPin />
@@ -34,7 +36,9 @@ const ParticipantInfoPopUp = ({ participant }) => {
         <hr />
       </div>
       <div className={styles["description"]}>{participant.description}</div>
-      <button>Show more</button>
+      <PrimaryButton className={styles["show-more-btn"]}>
+        Show more
+      </PrimaryButton>
     </div>
   );
 };
