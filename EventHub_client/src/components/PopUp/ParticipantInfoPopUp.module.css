@@ -3,15 +3,13 @@
   flex-direction: column;
   width: 750%;
   height: 600%;
-  /* width: 500px;
-  height: 400px; */
   background-color: var(--popup-background);
   position: absolute;
   left: -500%;
   font-family: var(--primary-font-family);
   padding: 15px;
-  border: solid var(--third-color);
-  /* left: -50%; */
+  border-radius: 5px;
+  box-shadow: 0px 5px 6px 1px var(--third-color);
 }
 
 .header-container {
@@ -19,7 +17,6 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  /* width: 50px; */
   height: 100px;
 }
 

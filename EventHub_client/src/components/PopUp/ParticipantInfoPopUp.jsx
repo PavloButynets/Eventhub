@@ -9,9 +9,6 @@ const ParticipantInfoPopUp = ({ participant }) => {
   return (
     <div className={styles["pop-up-container"]}>
       <div className={styles["header-container"]}>
-        {/* <div className={styles["participant-img-container"]}>
-          <img src={participant.photo_responses[0].photo_url} alt="Img" />
-        </div> */}
         <img
           className={styles["participant-img"]}
           src={participant.photo_responses[0].photo_url}
