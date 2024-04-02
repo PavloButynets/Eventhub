@@ -16,6 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.net.PasswordAuthentication;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -46,7 +50,11 @@ public class AuthenticationService {
                 )
         );
         var user = userRepository.findByEmail(request.getEmail());
-        var jwtToken = jwtService.generateToken(user);
+
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("id", user.getId());
+
+        var jwtToken = jwtService.generateToken(extraClaims, user);
         return AuthenticationResponce.builder()
                 .token(jwtToken)
                 .build();
