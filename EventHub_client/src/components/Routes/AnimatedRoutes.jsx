@@ -11,6 +11,7 @@ import { Home } from "../../pages/Home/Home";
 import EventInfoSideBar from "../../pages/Home/EventInfoSideBar/EventInfoSideBar";
 import { AnimatePresence } from "framer-motion";
 
+// TODO For future animations
 const AnimatedRoutes = () => {
   const location = useLocation();
   return (

@@ -5,9 +5,22 @@ import { SlLocationPin } from "react-icons/sl";
 import { CiCalendar } from "react-icons/ci";
 import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
 
+import { motion } from "framer-motion";
+
 const ParticipantInfoPopUp = ({ participant }) => {
   return (
-    <div className={styles["pop-up-container"]}>
+    <motion.div
+      className={styles["pop-up-container"]}
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        opacity: 1,
+      }}
+      transition={{
+        duration: 0.5,
+      }}
+    >
       <div className={styles["header-container"]}>
         <img
           className={styles["participant-img"]}
@@ -48,7 +61,7 @@ const ParticipantInfoPopUp = ({ participant }) => {
       <PrimaryButton className={styles["show-more-btn"]}>
         Show more
       </PrimaryButton>
-    </div>
+    </motion.div>
   );
 };
 
