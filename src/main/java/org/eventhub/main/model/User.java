@@ -56,7 +56,7 @@ public class User implements UserDetails {
     private String password;
 
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = true)
     private String description;
 
     @Column(name = "created_at", nullable = false)
@@ -66,7 +66,7 @@ public class User implements UserDetails {
     private String city;
 
     @Past
-    @Column(name = "birth_date", nullable = false)
+    @Column(name = "birth_date", nullable = true)
     private LocalDate birthDate;
 
     @Column(name = "gender")
