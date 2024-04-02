@@ -2,14 +2,14 @@
   all: unset;
   background: transparent;
   cursor: pointer;
-  box-shadow: 0 0 3px 0;
   border-radius: 10px;
+  box-shadow: 0 0 3px 0;
 }
 
 .btn-icon {
-  font-size: 0.85rem;
-  color: var(--popup-background);
   background-color: var(--primary-color);
+  color: var(--popup-background);
+  font-size: 2.15rem;
   border-radius: 10px;
   display: block;
   flex-grow: 0;

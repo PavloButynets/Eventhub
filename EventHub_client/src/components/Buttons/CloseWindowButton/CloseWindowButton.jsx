@@ -3,8 +3,8 @@ import { IoClose } from "react-icons/io5";
 
 const CloseWindowButton = ({ onClick }) => {
   return (
-    <button className={styles["close-btn"]} onClick={onClick}>
-      <IoClose className={styles["close-btn-icon"]} size="2.5em" />
+    <button className={styles["btn"]} onClick={onClick}>
+      <IoClose className={styles["btn-icon"]} size="2.5em" />
     </button>
   );
 };

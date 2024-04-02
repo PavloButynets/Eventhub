@@ -6,9 +6,10 @@ import { getUserParticipants } from "../../../api/getUserParticipants";
 import { getFullEventById } from "../../../api/getFullEventById";
 import { getUserById } from "../../../api/getUserById";
 
-import { IoArrowBackOutline } from "react-icons/io5";
 import { RiVipCrownLine } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
+import GoBackButton from "../../../components/Buttons/GoBackButton/GoBackButton";
+import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
 
 const ParticipantsList = ({ handleGoBackToSideBar, handleCloseWindow }) => {
   // States
@@ -37,12 +38,8 @@ const ParticipantsList = ({ handleGoBackToSideBar, handleCloseWindow }) => {
     event && (
       <div className={styles["participants-list-container"]}>
         <div className={styles["header"]}>
-          <button className={styles["btn"]} onClick={handleGoBackToSideBar}>
-            <IoArrowBackOutline className={styles["btn-icon"]} />
-          </button>
-          <button className={styles["btn"]} onClick={handleCloseWindow}>
-            <IoClose className={styles["btn-icon"]} />
-          </button>
+          <GoBackButton onClick={handleGoBackToSideBar} />
+          <CloseWindowButton onClick={handleCloseWindow} />
         </div>
 
         <div className={styles["participants-container"]}>
