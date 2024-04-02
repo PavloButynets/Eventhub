@@ -52,12 +52,7 @@ const ParticipantInfoPopUp = ({ participant }) => {
         </div>
         <hr />
       </div>
-      <div className={styles["description"]}>
-        {participant.description}
-        sadasli jdasdjais uhgdaio uy fgao iuyf gadoiu sadasli jdasdjais uhgdaio
-        uy fgao iuyf gadoiu sadasli jdasdjais uhgdaio uy fgao iuyf gadoiu
-        sadasli jdasdjais uhgdaio uy fgao iuyf gadoiu
-      </div>
+      <div className={styles["description"]}>{participant.description} </div>
       <PrimaryButton className={styles["show-more-btn"]}>
         Show more
       </PrimaryButton>
