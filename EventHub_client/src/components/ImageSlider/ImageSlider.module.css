@@ -47,25 +47,35 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  backdrop-filter: blur(2px);
-  transition: backdrop-filter 0.4s, font-size 0.3s;
+  position: relative;
 }
 
-/* .arrow::before {
+.arrow::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.7), transparent);
-  pointer-events: none;
-} */
+  backdrop-filter: blur(3px);
+  transition: backdrop-filter 0.4s ease;
+}
 
-.arrow:hover {
+.arrow.left::before {
+  -webkit-mask-image: linear-gradient(to left, transparent, black);
+  mask-image: linear-gradient(to left, transparent, black);
+}
+
+.arrow.right::before {
+  -webkit-mask-image: linear-gradient(to left, transparent, black);
+  mask-image: linear-gradient(to right, transparent, black);
+}
+
+.arrow:hover::before {
   backdrop-filter: blur(0px);
 }
 
 .arrow-icon {
   stroke-width: 70px;
+  z-index: 900;
 }

@@ -23,6 +23,7 @@ const defaultCenter = {
 const libraries = ["places"];
 const Home = () => {
   const { auth, setAuth } = useAuth();
+
   const { ownerId, eventId } = useParams();
 
   const { isLoaded } = useJsApiLoader({

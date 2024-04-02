@@ -6,9 +6,6 @@ import "./App.css";
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-import EventInfoSideBar from "./pages/Home/EventInfoSideBar/EventInfoSideBar";
-import AnimatedRoutes from "./components/Routes/AnimatedRoutes";
-
 function App() {
   return (
     <Router>
