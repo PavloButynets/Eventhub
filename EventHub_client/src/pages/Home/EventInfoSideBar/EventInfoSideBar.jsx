@@ -14,6 +14,7 @@ import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/Clo
 import ParticipantsList from "./ParticipantsList";
 
 import { AnimatePresence, motion } from "framer-motion";
+import ParticipantInfoPopUp from "../../../components/PopUp/ParticipantInfoPopUp";
 
 const EventInfoSideBar = ({ ownerId, eventId }) => {
   // States
@@ -190,13 +191,23 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
               <h3 className={styles["heading"]}>Participants</h3>
               <div className={styles["participant-container"]}>
                 <div className={styles["participants-photos"]}>
-                  <div className={styles["owner-photo"]}>
+                  <div
+                    className={styles["owner-photo"]}
+                    onMouseEnter={() => setHoveredParticipant(owner)}
+                    onMouseLeave={() => setHoveredParticipant(null)}
+                  >
                     {owner && (
                       <img src={owner.photo_responses[0].photo_url} alt="" />
                     )}
                     <div className={styles["crown-container"]}>
                       <RiVipCrownLine className={styles["crown-icon"]} />
                     </div>
+                    {hoveredParticipant &&
+                      hoveredParticipant.id === owner.id && (
+                        <ParticipantInfoPopUp
+                          participant={hoveredParticipant}
+                        />
+                      )}
                   </div>
                   {participantsToShow.map((participant) => (
                     <div
@@ -215,9 +226,9 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
                       />
                       {hoveredParticipant &&
                         hoveredParticipant.id === participant.user_id && (
-                          <div className={styles["pop-up-participant-info"]}>
-                            {hoveredParticipant.first_name}
-                          </div>
+                          <ParticipantInfoPopUp
+                            participant={hoveredParticipant}
+                          />
                         )}
                     </div>
                   ))}

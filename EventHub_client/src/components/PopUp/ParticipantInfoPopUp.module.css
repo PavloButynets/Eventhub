@@ -1,0 +1,7 @@
+.pop-up-container {
+  width: 700%;
+  background-color: blue;
+  position: absolute;
+  border: solid;
+  left: -450%;
+}
