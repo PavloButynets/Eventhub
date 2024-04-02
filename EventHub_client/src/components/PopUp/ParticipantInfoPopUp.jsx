@@ -47,12 +47,18 @@ const ParticipantInfoPopUp = ({ participant }) => {
           </div>
           <div className={styles["birth-date"]}>
             <CiCalendar size="1.4rem" />
-            {participant.birth_date}
+            {`${participant.birth_date.slice(
+              8,
+              10
+            )}.${participant.birth_date.slice(
+              5,
+              7
+            )}.${participant.birth_date.slice(0, 4)}`}
           </div>
         </div>
         <hr />
       </div>
-      <div className={styles["description"]}>{participant.description} </div>
+      <div className={styles["description"]}>{participant.description}</div>
       <PrimaryButton className={styles["show-more-btn"]}>
         Show more
       </PrimaryButton>
