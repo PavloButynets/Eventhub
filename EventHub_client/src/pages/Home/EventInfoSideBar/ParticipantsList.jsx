@@ -7,9 +7,9 @@ import { getFullEventById } from "../../../api/getFullEventById";
 import { getUserById } from "../../../api/getUserById";
 
 import { RiVipCrownLine } from "react-icons/ri";
-import { IoClose } from "react-icons/io5";
 import GoBackButton from "../../../components/Buttons/GoBackButton/GoBackButton";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
+import OwnerPhotoOverlay from "../../../components/OwnerPhotoOverlay/OwnerPhotoOverlay";
 
 const ParticipantsList = ({ handleGoBackToSideBar, handleCloseWindow }) => {
   // States
@@ -45,16 +45,7 @@ const ParticipantsList = ({ handleGoBackToSideBar, handleCloseWindow }) => {
         <div className={styles["participants-container"]}>
           {owner && (
             <div className={styles["participant-container"]}>
-              <div className={styles["participant-photo-owner-container"]}>
-                <img
-                  className={styles["owner-photo-img"]}
-                  src={owner.photo_responses[0].photo_url}
-                  alt="Owner participant img"
-                />
-                <div className={styles["crown-container"]}>
-                  <RiVipCrownLine className={styles["crown-icon"]} />
-                </div>
-              </div>
+              <OwnerPhotoOverlay owner={owner} />
 
               <div className={styles["participant-info-container"]}>
                 <div className={styles["full-name"]}>

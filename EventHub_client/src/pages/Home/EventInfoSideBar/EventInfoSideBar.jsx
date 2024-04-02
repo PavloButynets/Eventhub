@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import styles from "./EventInfoSideBar.module.css";
 
 import { IoIosMore } from "react-icons/io";
-import { RiVipCrownLine } from "react-icons/ri";
 
 import { getParticipants } from "../../../api/getParticipants";
 import { getUserById } from "../../../api/getUserById";
@@ -16,6 +15,7 @@ import ParticipantsList from "./ParticipantsList";
 import { AnimatePresence, motion } from "framer-motion";
 import ParticipantInfoPopUp from "../../../components/PopUp/ParticipantInfoPopUp";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton/PrimaryButton";
+import OwnerPhotoOverlay from "../../../components/OwnerPhotoOverlay/OwnerPhotoOverlay";
 
 const EventInfoSideBar = ({ ownerId, eventId }) => {
   // States
@@ -192,24 +192,12 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
               <h3 className={styles["heading"]}>Participants</h3>
               <div className={styles["participant-container"]}>
                 <div className={styles["participants-photos"]}>
-                  <div
-                    className={styles["owner-photo"]}
+                  <OwnerPhotoOverlay
+                    owner={owner}
                     onMouseEnter={() => setHoveredParticipant(owner)}
                     onMouseLeave={() => setHoveredParticipant(null)}
-                  >
-                    {owner && (
-                      <img src={owner.photo_responses[0].photo_url} alt="" />
-                    )}
-                    <div className={styles["crown-container"]}>
-                      <RiVipCrownLine className={styles["crown-icon"]} />
-                    </div>
-                    {hoveredParticipant &&
-                      hoveredParticipant.id === owner.id && (
-                        <ParticipantInfoPopUp
-                          participant={hoveredParticipant}
-                        />
-                      )}
-                  </div>
+                    hoveredParticipant={hoveredParticipant}
+                  />
                   {participantsToShow.map((participant) => (
                     <div
                       className={styles["item"]}
@@ -222,6 +210,7 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
                       onMouseLeave={() => setHoveredParticipant(null)}
                     >
                       <img
+                        className={styles["participant-img"]}
                         src={participant.participant_photo.photo_url}
                         alt="Participant Img"
                       />
