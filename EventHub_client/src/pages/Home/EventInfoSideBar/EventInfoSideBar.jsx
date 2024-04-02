@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./EventInfoSideBar.module.css";
 
 import { IoIosMore } from "react-icons/io";
 import { RiVipCrownLine } from "react-icons/ri";
-import { IoClose } from "react-icons/io5";
 
 import { getParticipants } from "../../../api/getParticipants";
 import { getUserById } from "../../../api/getUserById";
 import { getFullEventById } from "../../../api/getFullEventById";
 
 import ImageSlider from "../../../components/ImageSlider/ImageSlider";
+import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
 import ParticipantsList from "./ParticipantsList";
 
 import { AnimatePresence, motion } from "framer-motion";
@@ -138,12 +138,7 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
             >
               <div className={styles["header"]}>
                 <h2 className={styles["event-title"]}>{event.title}</h2>
-                <button
-                  className={styles["close-btn"]}
-                  onClick={handleCloseWindow}
-                >
-                  <IoClose className={styles["close-btn-icon"]} size="2.5em" />
-                </button>
+                <CloseWindowButton onClick={handleCloseWindow} />
               </div>
 
               {/* Photo */}
