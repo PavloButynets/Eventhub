@@ -7,7 +7,7 @@ const OwnerPhotoOverlay = ({
   owner,
   onMouseEnter,
   onMouseLeave,
-  hoveredParticipant,
+  showPopUp,
 }) => {
   return (
     <div
@@ -25,9 +25,7 @@ const OwnerPhotoOverlay = ({
       <div className={styles["crown-container"]}>
         <RiVipCrownLine className={styles["crown-icon"]} />
       </div>
-      {hoveredParticipant && hoveredParticipant.id === owner.id && (
-        <ParticipantInfoPopUp participant={hoveredParticipant} />
-      )}
+      {showPopUp && <ParticipantInfoPopUp participant={owner} />}
     </div>
   );
 };

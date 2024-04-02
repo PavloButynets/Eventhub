@@ -28,6 +28,7 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
   const [owner, setOwner] = useState(null);
 
   const [hoveredParticipant, setHoveredParticipant] = useState(null);
+  const [showOwnerPopUp, setShowOwnerPopUp] = useState(false);
 
   const [showAllParticipants, setShowAllParticipants] = useState(false);
 
@@ -194,9 +195,9 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
                 <div className={styles["participants-photos"]}>
                   <OwnerPhotoOverlay
                     owner={owner}
-                    onMouseEnter={() => setHoveredParticipant(owner)}
-                    onMouseLeave={() => setHoveredParticipant(null)}
-                    hoveredParticipant={hoveredParticipant}
+                    onMouseEnter={() => setShowOwnerPopUp(true)}
+                    onMouseLeave={() => setShowOwnerPopUp(false)}
+                    showPopUp={showOwnerPopUp}
                   />
                   {participantsToShow.map((participant) => (
                     <div
