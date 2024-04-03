@@ -1,7 +1,6 @@
 package org.eventhub.main.service;
 
-import org.eventhub.main.dto.ParticipantRequest;
-import org.eventhub.main.dto.ParticipantResponse;
+import org.eventhub.main.dto.*;
 import org.eventhub.main.model.Participant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +20,5 @@ public interface ParticipantService {
     List<ParticipantResponse> getAll();
     List<ParticipantResponse> getAllByEventId(UUID eventId);
     List<ParticipantResponse> getAllRequestsByEventId(UUID eventId);
+    List<UserParticipantResponse> getUserParticipantsByEventId(UUID eventId);
 }

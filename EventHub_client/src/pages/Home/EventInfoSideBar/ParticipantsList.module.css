@@ -1,0 +1,96 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+/* Main container */
+
+.participants-list-container {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(5px);
+  width: 20%;
+  height: 85%;
+  top: 10%;
+  padding: 20px;
+  z-index: 991;
+  right: 0;
+  position: absolute;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 30px;
+  font-family: var(--primary-font-family), sans-serif;
+  font-style: normal;
+  box-shadow: 0px 0 4px 1px var(--third-color);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3.2%;
+}
+
+/* Participants list */
+
+.participants-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5%;
+  height: 100%;
+  overflow: auto;
+}
+
+.participant-container {
+  width: 85%;
+  height: 8%;
+  border: 1px solid var(--third-color);
+  margin-bottom: 2%;
+  display: flex;
+  align-items: center;
+  padding: 3%;
+  border-radius: 5px;
+}
+
+.participant-container:hover {
+  background-color: var(--third-color-hover);
+  cursor: pointer;
+}
+
+.participant-photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.participant-info-container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  margin-left: 3%;
+}
+
+.full-name {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  height: 30px;
+  position: relative;
+  top: -10px;
+}
+
+.full-name p {
+  margin-right: 7px;
+}
+
+.creator-text {
+  color: var(--third-color);
+  font-weight: 400;
+}
+
+.email {
+  position: absolute;
+  top: 1px;
+}

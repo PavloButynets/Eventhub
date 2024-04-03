@@ -10,3 +10,4 @@ const CloseWindowButton = ({ onClick }) => {
 };
 
 export default CloseWindowButton;
+

@@ -1,0 +1,88 @@
+.pop-up-container {
+  display: flex;
+  flex-direction: column;
+  width: 750%;
+  height: 600%;
+  background-color: var(--popup-background);
+  position: absolute;
+  left: -500%;
+  font-family: var(--primary-font-family);
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0px 5px 6px 1px var(--third-color);
+}
+
+.header-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 100px;
+}
+
+.full-name {
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.participant-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.email {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  color: var(--third-color);
+}
+
+.heading {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+.information {
+  margin-left: 6px;
+  color: var(--third-color);
+}
+
+.location {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.birth-date {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.description {
+  margin-left: 6px;
+  color: var(--third-color);
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.show-more-btn {
+  align-self: flex-end;
+  width: 35%;
+  height: 8%;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+hr {
+  height: 2px;
+  background-color: #000;
+  opacity: 0.7;
+  border: none;
+}

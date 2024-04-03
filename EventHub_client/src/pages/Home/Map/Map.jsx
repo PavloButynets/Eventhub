@@ -7,6 +7,8 @@ import { getEventsDataSearch } from '../../../api/getEventsData';
 import { useLocation } from 'react-router-dom';
 import { EnvironmentOutlined } from '@ant-design/icons';
 import { light } from "./Theme"
+
+import { useNavigate } from 'react-router-dom';
 import { getFilteredEvents } from '../../../api/getFilteredEvents';
 
 
@@ -37,6 +39,8 @@ const Map = ({ center }) => {
 
   const mapRef = useRef(undefined)
 
+  const navigate = useNavigate();
+
   const onLoad = useCallback(function callback(map) {
     mapRef.current = map;
   }, [])
@@ -47,6 +51,8 @@ const Map = ({ center }) => {
   
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
+
+  
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -84,6 +90,7 @@ const Map = ({ center }) => {
   }, [searchParams]);
   const onMarkerClick = (event) => {
     setSelectedEvent(event);
+    navigate(`/event/${event.owner_id}/${event.id}`);
   };
 
   const onMapClick = () => {
@@ -102,16 +109,18 @@ const Map = ({ center }) => {
       >
 
         <></>
-        {events && events.map(event => {
-          return (
-            <Marker
-              key={event.id}
-              position={{ lat: Number(event.latitude), lng: Number(event.longitude) }}
-              icon={{ url: '/images/pin.svg', scaledSize: new window.google.maps.Size(40, 40) }}
-              onClick={() => onMarkerClick(event)}
-            />
-          );
-        })}
+        
+        {events && events.map(event => (
+          <Marker
+            key={event.eventID}
+            position={{ lat: Number(event.latitude), lng: Number(event.longitude) }}
+
+            icon={{ url: '/images/pin.svg', 
+            scaledSize: new window.google.maps.Size(40, 40) }}
+            onClick={() => onMarkerClick(event)
+            }
+          />
+        ))}
         {selectedEvent && (
           <InfoWindow
             position={{ lat: Number(selectedEvent.latitude), lng: Number(selectedEvent.longitude) }}
@@ -123,7 +132,10 @@ const Map = ({ center }) => {
             </div>
           </InfoWindow>
         )}
+
+        
       </GoogleMap>
+      
     </div>
   );
 }
