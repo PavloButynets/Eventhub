@@ -9,18 +9,14 @@ import { useJsApiLoader } from "@react-google-maps/api";
 import MenuButton from "./ProfileORlogin/ProfileButton";
 import LoginRegisterButton from "./ProfileORlogin/LoginRegisterButton";
 
-
-
-const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
-=======
-import SearchEvents from  "./Search/Search"
-import CreateEventButton from './CreateEvent/CreateEventButton'
+import SearchEvents from "./Search/Search";
+import CreateEventButton from "./CreateEvent/CreateEventButton";
 import EventFilter from "./Filter/Filter";
 import FilteredEvents from "./Filter/FilteredEvents";
-import MyEvents from './MyEvents/MyEvents'
+import MyEvents from "./MyEvents/MyEvents";
 import EventInfoSideBar from "./EventInfoSideBar/EventInfoSideBar";
 
-const MAP_API_KEY =  process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
 const defaultCenter = {
   lat: 49.83826,
@@ -44,10 +40,8 @@ const Home = () => {
         <>
           <Map center={defaultCenter} />
 
-          {auth.token ? (
-              <MenuButton />
-          ) : <LoginRegisterButton />}
-          
+          {auth.token ? <MenuButton /> : <LoginRegisterButton />}
+
           <SearchEvents />
           {/* <CreateEventButton /> */}
           <EventFilter />
