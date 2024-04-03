@@ -6,7 +6,6 @@ import { getUserParticipants } from "../../../api/getUserParticipants";
 import { getFullEventById } from "../../../api/getFullEventById";
 import { getUserById } from "../../../api/getUserById";
 
-import { RiVipCrownLine } from "react-icons/ri";
 import GoBackButton from "../../../components/Buttons/GoBackButton/GoBackButton";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
 import OwnerPhotoOverlay from "../../../components/OwnerPhotoOverlay/OwnerPhotoOverlay";

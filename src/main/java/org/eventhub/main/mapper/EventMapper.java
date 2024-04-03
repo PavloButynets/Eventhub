@@ -51,7 +51,6 @@ public class EventMapper {
                 .expireAt(event.getExpireAt())
                 .description(event.getDescription())
                 .participantCount(event.getParticipantCount())
-                .withOwner(event.isWithOwner())
                 .location(event.getLocation())
                 .latitude(event.getLatitude())
                 .longitude(event.getLongitude())
@@ -120,7 +119,6 @@ public class EventMapper {
         event.setStartAt(eventRequest.getStartAt());
         event.setExpireAt(eventRequest.getExpireAt());
         event.setDescription(eventRequest.getDescription());
-        event.setWithOwner(eventRequest.isWithOwner());
         event.setLocation(eventRequest.getLocation());
         event.setLatitude(eventRequest.getLatitude());
         event.setLongitude(eventRequest.getLongitude());
