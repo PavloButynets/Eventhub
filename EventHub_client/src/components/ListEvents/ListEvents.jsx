@@ -26,7 +26,7 @@ const SearchResults = ({ eventsData }) => {
       <ul className={styles.ListStyleNone}>
         {eventsData.map(event => (
           <li key={event.id} className={styles.ResultDataContainer}>
-            <img src={event.photo_responses[0].photo_url} alt="Event" className={styles.EventImage} />
+            <img src={event.photo_response.photo_url} alt="Event" className={styles.EventImage} />
             <div className={styles.EventDescription}>
               <div className={styles.titleAndParticipants}>
                 <h3>{event.title.length > 16 ? `${event.title.slice(0, 16)}...` : event.title}</h3>

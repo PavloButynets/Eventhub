@@ -7,6 +7,7 @@ import { getEventsDataSearch } from '../../../api/getEventsData';
 import { useLocation } from 'react-router-dom';
 import { EnvironmentOutlined } from '@ant-design/icons';
 import { light } from "./Theme"
+import { getFilteredEvents } from '../../../api/getFilteredEvents';
 
 
 
@@ -59,7 +60,16 @@ const Map = ({ center }) => {
         } catch(error) {
           console.error('Error getting events data:', error);
         }
-      } else {
+      } 
+      else if(searchParams.get('show_filter')){
+        try{
+          const data = await getFilteredEvents();
+          setEvents(data);
+        }catch(error){
+          console.error('Error getting events data:', error);
+        }
+      }
+      else {
         getEventsData()
           .then(data => {
             setEvents(data);

@@ -11,7 +11,9 @@ import LoginRegisterButton from "./ProfileORlogin/LoginRegisterButton";
 import SearchEvents from  "./Search/Search"
 import CreateEventButton from './CreateEvent/CreateEventButton'
 import EventFilter from "./Filter/Filter";
+import FilteredEvents from "./Filter/FilteredEvents";
 import MyEvents from './MyEvents/MyEvents'
+
 
 const MAP_API_KEY =  process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
@@ -22,7 +24,7 @@ const defaultCenter = {
 const libraries = [ "places" ];
 const Home = () => {
   const { auth, setAuth } = useAuth();
-  
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: MAP_API_KEY,
