@@ -6,8 +6,6 @@ import org.eventhub.main.dto.OperationResponse;
 import org.eventhub.main.dto.UserRequest;
 import org.eventhub.main.dto.UserResponse;
 import org.eventhub.main.exception.ResponseStatusException;
-import org.eventhub.main.mapper.EventMapper;
-import org.eventhub.main.model.Event;
 import org.eventhub.main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,12 +24,10 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
-    private final EventMapper eventMapper;
 
     @Autowired
-    public UserController(UserService userService, EventMapper eventMapper) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.eventMapper = eventMapper;
     }
 
     @GetMapping
@@ -75,10 +71,7 @@ public class UserController {
 
     @GetMapping("/{user_id}/events")
     public ResponseEntity<List<EventSearchResponse>> getUserEvents(@PathVariable("user_id") UUID userId) {
-        List<EventSearchResponse> userEvents = userService.getUserEvents(userId)
-                .stream()
-                .map(eventMapper::entityToSearchResponse)
-                .toList();
+        List<EventSearchResponse> userEvents = userService.getUserEvents(userId);
         return new ResponseEntity<>(userEvents, HttpStatus.OK);
     }
 }
