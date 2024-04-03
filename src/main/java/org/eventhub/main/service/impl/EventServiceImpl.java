@@ -9,6 +9,8 @@ import org.eventhub.main.mapper.EventMapper;
 import org.eventhub.main.model.Embedding;
 import org.eventhub.main.model.Event;
 import org.eventhub.main.model.Photo;
+import org.eventhub.main.model.Category;
+
 import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.service.EventService;
 
@@ -20,8 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -139,6 +143,20 @@ public class EventServiceImpl implements EventService {
                 .map(eventMapper::entityToFullInfoResponse)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<EventSearchResponse> getAllSearchResponse() {
+        return eventRepository.findAll()
+                .stream()
+                .map(eventMapper::entityToSearchResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Event> getAllEntities() {
+        return eventRepository.findAll();
+    }
+
     @Override
     public List<EventResponseXY> getAll(){
         return eventRepository.findAll()
@@ -163,4 +181,5 @@ public class EventServiceImpl implements EventService {
         Event event = eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
         return eventMapper.entityToSearchResponse(event);
     }
+
 }

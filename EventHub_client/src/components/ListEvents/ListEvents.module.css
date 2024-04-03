@@ -1,0 +1,129 @@
+
+.SearchResults {
+    height: auto;
+    max-height: 100%;
+    width: 100%;
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+  }
+  .SearchResults::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Кольори та стилі фону скроллбару */
+  .SearchResults::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Кольори та стилі скроллбару */
+  .SearchResults::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+  }
+  .ResultDataContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    max-width: 312px;
+    height: 80px;
+    justify-content: center;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px -1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    margin: 8px 8px 8px 0px;
+    flex: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .ResultDataContainer:hover {
+    background-color: #f0f0f0; 
+    transform: scale(0.95); 
+  }
+  
+  .ResultDataContainer:active {
+    background-color: #e0e0e0; 
+  }
+  .EventImage {
+    width: 128px;
+    height: 80px;
+    margin-right: 8px;
+    border-radius: 8px 0px 0px 8px;
+  }
+  
+  .ListStyleNone {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+  }
+  
+  .EventDescription {
+    width: 184px;
+    font-family: var(--primary-font-family);
+    font-size: 12px;
+    color: #555555;
+    display: flex;
+    flex-direction: column;
+    
+  }
+  
+  .titleAndParticipants {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 3px;
+  }
+  
+  .EventDescription h3 {
+    font-family: var(--secondary-font-family);
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: 5px;
+  }
+  
+  
+  
+  
+  
+  .EventDescription p {
+    font-size: 12px;
+    margin: 0;
+    margin-bottom: 1px;
+  }
+  
+  .EventDescription .details {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+  } 
+  
+  .EventDescription .icon {
+    margin-right: 2px; 
+  }
+  .EventDescription .iconTextContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+  }
+  
+  
+  .NoResultsText{
+    /* No results found. */
+  
+  position: absolute;
+  width: 352px;
+  top: 48px;
+  font-family: var(--primary-font-family);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  color: var(--text-secondary-color);
+  }

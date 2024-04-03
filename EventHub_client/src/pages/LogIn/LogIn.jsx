@@ -20,6 +20,7 @@ const LogIn = () => {
             }, {
                 headers:{'Content-Type':'application/json'},
             });
+            console.log(res?.data)
             const accessToken = res?.data?.token;
             localStorage.setItem("token", accessToken);
             console.log(res.data)

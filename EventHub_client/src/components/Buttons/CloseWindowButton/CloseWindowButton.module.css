@@ -1,22 +1,22 @@
 .btn {
-  all: unset;
-  background: transparent;
-  cursor: pointer;
-  box-shadow: 0 0 3px 0;
-  border-radius: 10px;
-}
-
-.btn-icon {
-  font-size: 0.85rem;
-  color: var(--popup-background);
-  background-color: var(--primary-color);
-  border-radius: 10px;
-  display: block;
-  flex-grow: 0;
-  flex-shrink: 0;
-}
-
-.btn-icon:hover {
-  background-color: var(--primary-color-hover-2);
-  /* background-color: red; */
-}
+    all: unset;
+    background: transparent;
+    cursor: pointer;
+    box-shadow: 0 0 3px 0;
+    border-radius: 10px;
+  }
+  
+  .btn-icon {
+    font-size: 0.85rem;
+    color: var(--popup-background);
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+  
+  .btn-icon:hover {
+    background-color: var(--primary-color-hover-2);
+    /* background-color: red; */
+  }
