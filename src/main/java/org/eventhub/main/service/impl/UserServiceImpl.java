@@ -7,8 +7,10 @@ import org.eventhub.main.dto.UserRequest;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.mapper.PhotoMapper;
 import org.eventhub.main.mapper.UserMapper;
+import org.eventhub.main.model.Event;
 import org.eventhub.main.model.Photo;
 import org.eventhub.main.model.User;
+import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.repository.UserRepository;
 import org.eventhub.main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +29,13 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userDtoMapper;
+    private final EventRepository eventRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userDtoMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userDtoMapper, EventRepository eventRepository) {
         this.userRepository = userRepository;
         this.userDtoMapper = userDtoMapper;
+        this.eventRepository = eventRepository;
     }
 
     @Override
@@ -113,5 +117,10 @@ public class UserServiceImpl implements UserService {
 //    public User readByEmail(String email) {
 //        return userRepository.findByEmail(email);
 //    }
+
+    @Override
+    public List<Event> getUserEvents(UUID userId) {
+        return eventRepository.findUserEvents(userId);
+    }
 }
 
