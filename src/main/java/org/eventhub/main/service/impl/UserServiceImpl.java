@@ -27,14 +27,12 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userDtoMapper;
-    private final EventMapper eventDtoMapper;
 
     @Lazy
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userDtoMapper, EventMapper eventMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userDtoMapper) {
         this.userRepository = userRepository;
         this.userDtoMapper = userDtoMapper;
-        this.eventDtoMapper = eventMapper;
     }
 
     @Override
@@ -116,13 +114,5 @@ public class UserServiceImpl implements UserService {
 //    public User readByEmail(String email) {
 //        return userRepository.findByEmail(email);
 //    }
-
-    @Override
-    public List<EventSearchResponse> getUserEvents(UUID userId) {
-        return userRepository.findUserEvents(userId)
-                .stream()
-                .map(eventDtoMapper::entityToSearchResponse)
-                .toList();
-    }
 }
 

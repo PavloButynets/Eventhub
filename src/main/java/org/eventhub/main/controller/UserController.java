@@ -68,11 +68,5 @@ public class UserController {
         userService.delete(userId);
         return new ResponseEntity<>(new OperationResponse("User " + name + " deleted successfully"), HttpStatus.OK);
     }
-
-    @GetMapping("/{user_id}/events")
-    public ResponseEntity<List<EventSearchResponse>> getUserEvents(@PathVariable("user_id") UUID userId) {
-        List<EventSearchResponse> userEvents = userService.getUserEvents(userId);
-        return new ResponseEntity<>(userEvents, HttpStatus.OK);
-    }
 }
 

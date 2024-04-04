@@ -163,4 +163,12 @@ public class EventServiceImpl implements EventService {
         Event event = eventRepository.findById(id).orElseThrow( () -> new EntityNotFoundException("Non existing id: " + id));
         return eventMapper.entityToSearchResponse(event);
     }
+
+    @Override
+    public List<EventSearchResponse> getUserEvents(UUID userId) {
+        return eventRepository.findUserEvents(userId)
+                .stream()
+                .map(eventMapper::entityToSearchResponse)
+                .toList();
+    }
 }

@@ -29,6 +29,4 @@ public interface UserService extends UserDetailsService {
     void addImage(UUID id, Photo image);
 
     void deleteImage(UUID userId, Photo image);
-
-    List<EventSearchResponse> getUserEvents(UUID userId);
 }
