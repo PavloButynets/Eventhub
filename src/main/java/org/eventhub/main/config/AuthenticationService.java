@@ -48,7 +48,10 @@ public class AuthenticationService {
         UserResponse userResponse = userService.create(userRequest);
         var user = userRepository.findByEmail(userRequest.getEmail());
 
-        var jwtToken = jwtService.generateToken(user);
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("id", user.getId());
+
+        var jwtToken = jwtService.generateToken(extraClaims, user);
         return AuthenticationResponce.builder()
                 .token(jwtToken)
                 .build();
