@@ -1,13 +1,13 @@
 @import '../../../App.css';
 
 .filterContainer{
-    background-color: var(--popup-background) !important; 
+    background-color: var(--primary-popup-background) !important; 
 }
 
 .filterButtonContainer{
     position: absolute;
     top: 20px;
-    left: 330px; 
+    left: 416px; 
     
 }
 .applyButtonContainer{

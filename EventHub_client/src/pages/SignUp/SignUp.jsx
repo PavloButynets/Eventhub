@@ -75,7 +75,7 @@ const SignUp = () => {
       email,
       password,
       description: "description 1",
-      phone_number: "0162609247",
+      phone_number: "0162609147",
       city,
       birth_date: "1990-09-11",
       gender: "MALE"
@@ -264,9 +264,9 @@ const SignUp = () => {
         <Select placeholder="select your gender"
         onChange={(value) => setGender(value)}
         >
-          <Option value="male">Male</Option>
-          <Option value="female">Female</Option>
-          <Option value="other">Other</Option>
+          <Option value="MALE">Male</Option>
+          <Option value="FEMALE">Female</Option>
+          <Option value="OTHER">Other</Option>
         </Select>
       </Form.Item>
       </Col>

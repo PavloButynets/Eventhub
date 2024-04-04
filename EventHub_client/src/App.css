@@ -3,6 +3,9 @@
     --primary-color-hover:  #003898;
     --secondary-color: #dddfe0;
     --secondary-color-hover: #002462;
-    --popup-background: #eeeeee;
-    --font-family: 'Georgia', sans-serif;
+    --text-secondary-color:#A6A6A6;
+    --primary-popup-background: #FFFFFF;
+    --secondary-popup-background: rgba(255, 255, 255, 0.7);
+    --primary-font-family: 'Poppins';
+    --secondary-font-family:'Roboto';
   }

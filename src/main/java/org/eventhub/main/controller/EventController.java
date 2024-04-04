@@ -87,5 +87,11 @@ public class EventController {
 
         return new ResponseEntity<>(new OperationResponse("Event with title '"+title+"' deleted successfully"), HttpStatus.OK);
     }
+
+    @GetMapping("/{user_id}/events")
+    public ResponseEntity<List<EventSearchResponse>> getUserEvents(@PathVariable("user_id") UUID userId) {
+        List<EventSearchResponse> userEvents = eventService.getUserEvents(userId);
+        return new ResponseEntity<>(userEvents, HttpStatus.OK);
+    }
 }
 

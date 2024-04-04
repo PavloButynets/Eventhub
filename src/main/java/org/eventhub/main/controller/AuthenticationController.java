@@ -3,10 +3,7 @@ package org.eventhub.main.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.eventhub.main.config.AuthenticationService;
-import org.eventhub.main.dto.AuthenticationRequest;
-import org.eventhub.main.dto.AuthenticationResponce;
-import org.eventhub.main.dto.UserRequest;
-import org.eventhub.main.dto.UserResponse;
+import org.eventhub.main.dto.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +18,13 @@ public class AuthenticationController {
 
     private final AuthenticationService authService;
 
+//    @PostMapping("/register")
+//    public ResponseEntity<AuthenticationResponce> register(@RequestBody UserRequest request) {
+//        return ResponseEntity.ok(authService.register(request));
+//    }
+
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponce> register(@RequestBody UserRequest request) {
+    public ResponseEntity<AuthenticationResponce> register(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }
 
