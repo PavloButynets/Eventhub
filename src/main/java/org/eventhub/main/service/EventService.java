@@ -21,5 +21,6 @@ public interface EventService {
     void addImage(UUID eventId, Photo image);
     void deleteImage(UUID eventId, Photo image);
     EventSearchResponse readByIdSearch(UUID eventId);
-
+  
+    List<EventSearchResponse> getUserEvents(UUID userId);
 }
