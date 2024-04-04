@@ -3,6 +3,7 @@ import styles from './Search.module.css';
 import SearchInput from './SearchInput';
 import ListEvents from '../../../components/ListEvents/ListEvents'; 
 import { getEventsDataSearch } from '../../../api/getEventsData';
+import {  CloseOutlined } from '@ant-design/icons';
 import { useSearchParams } from 'react-router-dom';
 
 const SearchEvents = () => {
@@ -29,9 +30,18 @@ const SearchEvents = () => {
   
   const handleInputChange = (event) => {
     setSearchValue(event.target.value);
+  };
+  const handleClearClick = () => {
+    setSearchValue('');
     setSearchParams({});
     setShowResults(false);
   };
+  
+  useEffect(() => {
+    if (!showResults) {
+      setSearchParams({});
+    }
+  }, [showResults]);
 
 
   return (
@@ -42,8 +52,10 @@ const SearchEvents = () => {
           handleInputChange={handleInputChange}
           handleSearch={handleSearch}
           showResults = {showResults}
+          handleClearButtonClick = {handleClearClick}
         />
       </div>
+      
       {showResults ? (( 
         <div className={styles.ResultsContainer}>
           {eventsData.length === 0 ? (
