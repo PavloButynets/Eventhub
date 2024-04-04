@@ -55,7 +55,6 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-
     @Column(name = "description", nullable = true)
     private String description;
 

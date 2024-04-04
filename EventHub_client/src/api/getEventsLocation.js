@@ -1,14 +1,23 @@
 import axios from "./axios"
 
-//const DATA_URL =  '/eventData'
-const DATA_URL = "/users/events"
-
 export const getEventsData = async() =>{
-    try{
-        const response = await axios(DATA_URL)
-        return response.data;
+
+  const accessToken = localStorage.getItem('token')
+
+  const authAxios = axios.create({
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Access-Control-Allow-Origin': '*',
+      "Access-Control-Allow-Headers": "content-type",
+      "Access-Control-Allow-Credentials": "true"
     }
-    catch(error){
-        console.log('Error getting events data', error);
-    }
+  })
+
+  try{
+      const response = await authAxios.get(`/users/events`)
+      return response.data;
+  }
+  catch(error){
+      console.log('Error getting events data', error);
+  }
 }

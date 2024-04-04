@@ -58,6 +58,7 @@ public class EventController {
         log.info("**/get all events");
         return new ResponseEntity<>(eventService.getAll(), HttpStatus.OK);
     }
+
     @GetMapping("/{owner_id}/events/{event_id}")
     public ResponseEntity<EventFullInfoResponse> getById(@PathVariable("event_id") UUID eventId){
         EventFullInfoResponse response = eventService.readById(eventId);
