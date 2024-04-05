@@ -48,6 +48,14 @@ public class UserController {
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{user_id}")
+    public ResponseEntity<UserResponse> getById(@PathVariable("user_id") UUID userId) {
+        UserResponse response = userService.readById(userId);
+        log.info("**/get by id user(id) = " + response.getId());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @PutMapping("/{user_id}")
     public ResponseEntity<UserResponse> update(@PathVariable("user_id") UUID userId,
                                                @Validated @RequestBody UserRequest userRequest, BindingResult result) {

@@ -63,7 +63,7 @@ public class EventRequest {
 
     public EventRequest(){}
 
-    public EventRequest(String title, int maxParticipants, LocalDateTime startAt, LocalDateTime expireAt, String description, String location, BigDecimal latitude, BigDecimal longitude, boolean withOwner, List<CategoryRequest> categoryRequests, UUID ownerId) {
+    public EventRequest(String title, int maxParticipants, LocalDateTime startAt, LocalDateTime expireAt, String description, String location, BigDecimal latitude, BigDecimal longitude, int currentCount, boolean withOwner, List<CategoryRequest> categoryRequests, UUID ownerId) {
         this.title = title;
         this.maxParticipants = maxParticipants;
         this.startAt = startAt;
@@ -72,26 +72,9 @@ public class EventRequest {
         this.location = location;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.currentCount = currentCount;
         this.withOwner = withOwner;
-        this.currentCount = 0;
         this.categoryRequests = categoryRequests;
         this.ownerId = ownerId;
-
-    }
-
-    public EventRequest(String title, int maxParticipants, LocalDateTime startAt, LocalDateTime expireAt, String description, String location, BigDecimal latitude, BigDecimal longitude, int current_count, boolean withOwner, List<CategoryRequest> categoryRequests, UUID ownerId) {
-        this.title = title;
-        this.maxParticipants = maxParticipants;
-        this.startAt = startAt;
-        this.expireAt = expireAt;
-        this.description = description;
-        this.location = location;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.withOwner = withOwner;
-        this.currentCount = current_count;
-        this.categoryRequests = categoryRequests;
-        this.ownerId = ownerId;
-
     }
 }
