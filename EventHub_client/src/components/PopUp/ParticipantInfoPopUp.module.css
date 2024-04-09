@@ -1,15 +1,17 @@
 .pop-up-container {
   display: flex;
   flex-direction: column;
-  width: 750%;
-  height: 600%;
+  width: 100%;
+  height: 350px;
   background-color: var(--popup-background);
   position: absolute;
-  left: -500%;
+  /* right: -100%; */
+  top: -575%;
   font-family: var(--primary-font-family);
   padding: 15px;
   border-radius: 5px;
   box-shadow: 0px 5px 6px 1px var(--third-color);
+  z-index: 995;
 }
 
 .header-container {
@@ -17,7 +19,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  height: 100px;
+  height: 30%;
 }
 
 .full-name {
@@ -26,8 +28,10 @@
 }
 
 .participant-img {
-  width: 100px;
-  height: 100px;
+  object-fit: cover;
+  display: block;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
 }
 
@@ -68,13 +72,13 @@
   -webkit-box-orient: vertical;
   display: -webkit-box;
   overflow: hidden;
+  min-height: 100px;
 }
 
 .show-more-btn {
   align-self: flex-end;
-  width: 35%;
-  height: 8%;
-  margin-top: 30px;
+  width: 150px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -85,4 +89,69 @@ hr {
   background-color: #000;
   opacity: 0.7;
   border: none;
+}
+
+.transparent-div {
+  position: absolute;
+  left: 0;
+  height: 20px;
+  bottom: -17px;
+  opacity: 0;
+  width: 100%;
+}
+
+@media (width < 1280px) {
+  .pop-up-container {
+    top: -395%;
+    height: 162px;
+  }
+
+  .full-name {
+    font-size: var(--xs-size);
+  }
+
+  .heading {
+    font-size: var(--xs-size);
+  }
+
+  .information {
+    font-size: var(--xxxs-size);
+  }
+
+  .email {
+    font-size: var(--xs-size);
+  }
+
+  .description {
+    display: none;
+  }
+
+  .participant-img {
+    width: 50px;
+    height: 50px;
+  }
+
+  hr {
+    display: none;
+  }
+
+  .show-more-btn {
+    width: 110px;
+    height: 20px;
+    font-size: var(--xxs-size);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media (width >= 1280px) and (width < 1700px) {
+  .pop-up-container {
+    height: 350px;
+    top: -825%;
+  }
+
+  .show-more-btn {
+    position: relative;
+  }
 }

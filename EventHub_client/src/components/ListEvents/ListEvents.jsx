@@ -192,7 +192,10 @@ const SearchResults = ({ eventsData }) => {
               </div>
               <div className={`${styles.details} ${styles.iconTextContainer}`}>
                 <ClockCircleOutlined className={styles.icon} />
-                <p></p>
+                <p>
+                  {new Date(event.start_at).toLocaleTimeString().slice(0, 5)} -{" "}
+                  {new Date(event.expire_at).toLocaleTimeString().slice(0, 5)}
+                </p>
               </div>
               <div className={`${styles.details} ${styles.iconTextContainer}`}>
                 <EnvironmentOutlined className={styles.icon} />

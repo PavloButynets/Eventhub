@@ -10,8 +10,10 @@
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(5px);
   width: 20%;
+  min-width: 330px;
   height: 85%;
-  top: 10%;
+  top: 80px;
+  margin-top: 10px;
   padding: 20px;
   z-index: 991;
   right: 0;
@@ -39,19 +41,17 @@
   flex-direction: column;
   align-items: center;
   margin-top: 5%;
-  height: 100%;
-  overflow: auto;
 }
 
 .participant-container {
-  width: 85%;
-  height: 8%;
+  width: 100%;
+  height: 72px;
   border: 1px solid var(--third-color);
   margin-bottom: 2%;
   display: flex;
   align-items: center;
-  padding: 3%;
-  border-radius: 5px;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .participant-container:hover {
@@ -60,15 +60,15 @@
 }
 
 .participant-photo {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
+  width: 72px;
+  height: 100%;
 }
 
 .participant-info-container {
   display: flex;
   position: relative;
   flex-direction: column;
+  justify-content: center;
   margin-left: 3%;
 }
 
@@ -77,20 +77,43 @@
   align-items: center;
   font-weight: 600;
   height: 30px;
-  position: relative;
-  top: -10px;
+  margin: 0;
 }
 
 .full-name p {
-  margin-right: 7px;
-}
-
-.creator-text {
-  color: var(--third-color);
-  font-weight: 400;
+  margin-right: 5px;
 }
 
 .email {
-  position: absolute;
-  top: 1px;
+  margin: 0;
+}
+
+@media (width < 1280px) {
+  .participants-list-container {
+    font-size: var(--xxs-size);
+  }
+
+  .participant-container {
+    height: 60px;
+  }
+
+  .participant-photo {
+    width: 60px;
+    height: 100%;
+  }
+}
+
+@media (width >= 1280px) and (width < 1700px) {
+  .participants-list-container {
+    font-size: var(--xxs-size);
+  }
+
+  .participant-container {
+    height: 60px;
+  }
+
+  .participant-photo {
+    width: 60px;
+    height: 100%;
+  }
 }

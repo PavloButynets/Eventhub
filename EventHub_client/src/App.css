@@ -1,17 +1,23 @@
 :root {
-    --primary-color: #002462;
-    --primary-color-hover:  #003898;
-    --primary-color-hover-2: #11557c;
-    --secondary-color: #dddfe0;
-    --secondary-color-hover: #002462;
-    --third-color: #aaaaaa;
-    --third-color-hover: #eeeeee;
-    --highlight-color: #ffff00;
-    --highlight-color-stroke: #ffd700;
-    --text-secondary-color:#A6A6A6;
-    --primary-popup-background: #FFFFFF;
-    --popup-background: #ffffff;
-    --secondary-popup-background: rgba(255, 255, 255, 0.7);
-    --primary-font-family: 'Poppins';
-    --secondary-font-family:'Roboto';
-  }
+  --primary-color: #002462;
+  --primary-color-hover: #003898;
+  --primary-color-hover-2: #11557c;
+  --secondary-color: #dddfe0;
+  --secondary-color-hover: #002462;
+  --third-color: #aaaaaa;
+  --third-color-hover: #eeeeee;
+  --highlight-color: #ffff00;
+  --highlight-color-stroke: #ffd700;
+  --text-secondary-color: #a6a6a6;
+  --primary-popup-background: #ffffff;
+  --popup-background: #ffffff;
+  --secondary-popup-background: rgba(255, 255, 255, 0.7);
+  --primary-font-family: "Poppins";
+  --secondary-font-family: "Roboto";
+
+  --xxxs-size: 0.7rem;
+  --xxs-size: 0.8rem;
+  --xs-size: 0.95rem;
+  --sm-size: 1.1rem;
+  --md-size: 1.2rem;
+}

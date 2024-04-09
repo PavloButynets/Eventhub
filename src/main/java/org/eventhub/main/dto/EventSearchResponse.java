@@ -21,6 +21,9 @@ public class EventSearchResponse {
     @NotNull
     private UUID id;
 
+    @NotNull
+    private UUID ownerId;
+
     @NotBlank(message = "Title cannot be blank")
     private String title;
 
@@ -50,8 +53,9 @@ public class EventSearchResponse {
     public EventSearchResponse() {
     }
 
-    public EventSearchResponse(UUID id, String title, int maxParticipants, LocalDateTime startAt, LocalDateTime expireAt, int participantCount, String location, BigDecimal latitude, BigDecimal longitude, PhotoResponse photoResponse) {
+    public EventSearchResponse(UUID id, UUID ownerId, String title, int maxParticipants, LocalDateTime startAt, LocalDateTime expireAt, int participantCount, String location, BigDecimal latitude, BigDecimal longitude, PhotoResponse photoResponse) {
         this.id = id;
+        this.ownerId = ownerId;
         this.title = title;
         this.maxParticipants = maxParticipants;
         this.startAt = startAt;

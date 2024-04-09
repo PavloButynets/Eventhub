@@ -80,6 +80,7 @@ public class EventMapper {
         }
         EventSearchResponse response = EventSearchResponse.builder()
                 .id(event.getId())
+                .ownerId(event.getOwner().getId())
                 .title(event.getTitle())
                 .maxParticipants(event.getMaxParticipants())
                 .startAt(event.getStartAt())
@@ -102,6 +103,7 @@ public class EventMapper {
     public EventResponseXY entityToResponse(Event event){
         return EventResponseXY.builder()
                 .id(event.getId())
+                .ownerId(event.getOwner().getId())
                 .latitude(event.getLatitude())
                 .longitude(event.getLongitude())
                 .build();

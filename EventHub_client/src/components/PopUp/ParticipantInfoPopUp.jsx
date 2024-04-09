@@ -7,9 +7,11 @@ import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
 
 import { motion } from "framer-motion";
 
-const ParticipantInfoPopUp = ({ participant }) => {
+const ParticipantInfoPopUp = ({ participant, onMouseEnter, onMouseLeave }) => {
   return (
     <motion.div
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       className={styles["pop-up-container"]}
       initial={{
         opacity: 0,
@@ -62,6 +64,7 @@ const ParticipantInfoPopUp = ({ participant }) => {
       <PrimaryButton className={styles["show-more-btn"]}>
         Show more
       </PrimaryButton>
+      <div className={styles["transparent-div"]}>&nbsp;</div>
     </motion.div>
   );
 };

@@ -17,6 +17,9 @@ public class EventResponseXY {
     private UUID id;
 
     @NotNull
+    private UUID ownerId;
+
+    @NotNull
     private BigDecimal latitude;
 
     @NotNull
@@ -25,8 +28,9 @@ public class EventResponseXY {
     public EventResponseXY() {
     }
 
-    public EventResponseXY(UUID id, BigDecimal latitude, BigDecimal longitude) {
+    public EventResponseXY(UUID id, UUID ownerId, BigDecimal latitude, BigDecimal longitude) {
         this.id = id;
+        this.ownerId = ownerId;
         this.latitude = latitude;
         this.longitude = longitude;
     }

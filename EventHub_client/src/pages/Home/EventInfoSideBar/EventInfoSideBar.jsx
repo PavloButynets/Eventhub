@@ -30,14 +30,12 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
   const [owner, setOwner] = useState(null);
 
   const [hoveredParticipant, setHoveredParticipant] = useState(null);
-  const [showOwnerPopUp, setShowOwnerPopUp] = useState(false);
 
   const [showAllParticipants, setShowAllParticipants] = useState(false);
 
   const navigate = useNavigate();
 
   const handleCloseWindow = () => {
-    // setEvent(null);
     navigate("../");
   };
 
@@ -45,9 +43,6 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
   const sideBar = useRef(null);
   const showMoreBtn = useRef(null);
   const aboutText = useRef(null);
-
-  // Params
-  // const { ownerId, eventId } = useParams();
 
   // Effects
   useEffect(() => {
@@ -60,9 +55,9 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
     event &&
       getParticipants(event.id).then((data) => {
         console.log("Data: ", data);
-        if (data.length > 4) {
+        if (data.length > 5) {
           setIsShowMoreParticipants(true);
-          setParticipantsToShow(data.slice(0, 4));
+          setParticipantsToShow(data.slice(0, 5));
         } else {
           setParticipantsToShow(data);
         }
@@ -146,6 +141,9 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
                 ))}
               </div>
 
+              {/* Owner */}
+              {owner && <OwnerPhotoOverlay owner={owner} />}
+
               {/* Date */}
               <h3 className={styles["heading"]}>Date and time</h3>
               <div className={styles["date-container"]}>
@@ -180,13 +178,10 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
               {/* Participants */}
               <h3 className={styles["heading"]}>Participants</h3>
               <div className={styles["participant-container"]}>
-                <div className={styles["participants-photos"]}>
-                  <OwnerPhotoOverlay
-                    owner={owner}
-                    onMouseEnter={() => setShowOwnerPopUp(true)}
-                    onMouseLeave={() => setShowOwnerPopUp(false)}
-                    showPopUp={showOwnerPopUp}
-                  />
+                <div
+                  className={styles["participants-photos"]}
+                  onMouseLeave={() => setHoveredParticipant(null)}
+                >
                   {participantsToShow.map((participant) => (
                     <div
                       className={styles["item"]}
@@ -196,19 +191,12 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
                           setHoveredParticipant(data);
                         });
                       }}
-                      onMouseLeave={() => setHoveredParticipant(null)}
                     >
                       <img
                         className={styles["participant-img"]}
                         src={participant.participant_photo.photo_url}
                         alt="Participant Img"
                       />
-                      {hoveredParticipant &&
-                        hoveredParticipant.id === participant.user_id && (
-                          <ParticipantInfoPopUp
-                            participant={hoveredParticipant}
-                          />
-                        )}
                     </div>
                   ))}
                   {isShowMoreParticipants && (
@@ -222,6 +210,10 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
                         />
                       </button>
                     </div>
+                  )}
+
+                  {hoveredParticipant && (
+                    <ParticipantInfoPopUp participant={hoveredParticipant} />
                   )}
                 </div>
               </div>
@@ -258,6 +250,10 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
               </div>
             </motion.div>
           )}
+
+          {/* {hoveredParticipant && (
+            <ParticipantInfoPopUp participant={hoveredParticipant} />
+          )} */}
 
           {showAllParticipants && (
             <ParticipantsList
