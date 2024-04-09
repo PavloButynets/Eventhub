@@ -1,7 +1,69 @@
+@import '../../../App.css';
 
-.filterButtonContainer{
-    
+.filterButtonContainer {
     position: absolute;
     top: 20px;
     left: 480px; 
+}
+
+.BackgroungContainer {
+  position: absolute;
+  top: 88px;
+  left: 32px;
+  width: 100%;
+  height: 553px;
+  background-color: var(--secondary-popup-background);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #cacaca;
+  border-radius: 25px 25px 25px 25px;
+  padding: 8px 8px 16px 8px;
+  box-sizing: border-box;
+  width: 352px;
+  backdrop-filter: blur(5px);
+}
+
+.EventResults {
+  height: 60%;
+  max-height: 362px;
+  width: 100%;
+  overflow-y: auto; 
+  overflow-x: hidden; 
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.Title{
+  width: 112px;
+  font-family: var(--primary-font-family);
+  font-style: normal;
+  font-size: large;
+}
+
+.CheckboxContainer {
+  height: 23%;
+  top: 108px;
+  left: 20px;
+  padding: 8px 8px 16px 8px;
+  border-bottom: 2px solid #cacaca;
+}
+
+.Checkbox {
+  top: 22px;
+}
+
+.Heading{
+  height: 17%;
+  font-family: var(--secondary-font-family), sans-serif;
+  margin: none;
+  padding: 0 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #cacaca;
 }

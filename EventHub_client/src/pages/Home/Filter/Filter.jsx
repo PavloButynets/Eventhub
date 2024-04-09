@@ -7,6 +7,7 @@ import styles from './Filter.module.css';
 import PrimaryButton from '../../../components/Buttons/PrimaryButton/PrimaryButton';
 import FilteredEvents from './FilteredEvents';
 import { getCategories } from '../../../api/getCategories';
+import { getFilteredEvents } from '../../../api/getFilteredEvents';
 import '../../../App.css'
 const { Option } = Select;
 
@@ -14,7 +15,7 @@ const { Option } = Select;
 const EventFilter = () => {
   const [searchParams, setSearchParams] = useSearchParams('');
   const [isOpen, setIsOpen] = useState(false);
-  const [showResult, setShowResult] = useState(false);
+  const [eventsData, setEventsData] = useState(null);
  
   const [categories, setCategories] = useState([]);
   const [minParticipants, setMinParticipants] = useState();
@@ -38,6 +39,21 @@ const EventFilter = () => {
     fetchCategories();
   }, []);
 
+  const fetchData = async () => {
+    try {
+        const events = await getFilteredEvents();
+        setEventsData(events);
+    } catch (error) {
+        console.log('Error fetching filtered events', error);
+    }
+  };
+
+  useEffect(() => {
+    if(!eventsData){
+      setSearchParams('');
+    }
+  }, [eventsData]);
+
   const resetFilter = () =>{
     setCategories([]);
     setMinParticipants();
@@ -47,21 +63,18 @@ const EventFilter = () => {
   }
 
   const handleClose = () => {
-    setShowResult(false);
+    setEventsData(null);
     setSearchParams('');
   }
 
   const toggleMenu = () => {
     resetFilter();
     setIsOpen(!isOpen);
-    if(showResult){
-      handleClose();
-    }
   };
 
   const handleApplyButtonClick = async () => {
     const filterData = {
-      show_filter: true,
+      filter: true,
       min_participants: minParticipants || 0,
       max_participants: maxParticipants || 0,
       start_at: dateRange[0] || '',
@@ -69,10 +82,9 @@ const EventFilter = () => {
       location: location || '',
       category_requests: categories
     }
-
     setSearchParams(filterData);
+    fetchData();
     toggleMenu();
-    setShowResult(!showResult);
   };
 
   return (
@@ -125,7 +137,7 @@ const EventFilter = () => {
         </div>
       </Dropdown>
 
-      {!isOpen && showResult && <FilteredEvents handleClose={handleClose}/>}
+      {searchParams.get('filter') && eventsData && <FilteredEvents handleClose={handleClose} eventsData={eventsData}/>}
     </div>
   );
 };

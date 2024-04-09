@@ -3,7 +3,7 @@ import axios from './axios';
 const DATA_URL = "/search";
 
 export const getEventsDataSearch = async (searchValue) => {
-  const authToken = localStorage.getItem('token');
+  //const authToken = localStorage.getItem('token');
 
   const response = await axios.get(DATA_URL, {
     params: {

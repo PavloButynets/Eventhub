@@ -27,6 +27,7 @@ public class EventController {
         this.eventService = eventService;
         this.participantService = participantService;
     }
+
     @PostMapping("/{user_id}/events")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<EventFullInfoResponse> create(@PathVariable("user_id") UUID userId, @Validated @RequestBody EventRequest request,

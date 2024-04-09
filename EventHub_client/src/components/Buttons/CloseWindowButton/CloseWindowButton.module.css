@@ -8,7 +8,7 @@
   
   .btn-icon {
     font-size: 0.85rem;
-    color: var(--popup-background);
+    color: var(--primary-popup-background);
     background-color: var(--primary-color);
     border-radius: 10px;
     display: block;
@@ -18,5 +18,6 @@
   
   .btn-icon:hover {
     background-color: var(--primary-color-hover-2);
+    color: var(--primary-color);
     /* background-color: red; */
   }

@@ -6,21 +6,7 @@ import ListEvents from '../../../components/ListEvents/ListEvents';
 import EmptyFilteredEvents from './EmptyFilteredEvents.jsx';
 import CloseWindowButton from '../../../components/Buttons/CloseWindowButton/CloseWindowButton';
 
-const FilteredEvents = ({handleClose}) => {
-    const [eventsData, setEventsData] = useState([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const events = await getFilteredEvents();
-                setEventsData(events);
-            } catch (error) {
-                console.log('Error fetching filtered events', error);
-            }
-        };
-        fetchData(); 
-    }, []);
-
+const FilteredEvents = ({handleClose, eventsData}) => {
     return (
         <div className={styles.FilterResultContainer}>
             <div className={styles.Heading}>
