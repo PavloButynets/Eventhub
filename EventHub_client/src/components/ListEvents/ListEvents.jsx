@@ -7,6 +7,8 @@ import {
   EnvironmentOutlined,
 } from "@ant-design/icons";
 
+import { useNavigate } from "react-router-dom";
+
 const SearchResults = ({ eventsData }) => {
   const results = [
     {
@@ -157,11 +159,21 @@ const SearchResults = ({ eventsData }) => {
   const default_image =
     "https://eventhub12.blob.core.windows.net/images/default.jpg?sp=r&st=2024-03-18T06:52:24Z&se=2024-03-24T14:52:24Z&spr=https&sv=2022-11-02&sr=b&sig=nWb0Dzb9%2FWPfAZ6X5MRrwoi%2FxHU8OLe0I6nPtwpBkbQ%3D";
 
+  const navigate = useNavigate();
+
+  const handleClick = (ownerId, eventId) => {
+    navigate(`/event/${ownerId}/${eventId}`);
+  };
+
   return (
     <div className={styles.SearchResults}>
       <ul className={styles.ListStyleNone}>
         {eventsData.map((event) => (
-          <li key={event.id} className={styles.ResultDataContainer}>
+          <li
+            key={event.id}
+            className={styles.ResultDataContainer}
+            onClick={() => handleClick(event.owner_id, event.id)}
+          >
             <img
               src={event.photo_response.photo_url}
               alt="Event"
