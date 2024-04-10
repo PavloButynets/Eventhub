@@ -1,4 +1,17 @@
 :root {
+<<<<<<< HEAD
+    --primary-color: #002462;
+    --primary-color-hover:  #11557C;
+    --secondary-color: #dddfe0;
+    --secondary-color-hover: #002462;
+    --text-secondary-color:#A6A6A6;
+    --primary-popup-background: #FFFFFF;
+    --primary-2-popup-background: #EEEEEE;
+    --secondary-popup-background: rgba(255, 255, 255, 0.7);
+    --primary-font-family: 'Poppins';
+    --secondary-font-family:'Roboto';
+  }
+=======
   --primary-color: #002462;
   --primary-color-hover: #003898;
   --primary-color-hover-2: #11557c;
@@ -21,3 +34,4 @@
   --sm-size: 1.1rem;
   --md-size: 1.2rem;
 }
+>>>>>>> main

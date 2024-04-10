@@ -18,16 +18,22 @@
     "dotenv": "^16.4.5",
     "env": "^0.0.2",
     "express": "^4.18.2",
+<<<<<<< HEAD
+    "fecha": "^4.2.3",
+=======
     "framer-motion": "^11.0.25",
+>>>>>>> main
     "json-server-auth": "^2.1.0",
     "jwt-decode": "^4.0.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
+    "moment": "^2.30.1",
     "query-string": "^9.0.0",
     "querystring": "^0.2.1",
     "querystring-es3": "^0.2.1",
     "react": "^18.2.0",
     "react-click-outside": "^3.0.1",
+    "react-cool-onclickoutside": "^1.7.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
     "react-onclickoutside": "^6.13.0",

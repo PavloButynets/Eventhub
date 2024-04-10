@@ -69,7 +69,7 @@
     color: #555555;
     display: flex;
     flex-direction: column;
-    
+    line-height: 100%;
   }
   
   .titleAndParticipants {
@@ -82,7 +82,7 @@
   .EventDescription h3 {
     font-family: var(--secondary-font-family);
     font-size: 14px;
-    font-weight: 500;
+    font-weight:bold;
     margin: 0;
     margin-bottom: 5px;
   }
@@ -92,6 +92,7 @@
   
   
   .EventDescription p {
+    font-family: var(--primary-font-family);
     font-size: 12px;
     margin: 0;
     margin-bottom: 1px;
@@ -127,3 +128,4 @@
   text-align: center;
   color: var(--text-secondary-color);
   }
+  
