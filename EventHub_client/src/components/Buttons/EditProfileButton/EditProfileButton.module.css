@@ -1,0 +1,15 @@
+.EditProfileButton{
+    font-family: var(--primary-font-family);
+    font-size: 20px;
+    color: #FFF;
+    width: 160px;
+    height: 48px;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.EditProfileButton:hover{
+    background-color: var(--primary-color-hover);
+}

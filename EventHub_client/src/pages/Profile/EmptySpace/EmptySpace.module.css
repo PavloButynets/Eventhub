@@ -1,0 +1,8 @@
+.EmptySpace{
+    flex:3;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1.5px solid #AAA;
+}

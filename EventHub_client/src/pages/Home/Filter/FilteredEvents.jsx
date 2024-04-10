@@ -15,7 +15,7 @@ const FilteredEvents = ({handleClose, eventsData}) => {
             </div>
             <hr />
             {(eventsData.length > 0)?
-                <ListEvents eventsData={eventsData}/>
+                <div className={styles.ListEvents}><ListEvents eventsData={eventsData}/></div>
                 :<EmptyFilteredEvents/>}
         </div>
     );

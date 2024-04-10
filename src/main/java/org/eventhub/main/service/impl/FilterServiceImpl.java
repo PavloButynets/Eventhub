@@ -34,7 +34,7 @@ public class FilterServiceImpl implements FilterService {
 
         Stream<Event> stream = this.eventService.getAllEntities().stream();
         if (!filterRequest.getLocation().isBlank()) {
-            stream = stream.filter(event -> event.getLocation().equals(filterRequest.getLocation()));
+            stream = stream.filter(event -> event.getLocation().contains(filterRequest.getLocation()));
         }
         if (filterRequest.getMinParticipants() > 2) {
             stream = stream.filter(event -> event.getMaxParticipants() >= filterRequest.getMinParticipants());

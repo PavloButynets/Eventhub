@@ -1,0 +1,13 @@
+.Header{
+    background-color: #EEE;
+    height: 96px;
+    width: 100%;
+    border: 1px solid #EEE;
+    margin: 0; 
+}
+
+.Logo{
+    width: 260px;
+    height: 64px;
+    margin: 16px 20px 0;
+}

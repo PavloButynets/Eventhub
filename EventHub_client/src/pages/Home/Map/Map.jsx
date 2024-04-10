@@ -121,18 +121,6 @@ const Map = ({ center }) => {
             }
           />
         ))}
-        {selectedEvent && (
-          <InfoWindow
-            position={{ lat: Number(selectedEvent.latitude), lng: Number(selectedEvent.longitude) }}
-            onCloseClick={() => setSelectedEvent(null)}
-          >
-            <div>
-              <h3>{selectedEvent.title}</h3>
-              <p>{selectedEvent.location}</p>
-            </div>
-          </InfoWindow>
-        )}
-
         
       </GoogleMap>
       
