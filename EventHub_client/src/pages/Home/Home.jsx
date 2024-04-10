@@ -15,6 +15,7 @@ import EventFilter from "./Filter/Filter";
 import FilteredEvents from "./Filter/FilteredEvents";
 import MyEvents from "./MyEvents/MyEvents";
 import EventInfoSideBar from "./EventInfoSideBar/EventInfoSideBar";
+import { jwtDecode } from "jwt-decode";
 
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
@@ -34,13 +35,23 @@ const Home = () => {
     libraries,
   });
 
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    setUser(jwtDecode(localStorage.getItem("token")));
+  }, []);
+
   return (
     <div className={styles.Home}>
       {isLoaded ? (
         <>
           <Map center={defaultCenter} />
 
-          {auth.token ? <MenuButton /> : <LoginRegisterButton />}
+          {auth.token ? (
+            user && <MenuButton user={user} />
+          ) : (
+            <LoginRegisterButton />
+          )}
 
           <SearchEvents />
           <CreateEvent />

@@ -18,15 +18,15 @@
   padding: 0 10px 10px;
 }
 
-.Heading {
-  font-family: var(--secondary-font-family), sans-serif;
-  margin: none;
-  padding: 0 5px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 1.1rem;
+.Heading{
+    font-family: var(--secondary-font-family), sans-serif;
+    margin: none;
+    padding: 0 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.1rem;
 }
 
 .ListEvents {

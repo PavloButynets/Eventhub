@@ -55,7 +55,7 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
     event &&
       getParticipants(event.id).then((data) => {
         console.log("Data: ", data);
-        if (data.length > 5) {
+        if (data.length > 2) {
           setIsShowMoreParticipants(true);
           setParticipantsToShow(data.slice(0, 5));
         } else {
@@ -255,7 +255,7 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
             <ParticipantInfoPopUp participant={hoveredParticipant} />
           )} */}
 
-          {showAllParticipants && (
+          {showAllParticipants && event && (
             <ParticipantsList
               event={event}
               handleGoBackToSideBar={handleShowAllParticipants}
