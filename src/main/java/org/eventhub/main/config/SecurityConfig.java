@@ -47,7 +47,15 @@ public class SecurityConfig {
                 .disable()
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests()
-                .requestMatchers("/authentication/**", "/users/{owner_id}/events/{event_id}", "/categories/**", "/search", "/events/filter", "/users/events")
+                .requestMatchers(
+                        "/authentication/**",
+                        "/users/{owner_id}/events/{event_id}",
+                        "/users/{user_id}",
+                        "/categories/**",
+                        "/search",
+                        "/events/filter",
+                        "/users/events",
+                        "/events/{event_id}/participants/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
