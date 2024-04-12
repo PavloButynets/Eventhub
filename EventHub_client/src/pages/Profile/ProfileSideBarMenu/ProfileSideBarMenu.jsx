@@ -7,10 +7,14 @@ import getIdFromToken from "../../../jwt/getIdFromToken";
 import styles from "./ProfileSideBarMenu.module.css";
 
 const ProfileSideBarMenu = () => {
-  const userId = getIdFromToken();
+  // const userId = getIdFromToken();
 
   const options = [
-    { name: "Account", icon: <FiUser />, source: `/profile/${userId}/account` },
+    {
+      name: "Account",
+      icon: <FiUser />,
+      source: `/profile/7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc/account`,
+    },
     { name: "Events", icon: <HiOutlineLocationMarker />, source: "/" },
   ];
 

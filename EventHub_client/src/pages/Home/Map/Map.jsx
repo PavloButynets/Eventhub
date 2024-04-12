@@ -145,7 +145,6 @@ const Map = ({ center }) => {
               scaledSize: new window.google.maps.Size(40, 40),
             }}
           />
-
         )}
 
         {events &&

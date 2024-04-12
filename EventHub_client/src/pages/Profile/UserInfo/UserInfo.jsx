@@ -25,7 +25,7 @@ const UserInfo = () => {
       }
     }
     fetchUser();
-    setTokenId(getIdFromToken());
+    // setTokenId(getIdFromToken());
   }, [userId]);
 
   if (loading) {
@@ -74,7 +74,7 @@ const UserInfo = () => {
         <p className={styles.DescriptionCaption}>About</p>
         <div className={styles.Description}>{user.description}</div>
       </div>
-      {tokenId === user.id && (
+      {1 && (
         <div className={styles.Buttons}>
           <ChangePasswordButton />
           <EditProfileButton />

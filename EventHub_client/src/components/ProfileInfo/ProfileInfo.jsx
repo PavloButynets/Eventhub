@@ -1,27 +1,20 @@
 // ProfileInfo.jsx
-import React, { useEffect, useState } from "react";
-import { Avatar } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import styles from "./ProfileInfo.module.css";
-import { getUserById } from "../../api/getUserById";
+import React from 'react';
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import styles from './ProfileInfo.module.css';
 
-const ProfileInfo = ({ userId, onProfileClick }) => {
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    userId && getUserById(userId).then((data) => setUser(data));
-  }, []);
+const ProfileInfo = ({ nickname, email, onProfileClick }) => {
   return (
-    user && (
-      <div className={styles.profileInfoContainer}>
-        <div className={styles.profileText}>
-          <span>Hi {user.username}</span>
-          <span>{user.email}</span>
-        </div>
-        <button className={styles.avatarButton} onClick={onProfileClick}>
-          <Avatar size={40} icon={<UserOutlined />} />
-        </button>
+    <div className={styles.profileInfoContainer}>
+      <div className={styles.profileText}>
+        <span>Hi {nickname}</span>
+        <span>{email}</span>
       </div>
-    )
+      <button className={styles.avatarButton} onClick={onProfileClick}>
+        <Avatar size={40} icon={<UserOutlined />} />
+      </button>
+    </div>
   );
 };
 

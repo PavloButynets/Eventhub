@@ -167,10 +167,15 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.show-more-participants-btn:hover {
+  background-color: var(--primary-color-hover);
 }
 
 .show-more-participants-btn-icon {
-  color: var(--popup-background);
+  color: var(--primary-popup-background);
   font-size: 2.5em;
 }
 
@@ -285,7 +290,7 @@
   }
 
   .show-more-participants-btn-icon {
-    color: var(--popup-background);
+    color: var(--primary-popup-background);
     font-size: 2em;
   }
 
@@ -355,7 +360,7 @@
   }
 
   .show-more-participants-btn-icon {
-    color: var(--popup-background);
+    color: var(--primary-popup-background);
     font-size: 2em;
   }
 

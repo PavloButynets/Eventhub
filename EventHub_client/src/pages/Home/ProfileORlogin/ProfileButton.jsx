@@ -1,13 +1,13 @@
 // MenuButton.jsx
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { Dropdown, Menu } from "antd";
 import useAuth from "../../../hooks/useAuth";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import ProfileInfo from "../../../components/ProfileInfo/ProfileInfo";
 import styles from "./Buttons.module.css";
+import { Link } from "react-router-dom";
 
-const MenuButton = ({ user }) => {
+const MenuButton = () => {
   const { setAuth } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -29,7 +29,7 @@ const MenuButton = ({ user }) => {
     <Dropdown
       overlay={
         <Menu className={styles.customMenu} onClick={handleMenuClick}>
-          <Link to={`/profile/${user.id}/account`}>
+          <Link style={{ all: "unset" }}>
             <Menu.Item icon={<UserOutlined />} key="profile">
               Profile
             </Menu.Item>
@@ -43,7 +43,11 @@ const MenuButton = ({ user }) => {
       visible={isOpen}
       onVisibleChange={toggleMenu}
     >
-      <ProfileInfo userId={user.id} onProfileClick={toggleMenu} />
+      <ProfileInfo
+        nickname="Your Nickname"
+        email="example@example.com"
+        onProfileClick={toggleMenu}
+      />
     </Dropdown>
   );
 };

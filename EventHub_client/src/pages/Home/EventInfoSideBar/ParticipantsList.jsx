@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./ParticipantsList.module.css";
 
 import { getUserParticipants } from "../../../api/getUserParticipants";
@@ -11,19 +10,19 @@ import GoBackButton from "../../../components/Buttons/GoBackButton/GoBackButton"
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
 import OwnerPhotoOverlay from "../../../components/OwnerPhotoOverlay/OwnerPhotoOverlay";
 
-const ParticipantsList = ({
-  handleGoBackToSideBar,
-  handleCloseWindow,
-  event,
-}) => {
+const ParticipantsList = ({ handleGoBackToSideBar, handleCloseWindow }) => {
   // States
   const [participants, setParticipants] = useState([]);
+  const [event, setEvent] = useState(null);
   const [owner, setOwner] = useState(null);
 
-  // Navigation, redirection
-  const navigate = useNavigate();
+  // Params
+  const { ownerId, eventId } = useParams();
 
   // Effects
+  useEffect(() => {
+    getFullEventById(ownerId, eventId).then((data) => setEvent(data));
+  }, [ownerId, eventId]);
 
   useEffect(() => {
     event &&
@@ -38,8 +37,14 @@ const ParticipantsList = ({
     event && (
       <div className={styles["participants-list-container"]}>
         <div className={styles["header"]}>
-          <GoBackButton onClick={handleGoBackToSideBar} />
-          <CloseWindowButton onClick={handleCloseWindow} />
+          <GoBackButton
+            className={styles["back-btn"]}
+            onClick={handleGoBackToSideBar}
+          />
+          <CloseWindowButton
+            className={styles["back-btn"]}
+            onClick={handleCloseWindow}
+          />
         </div>
 
         <div className={styles["participants-container"]}>
@@ -48,9 +53,6 @@ const ParticipantsList = ({
             <div
               key={participant.id}
               className={styles["participant-container"]}
-              onClick={() =>
-                navigate(`/profile/${participant.user_id}/account`)
-              }
             >
               <img
                 className={styles["participant-photo"]}
