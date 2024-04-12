@@ -3,17 +3,32 @@ import { FiUser } from "react-icons/fi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { LuUsers } from "react-icons/lu";
 import { FiLogOut } from "react-icons/fi";
+import useAuth from "../../../hooks/useAuth";
 import getIdFromToken from "../../../jwt/getIdFromToken";
 import styles from "./ProfileSideBarMenu.module.css";
 
 const ProfileSideBarMenu = () => {
-  // const userId = getIdFromToken();
+  const { setAuth } = useAuth();
+  let link = '';
+
+  try{
+    const userId = getIdFromToken();
+    link = `/profile/${userId}/account`;
+  }
+  catch(e){
+    link = "/login";
+  }
+  
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setAuth({});
+  };
 
   const options = [
     {
       name: "Account",
       icon: <FiUser />,
-      source: `/profile/7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc/account`,
+      source: link,
     },
     { name: "Events", icon: <HiOutlineLocationMarker />, source: "/" },
   ];
@@ -23,13 +38,13 @@ const ProfileSideBarMenu = () => {
       {options.map((option) => {
         return (
           <li className={styles.Option}>
-            <Link className={styles.Link} key={option} to={option.source}>
+            <Link className={styles.Link} key={option.name} to={option.source}>
               {option.icon} {option.name}
             </Link>
           </li>
         );
       })}
-      <li className={styles.Option}>
+      <li className={styles.Option} onClick={handleLogout}>
         <Link className={styles.Link} key="logout" to={"/login"}>
           <FiLogOut /> Logout
         </Link>
