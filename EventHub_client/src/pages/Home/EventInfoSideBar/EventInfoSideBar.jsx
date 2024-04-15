@@ -4,7 +4,7 @@ import styles from "./EventInfoSideBar.module.css";
 
 import { IoIosMore } from "react-icons/io";
 
-import { getParticipants } from "../../../api/getParticipants";
+import { getJoinedParticipants } from "../../../api/getJoinedParticipants";
 import { getUserById } from "../../../api/getUserById";
 import { getFullEventById } from "../../../api/getFullEventById";
 
@@ -18,6 +18,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import ParticipantInfoPopUp from "../../../components/PopUp/ParticipantInfoPopUp";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton/PrimaryButton";
 import OwnerPhotoOverlay from "../../../components/OwnerPhotoOverlay/OwnerPhotoOverlay";
+import useAuth from "../../../hooks/useAuth";
+import getIdFromToken from "../../../jwt/getIdFromToken";
+import { getParticipantState } from "../../../api/getParticipantState";
+import { getParticipantByUserId } from "../../../api/getParticipantByUserId";
+import { deleteParticipant } from "../../../api/deleteParticipant";
+import { createParticipant } from "../../../api/createParticipant";
+import { addParticipant } from "../../../api/addParticipant";
 
 const EventInfoSideBar = ({ ownerId, eventId }) => {
   // States
@@ -33,11 +40,15 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
 
   const [showAllParticipants, setShowAllParticipants] = useState(false);
 
-  const navigate = useNavigate();
+  const [userId, setUserId] = useState(null);
 
-  const handleCloseWindow = () => {
-    navigate("../");
-  };
+  const [participantState, setParticipantState] = useState(null);
+
+  // Auth
+  const { auth } = useAuth();
+
+  // Navigation
+  const navigate = useNavigate();
 
   // Refs
   const sideBar = useRef(null);
@@ -46,14 +57,36 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
 
   // Effects
   useEffect(() => {
+    try {
+      setUserId(getIdFromToken());
+    } catch (e) {
+      setUserId(null);
+      setParticipantState(null);
+      console.log("User is not logged in.");
+    }
+  }, [auth]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      userId &&
+        getParticipantState(userId, eventId).then((data) =>
+          setParticipantState(data)
+        );
+    };
+
+    fetchData();
+  }, [eventId, userId]);
+
+  useEffect(() => {
     getFullEventById(ownerId, eventId).then((data) => {
       setEvent(data);
     });
-  }, [ownerId, eventId]);
+  }, [ownerId, eventId, participantState]);
 
   useEffect(() => {
     event &&
-      getParticipants(event.id).then((data) => {
+      participantState &&
+      getJoinedParticipants(event.id).then((data) => {
         console.log("Data: ", data);
         if (data.length > 2) {
           setIsShowMoreParticipants(true);
@@ -101,6 +134,10 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
   const handleShowMore = () => {
     setIsShowMore(!isShowMore);
     showMoreBtn.current.innerHTML = isShowMore ? "Show more" : "Show less";
+  };
+
+  const handleCloseWindow = () => {
+    navigate("../");
   };
 
   return (
@@ -247,16 +284,114 @@ const EventInfoSideBar = ({ ownerId, eventId }) => {
                   {event.max_participants - event.participant_count} Spots left
                 </div>
 
-                <PrimaryButton className={styles["action-btn"]}>
-                  Action
-                </PrimaryButton>
+                {participantState === null && (
+                  <PrimaryButton
+                    className={styles["action-btn"]}
+                    onClick={() => navigate("login")}
+                  >
+                    Join
+                  </PrimaryButton>
+                )}
+
+                {participantState === "NONE" &&
+                  userId !== event.owner_id &&
+                  userId && (
+                    <PrimaryButton
+                      className={styles["action-btn"]}
+                      onClick={() => {
+                        createParticipant(userId, eventId).then(() =>
+                          setParticipantState("REQUESTED")
+                        );
+                      }}
+                    >
+                      Join
+                    </PrimaryButton>
+                  )}
+
+                {participantState === "REQUESTED" &&
+                  userId !== event.owner_id &&
+                  userId && (
+                    <PrimaryButton
+                      className={`${styles["action-btn"]} ${styles["action-2-btn"]}`}
+                      onClick={() =>
+                        getParticipantByUserId(userId, eventId).then((data) => {
+                          deleteParticipant(data.id, eventId).then(() =>
+                            setParticipantState("NONE")
+                          );
+                        })
+                      }
+                    >
+                      Cancel
+                    </PrimaryButton>
+                  )}
+
+                {participantState === "JOINED" &&
+                  userId !== event.owner_id &&
+                  userId && (
+                    <PrimaryButton
+                      className={`${styles["action-btn"]} ${styles["action-2-btn"]}`}
+                      onClick={() =>
+                        getParticipantByUserId(userId, eventId).then((data) => {
+                          deleteParticipant(data.id, eventId).then(() =>
+                            setParticipantState("NONE")
+                          );
+                        })
+                      }
+                    >
+                      Leave
+                    </PrimaryButton>
+                  )}
+
+                {userId === event.owner_id && (
+                  <div className={styles["btns-container"]}>
+                    {participantState === "NONE" && (
+                      <PrimaryButton
+                        className={styles["isOwner-action-btn"]}
+                        onClick={() => {
+                          createParticipant(userId, eventId).then(() =>
+                            getParticipantByUserId(userId, eventId).then(
+                              (participant) => {
+                                addParticipant(
+                                  userId,
+                                  eventId,
+                                  participant.id
+                                ).then(() => {
+                                  setParticipantState("JOINED");
+                                });
+                              }
+                            )
+                          );
+                        }}
+                      >
+                        Join
+                      </PrimaryButton>
+                    )}
+
+                    {participantState === "JOINED" && (
+                      <PrimaryButton
+                        className={`${styles["isOwner-action-btn"]} ${styles["isOwner-action-2-btn"]}`}
+                        onClick={() =>
+                          getParticipantByUserId(userId, eventId).then(
+                            (data) => {
+                              deleteParticipant(data.id, eventId).then(() =>
+                                setParticipantState("NONE")
+                              );
+                            }
+                          )
+                        }
+                      >
+                        Leave
+                      </PrimaryButton>
+                    )}
+
+                    <PrimaryButton className={styles["isOwner-edit-btn"]}>
+                      Edit
+                    </PrimaryButton>
+                  </div>
+                )}
               </div>
             </motion.div>
           )}
-
-          {/* {hoveredParticipant && (
-            <ParticipantInfoPopUp participant={hoveredParticipant} />
-          )} */}
 
           {showAllParticipants && (
             <ParticipantsList

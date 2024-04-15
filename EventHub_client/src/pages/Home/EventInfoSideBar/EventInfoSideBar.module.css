@@ -239,6 +239,52 @@
   height: 100%;
 }
 
+.action-2-btn {
+  background-color: var(--primary-2-popup-background);
+  color: var(--third-color);
+  border: var(--third-color) solid 1px;
+}
+
+.action-2-btn:hover {
+  background-color: var(--primary-2-popup-background);
+}
+
+.btns-container {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  height: 3.5vh;
+  font-family: var(--primary-font-family);
+}
+
+.isOwner-action-btn {
+  border-top-right-radius: 0; /* No radius for top-right corner */
+  border-bottom-right-radius: 0; /* No radius for bottom-right corner */
+  font-size: var(--sm-size);
+  border: var(--primary-color) solid 1px;
+  width: auto;
+}
+
+.isOwner-action-2-btn {
+  background-color: var(--primary-2-popup-background);
+  color: var(--third-color);
+  border: var(--third-color) solid 1px;
+}
+
+.isOwner-action-2-btn:hover {
+  background-color: var(--primary-2-popup-background);
+}
+
+.isOwner-edit-btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  font-size: var(--sm-size);
+  border: var(--primary-color) solid 1px;
+  width: auto;
+}
+
+/* Scroll bar */
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -306,6 +352,13 @@
 
   .about-text {
     font-size: var(--xxs-size);
+  }
+
+  .isOwner-action-btn {
+    font-size: var(--xxxs-size);
+  }
+  .isOwner-edit-btn {
+    font-size: var(--xxxs-size);
   }
 }
 
@@ -376,5 +429,12 @@
 
   .about-text {
     font-size: var(--xs-size);
+  }
+
+  .isOwner-action-btn {
+    font-size: var(--xxs-size);
+  }
+  .isOwner-edit-btn {
+    font-size: var(--xxs-size);
   }
 }

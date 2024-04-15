@@ -3,6 +3,7 @@ package org.eventhub.main.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.ResponseStatusException;
+import org.eventhub.main.model.ParticipantState;
 import org.eventhub.main.service.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,11 +53,26 @@ public class ParticipantController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @GetMapping("/user/{user_id}")
+    public ResponseEntity<ParticipantResponse> getByUserId(@PathVariable("user_id") UUID userId, @PathVariable("event_id") UUID eventId){
+        ParticipantResponse response = participantService.readByUserIdInEventById(userId, eventId);
+        log.info("**/get by user id: " + userId + "in event by id: " + eventId);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     @GetMapping
-    public ResponseEntity<List<ParticipantResponse>> getByEventId(@PathVariable("event_id") UUID eventId){
+    public ResponseEntity<List<ParticipantResponse>> getAllByEventId(@PathVariable("event_id") UUID eventId){
         List<ParticipantResponse> responses = participantService.getAllByEventId(eventId);
         log.info("**/get by event id: " + eventId + " participants");
+
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    @GetMapping("/joined")
+    public ResponseEntity<List<ParticipantResponse>> getJoinedByEventId(@PathVariable("event_id") UUID eventId){
+        List<ParticipantResponse> responses = participantService.getAllJoinedByEventId(eventId);
+        log.info("**/get all joined by event id: " + eventId + " participants");
 
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
@@ -69,7 +85,12 @@ public class ParticipantController {
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
+    @GetMapping("/user_state/{user_id}")
+    public ResponseEntity<ParticipantState> getParticipantState(@PathVariable("user_id") UUID userId, @PathVariable("event_id") UUID eventId){
+        log.info("**/get participant state with user id:" + userId + ", event id: " + eventId);
 
+        return new ResponseEntity<>(participantService.getParticipantState(userId, eventId), HttpStatus.OK);
+    }
 
     @GetMapping("/requests")
     public ResponseEntity<List<ParticipantResponse>> getRequestsByEventId(@PathVariable("event_id") UUID eventId){

@@ -9,6 +9,7 @@ import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.mapper.ParticipantMapper;
 import org.eventhub.main.model.Event;
 import org.eventhub.main.model.Participant;
+import org.eventhub.main.model.ParticipantState;
 import org.eventhub.main.repository.ParticipantRepository;
 import org.eventhub.main.service.EventService;
 import org.eventhub.main.service.ParticipantService;
@@ -80,7 +81,11 @@ public class ParticipantServiceImpl implements ParticipantService {
                 .orElseThrow(()->new EntityNotFoundException("Participant with " + id + " id is not found"));
         return participantMapper.entityToResponse(participant);
     }
-
+    @Override
+    public ParticipantResponse readByUserIdInEventById(UUID userId, UUID eventId) {
+        return getAllByEventId(eventId).stream().filter(participantRes -> participantRes.getUserId().equals(userId)).findFirst()
+                .orElseThrow(()->new EntityNotFoundException("Participant with user id:  " + userId + " is not found in event with id: " + eventId));
+    }
     @Override
     public Participant readByIdEntity(UUID id){
         return participantRepository.findById(id)
@@ -101,7 +106,9 @@ public class ParticipantServiceImpl implements ParticipantService {
         Participant participant = readByIdEntity(id);
 
         Event event = eventService.readByIdEntity(participant.getEvent().getId());
-        event.setParticipantCount(event.getParticipantCount() - 1);
+        if (participant.isApproved()) {
+            event.setParticipantCount(event.getParticipantCount() - 1);
+        }
 
         participantRepository.delete(readByIdEntity(id));
     }
@@ -114,8 +121,17 @@ public class ParticipantServiceImpl implements ParticipantService {
                 .collect(Collectors.toList());
     }
 
+
     @Override
     public List<ParticipantResponse> getAllByEventId(UUID eventId) {
+        Event event = eventService.readByIdEntity(eventId);
+        return event.getParticipants()
+                .stream()
+                .map(participantMapper::entityToResponse)
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<ParticipantResponse> getAllJoinedByEventId(UUID eventId) {
         Event event = eventService.readByIdEntity(eventId);
         return event.getParticipants()
                 .stream()
@@ -142,6 +158,17 @@ public class ParticipantServiceImpl implements ParticipantService {
                 .filter(participant -> !participant.isApproved())
                 .map(participantMapper::entityToResponse)
                 .collect(Collectors.toList());
+    }
+    @Override
+    public ParticipantState getParticipantState(UUID userId, UUID eventId) {
+        if (getAllJoinedByEventId(eventId).stream().anyMatch(participant -> participant.getUserId().equals(userId))) {
+            return ParticipantState.JOINED;
+        } else if (getAllRequestsByEventId(eventId).stream().anyMatch(participant -> participant.getUserId().equals(userId))) {
+            return ParticipantState.REQUESTED;
+        } else {
+            return ParticipantState.NONE;
+        }
+
     }
 
 }

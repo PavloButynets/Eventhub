@@ -1,8 +1,8 @@
 import axios from "./axios";
 
-export const getParticipants = async (eventId) => {
+export const getJoinedParticipants = async (eventId) => {
   try {
-    const accessToken = localStorage.getItem("token");
+    // const accessToken = localStorage.getItem("token");
 
     const authAxios = axios.create({
       headers: {
@@ -12,7 +12,9 @@ export const getParticipants = async (eventId) => {
         "Access-Control-Allow-Credentials": "true",
       },
     });
-    const response = await authAxios.get(`events/${eventId}/participants`);
+    const response = await authAxios.get(
+      `events/${eventId}/participants/joined`
+    );
     return response.data;
   } catch (error) {
     console.log("Error getting participants with photos data:", error);
