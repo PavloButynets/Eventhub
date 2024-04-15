@@ -3,12 +3,17 @@
   --primary-color-hover: #11557c;
   --secondary-color: #dddfe0;
   --secondary-color-hover: #002462;
+  --third-color: #aaaaaa;
+  --third-color-hover: #eeeeee;
+  --highlight-color: #ffff00;
+  --highlight-color-stroke: #ffd700;
   --text-secondary-color: #a6a6a6;
   --primary-popup-background: #ffffff;
   --primary-2-popup-background: #eeeeee;
   --secondary-popup-background: rgba(255, 255, 255, 0.7);
   --primary-font-family: "Poppins";
   --secondary-font-family: "Roboto";
+
   --xxxs-size: 0.7rem;
   --xxs-size: 0.8rem;
   --xs-size: 0.95rem;

@@ -25,7 +25,14 @@ const UserInfo = () => {
       }
     }
     fetchUser();
-    setTokenId(getIdFromToken());
+
+    try{
+      setTokenId(getIdFromToken());
+    }
+    catch(e){
+      setTokenId(null);
+    }
+    
   }, [userId]);
 
   if (loading) {

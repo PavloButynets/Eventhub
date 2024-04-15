@@ -6,6 +6,7 @@ import { CiCalendar } from "react-icons/ci";
 import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
 
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const ParticipantInfoPopUp = ({ participant, onMouseEnter, onMouseLeave }) => {
   return (
@@ -61,9 +62,11 @@ const ParticipantInfoPopUp = ({ participant, onMouseEnter, onMouseLeave }) => {
         <hr />
       </div>
       <div className={styles["description"]}>{participant.description}</div>
-      <PrimaryButton className={styles["show-more-btn"]}>
-        Show more
-      </PrimaryButton>
+      <Link style={{ all: "unset" }}>
+        <PrimaryButton className={styles["show-more-btn"]}>
+          Show more
+        </PrimaryButton>
+      </Link>
       <div className={styles["transparent-div"]}>&nbsp;</div>
     </motion.div>
   );

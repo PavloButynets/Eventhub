@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./ParticipantsList.module.css";
 
 import { getUserParticipants } from "../../../api/getUserParticipants";
@@ -37,8 +37,14 @@ const ParticipantsList = ({ handleGoBackToSideBar, handleCloseWindow }) => {
     event && (
       <div className={styles["participants-list-container"]}>
         <div className={styles["header"]}>
-          <GoBackButton onClick={handleGoBackToSideBar} />
-          <CloseWindowButton onClick={handleCloseWindow} />
+          <GoBackButton
+            className={styles["back-btn"]}
+            onClick={handleGoBackToSideBar}
+          />
+          <CloseWindowButton
+            className={styles["back-btn"]}
+            onClick={handleCloseWindow}
+          />
         </div>
 
         <div className={styles["participants-container"]}>
