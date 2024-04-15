@@ -36,7 +36,7 @@ SELECT
     event_embeddings.embedding
 FROM events
 INNER JOIN event_embeddings ON events.embedding_id = event_embeddings.id
-WHERE 1 - (embedding <=> :user_prompt::vector) >= 0.7
+WHERE 1 - (embedding <=> :user_prompt::vector) >= 0.8
 ORDER BY (embedding <=> :user_prompt::vector) LIMIT 15
 """).param("user_prompt", embedding.toString());
 
