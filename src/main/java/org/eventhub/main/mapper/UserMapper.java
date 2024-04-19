@@ -34,7 +34,7 @@ public class UserMapper {
                 .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
-                .username(user.getUsername())
+                .username(user.getNickname())
                 .email(user.getEmail())
                 .description(user.getDescription())
                 .createdAt(user.getCreatedAt())

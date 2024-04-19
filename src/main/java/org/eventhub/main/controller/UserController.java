@@ -1,6 +1,7 @@
 package org.eventhub.main.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.eventhub.main.config.JwtService;
 import org.eventhub.main.dto.EventSearchResponse;
 import org.eventhub.main.dto.OperationResponse;
 import org.eventhub.main.dto.UserRequest;
@@ -24,10 +25,13 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+    private final JwtService jwtService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, JwtService jwtService) {
+
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @GetMapping
@@ -52,6 +56,14 @@ public class UserController {
     public ResponseEntity<UserResponse> getById(@PathVariable("user_id") UUID userId) {
         UserResponse response = userService.readById(userId);
         log.info("**/get by id user(id) = " + response.getId());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/user-info")
+    public ResponseEntity<UserResponse> getUserInfo(@RequestHeader("Authorization") String token){
+        UserResponse response = userService.readById(jwtService.getId(token));
+        log.info("**/get user info by id from token = " + response.getId());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

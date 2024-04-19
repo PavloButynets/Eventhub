@@ -8,11 +8,7 @@ const Header = () => {
       <div className={styles.Logo}>
         <img src={Logo} alt="Event Hub Logo" />
       </div>
-      <ProfileInfo
-        nickname={"Nickname"}
-        email={"Email@gmail.com"}
-        onProfileClick={null}
-      />
+      <ProfileInfo onProfileClick={null} />
     </div>
   );
 };

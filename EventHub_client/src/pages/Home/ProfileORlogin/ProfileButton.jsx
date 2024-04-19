@@ -43,11 +43,7 @@ const MenuButton = () => {
       visible={isOpen}
       onVisibleChange={toggleMenu}
     >
-      <ProfileInfo
-        nickname="Your Nickname"
-        email="example@example.com"
-        onProfileClick={toggleMenu}
-      />
+      <ProfileInfo onProfileClick={toggleMenu} />
     </Dropdown>
   );
 };
