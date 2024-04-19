@@ -31,17 +31,6 @@ public class AuthenticationService {
     private final UserService userService;
     private final RegisterMapper registerMapper;
 
-//    public AuthenticationResponce register(UserRequest request) {
-//        request.setPassword(passwordEncoder.encode(request.getPassword()));
-//        UserResponse userResponse = userService.create(request);
-//        var user = userRepository.findByEmail(request.getEmail());
-//
-//        var jwtToken = jwtService.generateToken(user);
-//        return AuthenticationResponce.builder()
-//                .token(jwtToken)
-//                .build();
-//    }
-
     public AuthenticationResponce register(RegisterRequest registerRequest) {
         registerRequest.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         UserRequest userRequest = registerMapper.requestToEntity(registerRequest, new UserRequest());

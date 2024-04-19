@@ -26,13 +26,11 @@ const UserInfo = () => {
     }
     fetchUser();
 
-    try{
+    try {
       setTokenId(getIdFromToken());
-    }
-    catch(e){
+    } catch (e) {
       setTokenId(null);
     }
-    
   }, [userId]);
 
   if (loading) {

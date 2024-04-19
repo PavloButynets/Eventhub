@@ -1,8 +1,8 @@
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 const getIdFromToken = () => {
-    const authToken = localStorage.getItem('token');
-    return jwtDecode(authToken).id;
-}
+  const authToken = localStorage.getItem("token");
+  return jwtDecode(authToken).id;
+};
 
-export default getIdFromToken
+export default getIdFromToken;

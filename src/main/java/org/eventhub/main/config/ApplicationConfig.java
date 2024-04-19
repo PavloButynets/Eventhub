@@ -34,13 +34,4 @@ public class ApplicationConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-
-    //    private final UserRepository userRepository;
-//
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        return username -> userRepository.findByEmail(username);
-//                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-//    }
 }

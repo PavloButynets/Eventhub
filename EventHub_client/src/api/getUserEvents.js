@@ -1,13 +1,10 @@
-import axios from './axios';
-import { jwtDecode } from 'jwt-decode'
+import axios from "./axios";
+import getIdFromToken from "../jwt/getIdFromToken";
 
 export const getUserEvents = async () => {
+  const user_id = getIdFromToken();
 
-  const authToken = localStorage.getItem('token');
-
-  const user = jwtDecode(authToken);
-  console.log(user);
-  const DATA_URL = `/users/${user.id}/events`;
+  const DATA_URL = `/users/${user_id}/events`;
 
   const response = await axios.get(DATA_URL);
   return response.data;
