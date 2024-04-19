@@ -1,7 +1,7 @@
 import axios from "./axios";
 
 export const getEventsData = async () => {
-  const accessToken = localStorage.getItem("token");
+  //const accessToken = localStorage.getItem("token");
 
   const authAxios = axios.create({
     headers: {
@@ -12,7 +12,7 @@ export const getEventsData = async () => {
   });
 
   try {
-    const response = await authAxios.get(`/users/events`);
+    const response = await authAxios.get(`/events/all-live-upcoming`);
     return response.data;
   } catch (error) {
     console.log("Error getting events data", error);

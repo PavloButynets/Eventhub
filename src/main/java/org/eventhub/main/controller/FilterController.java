@@ -3,15 +3,13 @@ package org.eventhub.main.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.eventhub.main.dto.CheckboxRequest;
 import org.eventhub.main.dto.EventFilterRequest;
+import org.eventhub.main.dto.EventResponseXY;
 import org.eventhub.main.dto.EventSearchResponse;
 import org.eventhub.main.service.FilterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
@@ -37,5 +35,11 @@ public class FilterController {
     public ResponseEntity<Set<EventSearchResponse>> checkboxFilter(@RequestBody CheckboxRequest request) {
         log.info("**/get filtered events with checkbox");
         return new ResponseEntity<>(filterService.filterCheckboxEvents(request), HttpStatus.OK);
+    }
+
+    @GetMapping("/events/all-live-upcoming")
+    public ResponseEntity<List<EventResponseXY>> getAllLiveAndUpcoming() {
+        log.info("**/get all live and upcoming events ");
+        return new ResponseEntity<>(filterService.allLiveAndUpcomingEvents(), HttpStatus.OK);
     }
 }

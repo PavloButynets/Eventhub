@@ -55,7 +55,11 @@ public class SecurityConfig {
                         "/search",
                         "/events/filter",
                         "/users/events",
-                        "/events/{event_id}/participants/**")
+                        "/events/{event_id}/participants/**",
+                        "events/all-live",
+                        "events/all-upcoming",
+                        "events/all-past",
+                        "/events/all-live-upcoming")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

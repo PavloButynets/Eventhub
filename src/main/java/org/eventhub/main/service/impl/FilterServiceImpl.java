@@ -11,10 +11,7 @@ import org.eventhub.main.service.FilterService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -90,5 +87,18 @@ public class FilterServiceImpl implements FilterService {
 
         return results.stream().map(eventMapper::entityToSearchResponse)
                 .collect(Collectors.toSet());
+    }
+
+    @Override
+    public List<EventResponseXY> allLiveAndUpcomingEvents() {
+        List<Event> liveAndUpcomingEvents = new ArrayList<>();
+
+        liveAndUpcomingEvents.addAll(filterRepository.findAllLiveEvents(LocalDateTime.now()));
+        liveAndUpcomingEvents.addAll(filterRepository.findAllUpcomingEvents(LocalDateTime.now()));
+
+        return liveAndUpcomingEvents
+                .stream()
+                .map(eventMapper::entityToResponse)
+                .collect(Collectors.toList());
     }
 }
