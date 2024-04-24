@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown, Menu } from "antd";
 import useAuth from "../../../hooks/useAuth";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import {
   UserOutlined,
@@ -73,7 +73,6 @@ const MenuButton = () => {
             </Link>
           </Menu.Item>
           <Menu.Item icon={<LogoutOutlined />} key="logout">
-
             Log out
           </Menu.Item>
         </Menu>
