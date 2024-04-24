@@ -12,7 +12,7 @@ public interface EventService {
     EventFullInfoResponse readById(UUID id);
     Event readByIdEntity(UUID id);
     Event readByTitle(String title);
-    EventFullInfoResponse update(EventRequest eventRequest);
+    EventFullInfoResponse update(UUID id, EventRequest eventRequest);
     void delete(UUID id);
     List<EventFullInfoResponse> getAllFullInfo();
     List<EventSearchResponse> getAllSearchResponse();

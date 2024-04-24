@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -69,12 +70,12 @@ public class EventController {
     }
 
     @PutMapping("/{owner_id}/events/{event_id}")
-    public ResponseEntity<EventFullInfoResponse> update(@Validated @RequestBody EventRequest request,
-                                                        BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            throw new ResponseStatusException("Invalid Input");
+    public ResponseEntity<EventFullInfoResponse> update(@PathVariable("event_id") UUID eventId,
+                                                        @Validated @RequestBody EventRequest request, BindingResult result){
+        if(result.hasErrors()){
+            throw new ResponseStatusException(Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
         }
-        EventFullInfoResponse response = eventService.update(request);
+        EventFullInfoResponse response = eventService.update(eventId, request);
         log.info("**/updated event(id) = " + response.getId());
 
         return new ResponseEntity<>(response, HttpStatus.OK);

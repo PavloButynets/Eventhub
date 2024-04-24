@@ -12,7 +12,6 @@ const GetLocationByCoordinates = async (lat, lng) => {
     });
     
     const { status, results } = response.data;
-    console.log(results)
     if (status === 'OK') {
       const addressComponents = results[0].address_components;
       let city = '';

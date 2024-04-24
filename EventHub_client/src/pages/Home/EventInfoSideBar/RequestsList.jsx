@@ -7,6 +7,7 @@ import { deleteParticipant } from "../../../api/deleteParticipant";
 import AcceptParticipantButton from "./AcceptParticipantButton/AcceptParticipantButton";
 import { addParticipant } from "../../../api/addParticipant";
 import SpotsLeft from "../../../components/Spots/SpotsLeft";
+import { message } from "antd";
 const RequestsList = ({
   _event,
   requests,
@@ -50,20 +51,34 @@ const RequestsList = ({
               <div className={styles["accept-requested-participant-container"]}>
                 <AcceptParticipantButton
                   onClick={() => {
-                    addParticipant(_event.id, requestedParticipant.id).then(
-                      () => {
+                    addParticipant(_event.id, requestedParticipant.id)
+                      .then(() => {
                         setReloadList((prev) => !prev);
-                      }
-                    );
+                      })
+                      .catch((error) => {
+                        if (error.response) {
+                          const responseData = error.response.data;
+                          if (
+                            typeof responseData === "string" &&
+                            responseData.includes("is full")
+                          ) {
+                            message.info("Event is full");
+                          } else {
+                            message.error("An error occurred");
+                          }
+                        } else {
+                          message.error("An error occurred");
+                        }
+                      });
                   }}
                 />
               </div>
               <div className={styles["delete-requested-participant-container"]}>
                 <CloseParticipantButton
                   onClick={() => {
-                    deleteParticipant(requestedParticipant.id, _event.id).then(
-                      () => setReloadList((prev) => !prev)
-                    );
+                    deleteParticipant(requestedParticipant.id, _event.id)
+                      .then(() => setReloadList((prev) => !prev))
+                      .catch((error) => message.error("An error occured"));
                   }}
                 />
               </div>

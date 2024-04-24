@@ -40,6 +40,8 @@ public class EventRequest {
     private String description;
 
     @NotNull
+    @NotEmpty(message = "Please choose correct location")
+    @NotBlank(message = "Please choose correct location")
     private String location;
 
     @NotNull
@@ -49,12 +51,10 @@ public class EventRequest {
     private BigDecimal longitude;
 
     @NotNull
-    private int currentCount;
-
-    @NotNull
     private boolean withOwner;
   
     @NotNull
+    @Size(min = 1, message = "Please choose at least one category!")
     private List<CategoryRequest> categoryRequests;
 
     @NotNull
@@ -63,7 +63,7 @@ public class EventRequest {
 
     public EventRequest(){}
 
-    public EventRequest(String title, int maxParticipants, LocalDateTime startAt, LocalDateTime expireAt, String description, String location, BigDecimal latitude, BigDecimal longitude, int currentCount, boolean withOwner, List<CategoryRequest> categoryRequests, UUID ownerId) {
+    public EventRequest(String title, int maxParticipants, LocalDateTime startAt, LocalDateTime expireAt, String description, String location, BigDecimal latitude, BigDecimal longitude, boolean withOwner, List<CategoryRequest> categoryRequests, UUID ownerId) {
         this.title = title;
         this.maxParticipants = maxParticipants;
         this.startAt = startAt;
@@ -72,7 +72,6 @@ public class EventRequest {
         this.location = location;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.currentCount = currentCount;
         this.withOwner = withOwner;
         this.categoryRequests = categoryRequests;
         this.ownerId = ownerId;

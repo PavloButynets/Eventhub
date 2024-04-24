@@ -13,6 +13,7 @@ import { deleteParticipant } from "../../../api/deleteParticipant";
 import SpotsLeft from "../../../components/Spots/SpotsLeft";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton/PrimaryButton";
 import RequestsCount from "../../../components/RequestsCount/RequestsCount";
+import { message } from "antd";
 
 const ParticipantsList = ({
   setIsLoading,
@@ -35,11 +36,16 @@ const ParticipantsList = ({
 
   useEffect(() => {
     _event &&
-      getUserParticipants(_event.id).then((data) => setParticipants(data));
+      getUserParticipants(_event.id)
+        .then((data) => setParticipants(data))
+        .catch((error) => message.error("An error occured"));
   }, [_event]);
 
   useEffect(() => {
-    _event && getUserById(_event.owner_id).then((data) => setOwner(data));
+    _event &&
+      getUserById(_event.owner_id)
+        .then((data) => setOwner(data))
+        .catch((error) => message.error("An error occured"));
   }, [_event]);
 
   useEffect(() => {
@@ -92,9 +98,11 @@ const ParticipantsList = ({
                       <div className={styles["delete-participant-container"]}>
                         <CloseParticipantButton
                           onClick={() => {
-                            deleteParticipant(participant.id, eventId).then(
-                              () => setReloadList((prev) => !prev)
-                            );
+                            deleteParticipant(participant.id, eventId)
+                              .then(() => setReloadList((prev) => !prev))
+                              .catch((error) =>
+                                message.error("An error occured")
+                              );
                           }}
                         />
                       </div>

@@ -72,7 +72,11 @@ const MenuButton = () => {
               Change password
             </Link>
           </Menu.Item>
-          <Menu.Item icon={<LogoutOutlined />} key="logout">
+          <Menu.Item
+            onClick={() => navigate("/")}
+            icon={<LogoutOutlined />}
+            key="logout"
+          >
             Log out
           </Menu.Item>
         </Menu>

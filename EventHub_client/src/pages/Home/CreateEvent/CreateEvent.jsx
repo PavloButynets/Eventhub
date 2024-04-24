@@ -91,7 +91,6 @@ const PlacesAutocomplete = ({ onSelectLocation }) => {
     // Get latitude and longitude via utility functions
     getGeocode({ address: value }).then((results) => {
       const { lat, lng } = getLatLng(results[0]);
-      console.log("📍 Coordinates: ", { lat, lng });
       onSelectLocation({ address: value, lat, lng });
     });
   };
@@ -139,7 +138,7 @@ const CreateEvent = () => {
   const [participants, setParticipants] = useState("");
   const [dateRange, setDateRange] = useState(null);
 
-  const [formData, setFormData] = useState(new FormData());
+  const [formData, setFormData] = useState(new Array(6).fill(null));
   useEffect(() => {
     // Отримання категорії з серверу під час завантаження компонента
     const fetchCategories = async () => {
@@ -167,25 +166,31 @@ const CreateEvent = () => {
     const newPhotos = [...photos];
     newPhotos[index] = URL.createObjectURL(file);
 
-    //
-    formData.append("files", file);
-    setFormData(formData);
-    //
+    const newFormDataPhotos = [...formData]
+    const data = new FormData();
+    data.append("files", file);
+    newFormDataPhotos[index] = data;
+  
 
+    setFormData(newFormDataPhotos);
     setPhotos(newPhotos);
     setAddedPhotos(addedPhotos + 1);
   };
 
   const handlePhotoDelete = (index) => {
     const newPhotos = [...photos];
+    const newFormDataPhotos = [...formData]
     newPhotos[index] = null;
+    newFormDataPhotos[index]=null;
     setPhotos(newPhotos);
+    setFormData(newFormDataPhotos);
     setAddedPhotos(addedPhotos - 1);
 
     // Зміщення наступних фото назад
     for (let i = index; i < photos.length - 1; i++) {
       if (newPhotos[i] === null && newPhotos[i + 1] !== null) {
         [newPhotos[i], newPhotos[i + 1]] = [newPhotos[i + 1], newPhotos[i]];
+        [newFormDataPhotos[i], newFormDataPhotos[i+1]]=[newFormDataPhotos[i+1], newFormDataPhotos[i]]
       }
     }
   };
@@ -293,6 +298,7 @@ const CreateEvent = () => {
       if (!validateFields()) {
         return;
       }
+      console.log(dateRange);
       const startAt = formatDate(dateRange[0]);
       const expireAt = formatDate(dateRange[1]);
       const authToken = localStorage.getItem("token");
@@ -316,12 +322,9 @@ const CreateEvent = () => {
         current_count: 0,
         owner_id: user_id,
       };
-      console.log("Event Data:", eventData);
       const textDataResponse = await sendDataWithoutPhotos(eventData, user_id);
 
       const eventId = textDataResponse.id;
-      console.log("Event Id from server", eventId);
-      console.log(typeof photos[0], photos[0]);
       const photoDataResponse = await sendPhotosToServer(formData, eventId);
       // console.log("Photo response data: ",photoDataResponse)
 
@@ -350,7 +353,9 @@ const CreateEvent = () => {
   return (
     <>
       {isCreateEvent && (
+       
         <div className={styles.backdrop}>
+          <div  className={styles.wrapper}>
           <div className={styles.mainContainer}>
             <div className={styles.createEventHeader}>
               <h2>Create Event</h2>
@@ -496,7 +501,9 @@ const CreateEvent = () => {
             <div className={styles.DescriptionContainer}>
               <div className={styles.ParamLabel}>Description</div>
               <TextArea
-                autoSize={{ minRows: 2, maxRows: 5 }}
+                autoSize={{ 
+                  minRows: 2, 
+                  maxRows: window.innerHeight < 900 ? 2 : 5  }}
                 placeholder="Enter description..."
                 value={description}
                 onChange={handleDescriptionChange}
@@ -517,6 +524,7 @@ const CreateEvent = () => {
               </button>
             </div>
           </div>
+        </div>
         </div>
       )}
     </>

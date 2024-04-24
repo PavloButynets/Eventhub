@@ -124,7 +124,6 @@ public class EventMapper {
         event.setLocation(eventRequest.getLocation());
         event.setLatitude(eventRequest.getLatitude());
         event.setLongitude(eventRequest.getLongitude());
-        event.setParticipantCount(eventRequest.getCurrentCount());
         event.setCategories(eventRequest.getCategoryRequests().stream()
                 .map(categoryRequest -> categoryService.getByName(categoryRequest.getName()))
                 .collect(Collectors.toList()));

@@ -30,6 +30,8 @@ const defaultOption = {
   scrollwheel: true,
   disableDoubleClickZoom: true,
   styles: light,
+  minZoom: 5,
+  maxZoom: 20, 
 };
 
 const Map = ({ center }) => {

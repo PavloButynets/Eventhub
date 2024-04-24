@@ -5,6 +5,7 @@ import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.NotValidDateException;
 import org.eventhub.main.exception.NullDtoReferenceException;
+import org.eventhub.main.exception.ResponseStatusException;
 import org.eventhub.main.mapper.EventMapper;
 import org.eventhub.main.model.Embedding;
 import org.eventhub.main.model.Event;
@@ -112,11 +113,13 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public EventFullInfoResponse update(EventRequest eventRequest) {
+    public EventFullInfoResponse update(UUID id, EventRequest eventRequest) {
         if(eventRequest != null) {
             LocalDateTime currentTime = LocalDateTime.now();
-            Event event = readByTitle(eventRequest.getTitle());
-
+            Event event = readByIdEntity(id);
+            if(event.getParticipantCount() > eventRequest.getMaxParticipants()){
+                throw new ResponseStatusException("New participants count can not be less than current!");
+            }
             checkDate(currentTime, eventRequest.getStartAt(), eventRequest.getExpireAt());
 
             Embedding embedding = setVector(eventRequest);

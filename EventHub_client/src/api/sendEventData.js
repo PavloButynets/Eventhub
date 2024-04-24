@@ -11,7 +11,6 @@ export const sendDataWithoutPhotos = async (eventData, owner_id) => {
     },
   });
   try {
-    console.log(eventData);
     const response = await authAxios.post(
       `/users/${owner_id}/events`,
       eventData
@@ -28,9 +27,19 @@ function isFormDataEmpty(formData) {
   const entries = formData.entries();
   return entries.next().done;
 }
+const appendFormData = (formDataArray) => {
+  const mergedFormData = new FormData();
+  formDataArray.forEach((formData) => {
+    if (!formData) return;
+    for (const [key, value] of formData.entries()) {
+      mergedFormData.append("files", value);
+    }
+  });
 
+  return mergedFormData;
+};
 export const sendPhotosToServer = async (formData, event_id) => {
-  console.log("Images: ", formData);
+  const mergedPhotos = appendFormData(formData);
   const accessToken = localStorage.getItem("token");
   const authAxios = axios.create({
     headers: {
@@ -40,10 +49,10 @@ export const sendPhotosToServer = async (formData, event_id) => {
     },
   });
   try {
-    if (isFormDataEmpty(formData)) return;
+    if (isFormDataEmpty(mergedPhotos)) return;
     const response = await authAxios.post(
       `/events/${event_id}/photos/upload`,
-      formData
+      mergedPhotos
     );
     return response.data;
   } catch (error) {
