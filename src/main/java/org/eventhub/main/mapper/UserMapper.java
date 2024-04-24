@@ -1,8 +1,9 @@
 package org.eventhub.main.mapper;
 
 import org.eventhub.main.dto.PhotoResponse;
+import org.eventhub.main.dto.UserRequestCreate;
+import org.eventhub.main.dto.UserRequestUpdate;
 import org.eventhub.main.dto.UserResponse;
-import org.eventhub.main.dto.UserRequest;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.model.Photo;
@@ -41,6 +42,7 @@ public class UserMapper {
                 .city(user.getCity())
                 .birthDate(user.getBirthDate())
                 .gender(user.getGender())
+                .showEmail(user.isShowEmail())
                 .photoResponses(user.getProfileImages()
                         .stream()
                         .map(photoMapper::entityToResponse)
@@ -53,7 +55,7 @@ public class UserMapper {
         return response;
     }
 
-    public User requestToEntity(UserRequest userRequest, User user) {
+    public User createRequestToEntity(UserRequestCreate userRequest, User user) {
         if(userRequest == null){
             throw new NullDtoReferenceException("UserRequest can't be null");
         }
@@ -66,11 +68,30 @@ public class UserMapper {
         user.setUsername(userRequest.getUsername());
         user.setEmail(userRequest.getEmail());
         user.setPassword(userRequest.getPassword());
+        user.setCreatedAt(LocalDateTime.now());
+        user.setCity(userRequest.getCity());
+        user.setGender(userRequest.getGender());
+        user.setShowEmail(false);
+        return user;
+    }
+
+    public User updateRequestToEntity(UserRequestUpdate userRequest, User user){
+        if(userRequest == null){
+            throw new NullDtoReferenceException("UserRequest can't be null");
+        }
+        if(user == null){
+            throw new NullEntityReferenceException("User can't be null");
+        }
+
+        user.setFirstName(userRequest.getFirstName());
+        user.setLastName(userRequest.getLastName());
+        user.setUsername(userRequest.getUsername());
         user.setDescription(userRequest.getDescription());
         user.setCreatedAt(LocalDateTime.now());
         user.setCity(userRequest.getCity());
         user.setBirthDate(userRequest.getBirthDate());
         user.setGender(userRequest.getGender());
+        user.setShowEmail(userRequest.isShowEmail());
         return user;
     }
 }

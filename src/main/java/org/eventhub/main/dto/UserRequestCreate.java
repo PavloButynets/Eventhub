@@ -6,28 +6,22 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.eventhub.main.model.Event;
 import org.eventhub.main.model.Gender;
-import org.eventhub.main.model.Participant;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class UserRequest {
+public class UserRequestCreate {
     @Pattern(regexp = "[A-Z][a-z]+",
-            message = "Must start with a capital letter followed by one or more lowercase letters")
+            message = "First Name must start with a capital letter followed by one or more lowercase letters")
     private String firstName;
 
     @Pattern(regexp = "[A-Z][a-z]+",
-            message = "Must start with a capital letter followed by one or more lowercase letters")
+            message = "Last Name must start with a capital letter followed by one or more lowercase letters")
     private String lastName;
 
     @Size(min = 3, max = 15)
@@ -46,27 +40,20 @@ public class UserRequest {
             message = "Must contain at least one lowercase letter")
     private String password;
 
-    private String description;
-
     private String city;
-
-    @Past
-    private LocalDate birthDate;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    public UserRequest() {}
+    public UserRequestCreate() {}
 
-    public UserRequest(String firstName, String lastName, String username, String email, String password, String description, String city, LocalDate birthDate, Gender gender) {
+    public UserRequestCreate(String firstName, String lastName, String username, String email, String password, String city, Gender gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.description = description;
         this.city = city;
-        this.birthDate = birthDate;
         this.gender = gender;
     }
 }

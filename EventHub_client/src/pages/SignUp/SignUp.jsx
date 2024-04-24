@@ -61,16 +61,17 @@ const SignUp = () => {
       username,
       email,
       password,
-      description: "description 1",
-      phone_number: "0162609147",
       city,
-      birth_date: "1990-09-11",
-      gender: "MALE",
-    };
-    try {
-      const res = await axios.post(REGISTER_URL, userData, {
-        headers: { "Content-Type": "application/json" },
-      });
+      gender,
+  }
+     try{
+      
+      const res = await axios.post(REGISTER_URL, userData, 
+        {
+          headers:{'Content-Type':'application/json'},
+        }
+      );
+
       const accessToken = res?.data?.token;
       localStorage.setItem("token", accessToken);
       console.log(res);

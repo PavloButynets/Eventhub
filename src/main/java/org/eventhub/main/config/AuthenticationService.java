@@ -33,7 +33,7 @@ public class AuthenticationService {
 
     public AuthenticationResponce register(RegisterRequest registerRequest) {
         registerRequest.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        UserRequest userRequest = registerMapper.requestToEntity(registerRequest, new UserRequest());
+        UserRequestCreate userRequest = registerMapper.requestToEntity(registerRequest, new UserRequestCreate());
         UserResponse userResponse = userService.create(userRequest);
         var user = userRepository.findByEmail(userRequest.getEmail());
 

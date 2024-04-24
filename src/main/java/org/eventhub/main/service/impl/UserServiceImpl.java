@@ -1,11 +1,9 @@
 package org.eventhub.main.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.eventhub.main.dto.EventSearchResponse;
-import org.eventhub.main.dto.UserResponse;
-import org.eventhub.main.dto.UserRequest;
+import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.NullDtoReferenceException;
-import org.eventhub.main.mapper.EventMapper;
+import org.eventhub.main.exception.PasswordException;
 import org.eventhub.main.mapper.UserMapper;
 import org.eventhub.main.model.Photo;
 import org.eventhub.main.model.User;
@@ -15,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,9 +35,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse create(UserRequest userRequest) {
+    public UserResponse create(UserRequestCreate userRequest) {
         if (userRequest != null) {
-            User user = userDtoMapper.requestToEntity(userRequest, new User());
+            User user = userDtoMapper.createRequestToEntity(userRequest, new User());
             return userDtoMapper.entityToResponse(userRepository.save(user));
         }
         throw new NullDtoReferenceException("User cannot be 'null'");
@@ -57,12 +56,26 @@ public class UserServiceImpl implements UserService {
                 () -> new EntityNotFoundException("User with " + id + " not found"));
     }
 
+    @Override
+    public UserResponse readByUsername(String username){
+        User user = userRepository.findByUsername(username);
+        if(user == null)
+            throw new EntityNotFoundException("User with username " + username + " not found");
+        return userDtoMapper.entityToResponse(user);
+    }
+
+    @Override
+    public String getUsername(UUID id){
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("User with " + id + " not found"));
+        return user.getNickname();
+    }
+
     @Transactional
     @Override
-    public UserResponse update(UserRequest userRequest) {
+    public UserResponse update(UUID id, UserRequestUpdate userRequest) {
         if (userRequest != null) {
-            User user = userDtoMapper.requestToEntity(userRequest, userRepository.findByEmail(userRequest.getEmail()));
-            readByIdEntity(user.getId());
+            User user = userDtoMapper.updateRequestToEntity(userRequest, this.readByIdEntity(id));
             return userDtoMapper.entityToResponse(userRepository.save(user));
         }
         throw new NullDtoReferenceException("User cannot be 'null'");
@@ -111,6 +124,22 @@ public class UserServiceImpl implements UserService {
         this.readByIdEntity(userId).getProfileImages().remove(image);
     }
 
+    @Override
+    public UserResponse changePassword(UUID id, PasswordRequest passwordRequest){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String newPassword = encoder.encode(passwordRequest.getNewPassword());
+        User user = this.readByIdEntity(id);
+
+        if(!encoder.matches(passwordRequest.getOldPassword(), user.getPassword())){
+            throw new PasswordException("The old password is incorrect!");
+        }
+        if(encoder.matches(passwordRequest.getOldPassword(), newPassword)){
+            throw new PasswordException("the new password cannot be the same as the old one!");
+        }
+
+        user.setPassword(newPassword);
+        return userDtoMapper.entityToResponse(userRepository.save(user));
+    }
 //    public User readByEmail(String email) {
 //        return userRepository.findByEmail(email);
 //    }

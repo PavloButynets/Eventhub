@@ -62,7 +62,7 @@ const Map = ({ center }) => {
         } catch (error) {
           console.error("Error getting events data:", error);
         }
-      } else if (searchParams.get("show_filter")) {
+      } else if (searchParams.get("filter")) {
         try {
           const data = await getFilteredEvents();
           setEvents(data);

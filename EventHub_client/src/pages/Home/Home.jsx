@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useOutlet } from "react-router-dom";
 import AuthContext from "../../context/authProvider";
 import { Link, Outlet, useParams } from "react-router-dom";
 import { Map } from "./Map/Map";
@@ -25,7 +26,7 @@ const defaultCenter = {
 const libraries = ["places"];
 const Home = () => {
   const { auth, setAuth } = useAuth();
-
+  const outlet = useOutlet();
   const { ownerId, eventId } = useParams();
 
   const { isLoaded } = useJsApiLoader({
@@ -50,6 +51,7 @@ const Home = () => {
           {ownerId && eventId && (
             <EventInfoSideBar ownerId={ownerId} eventId={eventId} />
           )}
+          {outlet}
         </>
       ) : (
         <h1>Loading</h1>

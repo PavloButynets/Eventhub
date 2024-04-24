@@ -2,11 +2,10 @@ package org.eventhub.main.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eventhub.main.config.JwtService;
-import org.eventhub.main.dto.EventSearchResponse;
-import org.eventhub.main.dto.OperationResponse;
-import org.eventhub.main.dto.UserRequest;
-import org.eventhub.main.dto.UserResponse;
+import org.eventhub.main.dto.*;
+import org.eventhub.main.exception.PasswordException;
 import org.eventhub.main.exception.ResponseStatusException;
+import org.eventhub.main.model.User;
 import org.eventhub.main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -41,7 +41,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<UserResponse> create(@Validated @RequestBody UserRequest userRequest, BindingResult result) {
+    public ResponseEntity<UserResponse> create(@Validated @RequestBody UserRequestCreate userRequest, BindingResult result) {
         if (result.hasErrors()) {
             throw new ResponseStatusException("Invalid Input");
         }
@@ -60,6 +60,21 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/{username}/profile")
+    public ResponseEntity<UserResponse> getByUsername(@PathVariable("username") String username){
+        UserResponse response = userService.readByUsername(username);
+        log.info("**/get by username user = " + response.getId());
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/username")
+    public ResponseEntity<String> getUsernameFromToken(@RequestHeader("Authorization") String token){
+        String username = userService.getUsername(jwtService.getId(token));
+        log.info("**/get username from token = " + username);
+        return new ResponseEntity<>(username, HttpStatus.OK);
+    }
+
     @GetMapping("/user-info")
     public ResponseEntity<UserResponse> getUserInfo(@RequestHeader("Authorization") String token){
         UserResponse response = userService.readById(jwtService.getId(token));
@@ -68,15 +83,17 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping("/{user_id}")
-    public ResponseEntity<UserResponse> update(@PathVariable("user_id") UUID userId,
-                                               @Validated @RequestBody UserRequest userRequest, BindingResult result) {
+
+    @PutMapping
+    public ResponseEntity<UserResponse> update(@RequestHeader("Authorization") String token,
+                                                @Validated @RequestBody UserRequestUpdate userRequest,
+                                               BindingResult result) {
         if (result.hasErrors()) {
-            throw new ResponseStatusException("Invalid Input");
+            throw new ResponseStatusException(Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
         }
 
-        UserResponse userResponse = userService.update(userRequest);
-        log.info("**/updated user(id) = " + userId);
+        UserResponse userResponse = userService.update(jwtService.getId(token), userRequest);
+        log.info("**/updated user(id) = " + userResponse.getId());
 
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
@@ -87,6 +104,19 @@ public class UserController {
         log.info("**/deleted user(id) = " + userId);
         userService.delete(userId);
         return new ResponseEntity<>(new OperationResponse("User " + name + " deleted successfully"), HttpStatus.OK);
+    }
+    @PutMapping("/change-password")
+    public ResponseEntity<UserResponse> changePassword( @RequestHeader("Authorization") String token,
+                                                        @Validated @RequestBody PasswordRequest passwordRequest,
+                                                        BindingResult result){
+        if (result.hasErrors()) {
+            throw new PasswordException(Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
+        }
+
+        UserResponse userResponse = userService.changePassword(jwtService.getId(token), passwordRequest);
+        log.info("**/updated user(id) password = ");
+
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 }
 

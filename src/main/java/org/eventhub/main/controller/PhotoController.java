@@ -1,6 +1,7 @@
 package org.eventhub.main.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.eventhub.main.config.JwtService;
 import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.ResponseStatusException;
 import org.eventhub.main.service.PhotoService;
@@ -21,10 +22,12 @@ import java.util.UUID;
 @RequestMapping
 public class PhotoController {
     private final PhotoService photoService;
-
+    private final JwtService jwtService;
     @Autowired
-    public PhotoController(PhotoService photoService) {
+    public PhotoController(PhotoService photoService, JwtService jwtService) {
+
         this.photoService = photoService;
+        this.jwtService = jwtService;
     }
 
     @GetMapping("/photos")
@@ -73,19 +76,19 @@ public class PhotoController {
         return new ResponseEntity<>(this.photoService.uploadEventPhotos(eventId, files), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/users/{user_id}/photos/{photo_id}")
-    public ResponseEntity<OperationResponse> deleteProfileImage(@PathVariable("photo_id") UUID photoId,
-                                                                @PathVariable("user_id") UUID userId) {
+    @DeleteMapping("/users/photos/{photo_id}")
+    public ResponseEntity<OperationResponse> deleteProfileImage(@RequestHeader("Authorization") String token,
+                                                                @PathVariable("photo_id") UUID photoId) {
         log.info("**/deleted user(id) = " + photoId.toString());
-        photoService.deleteProfileImage(userId, photoId);
+        photoService.deleteProfileImage(jwtService.getId(token), photoId);
         return new ResponseEntity<>(new OperationResponse("Photo id:" + photoId + " deleted successfully"), HttpStatus.OK);
     }
 
-    @PostMapping("/users/{user_id}/photos/upload")
-    public ResponseEntity<PhotoResponse> uploadProfileImage(@PathVariable(name = "user_id") UUID userId,
-                                                                 @RequestPart("file") MultipartFile file){
+    @PostMapping("/users/photos/upload")
+    public ResponseEntity<List<PhotoResponse>> uploadProfileImage(@RequestHeader("Authorization") String token,
+                                                                 @RequestPart("files") List<MultipartFile> files){
         log.info("Uploading photos");
-        return new ResponseEntity<>(this.photoService.uploadProfilePhotos(userId, file), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.photoService.uploadProfilePhotos(jwtService.getId(token), files), HttpStatus.CREATED);
     }
 
 }

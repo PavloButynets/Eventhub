@@ -127,23 +127,27 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public PhotoResponse uploadProfilePhotos(UUID userId, MultipartFile file) {
-        try (ByteArrayInputStream dataStream = new ByteArrayInputStream(file.getBytes())) {
-            Photo photo = new Photo();
-            photo.setId(UUID.randomUUID());
+    public List<PhotoResponse> uploadProfilePhotos(UUID userId, List<MultipartFile> files) {
+        List<PhotoResponse> responses = new ArrayList<>();
+        for(MultipartFile file: files) {
+            try (ByteArrayInputStream dataStream = new ByteArrayInputStream(file.getBytes())) {
+                Photo photo = new Photo();
+                photo.setId(UUID.randomUUID());
 
-            String fileExtension = StringUtils.substringAfterLast(file.getOriginalFilename(), ".");
-            BlockBlobClient blockBlobClient = this.blobContainerClientUser.getBlobClient("user" + photo.getId().toString() + "." + fileExtension).getBlockBlobClient();
-            blockBlobClient.upload(dataStream, file.getSize());
+                String fileExtension = StringUtils.substringAfterLast(file.getOriginalFilename(), ".");
+                BlockBlobClient blockBlobClient = this.blobContainerClientUser.getBlobClient("user" + photo.getId().toString() + "." + fileExtension).getBlockBlobClient();
+                blockBlobClient.upload(dataStream, file.getSize());
 
-            photo.setPhotoName(blockBlobClient.getBlobName());
-            photo.setPhotoUrl(blockBlobClient.getBlobUrl());
+                photo.setPhotoName(blockBlobClient.getBlobName());
+                photo.setPhotoUrl(blockBlobClient.getBlobUrl());
 
-            userService.addImage(userId, photo);
+                userService.addImage(userId, photo);
 
-            return photoMapper.entityToResponse(photoRepository.save(photo));
-        } catch (IOException ex) {
-            throw new ResponseStatusException("Failed to download images");
+                responses.add(photoMapper.entityToResponse(photoRepository.save(photo)));
+            } catch (IOException ex) {
+                throw new ResponseStatusException("Failed to download images");
+            }
         }
+        return responses;
     }
 }

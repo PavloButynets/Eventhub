@@ -51,6 +51,7 @@ public class SecurityConfig {
                         "/authentication/**",
                         "/users/{owner_id}/events/{event_id}",
                         "/users/{user_id}",
+                        "/users/{username}/profile",
                         "/categories/**",
                         "/search",
                         "/events/filter",

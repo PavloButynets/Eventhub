@@ -17,5 +17,5 @@ public interface PhotoService {
     void deleteProfileImage(UUID userId, UUID imageId);
     List<PhotoResponse> getAll();
     List<PhotoResponse> uploadEventPhotos(UUID eventId, List<MultipartFile> files);
-    PhotoResponse uploadProfilePhotos(UUID userId, MultipartFile file);
+    List<PhotoResponse> uploadProfilePhotos(UUID userId, List<MultipartFile> files);
 }

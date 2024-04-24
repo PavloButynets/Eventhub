@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { getUserInfo } from "../../api/getUserInfo";
+import { useLocation } from "react-router-dom";
 import styles from "./ProfileInfo.module.css";
 
 const ProfileInfo = ({ onProfileClick }) => {
@@ -10,6 +11,8 @@ const ProfileInfo = ({ onProfileClick }) => {
     email: "",
     photo_url: "",
   });
+
+  const location = useLocation();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -26,8 +29,10 @@ const ProfileInfo = ({ onProfileClick }) => {
       }
     };
 
-    fetchUser();
-  }, []);
+    if (location.pathname === "/") {
+      fetchUser();
+    }
+  }, [location.pathname]);
 
   return (
     <div className={styles.profileInfoContainer}>

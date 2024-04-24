@@ -28,13 +28,14 @@ public class UserResponse {
     private String city;
     private LocalDate birthDate;
     private Gender gender;
+    private boolean showEmail;
     @NotNull
     List<PhotoResponse> photoResponses;
     public UserResponse(){
 
     }
 
-    public UserResponse(UUID id, String firstName, String lastName, String username, String email, String description, LocalDateTime createdAt, String city, LocalDate birthDate, Gender gender, List<PhotoResponse> photoResponses) {
+    public UserResponse(UUID id, String firstName, String lastName, String username, String email, String description, LocalDateTime createdAt, String city, LocalDate birthDate, Gender gender, boolean showEmail, List<PhotoResponse> photoResponses) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,6 +46,7 @@ public class UserResponse {
         this.city = city;
         this.birthDate = birthDate;
         this.gender = gender;
+        this.showEmail = showEmail;
         this.photoResponses = photoResponses;
     }
 
