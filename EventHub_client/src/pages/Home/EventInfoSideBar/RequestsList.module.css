@@ -6,13 +6,13 @@
 
 /* Main container */
 
-.participants-list-container {
+.requests-list-container {
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(5px);
   width: 100%;
   height: 100%;
   padding: 10px;
-  z-index: 991;
+  z-index: 992;
   position: absolute;
   overflow: auto;
   display: flex;
@@ -32,13 +32,27 @@
 }
 
 main {
-  padding: 20px;
+  padding: 10px;
   overflow: auto;
 }
 
-/* Participants list */
+.no-requests-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--third-color);
+  width: 15vw;
+  margin-top: 5vh;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-.participants-container {
+/* List */
+
+.requests-list {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,7 +60,7 @@ main {
   margin-top: 5%;
 }
 
-.participant-container {
+.requested-participant-container {
   width: 100%;
   height: 72px;
   margin-bottom: 2%;
@@ -57,17 +71,17 @@ main {
   position: relative;
 }
 
-.participant-container:hover {
+.requested-participant-container:hover {
   cursor: pointer;
 }
 
-.participant-photo {
+.requested-participant-photo {
   width: 72px;
   height: 100%;
   border-radius: 50%;
 }
 
-.participant-info-container {
+.requested-participant-info-container {
   display: flex;
   position: relative;
   flex-direction: column;
@@ -100,6 +114,21 @@ main {
   margin: 0;
 }
 
+.accept-requested-participant-container {
+  position: absolute;
+  right: 13%;
+  width: 3vh;
+  height: 3vh;
+}
+
+.delete-requested-participant-container {
+  position: absolute;
+  right: 1.5%;
+  width: 3vh;
+  height: 3vh;
+}
+
+/* Lower container */
 .lower-container {
   display: flex;
   justify-content: space-between;
@@ -108,60 +137,23 @@ main {
   height: 3.9vh;
 }
 
-.requests-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: var(--md-size);
-  width: 6.5vw;
-  height: 3.5vh;
-  position: relative;
-}
-
-.requests-count-container {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.no-participants-msg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--third-color);
-  width: 15vw;
-  margin-top: 5vh;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.delete-participant-container {
-  position: absolute;
-  right: 1.5%;
-  width: 3vh;
-  height: 3vh;
-}
-
 @media (width < 1280px) {
-  .participants-list-container {
+  .requests-list-container {
     font-size: var(--xxs-size);
   }
 
-  .participant-container {
+  .requested-participant-container {
     height: 60px;
   }
 
-  .participant-photo {
+  .requested-participant-photo {
     width: 60px;
     height: 100%;
   }
 }
 
 @media (width >= 1280px) and (width < 1700px) {
-  .participants-list-container {
+  .requests-list-container {
     font-size: var(--xxs-size);
     padding: 8px;
   }
@@ -170,17 +162,13 @@ main {
     padding: 10px;
   }
 
-  .participant-container {
+  .requested-participant-container {
     height: 53px;
   }
 
-  .participant-photo {
+  .requested-participant-photo {
     width: 53px;
     height: 100%;
-  }
-
-  .requests-btn {
-    font-size: var(--xxs-size);
   }
 
   .username {

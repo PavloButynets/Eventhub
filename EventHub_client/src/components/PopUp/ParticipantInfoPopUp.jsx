@@ -6,7 +6,11 @@ import { CiCalendar } from "react-icons/ci";
 import PrimaryButton from "../Buttons/PrimaryButton/PrimaryButton";
 
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+
+const getFormattedDate = (dateTimeString) => {
+  const date = new Date(dateTimeString);
+  return date.toLocaleDateString("default");
+};
 
 const ParticipantInfoPopUp = ({ participant, onMouseEnter, onMouseLeave }) => {
   return (
@@ -35,10 +39,7 @@ const ParticipantInfoPopUp = ({ participant, onMouseEnter, onMouseLeave }) => {
           <div className={styles["full-name"]}>
             {`${participant.first_name} ${participant.last_name}`}
           </div>
-          <div className={styles["email"]}>
-            <MdOutlineEmail />
-            {participant.email}
-          </div>
+          <div className={styles["email"]}>{`@${participant.username}`}</div>
         </div>
       </div>
       <div className={styles["info-container"]}>
@@ -48,25 +49,23 @@ const ParticipantInfoPopUp = ({ participant, onMouseEnter, onMouseLeave }) => {
             <SlLocationPin size="1.4rem" />
             {participant.city}
           </div>
-          <div className={styles["birth-date"]}>
-            <CiCalendar size="1.4rem" />
-            {`${participant.birth_date.slice(
-              8,
-              10
-            )}.${participant.birth_date.slice(
-              5,
-              7
-            )}.${participant.birth_date.slice(0, 4)}`}
-          </div>
+          {participant.birth_date && (
+            <div className={styles["birth-date"]}>
+              <CiCalendar size="1.4rem" />
+              {getFormattedDate(participant.birth_date)}
+            </div>
+          )}
         </div>
         <hr />
       </div>
-      <div className={styles["description"]}>{participant.description}</div>
-      <Link style={{ all: "unset" }}>
-        <PrimaryButton className={styles["show-more-btn"]}>
-          Show more
-        </PrimaryButton>
-      </Link>
+      {participant.description && (
+        <div className={styles["description"]}>{participant.description}</div>
+      )}
+
+      <PrimaryButton className={styles["show-more-btn"]}>
+        Show more
+      </PrimaryButton>
+
       <div className={styles["transparent-div"]}>&nbsp;</div>
     </motion.div>
   );

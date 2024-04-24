@@ -22,7 +22,10 @@ const MyEvents = () => {
         <RoundButton onClick={handleButtonClose} icon={<CalendarOutlined />} />
       </div>
       {searchParams.get("my_events") && (
-        <EventList handleButtonClose={handleButtonClose} />
+        <EventList
+          handleButtonClose={handleButtonClose}
+          searchParams={searchParams}
+        />
       )}
     </div>
   );

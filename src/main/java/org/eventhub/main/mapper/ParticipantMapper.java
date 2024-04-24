@@ -50,7 +50,7 @@ public class ParticipantMapper {
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .participantPhoto(user.getPhotoResponses().get(0))
-                .email(user.getEmail())
+                .username(user.getUsername())
                 .createdAt(participant.getCreatedAt())
                 .build();
     }

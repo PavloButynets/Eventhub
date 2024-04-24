@@ -1,3 +1,4 @@
+import { message } from "antd";
 import axios from "./axios";
 
 export const getFullEventById = async (userId, eventId) => {
@@ -5,6 +6,6 @@ export const getFullEventById = async (userId, eventId) => {
     const response = await axios.get(`/users/${userId}/events/${eventId}`);
     return response.data;
   } catch (error) {
-    console.log("Error getting event with Id: ", error);
+    console.error(error);
   }
 };

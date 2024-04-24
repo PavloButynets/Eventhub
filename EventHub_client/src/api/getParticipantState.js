@@ -1,12 +1,21 @@
 import axios from "./axios";
 
-export const getParticipantState = async (userId, eventId) => {
+export const getParticipantState = async (eventId) => {
   try {
-    const response = await axios.get(
-      `events/${eventId}/participants/user_state/${userId}`
+    const accessToken = localStorage.getItem("token");
+    const authAxios = axios.create({
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "content-type",
+        "Access-Control-Allow-Credentials": "true",
+      },
+    });
+    const response = await authAxios.get(
+      `events/${eventId}/participants/user_state`
     );
     return response.data;
   } catch (error) {
-    console.log("Error getting participant state:", error);
+    console.error(error);
   }
 };

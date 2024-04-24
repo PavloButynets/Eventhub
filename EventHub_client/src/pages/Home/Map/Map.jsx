@@ -84,7 +84,10 @@ const Map = ({ center }) => {
   }, [searchParams]);
   const onMarkerClick = (event) => {
     setSelectedEvent(event);
-    navigate(`/event/${event.owner_id}/${event.id}`);
+    navigate({
+      pathname: `/event/${event.owner_id}/${event.id}`,
+      search: `?${searchParams.toString()}`,
+    });
   };
 
   const onMapClick = () => {

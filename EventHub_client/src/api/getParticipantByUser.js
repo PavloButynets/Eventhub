@@ -1,6 +1,7 @@
+import { message } from "antd";
 import axios from "./axios";
 
-export const addParticipant = async (eventId, participantId) => {
+export const getParticipantByUser = async (eventId) => {
   try {
     const accessToken = localStorage.getItem("token");
     const authAxios = axios.create({
@@ -11,10 +12,8 @@ export const addParticipant = async (eventId, participantId) => {
         "Access-Control-Allow-Credentials": "true",
       },
     });
-    const response = await authAxios.post(
-      `events/${eventId}/participants/add/${participantId}`
-    );
 
+    const response = await authAxios.get(`events/${eventId}/participants/user`);
     return response.data;
   } catch (error) {
     console.error(error);

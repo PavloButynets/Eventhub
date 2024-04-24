@@ -1,0 +1,18 @@
+.spots {
+  font-family: var(--primary-font-family), sans-serif;
+  font-style: normal;
+  color: var(--third-color);
+  font-size: 20px;
+}
+
+@media (width < 1280px) {
+  .spots {
+    font-size: var(--sm-size);
+  }
+}
+
+@media (width >= 1280px) and (width < 1700px) {
+  .spots {
+    font-size: var(--xs-size);
+  }
+}

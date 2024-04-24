@@ -1,0 +1,13 @@
+.requests-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #ff3040;
+  color: #fff;
+  font-size: 10px;
+  border: 1px solid #fff;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}

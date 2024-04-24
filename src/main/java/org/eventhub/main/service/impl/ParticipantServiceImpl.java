@@ -3,6 +3,7 @@ package org.eventhub.main.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.ParticipantRequest;
 import org.eventhub.main.dto.ParticipantResponse;
+import org.eventhub.main.dto.ParticipantStateResponse;
 import org.eventhub.main.dto.UserParticipantResponse;
 import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.NullDtoReferenceException;
@@ -151,19 +152,30 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public List<ParticipantResponse> getAllRequestsByEventId(UUID eventId) {
+    public List<UserParticipantResponse> getAllUserRequestsByEventId(UUID eventId) {
         Event event = eventService.readByIdEntity(eventId);
         return event.getParticipants()
                 .stream()
                 .filter(participant -> !participant.isApproved())
-                .map(participantMapper::entityToResponse)
+                .map(participantMapper::entityToUserParticipantResponse)
                 .collect(Collectors.toList());
     }
+
     @Override
-    public ParticipantState getParticipantState(UUID userId, UUID eventId) {
+    public ParticipantStateResponse getParticipantState(UUID userId, UUID eventId) {
+        Event event = eventService.readByIdEntity(eventId);
+
+        ParticipantState state = getState(userId, eventId);
+        boolean isOwner = (userId.equals(event.getOwner().getId()));
+
+        return new ParticipantStateResponse(state, isOwner);
+
+    }
+    @Override
+    public ParticipantState getState(UUID userId, UUID eventId) {
         if (getAllJoinedByEventId(eventId).stream().anyMatch(participant -> participant.getUserId().equals(userId))) {
             return ParticipantState.JOINED;
-        } else if (getAllRequestsByEventId(eventId).stream().anyMatch(participant -> participant.getUserId().equals(userId))) {
+        } else if (getAllUserRequestsByEventId(eventId).stream().anyMatch(participant -> participant.getUserId().equals(userId))) {
             return ParticipantState.REQUESTED;
         } else {
             return ParticipantState.NONE;

@@ -18,15 +18,15 @@ public class UserParticipantResponse {
     private PhotoResponse participantPhoto;
     private String firstName;
     private String lastName;
-    private String email;
+    private String username;
 
-    public UserParticipantResponse(UUID id, UUID userId, LocalDateTime createdAt, PhotoResponse participantPhoto, String firstName, String lastName, String email) {
+    public UserParticipantResponse(UUID id, UUID userId, LocalDateTime createdAt, PhotoResponse participantPhoto, String firstName, String lastName, String username) {
         this.id = id;
         this.userId = userId;
         this.createdAt = createdAt;
         this.participantPhoto = participantPhoto;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.username = username;
     }
 }

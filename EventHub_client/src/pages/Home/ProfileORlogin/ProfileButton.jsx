@@ -5,11 +5,13 @@ import useAuth from "../../../hooks/useAuth";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import ProfileInfo from "../../../components/ProfileInfo/ProfileInfo";
 import styles from "./Buttons.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const MenuButton = () => {
   const { setAuth } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleMenuClick = (e) => {
     if (e.key === "profile") {
@@ -34,7 +36,11 @@ const MenuButton = () => {
               Profile
             </Menu.Item>
           </Link>
-          <Menu.Item icon={<LogoutOutlined />} key="logout">
+          <Menu.Item
+            onClick={() => navigate("/")}
+            icon={<LogoutOutlined />}
+            key="logout"
+          >
             Log out
           </Menu.Item>
         </Menu>

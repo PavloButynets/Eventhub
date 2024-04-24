@@ -3,12 +3,9 @@ package org.eventhub.main.service;
 import org.eventhub.main.dto.*;
 import org.eventhub.main.model.Participant;
 import org.eventhub.main.model.ParticipantState;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 public interface ParticipantService {
     ParticipantResponse create(ParticipantRequest participantRequest);
@@ -23,8 +20,9 @@ public interface ParticipantService {
 
     List<ParticipantResponse> getAllByEventId(UUID eventId);
     List<ParticipantResponse> getAllJoinedByEventId(UUID eventId);
-    List<ParticipantResponse> getAllRequestsByEventId(UUID eventId);
+    List<UserParticipantResponse> getAllUserRequestsByEventId(UUID eventId);
     List<UserParticipantResponse> getUserParticipantsByEventId(UUID eventId);
 
-    ParticipantState getParticipantState(UUID eventId, UUID userId);
+    ParticipantStateResponse getParticipantState(UUID eventId, UUID userId);
+    ParticipantState getState(UUID eventId, UUID userId);
 }
