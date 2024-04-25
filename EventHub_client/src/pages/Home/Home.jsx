@@ -16,6 +16,7 @@ import EventFilter from "./Filter/Filter";
 import MyEvents from "./MyEvents/MyEvents";
 import EventInfoSideBar from "./EventInfoSideBar/EventInfoSideBar";
 import EditEvent from "./EditEvent/EditEvent";
+import useLogin from "../../hooks/useLogin";
 
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
@@ -25,12 +26,8 @@ const defaultCenter = {
 };
 const libraries = ["places"];
 const Home = () => {
-  const { auth, setAuth } = useAuth();
+  const authenticated = useLogin();
   const location = useLocation();
-
-  useEffect(()=>{
-    setAuth({token:localStorage.getItem("token")});
-  },[auth]);
 
   const outlet = useOutlet();
   const { ownerId, eventId } = useParams();
@@ -47,7 +44,7 @@ const Home = () => {
         <>
           <Map center={defaultCenter} />
 
-          {auth.token ? <MenuButton /> : <LoginRegisterButton />}
+          {authenticated ? <MenuButton /> : <LoginRegisterButton />}
 
           <SearchEvents />
           <CreateEvent />
