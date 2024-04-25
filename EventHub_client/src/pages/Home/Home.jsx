@@ -30,7 +30,7 @@ const Home = () => {
 
   useEffect(()=>{
     setAuth({token:localStorage.getItem("token")});
-  },[location.pathname]);
+  },[auth]);
 
   const outlet = useOutlet();
   const { ownerId, eventId } = useParams();
