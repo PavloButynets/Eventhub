@@ -53,6 +53,7 @@ const Home = () => {
           <CreateEvent />
           <EventFilter />
           <MyEvents />
+          {location.pathname.includes("/edit") && <EditEvent />}
 
           {ownerId && eventId && (
             <EventInfoSideBar ownerId={ownerId} eventId={eventId} />
