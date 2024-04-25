@@ -1,7 +1,18 @@
+.outerContainer{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1000;
+}
+
 .container {
     display: flex;
+    flex-direction: column;
     align-items: center; /* Вирівнювання елементів по центру по вертикалі */
-    justify-content: center; /* Вирівнювання елементів по центру по горизонталі */
+   
     position: absolute;
     top: 50%;
     left: 50%;
@@ -40,4 +51,10 @@
     right: 25%;
     background-color:rgb(7, 104, 159)
   }
+
+  .Buttons{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
 

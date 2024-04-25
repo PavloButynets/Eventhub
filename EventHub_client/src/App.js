@@ -1,5 +1,5 @@
-import SignUp from "./pages/SignUp/SignUp";
-import LogIn from "./pages/LogIn/LogIn";
+import SignUp from "./pages/Home/SignUp/SignUp.jsx";
+import LogIn from "./pages/Home/LogIn/LogIn.jsx";
 import { Home } from "./pages/Home/Home";
 import ChangePassword from "./pages/Home/ChangePassword/ChangePassword";
 import "./App.css";
@@ -23,9 +23,9 @@ function App() {
             />
             <Route path="/profile/:username" element={<UserProfile />} />
             <Route path="/profile/edit" element={<EditUserProfile />} />
+            <Route path="/register" element={<SignUp />} />
+            <Route path="/login" element={<LogIn />} />
           </Route>
-          <Route path="/register" element={<SignUp />} />
-          <Route path="/login" element={<LogIn />} />
         </Routes>
       </div>
     </Router>

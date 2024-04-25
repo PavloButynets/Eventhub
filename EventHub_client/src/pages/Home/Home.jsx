@@ -13,7 +13,6 @@ import LoginRegisterButton from "./ProfileORlogin/LoginRegisterButton";
 import SearchEvents from "./Search/Search";
 import CreateEvent from "./CreateEvent/CreateEvent";
 import EventFilter from "./Filter/Filter";
-import FilteredEvents from "./Filter/FilteredEvents";
 import MyEvents from "./MyEvents/MyEvents";
 import EventInfoSideBar from "./EventInfoSideBar/EventInfoSideBar";
 import EditEvent from "./EditEvent/EditEvent";
@@ -28,6 +27,10 @@ const libraries = ["places"];
 const Home = () => {
   const { auth, setAuth } = useAuth();
   const location = useLocation();
+
+  useEffect(()=>{
+    setAuth({token:localStorage.getItem("token")});
+  },[location.pathname]);
 
   const outlet = useOutlet();
   const { ownerId, eventId } = useParams();
@@ -50,7 +53,6 @@ const Home = () => {
           <CreateEvent />
           <EventFilter />
           <MyEvents />
-          {location.pathname.includes("/edit") && <EditEvent />}
 
           {ownerId && eventId && (
             <EventInfoSideBar ownerId={ownerId} eventId={eventId} />

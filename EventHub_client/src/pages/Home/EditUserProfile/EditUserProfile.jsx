@@ -132,7 +132,7 @@ const EditUserProfile = () => {
         email: response.email,
         description: response.description,
         city: response.city,
-        birth_date: response.birth_date && dayjs(response.birth_date),
+        birth_date: (response.birth_date) ? dayjs(response.birth_date) : null,
         gender: response.gender,
         show_email: response.show_email,
       });
@@ -209,7 +209,7 @@ const EditUserProfile = () => {
       setSubmitChanges(true);
       await sendDataWithoutPhotos({
         ...user,
-        birth_date: user.birth_date.add(1, "day"),
+        birth_date: user.birth_date && user.birth_date.add(1, "day"),
       });
       await deleteUserPhotos(toDeletePhotos);
       await sendPhotosToServer(uploadedPhotos);
@@ -353,7 +353,7 @@ const EditUserProfile = () => {
                     className={styles.Param}
                     format={"YYYY-MM-DD"}
                     name="birth_date"
-                    value={user.birth_date ? user.birth_date : null}
+                    value={user.birth_date}
                     onChange={(value) =>
                       setUser({ ...user, birth_date: value })
                     }

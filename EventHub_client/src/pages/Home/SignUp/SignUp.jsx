@@ -1,10 +1,11 @@
 import styles from "./SignUp.module.css";
 import React, { useState } from "react";
-import axios from "../../api/axios";
+import axios from "../../../api/axios";
 import { useNavigate, Link } from "react-router-dom";
 import LogIn from "../LogIn/LogIn";
 import { checkEmail, checkName, checkPassword } from "./validation";
-import useAuth from "../../hooks/useAuth";
+import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
+import useAuth from "../../../hooks/useAuth";
 
 import { Button, Checkbox, Col, Form, Input, Row, Select, message } from "antd";
 
@@ -125,8 +126,11 @@ const SignUp = () => {
   };
 
   return (
-    <div className={styles.RegisterPage}>
+    <div className={styles.outerContainer}>
       <div className={styles.container}>
+        <div className={styles.Buttons}>
+          <CloseWindowButton onClick={() => navigate("/")} />
+        </div>
         <Form
           className={styles.SignUpForm}
           {...formItemLayout}
