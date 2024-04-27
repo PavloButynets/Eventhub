@@ -57,15 +57,6 @@ export const lightDefault = [
 
 export const light =[
     {
-        "featureType": "administrative.land_parcel",
-        "elementType": "labels.icon",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
         "featureType": "landscape.natural.landcover",
         "elementType": "geometry.fill",
         "stylers": [
@@ -73,7 +64,7 @@ export const light =[
                 "visibility": "on"
             },
             {
-                "color": "#a6c5a1"
+                "color": "#c2c6d1"
             }
         ]
     },
@@ -115,16 +106,10 @@ export const light =[
         "elementType": "geometry.fill",
         "stylers": [
             {
-                "color": "#cfd5b5"
-            }
-        ]
-    },
-    {
-        "featureType": "road",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
                 "visibility": "on"
+            },
+            {
+                "color": "#cfd5b5"
             }
         ]
     },
@@ -151,6 +136,9 @@ export const light =[
         "elementType": "geometry.stroke",
         "stylers": [
             {
+                "visibility": "on"
+            },
+            {
                 "color": "#fffefe"
             }
         ]
@@ -169,15 +157,6 @@ export const light =[
     },
     {
         "featureType": "transit",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "transit",
         "elementType": "labels.icon",
         "stylers": [
             {
@@ -190,14 +169,14 @@ export const light =[
         "elementType": "geometry.fill",
         "stylers": [
             {
+                "visibility": "on"
+            },
+            {
                 "color": "#96a1cb"
             }
         ]
     }
 ]
-
-
-
 
 
 
