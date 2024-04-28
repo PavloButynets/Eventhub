@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "../../../api/axios";
 import { useNavigate, Link } from "react-router-dom";
 import LogIn from "../LogIn/LogIn";
+import { PlacesAutocomplete } from "../../../components/PlaceAutocomplete/PlaceAutocomplete";
 import { checkEmail, checkName, checkPassword } from "./validation";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
 import useAuth from "../../../hooks/useAuth";
@@ -289,13 +290,12 @@ const SignUp = () => {
                 label="City"
                 rules={[
                   {
-                    required: true,
                     message: "Please select your City",
                     whitespace: true,
                   },
                 ]}
               >
-                <Input onChange={(e) => setCity(e.target.value)} />
+                <PlacesAutocomplete onSelectLocation={(value) => setCity(value)} initialValue={""}/>
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
