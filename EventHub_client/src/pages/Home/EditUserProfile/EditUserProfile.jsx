@@ -13,19 +13,20 @@ import {
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
 import CancelButton from "../../../components/Buttons/CancelButton/CancelButton";
 import ApplyChangesButton from "../../../components/Buttons/ApplyChangesButton/ApplyChangesButton";
-import {
-  CameraOutlined,
-  DeleteOutlined,
-  LoadingOutlined,
-} from "@ant-design/icons";
+import { CameraOutlined, DeleteOutlined } from "@ant-design/icons";
 import { sendDataWithoutPhotos } from "../../../api/updateUserInfo";
 import { deleteUserPhotos } from "../../../api/updateUserInfo";
 import { sendPhotosToServer } from "../../../api/updateUserInfo";
 import { getUserInfo } from "../../../api/getUserInfo";
 import dayjs from "dayjs";
 import styles from "./EditUserProfile.module.css";
+import ProcessingEffect from "../../../components/ProcessingEffect/ProcessingEffect";
 
-const PlacesAutocomplete = ({ onSelectLocation, initialValue, cancelChanges }) => {
+const PlacesAutocomplete = ({
+  onSelectLocation,
+  initialValue,
+  cancelChanges,
+}) => {
   const {
     ready,
     value,
@@ -36,7 +37,7 @@ const PlacesAutocomplete = ({ onSelectLocation, initialValue, cancelChanges }) =
     requestOptions: {},
     debounce: 300,
   });
-  
+
   const handleInput = (value) => {
     setValue(value);
   };
@@ -48,28 +49,30 @@ const PlacesAutocomplete = ({ onSelectLocation, initialValue, cancelChanges }) =
   const handleSelect = (value) => {
     setValue(value);
     clearSuggestions();
-    getGeocode({ address: value }).then((results) => {
-      const selectedPlace = results[0];
-      const country = selectedPlace.address_components.find((component) =>
-        component.types.includes("country")
-      ).long_name;
-      const region = selectedPlace.address_components.find(
-        (component) =>
-          component.types.includes("administrative_area_level_1") ||
-          component.types.includes("administrative_area_level_2")
-      ).long_name;
-      const city = selectedPlace.address_components.find(
-        (component) =>
-          component.types.includes("locality") ||
-          component.types.includes("sublocality") ||
-          component.types.includes("postal_town")
-      ).long_name;
+    getGeocode({ address: value })
+      .then((results) => {
+        const selectedPlace = results[0];
+        const country = selectedPlace.address_components.find((component) =>
+          component.types.includes("country")
+        ).long_name;
+        const region = selectedPlace.address_components.find(
+          (component) =>
+            component.types.includes("administrative_area_level_1") ||
+            component.types.includes("administrative_area_level_2")
+        ).long_name;
+        const city = selectedPlace.address_components.find(
+          (component) =>
+            component.types.includes("locality") ||
+            component.types.includes("sublocality") ||
+            component.types.includes("postal_town")
+        ).long_name;
 
-      onSelectLocation(`${city}, ${region}, ${country}`);
-    }).catch((error) => {
-      message.info("Select another location");
-      handleInput(initialValue);
-    });;
+        onSelectLocation(`${city}, ${region}, ${country}`);
+      })
+      .catch((error) => {
+        message.info("Select another location");
+        handleInput(initialValue);
+      });
   };
 
   const options = data.map((suggestion) => ({
@@ -201,7 +204,7 @@ const EditUserProfile = () => {
       city: value,
     });
   };
- 
+
   const applyChanges = async (event) => {
     event.preventDefault();
 
@@ -237,18 +240,10 @@ const EditUserProfile = () => {
   return (
     <div className={styles.OuterContainer}>
       {!loading ? (
-        <LoadingOutlined
-          style={{ color: "white", fontSize: "72px", fontWeight: "1000" }}
-        />
+        <ProcessingEffect />
       ) : (
         <>
-          {submitChanges && (
-            <div className={styles.SubmitChanges}>
-              <LoadingOutlined
-                style={{ color: "white", fontSize: "72px", fontWeight: "1000" }}
-              />
-            </div>
-          )}
+          {submitChanges && <ProcessingEffect />}
           <form className={styles.InnerContainer}>
             <div className={styles.Header}>
               <p className={styles.Heading}>Edit account information</p>

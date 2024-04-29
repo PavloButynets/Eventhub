@@ -3,7 +3,9 @@ package org.eventhub.main.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.eventhub.main.config.JwtService;
 import org.eventhub.main.dto.*;
+import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.ResponseStatusException;
+import org.eventhub.main.model.Event;
 import org.eventhub.main.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -62,18 +64,18 @@ public class PhotoController {
     }
 
     @DeleteMapping("/events/{event_id}/photos/{photo_id}")
-    public ResponseEntity<OperationResponse> deleteEventImage(@PathVariable("photo_id") UUID photoId,
+    public ResponseEntity<OperationResponse> deleteEventImage(@RequestHeader (name="Authorization") String token, @PathVariable("photo_id") UUID photoId,
                                                               @PathVariable("event_id") UUID evenId) {
         log.info("**/deleted user(id) = " + photoId.toString());
-        photoService.deleteEventImage(evenId,photoId);
+        photoService.deleteEventImage(evenId, photoId, token);
         return new ResponseEntity<>(new OperationResponse("Photo id:" + photoId + " deleted successfully"), HttpStatus.OK);
     }
 
     @PostMapping("/events/{event_id}/photos/upload")
-    public ResponseEntity<List<PhotoResponse>> uploadEventImages(@PathVariable(name = "event_id") UUID eventId,
+    public ResponseEntity<List<PhotoResponse>> uploadEventImages(@RequestHeader (name="Authorization") String token, @PathVariable(name = "event_id") UUID eventId,
                                                             @RequestPart("files") List<MultipartFile> files){
         log.info("Uploading photos");
-        return new ResponseEntity<>(this.photoService.uploadEventPhotos(eventId, files), HttpStatus.CREATED);
+        return new ResponseEntity<>(this.photoService.uploadEventPhotos(eventId, files, token), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/users/photos/{photo_id}")
@@ -90,6 +92,8 @@ public class PhotoController {
         log.info("Uploading photos");
         return new ResponseEntity<>(this.photoService.uploadProfilePhotos(jwtService.getId(token), files), HttpStatus.CREATED);
     }
+
+
 
 }
 

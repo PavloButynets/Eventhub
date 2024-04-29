@@ -1,6 +1,7 @@
 package org.eventhub.main.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.eventhub.main.config.JwtService;
 import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.NotValidDateException;
@@ -10,7 +11,6 @@ import org.eventhub.main.mapper.EventMapper;
 import org.eventhub.main.model.Embedding;
 import org.eventhub.main.model.Event;
 import org.eventhub.main.model.Photo;
-import org.eventhub.main.model.Category;
 
 import org.eventhub.main.repository.EventRepository;
 import org.eventhub.main.service.EventService;
@@ -23,10 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class EventServiceImpl implements EventService {
@@ -35,6 +33,8 @@ public class EventServiceImpl implements EventService {
     private final EventMapper eventMapper;
 
     private final EmbeddingClient embeddingClient;
+
+    private final JwtService jwtService;
 
     private void checkDate( LocalDateTime currentTime, LocalDateTime startAt, LocalDateTime expireAt) {
 
@@ -62,10 +62,11 @@ public class EventServiceImpl implements EventService {
 
 
     @Autowired
-    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EmbeddingClient embeddingClient) {
+    public EventServiceImpl(EventRepository eventRepository, EventMapper eventMapper, EmbeddingClient embeddingClient, JwtService jwtService) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
         this.embeddingClient = embeddingClient;
+        this.jwtService = jwtService;
     }
     @Override
     public EventFullInfoResponse create(EventRequest eventRequest) {
@@ -113,7 +114,9 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public EventFullInfoResponse update(UUID id, EventRequest eventRequest) {
+    public EventFullInfoResponse update(UUID id, EventRequest eventRequest, String token) {
+        validateEventOwner(token, id);
+
         if(eventRequest != null) {
             LocalDateTime currentTime = LocalDateTime.now();
             Event event = readByIdEntity(id);
@@ -135,7 +138,9 @@ public class EventServiceImpl implements EventService {
 
     @Override
     @Transactional
-    public void delete(UUID id) {
+    public void delete(UUID id, String token)
+    {
+        validateEventOwner(token, id);
         eventRepository.delete(readByIdEntity(id));
     }
 
@@ -191,5 +196,13 @@ public class EventServiceImpl implements EventService {
                 .stream()
                 .map(eventMapper::entityToSearchResponse)
                 .toList();
+    }
+    @Override
+    public void validateEventOwner(String token, UUID eventId) {
+        UUID userId = jwtService.getId(token);
+        Event event = readByIdEntity(eventId);
+        if (!userId.equals(event.getOwner().getId())) {
+            throw new AccessIsDeniedException("Not valid owner");
+        }
     }
 }

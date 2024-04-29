@@ -1,9 +1,11 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
+import queryString from "query-string";
 import { getEventsData } from "../../../api/getEventsLocation";
 import { GoogleMap, Marker, InfoWindow } from "@react-google-maps/api";
 import styles from "./Map.module.css";
 import { useSearchParams, useParams } from "react-router-dom";
 import { getEventsDataSearch } from "../../../api/getEventsData";
+import { getCheckbuttonsEvents } from "../../../api/getCheckbuttonsEvents";
 import { light } from "./Theme";
 
 import { useNavigate } from "react-router-dom";
@@ -31,7 +33,7 @@ const defaultOption = {
   disableDoubleClickZoom: true,
   styles: light,
   minZoom: 5,
-  maxZoom: 20, 
+  maxZoom: 20,
 };
 
 const Map = ({ center }) => {
@@ -71,6 +73,20 @@ const Map = ({ center }) => {
         } catch (error) {
           console.error("Error getting events data:", error);
         }
+      } else if (searchParams.get("my_events")) {
+        const parsed = queryString.parse(window.location.search);
+
+        try {
+          const data = await getCheckbuttonsEvents(
+            parsed.checkboxMy === "true",
+            parsed.checkboxJoined === "true",
+            parsed.checkboxPending === "true",
+            parsed.checkboxArchive === "true"
+          );
+          setEvents(data);
+        } catch (error) {
+          console.error("Error getting events data:", error);
+        }
       } else {
         getEventsData()
           .then((data) => {
@@ -87,7 +103,7 @@ const Map = ({ center }) => {
   const onMarkerClick = (event) => {
     setSelectedEvent(event);
     navigate({
-      pathname: `/event/${event.owner_id}/${event.id}`,
+      pathname: `/event/${event.id}`,
       search: `?${searchParams.toString()}`,
     });
   };

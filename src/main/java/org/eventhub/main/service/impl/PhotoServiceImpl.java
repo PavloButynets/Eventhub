@@ -4,10 +4,10 @@ import com.azure.storage.blob.BlobContainerClient;
 import com.azure.storage.blob.specialized.BlockBlobClient;
 import jakarta.persistence.EntityNotFoundException;
 import org.apache.commons.lang3.StringUtils;
+import org.eventhub.main.config.JwtService;
 import org.eventhub.main.dto.PhotoRequest;
 import org.eventhub.main.dto.PhotoResponse;
 import org.eventhub.main.exception.NullDtoReferenceException;
-import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.exception.ResponseStatusException;
 import org.eventhub.main.mapper.PhotoMapper;
 import org.eventhub.main.model.Photo;
@@ -37,6 +37,7 @@ public class PhotoServiceImpl implements PhotoService {
     private final UserService userService;
     private final BlobContainerClient blobContainerClientEvent;
     private final BlobContainerClient blobContainerClientUser;
+
     @Autowired
     public PhotoServiceImpl(PhotoRepository photoRepository, PhotoMapper photoMapper, EventService eventService, UserService userService){
         this.photoRepository = photoRepository;
@@ -76,7 +77,9 @@ public class PhotoServiceImpl implements PhotoService {
         throw new NullDtoReferenceException("Updated photo Request cannot be 'null'");
     }
     @Override
-    public void deleteEventImage(UUID eventId, UUID imageId) {
+    public void deleteEventImage(UUID eventId, UUID imageId, String token) {
+        eventService.validateEventOwner(token, eventId);
+
         String blobName = this.readById(imageId).getPhotoName();
         BlockBlobClient blockBlobClient = this.blobContainerClientEvent.getBlobClient(blobName).getBlockBlobClient();
         blockBlobClient.delete();
@@ -85,12 +88,13 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public void deleteProfileImage(UUID userId, UUID imageId){
-            String blobName = this.readById(imageId).getPhotoName();
-            BlockBlobClient blockBlobClient = this.blobContainerClientUser.getBlobClient(blobName).getBlockBlobClient();
-            blockBlobClient.delete();
-            userService.deleteImage(userId, this.readByIdEntity(imageId));
-            photoRepository.delete(readByIdEntity(imageId));
+    public void deleteProfileImage(UUID ownerId, UUID imageId) {
+
+        String blobName = this.readById(imageId).getPhotoName();
+        BlockBlobClient blockBlobClient = this.blobContainerClientUser.getBlobClient(blobName).getBlockBlobClient();
+        blockBlobClient.delete();
+        userService.deleteImage(ownerId, this.readByIdEntity(imageId));
+        photoRepository.delete(readByIdEntity(imageId));
     }
 
     @Override
@@ -101,7 +105,9 @@ public class PhotoServiceImpl implements PhotoService {
                 .collect(Collectors.toList());
     }
     @Override
-    public List<PhotoResponse> uploadEventPhotos(UUID eventId, List<MultipartFile> files){
+    public List<PhotoResponse> uploadEventPhotos(UUID eventId, List<MultipartFile> files, String token){
+        eventService.validateEventOwner(token, eventId);
+
         List<PhotoResponse> responses = new ArrayList<>();
             for (MultipartFile file : files) {
                 try (ByteArrayInputStream dataStream = new ByteArrayInputStream(file.getBytes())) {
@@ -150,4 +156,6 @@ public class PhotoServiceImpl implements PhotoService {
         }
         return responses;
     }
+
+
 }

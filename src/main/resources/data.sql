@@ -6153,8 +6153,24 @@ INSERT INTO event_embeddings (id, embedding) VALUES ('787bb8ed-f50a-41fa-b5dc-b4
             ]');
 
 
-INSERT INTO categories (id, name) VALUES ('d40fbb2f-64ee-4d1f-92a2-c303d047f2dc', 'Sport');
+INSERT INTO categories (id, name) VALUES ('d40fbb2f-64ee-4d1f-92a2-c303d047f2dc', 'Sports');
 INSERT INTO categories (id, name) VALUES ('a4d7caf9-50fa-499b-a4ce-19cd5790f686', 'Charity');
+INSERT INTO categories (id, name) VALUES ('178fb250-9cc2-4990-9505-70c802f14f22', 'Arts');
+INSERT INTO categories (id, name) VALUES ('2676b500-86fd-436c-a7e2-c794cf380a49', 'Music');
+INSERT INTO categories (id, name) VALUES ('a4a756e1-6427-4bb3-97bf-352436eb2544', 'Food');
+INSERT INTO categories (id, name) VALUES ('03c7da0f-1f72-412c-8f82-ca6f61bffc62', 'Business');
+INSERT INTO categories (id, name) VALUES ('a686270b-d774-4eb4-b4a5-144c1d089101', 'Networking');
+INSERT INTO categories (id, name) VALUES ('455ca2ff-b0a5-480d-90b1-a0a3ad9ce634', 'Education');
+INSERT INTO categories (id, name) VALUES ('842790d3-e4b9-453f-b9e6-45c6d7085a60', 'Health');
+INSERT INTO categories (id, name) VALUES ('1ee2d509-5fa1-4e46-b685-7fbfef010581', 'Fashion');
+INSERT INTO categories (id, name) VALUES ('6f236c7f-65fa-460e-8d0d-854b86424452', 'Gaming');
+INSERT INTO categories (id, name) VALUES ('1851f37f-71c6-4cfd-a46f-f099bc4c837d', 'Spiritual');
+INSERT INTO categories (id, name) VALUES ('76062c2d-69d1-4ff2-8aae-2ec5c0508188', 'Family');
+INSERT INTO categories (id, name) VALUES ('f27e74a6-0f5f-4b9b-b734-dcb9a25d03bb', 'Film/Theater');
+INSERT INTO categories (id, name) VALUES ('8745b0db-6ae2-48c5-b00e-730570bc47f9', 'Volunteer');
+INSERT INTO categories (id, name) VALUES ('87a5efa8-8cb1-46b7-9d05-01b6a9449e24', 'Science/STEM');
+INSERT INTO categories (id, name) VALUES ('c12e58be-4193-423a-bf94-4cb816088fb1', 'Travel/Tourism');
+
 
 INSERT INTO users (id, first_name, last_name, username, email, password, description, created_at, location_city, birth_date, gender, show_email) VALUES ('9a070957-1eb8-4c23-a5f7-d448168e7166', 'Nick', 'Green','nickGreen', 'nick@mail.com', '$2a$10$CJgEoobU2gm0euD4ygru4ukBf9g8fYnPrMvYk.q0GMfOcIDtUhEwC', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod elit quis augue lobortis, vel sollicitudin enim eleifend. Proin at ex vel turpis venenatis maximus. Nulla facilisi. Aenean consequat risus nec elit molli','2020-09-16 14:00:04.810221','Stryi', '1990-09-11 14:00:04.810221', 'MALE', true);
 INSERT INTO users (id, first_name, last_name, username, email, password, description, created_at, location_city, birth_date, gender, show_email) VALUES ('7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc', 'Nora', 'White','noraWhite', 'nora@mail.com', '$2a$12$f0lmw6sKmxheLX6lX4Lp/uWwjc4KQSk0TSjhMB.lpURHmKMFa1JDq', 'description 2', '2021-09-16 14:00:04.810221','Lviv', '1990-09-16 14:00:04.810221', 'FEMALE', false);
@@ -6167,7 +6183,7 @@ INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at
 INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, location, latitude, longitude, owner_id, embedding_id) VALUES ('d0fbbdff-6469-491e-88fa-3b5912b6cc1c', 'Пиво в Броварах', 50, '2025-09-16 14:00:11.480271','2022-10-16 14:00:11.480271','2026-09-16 14:30:04.810221', 'Вживаємо пиво до схочу, кількість обмежена, дрескод - смокінг і спортивки',  1, 'Бровари', 50.507848, 30.795741, '7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc', 'c45e9c9a-0cef-4eee-8ce3-e3a9d89b5565');
 INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, location, latitude, longitude, owner_id, embedding_id) VALUES ('c23a3e3b-7f3c-4cd5-a575-551bc0a58d58', 'Дурдом 5', 22, '2020-09-16 14:00:16.351238', '2020-11-16 14:00:16.351238','2021-09-16 14:30:04.810221', 'Хто вважає себе псіхом - приходьте, будемо веселитись.', 1, 'Барановічі', 37.7749, -122.4194, 'd878867a-fb11-4b24-b87b-18d94feafa18', 'bb5fd016-1c0a-4365-a11f-c099ec506933');
 
-INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, location, latitude, longitude, owner_id, embedding_id) VALUES ('f6bc5867-96cb-40d6-bea3-e8197dd7a675', 'Дн Стаса', 190, '2020-09-16 14:00:04.810221','2025-09-16 14:30:04.810221','2026-09-16 14:30:04.810221', 'Хай жиє Станіслав', 2, 'Станіслав', 48.9201, 24.7089, '9a070957-1eb8-4c23-a5f7-d448168e7166', '787bb8ed-f50a-41fa-b5dc-b4f4b30c4d20');
+INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, location, latitude, longitude, owner_id, embedding_id) VALUES ('f6bc5867-96cb-40d6-bea3-e8197dd7a675', 'Дн Стаса', 190, '2020-09-16 14:00:04.810221','2025-09-16 14:30:04.810221','2026-09-16 14:30:04.810221', 'Хай жиє Станіслав', 0, 'Станіслав', 48.9201, 24.7089, '9a070957-1eb8-4c23-a5f7-d448168e7166', '787bb8ed-f50a-41fa-b5dc-b4f4b30c4d20');
 -- INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, location, latitude, longitude, owner_id, embedding_id) VALUES ('7a548a07-20c9-4b95-841f-e746de1f9b01', 'Танці біля Грузинки', 50, '2025-09-16 14:00:11.480271','2022-10-16 14:00:11.480271','2026-09-16 14:30:04.810221', 'Вживаємо пиво до схочу, кількість обмежена, дрескод - смокінг і спортивки',  1, 'Бровари', 50.507848, 30.795741, '7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc', '787bb8ed-f50a-41fa-b5dc-b4f4b30c4d20');
 -- INSERT INTO events (id, title, max_participants, created_at, start_at, expire_at, description, participant_count, location, latitude, longitude, owner_id, embedding_id) VALUES ('771a549e-7b49-45bf-a1c4-decab902b82d', 'Random Event', 22, '2020-09-16 14:00:16.351238', '2020-11-16 14:00:16.351238','2021-09-16 14:30:04.810221', 'Random event placeholder', 1, 'Барановічі', 37.7749, -122.4194, 'd878867a-fb11-4b24-b87b-18d94feafa18', '787bb8ed-f50a-41fa-b5dc-b4f4b30u4d20');
 --

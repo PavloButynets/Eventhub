@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./ParticipantsList.module.css";
 
-import { getUserParticipants } from "../../../api/getUserParticipants";
-import { getUserById } from "../../../api/getUserById";
-
 import GoBackButton from "../../../components/Buttons/GoBackButton/GoBackButton";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
 import CloseParticipantButton from "./CloseParticipantButton/CloseParticipantButton";
@@ -24,29 +21,11 @@ const ParticipantsList = ({
   setReloadList,
   requests,
   _event,
+  participants,
+  owner,
 }) => {
-  // States
-  const [participants, setParticipants] = useState([]);
-  const [owner, setOwner] = useState(null);
-
   // Params
-  const { ownerId, eventId } = useParams();
-
-  // Effects
-
-  useEffect(() => {
-    _event &&
-      getUserParticipants(_event.id)
-        .then((data) => setParticipants(data))
-        .catch((error) => message.error("An error occured"));
-  }, [_event]);
-
-  useEffect(() => {
-    _event &&
-      getUserById(_event.owner_id)
-        .then((data) => setOwner(data))
-        .catch((error) => message.error("An error occured"));
-  }, [_event]);
+  const { eventId } = useParams();
 
   useEffect(() => {
     participants && owner && setIsLoading(false);
@@ -54,8 +33,7 @@ const ParticipantsList = ({
 
   return (
     _event &&
-    participants &&
-    owner && (
+    participants && (
       <div className={styles["participants-list-container"]}>
         <div className={styles["header"]}>
           <GoBackButton onClick={handleGoBackToSideBar} />
@@ -71,11 +49,11 @@ const ParticipantsList = ({
           <ul className={styles["participants-container"]}>
             {owner &&
               participants.find(
-                (participant) => participant.user_id === ownerId
+                (participant) => participant.user_id === owner.id
               ) && <OwnerPhotoOverlay owner={owner} />}
             {participants.map(
               (participant) =>
-                participant.user_id !== ownerId && (
+                participant.user_id !== owner.id && (
                   <li
                     key={participant.id}
                     className={styles["participant-container"]}

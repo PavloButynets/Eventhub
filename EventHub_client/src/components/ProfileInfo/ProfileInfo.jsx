@@ -29,9 +29,7 @@ const ProfileInfo = ({ onProfileClick }) => {
       }
     };
 
-    if (location.pathname === "/") {
-      fetchUser();
-    }
+    fetchUser();
   }, [location.pathname]);
 
   return (

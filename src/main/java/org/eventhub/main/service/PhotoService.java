@@ -13,9 +13,9 @@ public interface PhotoService {
     PhotoResponse readById(UUID id);
     Photo readByIdEntity(UUID id);
     PhotoResponse update(PhotoRequest photoRequest, UUID id);
-    void deleteEventImage (UUID eventId, UUID imageId);
+    void deleteEventImage (UUID eventId, UUID imageId, String token);
     void deleteProfileImage(UUID userId, UUID imageId);
     List<PhotoResponse> getAll();
-    List<PhotoResponse> uploadEventPhotos(UUID eventId, List<MultipartFile> files);
+    List<PhotoResponse> uploadEventPhotos(UUID eventId, List<MultipartFile> files, String token);
     List<PhotoResponse> uploadProfilePhotos(UUID userId, List<MultipartFile> files);
 }

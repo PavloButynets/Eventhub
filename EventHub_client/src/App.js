@@ -8,6 +8,7 @@ import EditEvent from "./pages/Home/EditEvent/EditEvent.jsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserProfile from "./pages/Home/UserProfile/UserProfile";
 import EditUserProfile from "./pages/Home/EditUserProfile/EditUserProfile";
+import EventInfoSideBar from "./pages/Home/EventInfoSideBar/EventInfoSideBar.jsx";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<Home />}>
-            <Route path="event/:ownerId/:eventId" />
+            <Route path="event/:eventId" element={<EventInfoSideBar/>}/>
             <Route path="/edit" element={<EditEvent />} />
             <Route
               path="/profile/change-password"

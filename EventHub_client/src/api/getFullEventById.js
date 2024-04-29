@@ -1,6 +1,6 @@
 import axios from "./axios";
 
-export const getFullEventById = async (userId, eventId) => {
-  const response = await axios.get(`/users/${userId}/events/${eventId}`);
+export const getFullEventById = async (eventId) => {
+  const response = await axios.get(`/users/events/${eventId}`);
   return response.data;
 };

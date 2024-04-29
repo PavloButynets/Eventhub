@@ -63,6 +63,7 @@
   width: 72px;
   height: 100%;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 @media (width < 1700px) {

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styles from "./OwnerPhotoOverlay.module.css";
 
 const OwnerPhotoOverlay = ({ owner, onMouseEnter, onMouseLeave }) => {

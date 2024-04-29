@@ -49,7 +49,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(
                         "/authentication/**",
-                        "/users/{owner_id}/events/{event_id}",
+                        "/users/events/{event_id}",
                         "/users/{user_id}",
                         "/users/{username}/profile",
                         "/categories/**",

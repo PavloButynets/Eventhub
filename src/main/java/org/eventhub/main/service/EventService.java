@@ -12,8 +12,8 @@ public interface EventService {
     EventFullInfoResponse readById(UUID id);
     Event readByIdEntity(UUID id);
     Event readByTitle(String title);
-    EventFullInfoResponse update(UUID id, EventRequest eventRequest);
-    void delete(UUID id);
+    EventFullInfoResponse update(UUID id, EventRequest eventRequest, String token);
+    void delete(UUID id, String token);
     List<EventFullInfoResponse> getAllFullInfo();
     List<EventSearchResponse> getAllSearchResponse();
     List<Event> getAllEntities();
@@ -21,6 +21,6 @@ public interface EventService {
     void addImage(UUID eventId, Photo image);
     void deleteImage(UUID eventId, Photo image);
     EventSearchResponse readByIdSearch(UUID eventId);
-  
     List<EventSearchResponse> getUserEvents(UUID userId);
+    void validateEventOwner(String token, UUID eventId);
 }

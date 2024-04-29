@@ -10,12 +10,13 @@ import java.util.UUID;
 public interface ParticipantService {
     ParticipantResponse create(ParticipantRequest participantRequest);
 
-    ParticipantResponse addParticipant(UUID participantId);
+    ParticipantResponse addParticipant(UUID participantId, UUID eventId, String token);
     ParticipantResponse readById(UUID id);
     Participant readByIdEntity(UUID id);
     ParticipantResponse readByUserIdInEventById(UUID userId, UUID eventId);
     ParticipantResponse update(ParticipantRequest participantRequest, UUID id);
-    void delete(UUID id);
+    void delete(UUID id, UUID eventId, String token);
+    void deleteSelf(UUID id, UUID eventId, String token);
     List<ParticipantResponse> getAll();
 
     List<ParticipantResponse> getAllByEventId(UUID eventId);

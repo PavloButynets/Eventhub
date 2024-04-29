@@ -1,6 +1,6 @@
 import axios from "./axios";
 
-export const editDataWithoutPhotos = async (eventData, owner_id, event_id) => {
+export const editDataWithoutPhotos = async (eventData, event_id) => {
   const accessToken = localStorage.getItem("token");
   const authAxios = axios.create({
     headers: {
@@ -11,10 +11,7 @@ export const editDataWithoutPhotos = async (eventData, owner_id, event_id) => {
     },
   });
 
-  const response = await authAxios.put(
-    `/users/${owner_id}/events/${event_id}`,
-    eventData
-  );
+  const response = await authAxios.put(`/users/events/${event_id}`, eventData);
   return response.data;
 };
 
@@ -53,7 +50,7 @@ export const editEventPhotos = async (formData, event_id) => {
   return response.data;
 };
 
-export const deleteEvent = async (owner_id, event_id) => {
+export const deleteEvent = async (event_id) => {
   const accessToken = localStorage.getItem("token");
   const authAxios = axios.create({
     headers: {
@@ -64,9 +61,7 @@ export const deleteEvent = async (owner_id, event_id) => {
     },
   });
 
-  const response = await authAxios.delete(
-    `/users/${owner_id}/events/${event_id}`
-  );
+  const response = await authAxios.delete(`/users/events/${event_id}`);
   return response.data;
 };
 

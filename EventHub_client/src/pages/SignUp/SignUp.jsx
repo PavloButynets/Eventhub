@@ -81,45 +81,7 @@ const SignUp = () => {
         message.error("No server response");
       } else {
         const status = err.response.status;
-        switch (status) {
-          case 400:
-            // Помилка валідації даних на сервері
-            message.error("Invalid data. Please check your input.");
-            break;
-          case 401:
-            // Користувач не авторизований
-            message.error("Unauthorized: Please check your credentials.");
-            break;
-          // case 403:
-          //   // Доступ заборонено
-          //   message.error('Forbidden: You do not have permission to access this resource.');
-          //  break;
-          case 404:
-            // URL не знайдено
-            message.error("Not Found: The requested resource was not found.");
-            break;
-          case 409:
-            // Конфлікт
-            message.error("Conflict: The resource already exists.");
-            break;
-          case 422:
-            // Невірні вхідні дані
-            message.error(
-              "Unprocessable Entity: The request was well-formed but unable to be followed due to semantic errors."
-            );
-            break;
-          case 500:
-            // Внутрішня помилка сервера
-            message.error(
-              "Internal Server Error: Something went wrong on the server."
-            );
-            break;
-          default:
-            // Інші типи помилок
-            console.error(err);
-            message.error("Registration failed: " + err.response.data);
-            break;
-        }
+        message.error(err.response.data);
       }
     }
   };

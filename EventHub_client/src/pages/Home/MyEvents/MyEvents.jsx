@@ -3,13 +3,19 @@ import { CalendarOutlined } from "@ant-design/icons";
 import { RoundButton } from "../../../components/Buttons/RoundButton/roundButton";
 import styles from "./MyEvents.module.css";
 import EventList from "./MyEventsList";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 
 const MyEvents = () => {
   const [searchParams, setSearchParams] = useSearchParams("");
+  const navigate = useNavigate();
+  const { auth, setAuth } = useAuth();
 
   const handleButtonClose = async () => {
-    if (searchParams.get("my_events")) {
+    if(!auth.token){
+      navigate("/login")
+    }
+    else if (searchParams.get("my_events")) {
       setSearchParams("");
     } else {
       setSearchParams({ my_events: "true" });
@@ -24,7 +30,6 @@ const MyEvents = () => {
       {searchParams.get("my_events") && (
         <EventList
           handleButtonClose={handleButtonClose}
-          searchParams={searchParams}
         />
       )}
     </div>

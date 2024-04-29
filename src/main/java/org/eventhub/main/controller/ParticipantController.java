@@ -107,18 +107,24 @@ public class ParticipantController {
     }
 
     @PostMapping("/add/{participant_id}")
-    public ResponseEntity<ParticipantResponse> addParticipant(@PathVariable("participant_id") UUID participantId) {
+    public ResponseEntity<ParticipantResponse> addParticipant(@PathVariable("participant_id") UUID participantId, @PathVariable("event_id") UUID eventId, @RequestHeader (name="Authorization") String token) {
 
-        ParticipantResponse response = participantService.addParticipant(participantId);
+        ParticipantResponse response = participantService.addParticipant(participantId, eventId, token);
         log.info("**/Added participant(id) = " + response.getId());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{participant_id}")
-    public ResponseEntity<OperationResponse> delete(@PathVariable("participant_id") UUID participantId){
-        participantService.delete(participantId);
+    public ResponseEntity<OperationResponse> delete(@PathVariable("participant_id") UUID participantId, @PathVariable("event_id") UUID eventId, @RequestHeader (name="Authorization") String token){
+        participantService.delete(participantId, eventId, token);
         log.info("**/deleted participant(id) = " + participantId);
         return new ResponseEntity<>(new OperationResponse("Participant deleted successfully"), HttpStatus.OK);
+    }
+    @DeleteMapping("/{participant_id}/leave")
+    public ResponseEntity<OperationResponse> leave(@PathVariable("participant_id") UUID participantId, @PathVariable("event_id") UUID eventId, @RequestHeader (name="Authorization") String token){
+        participantService.deleteSelf(participantId, eventId, token);
+        log.info("**/participant(id) = " + participantId + " has left");
+        return new ResponseEntity<>(new OperationResponse("Participant has left successfully"), HttpStatus.OK);
     }
 }

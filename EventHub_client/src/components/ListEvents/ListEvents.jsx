@@ -165,7 +165,7 @@ const SearchResults = ({ eventsData }) => {
 
   const handleClick = (ownerId, eventId) => {
     navigate({
-      pathname: `/event/${ownerId}/${eventId}`,
+      pathname: `/event/${eventId}`,
       search: `?${searchParams.toString()}`,
     });
   };

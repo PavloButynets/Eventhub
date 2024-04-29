@@ -1,6 +1,7 @@
 package org.eventhub.main.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.eventhub.main.config.JwtService;
 import org.eventhub.main.dto.ParticipantRequest;
 import org.eventhub.main.dto.ParticipantResponse;
 import org.eventhub.main.dto.ParticipantStateResponse;
@@ -29,12 +30,15 @@ public class ParticipantServiceImpl implements ParticipantService {
     private final ParticipantRepository participantRepository;
     private final ParticipantMapper participantMapper;
     private final EventService eventService;
+    private final JwtService jwtService;
+
 
     @Autowired
-    public ParticipantServiceImpl(ParticipantRepository participantRepository, ParticipantMapper participantMapper, EventService eventService) {
+    public ParticipantServiceImpl(ParticipantRepository participantRepository, ParticipantMapper participantMapper, EventService eventService, JwtService jwtService) {
         this.participantRepository = participantRepository;
         this.participantMapper = participantMapper;
         this.eventService = eventService;
+        this.jwtService = jwtService;
     }
 
 
@@ -60,7 +64,9 @@ public class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public ParticipantResponse addParticipant(UUID participantId) {
+    public ParticipantResponse addParticipant(UUID participantId, UUID eventId, String token) {
+        eventService.validateEventOwner(token, eventId);
+
         Participant existingParticipant = readByIdEntity(participantId);
 
         Event event = existingParticipant.getEvent();
@@ -103,15 +109,32 @@ public class ParticipantServiceImpl implements ParticipantService {
         throw new NullDtoReferenceException("Request can't be null");
     }
 
-    public void delete(UUID id) {
+    @Override
+    public void delete(UUID id, UUID eventId, String token) {
+        eventService.validateEventOwner(token, eventId);
+
         Participant participant = readByIdEntity(id);
 
-        Event event = eventService.readByIdEntity(participant.getEvent().getId());
+        Event event = eventService.readByIdEntity(eventId);
         if (participant.isApproved()) {
             event.setParticipantCount(event.getParticipantCount() - 1);
         }
 
         participantRepository.delete(readByIdEntity(id));
+    }
+    @Override
+    public void deleteSelf(UUID id, UUID eventId, String token) {
+        UUID userId = jwtService.getId(token);
+        Participant participant = readByIdEntity(id);
+        if (participant.getUser().getId().equals(userId) && participant.isApproved()) {
+            Event event = eventService.readByIdEntity(eventId);
+            event.setParticipantCount(event.getParticipantCount() - 1);
+            participantRepository.delete(readByIdEntity(id));
+        }
+        else {
+            throw new AccessIsDeniedException("Not valid leave/delete operation");
+        }
+
     }
 
     @Override
@@ -182,5 +205,4 @@ public class ParticipantServiceImpl implements ParticipantService {
         }
 
     }
-
 }

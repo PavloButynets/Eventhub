@@ -68,11 +68,11 @@
 .description {
   margin-left: 6px;
   color: var(--third-color);
+  display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  display: -webkit-box;
+
   overflow: hidden;
-  min-height: 100px;
 }
 
 .show-more-btn {

@@ -100,6 +100,7 @@ const EventFilter = () => {
                 style={{ width: "100%" }}
                 value={categories}
                 onChange={(category) => setCategories(category)}
+                maxTagCount={2}
               >
                 {categoryOptions}
               </Select>
