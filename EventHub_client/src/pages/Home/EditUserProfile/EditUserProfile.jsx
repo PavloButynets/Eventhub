@@ -1,13 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-import moment from "moment";
+import { useState, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-import usePlacesAutocomplete, { getGeocode } from "use-places-autocomplete";
 import {
   Input,
   Select,
   DatePicker,
   Checkbox,
-  AutoComplete,
   message,
 } from "antd";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
@@ -18,94 +15,11 @@ import { sendDataWithoutPhotos } from "../../../api/updateUserInfo";
 import { deleteUserPhotos } from "../../../api/updateUserInfo";
 import { sendPhotosToServer } from "../../../api/updateUserInfo";
 import { getUserInfo } from "../../../api/getUserInfo";
+import { PlacesAutocomplete } from "../../../components/PlaceAutocomplete/PlaceAutocomplete";
 import dayjs from "dayjs";
 import styles from "./EditUserProfile.module.css";
 import ProcessingEffect from "../../../components/ProcessingEffect/ProcessingEffect";
 
-const PlacesAutocomplete = ({
-  onSelectLocation,
-  initialValue,
-  cancelChanges,
-}) => {
-  const {
-    ready,
-    value,
-    suggestions: { data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete({
-    requestOptions: {},
-    debounce: 300,
-  });
-
-  const handleInput = (value) => {
-    setValue(value);
-  };
-
-  useEffect(() => {
-    handleInput(initialValue);
-  }, [cancelChanges]);
-
-  const handleSelect = (value) => {
-    setValue(value);
-    clearSuggestions();
-    getGeocode({ address: value })
-      .then((results) => {
-        const selectedPlace = results[0];
-        const country = selectedPlace.address_components.find((component) =>
-          component.types.includes("country")
-        ).long_name;
-        const region = selectedPlace.address_components.find(
-          (component) =>
-            component.types.includes("administrative_area_level_1") ||
-            component.types.includes("administrative_area_level_2")
-        ).long_name;
-        const city = selectedPlace.address_components.find(
-          (component) =>
-            component.types.includes("locality") ||
-            component.types.includes("sublocality") ||
-            component.types.includes("postal_town")
-        ).long_name;
-
-        onSelectLocation(`${city}, ${region}, ${country}`);
-      })
-      .catch((error) => {
-        message.info("Select another location");
-        handleInput(initialValue);
-      });
-  };
-
-  const options = data.map((suggestion) => ({
-    value: suggestion.description,
-    label: (
-      <div>
-        <strong className={styles.MainSuggestion}>
-          {suggestion.structured_formatting.main_text}
-        </strong>
-        <small className={styles.SecondarySuggestion}>
-          {suggestion.structured_formatting.secondary_text}
-        </small>
-      </div>
-    ),
-  }));
-
-  return (
-    <AutoComplete
-      options={options}
-      onSelect={handleSelect}
-      onSearch={handleInput}
-      onChange={(newValue) => {
-        handleInput(newValue);
-        onSelectLocation(newValue);
-      }}
-      value={value}
-      disabled={!ready}
-      placeholder="Where do you live?"
-      className={styles.Select}
-      defaultActiveFirstOption={false}
-    />
-  );
-};
 
 const EditUserProfile = () => {
   const { TextArea } = Input;
@@ -135,7 +49,7 @@ const EditUserProfile = () => {
         email: response.email,
         description: response.description,
         city: response.city,
-        birth_date: response.birth_date && dayjs(response.birth_date),
+        birth_date: (response.birth_date) ? dayjs(response.birth_date) : null,
         gender: response.gender,
         show_email: response.show_email,
       });
@@ -212,7 +126,7 @@ const EditUserProfile = () => {
       setSubmitChanges(true);
       await sendDataWithoutPhotos({
         ...user,
-        birth_date: user.birth_date.add(1, "day"),
+        birth_date: user.birth_date && user.birth_date.add(1, "day"),
       });
       await deleteUserPhotos(toDeletePhotos);
       await sendPhotosToServer(uploadedPhotos);
@@ -348,7 +262,7 @@ const EditUserProfile = () => {
                     className={styles.Param}
                     format={"YYYY-MM-DD"}
                     name="birth_date"
-                    value={user.birth_date ? user.birth_date : null}
+                    value={user.birth_date}
                     onChange={(value) =>
                       setUser({ ...user, birth_date: value })
                     }

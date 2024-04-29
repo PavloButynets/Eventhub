@@ -1,0 +1,10 @@
+.MainSuggestion {
+    margin: 0 5px;
+  }
+
+.Select {
+    width: 100%;
+    padding: 0;
+    border: 0.5px solid var(--third-color);
+    border-radius: 7px;
+}

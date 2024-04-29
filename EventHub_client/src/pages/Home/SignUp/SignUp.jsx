@@ -1,10 +1,12 @@
 import styles from "./SignUp.module.css";
 import React, { useState } from "react";
-import axios from "../../api/axios";
+import axios from "../../../api/axios";
 import { useNavigate, Link } from "react-router-dom";
 import LogIn from "../LogIn/LogIn";
+import { PlacesAutocomplete } from "../../../components/PlaceAutocomplete/PlaceAutocomplete";
 import { checkEmail, checkName, checkPassword } from "./validation";
-import useAuth from "../../hooks/useAuth";
+import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
+import useAuth from "../../../hooks/useAuth";
 
 import { Button, Checkbox, Col, Form, Input, Row, Select, message } from "antd";
 
@@ -87,8 +89,11 @@ const SignUp = () => {
   };
 
   return (
-    <div className={styles.RegisterPage}>
+    <div className={styles.outerContainer}>
       <div className={styles.container}>
+        <div className={styles.Buttons}>
+          <CloseWindowButton onClick={() => navigate("/")} />
+        </div>
         <Form
           className={styles.SignUpForm}
           {...formItemLayout}
@@ -185,9 +190,7 @@ const SignUp = () => {
                         return Promise.resolve();
                       }
                       return Promise.reject(
-                        new Error(
-                          "The new password that you entered do not match!"
-                        )
+                        new Error("The new password do not match!")
                       );
                     },
                   }),
@@ -249,13 +252,13 @@ const SignUp = () => {
                 label="City"
                 rules={[
                   {
-                    required: true,
+                    required:true,
                     message: "Please select your City",
                     whitespace: true,
                   },
                 ]}
               >
-                <Input onChange={(e) => setCity(e.target.value)} />
+                <PlacesAutocomplete onSelectLocation={(value) => setCity(value)} initialValue={null} onChange={(value) => setCity(value)}/>
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>

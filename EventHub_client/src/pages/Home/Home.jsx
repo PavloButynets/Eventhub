@@ -13,9 +13,10 @@ import LoginRegisterButton from "./ProfileORlogin/LoginRegisterButton";
 import SearchEvents from "./Search/Search";
 import CreateEvent from "./CreateEvent/CreateEvent";
 import EventFilter from "./Filter/Filter";
-
-import MyEvents from "./MyEvents/MyEvents";
 import ProcessingEffect from "../../components/ProcessingEffect/ProcessingEffect";
+import MyEvents from "./MyEvents/MyEvents";
+import useLogin from "../../hooks/useLogin";
+
 
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
@@ -25,7 +26,7 @@ const defaultCenter = {
 };
 const libraries = ["places"];
 const Home = () => {
-  const { auth, setAuth } = useAuth();
+  const authenticated = useLogin();
   const location = useLocation();
 
   const outlet = useOutlet();
@@ -43,7 +44,7 @@ const Home = () => {
         <>
           <Map center={defaultCenter} />
 
-          {auth.token ? <MenuButton /> : <LoginRegisterButton />}
+          {authenticated ? <MenuButton /> : <LoginRegisterButton />}
 
           <SearchEvents />
           <CreateEvent />
