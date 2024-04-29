@@ -58,7 +58,7 @@ export const PlacesAutocomplete = ({
       onSearch={handleInput}
       onChange={(newValue) => {
         handleInput(newValue);
-        onChange(newValue);
+        if (onChange) onChange(newValue);
         onSelectLocation(newValue);
       }}
       value={value}
