@@ -11,12 +11,12 @@ export const PlacesAutocomplete = ({
   const {
     ready,
     value,
-    suggestions: { status, data },
+    suggestions: { data },
     setValue,
     clearSuggestions,
   } = usePlacesAutocomplete({
     requestOptions: {
-      types: ["(cities)"], // Restrict suggestions to cities
+      types: ["(cities)"],
       fields: ["address_components", "geometry", "icon", "name"],
     },
     debounce: 300,
@@ -33,30 +33,7 @@ export const PlacesAutocomplete = ({
   const handleSelect = (value) => {
     setValue(value);
     clearSuggestions();
-    getGeocode({ address: value })
-      .then((results) => {
-        const selectedPlace = results[0];
-        const country = selectedPlace.address_components.find((component) =>
-          component.types.includes("country")
-        ).long_name;
-        const region = selectedPlace.address_components.find(
-          (component) =>
-            component.types.includes("administrative_area_level_1") ||
-            component.types.includes("administrative_area_level_2")
-        ).long_name;
-        const city = selectedPlace.address_components.find(
-          (component) =>
-            component.types.includes("locality") ||
-            component.types.includes("sublocality") ||
-            component.types.includes("postal_town")
-        ).long_name;
-
-        onSelectLocation(`${city}, ${region}, ${country}`);
-      })
-      .catch((error) => {
-        message.info("Select another location");
-        handleInput(initialValue);
-      });
+    onSelectLocation(value);
   };
 
   const options = data.map((suggestion) => ({

@@ -295,7 +295,7 @@ const SignUp = () => {
                   },
                 ]}
               >
-                <PlacesAutocomplete onSelectLocation={(value) => setCity(value)} initialValue={""}/>
+                <PlacesAutocomplete onSelectLocation={(value) => setCity(value)} initialValue={null}/>
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
