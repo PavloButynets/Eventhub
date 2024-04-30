@@ -75,7 +75,7 @@ const Map = ({ center }) => {
           console.error("Error getting events data:", error);
         }
       } else {
-        getEventsData()
+        await getEventsData()
           .then((data) => {
             setEvents(data);
           })
@@ -127,28 +127,28 @@ const Map = ({ center }) => {
         options={defaultOption}
         onClick={handleMapClick}
       >
-        <></>
-        <MarkerClusterer>
-        {(clusterer) =>
-          events.map((event) => (
-            <Marker
-              key={event.id}
-              position={{
-                lat: Number(event.latitude),
-                lng: Number(event.longitude),
-              }}
-              icon={{
-                url: "/images/pin.svg",
-                scaledSize: new window.google.maps.Size(40, 40),
-              }}
-              onClick={() => onMarkerClick(event)}
-              clusterer={clusterer}
-            />
-          ))
-        }
-      </MarkerClusterer>
+        {/* <MarkerClusterer>
+          {(clusterer) =>
+            events.map((event) => (
+              <Marker
+                key={event.id}
+                position={{
+                  lat: Number(event.latitude),
+                  lng: Number(event.longitude),
+                }}
+                icon={{
+                  url: "/images/pin.svg",
+                  scaledSize: new window.google.maps.Size(40, 40),
+                }}
+                onClick={() => onMarkerClick(event)}
+                clusterer={clusterer}
+              />
+            ))
+          }
+        </MarkerClusterer> */}
+      
 
-        {/* {events &&
+        {events &&
           events.map((event) => (
             <Marker
               key={event.eventID}
@@ -162,7 +162,7 @@ const Map = ({ center }) => {
               }}
               onClick={() => onMarkerClick(event)}
             />
-          ))} */}
+          ))}
       </GoogleMap>
     </div>
   );

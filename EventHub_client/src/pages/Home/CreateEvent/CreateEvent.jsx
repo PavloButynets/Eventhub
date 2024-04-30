@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import styles from "./CreateEvent.module.css";
 import { CameraOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
@@ -13,7 +13,7 @@ import {
 } from "antd";
 import { getCategories } from "../../../api/getCategories";
 import { MinusCircleOutlined } from "@ant-design/icons";
-import { jwtDecode } from "jwt-decode";
+
 import GetLocationByCoordinates from "../../../api/getLocationByCoordinates";
 
 import usePlacesAutocomplete, {
@@ -22,19 +22,41 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import { sendDataWithoutPhotos } from "../../../api/sendEventData";
 import { sendPhotosToServer } from "../../../api/sendEventData";
+import getIdFromToken from "../../../jwt/getIdFromToken";
+
 const { TextArea } = Input;
 const { Option } = Select;
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
-const FullSizePhotoModal = ({ photoUrl, onClose }) => {
+
+const FullSizePhotoModal = ({ photoUrl, handleClosePhoto }) => {
+  const modalRef = useRef(null);
+
+  const handleModalClick = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      handleClosePhoto();
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      handleClosePhoto();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleModalClick);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("mousedown", handleModalClick);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
-    <div className={styles.fullSizePhotoModal}>
-      <div className={styles.modalContent}>
-        <img src={photoUrl} alt="Full Size Photo" />
-        <button className={styles.closeButton} onClick={onClose}>
-          Close
-        </button>
-      </div>
+    <div className={styles.fullSizePhotoModal} ref={modalRef}>
+      <img src={photoUrl} alt="Full Size Photo" />
     </div>
   );
 };
@@ -301,11 +323,9 @@ const CreateEvent = () => {
       console.log(dateRange);
       const startAt = formatDate(dateRange[0]);
       const expireAt = formatDate(dateRange[1]);
-      const authToken = localStorage.getItem("token");
       console.log("Категорії", selectedCategories);
 
-      const user = jwtDecode(authToken);
-      const user_id = user.id;
+      const user_id = getIdFromToken();
       const eventData = {
         title: title,
         max_participants: participants,
@@ -394,6 +414,7 @@ const CreateEvent = () => {
                           <div className={styles.actionIcon}>
                             <EyeOutlined
                               onClick={() => handleFullSizePhoto(index)}
+                              handleClosePhoto={() => setFullSizePhotoIndex(-1)}
                               style={{
                                 fontSize: "24px",
                                 color: "#FFFFF",
@@ -453,7 +474,7 @@ const CreateEvent = () => {
                     className={styles.Param}
                     placeholder="Categories"
                     mode="multiple"
-                    maxTagCount={3}
+                    maxTagCount={2}
                     maxTagPlaceholder={<MinusCircleOutlined />}
                     value={selectedCategories}
                     onChange={handleCategoryChange}
@@ -523,6 +544,12 @@ const CreateEvent = () => {
                 Create Event
               </button>
             </div>
+            {fullSizePhotoIndex !== -1 && (
+            <FullSizePhotoModal
+              photoUrl={photos[fullSizePhotoIndex]}
+              handleClosePhoto={() => setFullSizePhotoIndex(-1)}
+            />
+          )}
           </div>
         </div>
         </div>

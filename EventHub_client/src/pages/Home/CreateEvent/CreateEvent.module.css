@@ -34,7 +34,8 @@
 
   .createEventHeader {
     width: 42vw;
-    height: 4vh;
+    height: auto;
+    max-height: 4vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -177,7 +178,7 @@
 }
 
 .CreateButtonContainer{
-    height: 4.69vh;
+    height: 4.4vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -234,3 +235,33 @@ border: none;
   .autocompleteItem:hover {
     background-color: #f0f0f0;
   }
+  
+  .fullSizePhotoModal {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; 
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.fullSizePhotoModal img {
+
+  max-width: 100%; 
+  max-height: 100%; 
+  object-fit: contain; /* Зберігати пропорції фото при масштабуванні */
+}
+.fullSizePhotoModal:not(:target) * {
+    pointer-events: none; 
+}
+
+.fullSizePhotoModal:target * {
+    pointer-events: auto; /* Enable click events within the modal */
+}

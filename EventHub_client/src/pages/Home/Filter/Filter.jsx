@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Menu, Dropdown, Select, Input, DatePicker } from "antd";
+import { Menu, Dropdown, Select, Input, DatePicker,Space } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 import { RoundButton } from "../../../components/Buttons/RoundButton/roundButton";
 import styles from "./Filter.module.css";
@@ -105,7 +105,7 @@ const EventFilter = () => {
               </Select>
             </Menu.Item>
             <Menu.Item key="2">
-              <Input.Group compact>
+            <Space compact="true">
                 <Input
                   placeholder="Min Participants"
                   style={{ width: "50%" }}
@@ -118,7 +118,7 @@ const EventFilter = () => {
                   onChange={(e) => setMaxParticipants(e.target.value)}
                   value={maxParticipants}
                 />
-              </Input.Group>
+              </Space>
             </Menu.Item>
             <Menu.Item key="3">
               <Input
@@ -142,8 +142,8 @@ const EventFilter = () => {
           </Menu>
         }
         trigger={["click"]}
-        visible={isOpen}
-        onVisibleChange={toggleMenu}
+        open={isOpen}
+        onOpenChange={toggleMenu}
       >
         <div className={styles.filterButtonContainer}>
           <RoundButton icon={<FilterOutlined />} onClick={toggleMenu} />

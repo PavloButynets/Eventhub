@@ -6153,9 +6153,22 @@ INSERT INTO event_embeddings (id, embedding) VALUES ('787bb8ed-f50a-41fa-b5dc-b4
             ]');
 
 
-INSERT INTO categories (id, name) VALUES ('d40fbb2f-64ee-4d1f-92a2-c303d047f2dc', 'Sport');
-INSERT INTO categories (id, name) VALUES ('a4d7caf9-50fa-499b-a4ce-19cd5790f686', 'Charity');
-
+INSERT INTO categories (id, name) VALUES ('d40fbb2f-64ee-4d1f-92a2-c303d047f2dc', 'Sports');
+INSERT INTO categories (id, name) VALUES ('a4d7caf9-50fa-499b-a4ce-19cd5790f686', 'Charity/Fundraising');
+INSERT INTO categories (id, name) VALUES ('178fb250-9cc2-4990-9505-70c802f14f22', 'Arts/Cultural');
+INSERT INTO categories (id, name) VALUES ('2676b500-86fd-436c-a7e2-c794cf380a49', 'Music/Concerts');
+INSERT INTO categories (id, name) VALUES ('a4a756e1-6427-4bb3-97bf-352436eb2544', 'Food');
+INSERT INTO categories (id, name) VALUES ('03c7da0f-1f72-412c-8f82-ca6f61bffc62', 'Business/Networking');
+INSERT INTO categories (id, name) VALUES ('455ca2ff-b0a5-480d-90b1-a0a3ad9ce634', 'Education/Seminars');
+INSERT INTO categories (id, name) VALUES ('842790d3-e4b9-453f-b9e6-45c6d7085a60', 'Health/Wellness');
+INSERT INTO categories (id, name) VALUES ('1ee2d509-5fa1-4e46-b685-7fbfef010581', 'Fashion/Beauty');
+INSERT INTO categories (id, name) VALUES ('6f236c7f-65fa-460e-8d0d-854b86424452', 'Gaming/Esports');
+INSERT INTO categories (id, name) VALUES ('1851f37f-71c6-4cfd-a46f-f099bc4c837d', 'Religious/Spiritual');
+INSERT INTO categories (id, name) VALUES ('76062c2d-69d1-4ff2-8aae-2ec5c0508188', 'Family/Kids');
+INSERT INTO categories (id, name) VALUES ('f27e74a6-0f5f-4b9b-b734-dcb9a25d03bb', 'Film/Theater');
+INSERT INTO categories (id, name) VALUES ('8745b0db-6ae2-48c5-b00e-730570bc47f9', 'Volunteer/Community Service');
+INSERT INTO categories (id, name) VALUES ('87a5efa8-8cb1-46b7-9d05-01b6a9449e24', 'Science/STEM');
+INSERT INTO categories (id, name) VALUES ('c12e58be-4193-423a-bf94-4cb816088fb1', 'Travel/Tourism');
 INSERT INTO users (id, first_name, last_name, username, email, password, description, created_at, location_city, birth_date, gender, show_email) VALUES ('9a070957-1eb8-4c23-a5f7-d448168e7166', 'Nick', 'Green','nickGreen', 'nick@mail.com', '$2a$10$CJgEoobU2gm0euD4ygru4ukBf9g8fYnPrMvYk.q0GMfOcIDtUhEwC', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod elit quis augue lobortis, vel sollicitudin enim eleifend. Proin at ex vel turpis venenatis maximus. Nulla facilisi. Aenean consequat risus nec elit molli','2020-09-16 14:00:04.810221','Stryi', '1990-09-11 14:00:04.810221', 'MALE', true);
 INSERT INTO users (id, first_name, last_name, username, email, password, description, created_at, location_city, birth_date, gender, show_email) VALUES ('7bdef2ef-50cb-4977-a4f3-aebf0f63c7fc', 'Nora', 'White','noraWhite', 'nora@mail.com', '$2a$12$f0lmw6sKmxheLX6lX4Lp/uWwjc4KQSk0TSjhMB.lpURHmKMFa1JDq', 'description 2', '2021-09-16 14:00:04.810221','Lviv', '1990-09-16 14:00:04.810221', 'FEMALE', false);
 INSERT INTO users (id, first_name, last_name, username, email, password, description, created_at, location_city, birth_date, gender, show_email) VALUES ('d878867a-fb11-4b24-b87b-18d94feafa18', 'Mike', 'Brown','mikeBrown', 'mike@mail.com', '1111', 'description 3', '2021-10-16 14:00:04.810221','Las Vegas', '1990-09-16 14:00:04.810221', 'MALE', true);
