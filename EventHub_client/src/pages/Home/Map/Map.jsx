@@ -55,6 +55,7 @@ const Map = ({ center }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [showMarker, setShowMarker] = useState(false);
+  const [loading, setLoading] = useState(true); // Доданий стан для відстеження завантаження даних з сервера
 
   useEffect(() => {
     const searchValue = searchParams.get("search");
@@ -64,6 +65,8 @@ const Map = ({ center }) => {
         try {
           const data = await getEventsDataSearch(searchValue);
           setEvents(data);
+          setLoading(false);
+
         } catch (error) {
           console.error("Error getting events data:", error);
         }
@@ -71,6 +74,8 @@ const Map = ({ center }) => {
         try {
           const data = await getFilteredEvents();
           setEvents(data);
+          setLoading(false);
+
         } catch (error) {
           console.error("Error getting events data:", error);
         }
@@ -78,6 +83,8 @@ const Map = ({ center }) => {
         await getEventsData()
           .then((data) => {
             setEvents(data);
+            setLoading(false);
+
           })
           .catch((error) => {
             console.error("Error getting events data:", error);
@@ -86,6 +93,7 @@ const Map = ({ center }) => {
     };
 
     fetchData();
+    
   }, [searchParams]);
   const onMarkerClick = (event) => {
     setSelectedEvent(event);
@@ -116,6 +124,9 @@ const Map = ({ center }) => {
       console.log("Error fetching location data");
     }
   };
+  if (loading) {
+    return <div>Loading...</div>; // Відображення спінера або індикатора завантаження, поки дані не завантажаться
+  }
   return (
     <div className={styles.mapcontainer}>
       <GoogleMap
@@ -127,27 +138,32 @@ const Map = ({ center }) => {
         options={defaultOption}
         onClick={handleMapClick}
       >
-        {/* <MarkerClusterer>
-          {(clusterer) =>
-            events.map((event) => (
-              <Marker
-                key={event.id}
-                position={{
-                  lat: Number(event.latitude),
-                  lng: Number(event.longitude),
-                }}
-                icon={{
-                  url: "/images/pin.svg",
-                  scaledSize: new window.google.maps.Size(40, 40),
-                }}
-                onClick={() => onMarkerClick(event)}
-                clusterer={clusterer}
-              />
-            ))
-          }
-        </MarkerClusterer> */}
-      
+        <></>
+       <MarkerClusterer>
+  {(clusterer) =>
+    events.map((event) => {
+      console.log(clusterer); // Розмістіть console.log тут
+      return (
+        <Marker
+          key={event.id}
+          position={{
+            lat: Number(event.latitude),
+            lng: Number(event.longitude),
+          }}
+          icon={{
+            url: "/images/pin.svg",
+            scaledSize: new window.google.maps.Size(40, 40),
+          }}
+          onClick={() => onMarkerClick(event)}
+          clusterer={clusterer}
+        />
+      );
+    })
+  }
+</MarkerClusterer>
 
+      
+{/* 
         {events &&
           events.map((event) => (
             <Marker
@@ -162,7 +178,7 @@ const Map = ({ center }) => {
               }}
               onClick={() => onMarkerClick(event)}
             />
-          ))}
+          ))} */}
       </GoogleMap>
     </div>
   );
