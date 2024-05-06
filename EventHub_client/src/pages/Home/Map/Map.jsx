@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { getEventsData } from "../../../api/getEventsLocation";
-import { GoogleMap, Marker,AdvancedMarkerElement, MarkerClusterer } from "@react-google-maps/api";
+import { GoogleMap, Marker, InfoWindow, MarkerClusterer } from "@react-google-maps/api";
 
 
 import styles from "./Map.module.css";
@@ -55,7 +55,6 @@ const Map = ({ center }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [showMarker, setShowMarker] = useState(false);
-  const [loading, setLoading] = useState(true); // Доданий стан для відстеження завантаження даних з сервера
 
   useEffect(() => {
     const searchValue = searchParams.get("search");
@@ -65,7 +64,6 @@ const Map = ({ center }) => {
         try {
           const data = await getEventsDataSearch(searchValue);
           setEvents(data);
-          setLoading(false);
 
         } catch (error) {
           console.error("Error getting events data:", error);
@@ -74,8 +72,6 @@ const Map = ({ center }) => {
         try {
           const data = await getFilteredEvents();
           setEvents(data);
-          setLoading(false);
-
         } catch (error) {
           console.error("Error getting events data:", error);
         }
@@ -83,8 +79,6 @@ const Map = ({ center }) => {
         await getEventsData()
           .then((data) => {
             setEvents(data);
-            setLoading(false);
-
           })
           .catch((error) => {
             console.error("Error getting events data:", error);
@@ -103,9 +97,6 @@ const Map = ({ center }) => {
     });
   };
 
-  const onMapClick = () => {
-    setSelectedEvent(null);
-  };
   const handleMapClick = async (event) => {
     if (!auth.token) {
       message.info("You need to login to create an event");
@@ -124,9 +115,7 @@ const Map = ({ center }) => {
       console.log("Error fetching location data");
     }
   };
-  if (loading) {
-    return <div>Loading...</div>; // Відображення спінера або індикатора завантаження, поки дані не завантажаться
-  }
+
   return (
     <div className={styles.mapcontainer}>
       <GoogleMap
@@ -138,7 +127,6 @@ const Map = ({ center }) => {
         options={defaultOption}
         onClick={handleMapClick}
       >
-        <></>
        {/* <MarkerClusterer>
   {(clusterer) =>
     events.map((event) => {
@@ -162,7 +150,8 @@ const Map = ({ center }) => {
   }
 </MarkerClusterer> */}
 
-<></>
+      
+        <></>
         {events &&
           events.map((event) => {
             return (
@@ -180,7 +169,7 @@ const Map = ({ center }) => {
               />
             );
           })}
-        {selectedPlace && showMarker && (
+          {selectedPlace && showMarker && (
           <Marker
             position={{ lat: selectedPlace.lat, lng: selectedPlace.lng }}
             icon={{
@@ -190,13 +179,25 @@ const Map = ({ center }) => {
           />
         )}
 
-
+        {events &&
+          events.map((event) => (
+            <Marker
+              key={event.eventID}
+              position={{
+                lat: Number(event.latitude),
+                lng: Number(event.longitude),
+              }}
+              icon={{
+                url: "/images/pin.svg",
+                scaledSize: new window.google.maps.Size(40, 40),
+              }}
+              onClick={() => onMarkerClick(event)}
+            />
+          ))}
       </GoogleMap>
     </div>
   );
 };
-
-
 
 
 export { Map };
