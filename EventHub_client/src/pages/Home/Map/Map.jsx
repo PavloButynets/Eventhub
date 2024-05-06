@@ -1,7 +1,9 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import queryString from "query-string";
 import { getEventsData } from "../../../api/getEventsLocation";
-import { GoogleMap, Marker, InfoWindow } from "@react-google-maps/api";
+import { GoogleMap, Marker, InfoWindow, MarkerClusterer } from "@react-google-maps/api";
+
+
 import styles from "./Map.module.css";
 import { useSearchParams, useParams } from "react-router-dom";
 import { getEventsDataSearch } from "../../../api/getEventsData";
@@ -13,6 +15,7 @@ import { getFilteredEvents } from "../../../api/getFilteredEvents";
 import GetLocationByCoordinates from "../../../api/getLocationByCoordinates";
 import useAuth from "../../../hooks/useAuth";
 import { message } from "antd";
+
 
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 const containerStyle = {
@@ -141,34 +144,27 @@ const Map = ({ center }) => {
         onClick={handleMapClick}
       >
         <></>
-        {events &&
-          events.map((event) => {
-            return (
-              <Marker
-                key={event.id}
-                position={{
-                  lat: Number(event.latitude),
-                  lng: Number(event.longitude),
-                }}
-                icon={{
-                  url: "/images/pin.svg",
-                  scaledSize: new window.google.maps.Size(40, 40),
-                }}
-                onClick={() => onMarkerClick(event)}
-              />
-            );
-          })}
-        {selectedPlace && showMarker && (
-          <Marker
-            position={{ lat: selectedPlace.lat, lng: selectedPlace.lng }}
-            icon={{
-              url: "/images/pin.svg",
-              scaledSize: new window.google.maps.Size(40, 40),
-            }}
-          />
-        )}
+        <MarkerClusterer>
+        {(clusterer) =>
+          events.map((event) => (
+            <Marker
+              key={event.id}
+              position={{
+                lat: Number(event.latitude),
+                lng: Number(event.longitude),
+              }}
+              icon={{
+                url: "/images/pin.svg",
+                scaledSize: new window.google.maps.Size(40, 40),
+              }}
+              onClick={() => onMarkerClick(event)}
+              clusterer={clusterer}
+            />
+          ))
+        }
+      </MarkerClusterer>
 
-        {events &&
+        {/* {events &&
           events.map((event) => (
             <Marker
               key={event.eventID}
@@ -182,10 +178,13 @@ const Map = ({ center }) => {
               }}
               onClick={() => onMarkerClick(event)}
             />
-          ))}
+          ))} */}
       </GoogleMap>
     </div>
   );
 };
+
+
+
 
 export { Map };
