@@ -62,7 +62,10 @@ const ParticipantInfoPopUp = ({ participant, onMouseEnter, onMouseLeave }) => {
         <div className={styles["description"]}>{participant.description}</div>
       )}
 
-      <PrimaryButton className={styles["show-more-btn"]}>
+      <PrimaryButton
+        to={`/profile/${participant.username}`}
+        className={styles["show-more-btn"]}
+      >
         Show more
       </PrimaryButton>
 

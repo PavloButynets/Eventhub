@@ -57,15 +57,12 @@ main {
   position: relative;
 }
 
-.participant-container:hover {
-  cursor: pointer;
-}
-
 .participant-photo {
   width: 72px;
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .participant-info-container {

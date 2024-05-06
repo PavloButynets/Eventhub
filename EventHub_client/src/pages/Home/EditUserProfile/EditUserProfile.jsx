@@ -1,12 +1,6 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Input,
-  Select,
-  DatePicker,
-  Checkbox,
-  message,
-} from "antd";
+import { Input, Select, DatePicker, Checkbox, message } from "antd";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
 import CancelButton from "../../../components/Buttons/CancelButton/CancelButton";
 import ApplyChangesButton from "../../../components/Buttons/ApplyChangesButton/ApplyChangesButton";
@@ -19,7 +13,6 @@ import { PlacesAutocomplete } from "../../../components/PlaceAutocomplete/PlaceA
 import dayjs from "dayjs";
 import styles from "./EditUserProfile.module.css";
 import ProcessingEffect from "../../../components/ProcessingEffect/ProcessingEffect";
-
 
 const EditUserProfile = () => {
   const { TextArea } = Input;
@@ -49,7 +42,7 @@ const EditUserProfile = () => {
         email: response.email,
         description: response.description,
         city: response.city,
-        birth_date: (response.birth_date) ? dayjs(response.birth_date) : null,
+        birth_date: response.birth_date ? dayjs(response.birth_date) : null,
         gender: response.gender,
         show_email: response.show_email,
       });
@@ -148,7 +141,8 @@ const EditUserProfile = () => {
     setToDeletePhotos([]);
   };
 
-  const handleClose = () => {
+  const handleClose = (e) => {
+    // e.preventDefault();
     navigate("/");
   };
   return (

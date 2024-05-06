@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "./ParticipantsList.module.css";
 
 import GoBackButton from "../../../components/Buttons/GoBackButton/GoBackButton";
@@ -26,6 +26,8 @@ const ParticipantsList = ({
 }) => {
   // Params
   const { eventId } = useParams();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     participants && owner && setIsLoading(false);
@@ -59,6 +61,9 @@ const ParticipantsList = ({
                     className={styles["participant-container"]}
                   >
                     <img
+                      onClick={() =>
+                        navigate(`/profile/${participant.username}`)
+                      }
                       className={styles["participant-photo"]}
                       src={participant.participant_photo.photo_url}
                       alt="User participant img"

@@ -6170,6 +6170,7 @@ INSERT INTO categories (id, name) VALUES ('f27e74a6-0f5f-4b9b-b734-dcb9a25d03bb'
 INSERT INTO categories (id, name) VALUES ('8745b0db-6ae2-48c5-b00e-730570bc47f9', 'Volunteer');
 INSERT INTO categories (id, name) VALUES ('87a5efa8-8cb1-46b7-9d05-01b6a9449e24', 'Science/STEM');
 INSERT INTO categories (id, name) VALUES ('c12e58be-4193-423a-bf94-4cb816088fb1', 'Travel/Tourism');
+INSERT INTO categories (id, name) VALUES ('0f2d22cd-e774-4fdc-a6ec-fe68b4a42530', 'Entertainment');
 
 
 INSERT INTO users (id, first_name, last_name, username, email, password, description, created_at, location_city, birth_date, gender, show_email) VALUES ('9a070957-1eb8-4c23-a5f7-d448168e7166', 'Nick', 'Green','nickGreen', 'nick@mail.com', '$2a$10$CJgEoobU2gm0euD4ygru4ukBf9g8fYnPrMvYk.q0GMfOcIDtUhEwC', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod elit quis augue lobortis, vel sollicitudin enim eleifend. Proin at ex vel turpis venenatis maximus. Nulla facilisi. Aenean consequat risus nec elit molli','2020-09-16 14:00:04.810221','Stryi', '1990-09-11 14:00:04.810221', 'MALE', true);

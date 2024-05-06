@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./OwnerPhotoOverlay.module.css";
 
 const OwnerPhotoOverlay = ({ owner, onMouseEnter, onMouseLeave }) => {
+  const navigate = useNavigate();
+
   return (
     <div
       className={styles["owner-container"]}
@@ -8,6 +11,7 @@ const OwnerPhotoOverlay = ({ owner, onMouseEnter, onMouseLeave }) => {
       onMouseLeave={onMouseLeave}
     >
       <img
+        onClick={() => navigate(`/profile/${owner.username}`)}
         className={styles["owner-img"]}
         src={owner.photo_responses[0].photo_url}
         alt=""

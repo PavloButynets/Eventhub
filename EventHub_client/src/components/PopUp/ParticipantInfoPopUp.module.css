@@ -6,7 +6,7 @@
   background-color: var(--primary-popup-background);
   position: absolute;
   /* right: 10%; */
-  top: -635%;
+  top: -600%;
   font-family: var(--primary-font-family);
   padding: 15px;
   border-radius: 5px;
@@ -150,7 +150,7 @@ hr {
 @media (width >= 1280px) and (width < 1700px) {
   .pop-up-container {
     height: 300px;
-    top: -705%;
+    top: -655%;
   }
   .full-name {
     font-size: var(--xs-size);

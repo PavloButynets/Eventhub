@@ -41,7 +41,7 @@ const UserProfile = () => {
       <div className={styles.InnerContainer}>
         <div className={styles.Title}>
           <p className={styles.Heading}>Account information</p>
-          <CloseWindowButton onClick={() => navigate("/")} />
+          <CloseWindowButton onClick={() => navigate(-1)} />
         </div>
         <div className={styles.MainInfo}>
           <UserImages images={user.photo_responses} />
@@ -82,7 +82,11 @@ const UserProfile = () => {
         </div>
         <div className={styles.DescriptionBox}>
           <p className={styles.DescriptionCaption}>About</p>
-          <div className={(user.description)?styles.Description:styles.NoInfo}>{user.description || "There is no description yet..."}</div>
+          <div
+            className={user.description ? styles.Description : styles.NoInfo}
+          >
+            {user.description || "There is no description yet..."}
+          </div>
         </div>
       </div>
     </div>

@@ -55,22 +55,24 @@ const ChangePassword = () => {
       }
     } finally {
       setSubmitChanges(false);
+      navigate(-1);
     }
   };
 
   const handleClose = () => {
-    navigate("/");
+    navigate(-1);
   };
 
   return (
     show && (
       <>
-        {submitChanges &&
-        <div className={styles.SubmitChanges}>
-          <LoadingOutlined
-            style={{ color: "white", fontSize: "72px", fontWeight: "1000" }}
-          />
-        </div>}
+        {submitChanges && (
+          <div className={styles.SubmitChanges}>
+            <LoadingOutlined
+              style={{ color: "white", fontSize: "72px", fontWeight: "1000" }}
+            />
+          </div>
+        )}
         <div className={styles.OuterContainer}>
           <div className={styles.InnerContainer}>
             <div className={styles.Buttons}>

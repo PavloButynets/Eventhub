@@ -71,15 +71,12 @@ main {
   position: relative;
 }
 
-.requested-participant-container:hover {
-  cursor: pointer;
-}
-
 .requested-participant-photo {
   width: 72px;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .requested-participant-info-container {

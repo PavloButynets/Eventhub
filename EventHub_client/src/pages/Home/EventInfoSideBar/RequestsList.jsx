@@ -8,6 +8,7 @@ import AcceptParticipantButton from "./AcceptParticipantButton/AcceptParticipant
 import { addParticipant } from "../../../api/addParticipant";
 import SpotsLeft from "../../../components/Spots/SpotsLeft";
 import { message } from "antd";
+import { useNavigate } from "react-router-dom";
 const RequestsList = ({
   _event,
   requests,
@@ -15,6 +16,7 @@ const RequestsList = ({
   handleCloseWindow,
   setReloadList,
 }) => {
+  const navigate = useNavigate();
   return (
     <div className={styles["requests-list-container"]}>
       <div className={styles["header"]}>
@@ -35,6 +37,9 @@ const RequestsList = ({
               key={requestedParticipant.id}
             >
               <img
+                onClick={() =>
+                  navigate(`/profile/${requestedParticipant.username}`)
+                }
                 className={styles["requested-participant-photo"]}
                 src={requestedParticipant.participant_photo.photo_url}
                 alt="User requestedParticipant img"
