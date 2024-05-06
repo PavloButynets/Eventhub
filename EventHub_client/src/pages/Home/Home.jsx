@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
 import { useOutlet } from "react-router-dom";
 import AuthContext from "../../context/authProvider";
-import { Link, Outlet, useParams, useLocation,useSearchParams } from "react-router-dom";
+import { Link, Outlet, useParams, useLocation } from "react-router-dom";
 import { Map } from "./Map/Map";
 import useAuth from "../../hooks/useAuth";
 import { Button } from "antd";
@@ -32,7 +31,6 @@ const Home = () => {
   const outlet = useOutlet();
   const { ownerId, eventId } = useParams();
 
-  const {searchParams} = useSearchParams();
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
