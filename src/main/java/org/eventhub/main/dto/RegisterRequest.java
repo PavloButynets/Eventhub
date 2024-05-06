@@ -14,11 +14,11 @@ import org.eventhub.main.model.Gender;
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class RegisterRequest {
-    @Pattern(regexp = "[A-Z][a-z]+",
+    @Pattern(regexp = "\\p{Lu}\\p{Ll}+",
             message = "First name must start with a capital letter followed by one or more lowercase letters")
     private String firstName;
 
-    @Pattern(regexp = "[A-Z][a-z]+",
+    @Pattern(regexp = "\\p{Lu}\\p{Ll}+",
             message = "Last name must start with a capital letter followed by one or more lowercase letters")
     private String lastName;
 

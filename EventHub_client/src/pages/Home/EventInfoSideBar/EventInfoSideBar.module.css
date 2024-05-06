@@ -424,7 +424,7 @@ main {
 @media (width >= 1280px) and (width < 1700px) {
   .side-bar-container {
     margin-top: 0;
-    padding: 8px;
+    padding: 10px 12px;
   }
 
   .header {

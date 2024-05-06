@@ -25,8 +25,8 @@ public class Event {
     private UUID id;
 
     @NotBlank(message = "Name is mandatory")
-    @Size(max = 20, min = 5,
-    message = "Name length cannot be greater than 20 symbols")
+    @Size(max = 35, min = 5,
+    message = "Event name must be between 5 and 35 characters")
     @Column(name = "title", unique = true)
     private String title;
 

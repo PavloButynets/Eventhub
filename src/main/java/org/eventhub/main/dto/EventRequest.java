@@ -17,8 +17,8 @@ import java.util.UUID;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class EventRequest {
     @NotBlank(message = "Name is mandatory")
-    @Size(max = 20, min = 5,
-            message = "Name length cannot be greater than 20 symbols")
+    @Size(max = 35, min = 5,
+            message = "Event name must be between 5 and 35 characters")
     private String title;
 
     @NotNull
