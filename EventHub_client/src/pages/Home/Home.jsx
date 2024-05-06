@@ -1,4 +1,3 @@
-import { useContext, useEffect, useState } from "react";
 import { useOutlet } from "react-router-dom";
 import AuthContext from "../../context/authProvider";
 import { Link, Outlet, useParams, useLocation } from "react-router-dom";
@@ -31,6 +30,7 @@ const Home = () => {
 
   const outlet = useOutlet();
   
+
 
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",

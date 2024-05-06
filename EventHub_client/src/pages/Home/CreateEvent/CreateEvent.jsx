@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import styles from "./CreateEvent.module.css";
 import { CameraOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
@@ -13,9 +13,8 @@ import {
 } from "antd";
 import { getCategories } from "../../../api/getCategories";
 import { MinusCircleOutlined } from "@ant-design/icons";
-import { jwtDecode } from "jwt-decode";
+
 import GetLocationByCoordinates from "../../../api/getLocationByCoordinates";
-import ProcessingEffect from "../../../components/ProcessingEffect/ProcessingEffect";
 
 import usePlacesAutocomplete, {
   getGeocode,
@@ -23,19 +22,42 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import { sendDataWithoutPhotos } from "../../../api/sendEventData";
 import { sendPhotosToServer } from "../../../api/sendEventData";
+import getIdFromToken from "../../../jwt/getIdFromToken";
+
+import ProcessingEffect from "../../../components/ProcessingEffect/ProcessingEffect";
+
 const { TextArea } = Input;
 const { Option } = Select;
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
-const FullSizePhotoModal = ({ photoUrl, onClose }) => {
+const FullSizePhotoModal = ({ photoUrl, handleClosePhoto }) => {
+  const modalRef = useRef(null);
+
+  const handleModalClick = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      handleClosePhoto();
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      handleClosePhoto();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleModalClick);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("mousedown", handleModalClick);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
-    <div className={styles.fullSizePhotoModal}>
-      <div className={styles.modalContent}>
-        <img src={photoUrl} alt="Full Size Photo" />
-        <button className={styles.closeButton} onClick={onClose}>
-          Close
-        </button>
-      </div>
+    <div className={styles.fullSizePhotoModal} ref={modalRef}>
+      <img src={photoUrl} alt="Full Size Photo" />
     </div>
   );
 };
@@ -141,7 +163,7 @@ const CreateEvent = () => {
 
   const [formData, setFormData] = useState(new Array(6).fill(null));
 
-  const [submitChanges, setSubmitChanges] = useState(false);
+  const [processing, setProcessing] = useState(false);
   useEffect(() => {
     // Отримання категорії з серверу під час завантаження компонента
     const fetchCategories = async () => {
@@ -251,8 +273,8 @@ const CreateEvent = () => {
   };
 
   const validateFields = () => {
-    if (title.length < 5 || title.length > 35) {
-      message.error("Event name must be between 5 and 35 characters");
+    if (title.length < 5 || title.length > 20) {
+      message.error("Event name must be between 5 and 20 characters");
       return false;
     }
 
@@ -296,18 +318,18 @@ const CreateEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setSubmitChanges(true);
+      setProcessing(true);
+
       if (!validateFields()) {
         return;
       }
+
       console.log(dateRange);
       const startAt = formatDate(dateRange[0]);
       const expireAt = formatDate(dateRange[1]);
-      const authToken = localStorage.getItem("token");
       console.log("Категорії", selectedCategories);
 
-      const user = jwtDecode(authToken);
-      const user_id = user.id;
+      const user_id = getIdFromToken();
       const eventData = {
         title: title,
         max_participants: participants,
@@ -348,191 +370,208 @@ const CreateEvent = () => {
       setFormData(new FormData());
     } catch (error) {
       console.error("Error submitting event:", error);
-      message.error(error.response.data);
+      message.error("Failed to create event. Please try again later.");
     } finally {
-      setSubmitChanges(false);
+      setProcessing(false);
     }
   };
 
   return (
     <>
       {isCreateEvent && (
-        <div className={styles.backdrop}>
-          {submitChanges && <ProcessingEffect />}
-          <div className={styles.wrapper}>
-            <div className={styles.mainContainer}>
-              <div className={styles.createEventHeader}>
-                <h2>Create Event</h2>
-                <div className={styles.CloseButton}>
-                  <CloseWindowButton onClick={handleCloseButton} />
+        <>
+          {processing && <ProcessingEffect />}
+          <div className={styles.backdrop}>
+            <div className={styles.wrapper}>
+              <div className={styles.mainContainer}>
+                <div className={styles.createEventHeader}>
+                  <h2>Create Event</h2>
+                  <div className={styles.CloseButton}>
+                    <CloseWindowButton onClick={handleCloseButton} />
+                  </div>
                 </div>
-              </div>
-              <div className={styles.photoContainer}>
-                {photos.map((photo, index) => (
-                  <div
-                    key={index}
-                    className={styles.photo}
-                    onMouseEnter={() => setHoveredPhotoIndex(index)}
-                    onMouseLeave={() => setHoveredPhotoIndex(-1)}
-                  >
-                    {index === 0 && (
-                      <div className={styles.miniContainer}>
-                        <span className={styles.mainPhotoText}>Main</span>
-                      </div>
-                    )}
-                    {photo ? (
-                      <>
-                        <img src={photo} alt={`Photo ${index}`} />
-                        {hoveredPhotoIndex === index && (
-                          <div className={styles.photoActions}>
-                            <div className={styles.actionIcon}>
-                              <DeleteOutlined
-                                onClick={() => handlePhotoDelete(index)}
-                                style={{
-                                  fontSize: "24px",
-                                  color: "#FF0000",
-                                  cursor: "pointer",
-                                }}
-                              />
-                            </div>
-                            <div className={styles.actionIcon}>
-                              <EyeOutlined
-                                onClick={() => handleFullSizePhoto(index)}
-                                style={{
-                                  fontSize: "24px",
-                                  color: "#FFFFF",
-                                  cursor: "pointer",
-                                }}
-                              />
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <>
-                        {addedPhotos === index && (
-                          <label className={styles.addPhotoLabel}>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={(event) =>
-                                handlePhotoUpload(index, event)
-                              }
-                              style={{ display: "none" }}
-                            />
-                            Add Photo
-                          </label>
-                        )}
-                        {addedPhotos !== index && (
-                          <div className={styles.cameraIcon}>
-                            <CameraOutlined
-                              style={{
-                                fontSize: "24px",
-                                color: "#AAAAAA",
-                                cursor: "pointer",
-                              }}
-                            />
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </div>
-                ))}
-              </div>
-              <div className={styles.ParamsContainer}>
-                {/* Перший рядок */}
-                <div className={styles.row}>
-                  <div className={styles.ParamContainer}>
-                    <div className={styles.ParamLabel}>Name</div>
-                    <Input
-                      placeholder="Name"
-                      className={styles.Param}
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                    />
-                  </div>
-                  <div className={styles.ParamContainer}>
-                    <div className={styles.ParamLabel}>Categories</div>
-                    <Select
-                      className={styles.Param}
-                      placeholder="Categories"
-                      mode="multiple"
-                      maxTagCount={3}
-                      maxTagPlaceholder={<MinusCircleOutlined />}
-                      value={selectedCategories}
-                      onChange={handleCategoryChange}
+                <div className={styles.photoContainer}>
+                  {photos.map((photo, index) => (
+                    <div
+                      key={index}
+                      className={styles.photo}
+                      onMouseEnter={() => setHoveredPhotoIndex(index)}
+                      onMouseLeave={() => setHoveredPhotoIndex(-1)}
                     >
-                      {categories.map((category) => (
-                        <Option key={category.id} value={category.name}>
-                          {category.name}
-                        </Option>
-                      ))}
-                    </Select>
-                  </div>
-                </div>
-                {/* Другий рядок */}
-                <div className={styles.row}>
-                  <div className={styles.ParamContainer}>
-                    <div className={styles.ParamLabel}>Location</div>
-                    <PlacesAutocomplete
-                      onSelectLocation={handleLocationChange}
-                    />
-                  </div>
-                  <div className={styles.ParamContainer}>
-                    <div className={styles.ParamLabel}>Participants</div>
-                    <Input
-                      placeholder="Participants"
-                      className={styles.Param}
-                      value={participants}
-                      onChange={(e) => setParticipants(e.target.value)}
-                    />
-                  </div>
-                </div>
-                {/* Третій рядок */}
-                <div className={styles.row}>
-                  <div className={styles.ParamContainer}>
-                    <div className={styles.ParamLabel}>
-                      Start date and time - End date and time
+                      {index === 0 && (
+                        <div className={styles.miniContainer}>
+                          <span className={styles.mainPhotoText}>Main</span>
+                        </div>
+                      )}
+                      {photo ? (
+                        <>
+                          <img src={photo} alt={`Photo ${index}`} />
+                          {hoveredPhotoIndex === index && (
+                            <div className={styles.photoActions}>
+                              <div className={styles.actionIcon}>
+                                <DeleteOutlined
+                                  onClick={() => handlePhotoDelete(index)}
+                                  style={{
+                                    fontSize: "24px",
+                                    color: "#FF0000",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                              </div>
+                              <div className={styles.actionIcon}>
+                                <EyeOutlined
+                                  onClick={() => handleFullSizePhoto(index)}
+                                  handleClosePhoto={() =>
+                                    setFullSizePhotoIndex(-1)
+                                  }
+                                  style={{
+                                    fontSize: "24px",
+                                    color: "#FFFFF",
+                                    cursor: "pointer",
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          {addedPhotos === index && (
+                            <label className={styles.addPhotoLabel}>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(event) =>
+                                  handlePhotoUpload(index, event)
+                                }
+                                style={{ display: "none" }}
+                              />
+                              Add Photo
+                            </label>
+                          )}
+                          {addedPhotos !== index && (
+                            <div className={styles.cameraIcon}>
+                              <CameraOutlined
+                                style={{
+                                  fontSize: "24px",
+                                  color: "#AAAAAA",
+                                  cursor: "pointer",
+                                }}
+                              />
+                            </div>
+                          )}
+                        </>
+                      )}
                     </div>
-                    <DatePicker.RangePicker
-                      showTime={{ format: "HH:mm" }}
-                      format="YYYY-MM-DD HH:mm"
-                      placeholder={["Start date and time", "End date and time"]}
-                      style={{ width: "100%", height: "4vh", zIndex: 999 }}
-                      onChange={handleDateChange}
-                    />
+                  ))}
+                </div>
+                <div className={styles.ParamsContainer}>
+                  {/* Перший рядок */}
+                  <div className={styles.row}>
+                    <div className={styles.ParamContainer}>
+                      <div className={styles.ParamLabel}>Name</div>
+                      <Input
+                        placeholder="Name"
+                        className={styles.Param}
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
+                    </div>
+                    <div className={styles.ParamContainer}>
+                      <div className={styles.ParamLabel}>Categories</div>
+                      <Select
+                        className={styles.Param}
+                        placeholder="Categories"
+                        mode="multiple"
+                        maxTagCount={2}
+                        maxTagPlaceholder={<MinusCircleOutlined />}
+                        value={selectedCategories}
+                        onChange={handleCategoryChange}
+                      >
+                        {categories.map((category) => (
+                          <Option key={category.id} value={category.name}>
+                            {category.name}
+                          </Option>
+                        ))}
+                      </Select>
+                    </div>
+                  </div>
+                  {/* Другий рядок */}
+                  <div className={styles.row}>
+                    <div className={styles.ParamContainer}>
+                      <div className={styles.ParamLabel}>Location</div>
+                      <PlacesAutocomplete
+                        onSelectLocation={handleLocationChange}
+                      />
+                    </div>
+                    <div className={styles.ParamContainer}>
+                      <div className={styles.ParamLabel}>Participants</div>
+                      <Input
+                        placeholder="Participants"
+                        className={styles.Param}
+                        value={participants}
+                        onChange={(e) => setParticipants(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  {/* Третій рядок */}
+                  <div className={styles.row}>
+                    <div className={styles.ParamContainer}>
+                      <div className={styles.ParamLabel}>
+                        Start date and time - End date and time
+                      </div>
+                      <DatePicker.RangePicker
+                        showTime={{ format: "HH:mm" }}
+                        format="YYYY-MM-DD HH:mm"
+                        placeholder={[
+                          "Start date and time",
+                          "End date and time",
+                        ]}
+                        style={{ width: "100%", height: "4vh", zIndex: 999 }}
+                        onChange={handleDateChange}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className={styles.DescriptionContainer}>
-                <div className={styles.ParamLabel}>Description</div>
-                <TextArea
-                  autoSize={{
-                    minRows: 2,
-                    maxRows: window.innerHeight < 900 ? 2 : 5,
-                  }}
-                  placeholder="Enter description..."
-                  value={description}
-                  onChange={handleDescriptionChange}
-                />
-              </div>
-              <div className={styles.ParticipationContainer}>
-                <Checkbox
-                  className={styles.Checkbox}
-                  checked={withOwner}
-                  onChange={handleCheckboxChange}
-                >
-                  I take part in this event
-                </Checkbox>
-              </div>
-              <div className={styles.CreateButtonContainer}>
-                <button className={styles.CreateButton} onClick={handleSubmit}>
-                  Create Event
-                </button>
+                <div className={styles.DescriptionContainer}>
+                  <div className={styles.ParamLabel}>Description</div>
+                  <TextArea
+                    autoSize={{
+                      minRows: 2,
+                      maxRows: window.innerHeight < 900 ? 2 : 5,
+                    }}
+                    placeholder="Enter description..."
+                    value={description}
+                    onChange={handleDescriptionChange}
+                  />
+                </div>
+                <div className={styles.ParticipationContainer}>
+                  <Checkbox
+                    className={styles.Checkbox}
+                    checked={withOwner}
+                    onChange={handleCheckboxChange}
+                  >
+                    I take part in this event
+                  </Checkbox>
+                </div>
+                <div className={styles.CreateButtonContainer}>
+                  <button
+                    className={styles.CreateButton}
+                    onClick={handleSubmit}
+                  >
+                    Create Event
+                  </button>
+                </div>
+                {fullSizePhotoIndex !== -1 && (
+                  <FullSizePhotoModal
+                    photoUrl={photos[fullSizePhotoIndex]}
+                    handleClosePhoto={() => setFullSizePhotoIndex(-1)}
+                  />
+                )}
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

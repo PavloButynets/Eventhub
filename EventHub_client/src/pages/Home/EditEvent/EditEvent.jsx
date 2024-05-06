@@ -5,9 +5,7 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from "use-places-autocomplete";
 import dayjs from "dayjs";
-
-import { jwtDecode } from "jwt-decode";
-
+import getIdFromToken from "../../../jwt/getIdFromToken";
 import styles from "./EditEvent.module.css";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
 import { Input, Select, DatePicker, AutoComplete, message } from "antd";
@@ -40,11 +38,19 @@ const FullSizePhotoModal = ({ photoUrl, handleClosePhoto }) => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      handleClosePhoto();
+    }
+  };
+
   useEffect(() => {
     document.addEventListener("mousedown", handleModalClick);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.removeEventListener("mousedown", handleModalClick);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -138,6 +144,8 @@ const EditEvent = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [submitChanges, setSubmitChanges] = useState(false);
+
+  const userId = getIdFromToken();
 
   const eventId = searchParams.get("eventId");
 
@@ -276,51 +284,56 @@ const EditEvent = () => {
     date.setHours(date.getHours() - offset / 60);
     return date.toISOString();
   };
-  /*
-    const validateFields = () => {
-        if (title.length < 5 || title.length > 20) {
-            message.error("Event name must be between 5 and 20 characters");
-            return false;
-        }
 
-        if (
-            !participants ||
-            isNaN(participants) ||
-            participants < 2 ||
-            participants > 20000
-        ) {
-            message.error("Number of participants must be a number between 2 and 20,000");
-            return false;
-        }
+  const validateFields = () => {
+    if (title.length < 5 || title.length > 20) {
+      message.error("Event name must be between 5 and 20 characters");
+      return false;
+    }
 
-        if (!dateRange) {
-            message.error("Start and End date cannot be empty");
-            return false;
-        }
+    if (
+      !participants ||
+      isNaN(participants) ||
+      participants < 2 ||
+      participants > 20000
+    ) {
+      message.error(
+        "Number of participants must be a number between 2 and 20,000"
+      );
+      return false;
+    }
 
-        if (!description || description.trim() === "") {
-            message.error("Event description cannot be empty");
-            return false;
-        } else if (description.length > 255) {
-            message.error("Event description cannot exceed 255 characters");
-            return false;
-        }
+    if (!dateRange) {
+      message.error("Start and End date cannot be empty");
+      return false;
+    }
 
-        if (selectedCategories.length === 0) {
-            message.error("At least one category must be selected");
-            return false;
-        }
+    if (!description || description.trim() === "") {
+      message.error("Event description cannot be empty");
+      return false;
+    } else if (description.length > 255) {
+      message.error("Event description cannot exceed 255 characters");
+      return false;
+    }
 
-        if (!location || location.trim() === "") {
-            message.error("Event location cannot be empty");
-            return false;
-        }
+    if (selectedCategories.length === 0) {
+      message.error("At least one category must be selected");
+      return false;
+    }
 
-        return true;
-    };
-    */
+    if (!location || location.trim() === "") {
+      message.error("Event location cannot be empty");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateFields()) {
+      return;
+    }
     setSubmitChanges(true);
     try {
       const startAt = formatDate(dateRange[0]);
@@ -379,9 +392,10 @@ const EditEvent = () => {
     }
   };
 
-  return (
+  return eventId && userId ? (
     <div className={styles.backdrop}>
       {submitChanges && <ProcessingEffect />}
+
       <div className={styles.wrapper}>
         <div className={styles.mainContainer}>
           <div className={styles.editEventHeader}>
@@ -478,7 +492,7 @@ const EditEvent = () => {
                   className={styles.Param}
                   placeholder="Categories"
                   mode="multiple"
-                  maxTagCount={3}
+                  maxTagCount={2}
                   maxTagPlaceholder={<MinusCircleOutlined />}
                   value={selectedCategories}
                   onChange={(values) => setSelectedCategories(values)}
@@ -555,6 +569,8 @@ const EditEvent = () => {
         </div>
       </div>
     </div>
+  ) : (
+    navigate({ pathname: "../" })
   );
 };
 
