@@ -1,5 +1,5 @@
 import styles from "./SignUp.module.css";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "../../../api/axios";
 import { useNavigate, Link } from "react-router-dom";
 import LogIn from "../LogIn/LogIn";
@@ -7,11 +7,11 @@ import { PlacesAutocomplete } from "../../../components/PlaceAutocomplete/PlaceA
 import { checkEmail, checkName, checkPassword } from "./validation";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
 import useAuth from "../../../hooks/useAuth";
+import AuthContext from "../../../context/authProvider";
 
 import { Button, Checkbox, Col, Form, Input, Row, Select, message } from "antd";
 
 const { Option } = Select;
-const REGISTER_URL = "/authentication/register";
 
 const formItemLayout = {
   labelCol: {
@@ -44,9 +44,10 @@ const tailFormItemLayout = {
   },
 };
 const SignUp = () => {
-  const { setAuth } = useAuth();
   const [form] = Form.useForm();
   const navigate = useNavigate();
+
+  const { register } = useContext(AuthContext);
 
   const [first_name, setFirstName] = useState("");
   const [last_name, setLastName] = useState("");
@@ -67,16 +68,11 @@ const SignUp = () => {
       gender,
     };
     try {
-      const res = await axios.post(REGISTER_URL, userData, {
-        headers: { "Content-Type": "application/json" },
-      });
+      await register(userData);
 
-      const accessToken = res?.data?.token;
-      localStorage.setItem("token", accessToken);
-      console.log(res);
-      console.log("Response:", res.data);
       message.success("Registration successful!");
       navigate("/");
+      window.location.reload();
     } catch (err) {
       if (!err.response) {
         // Помилка з'єднання з сервером
@@ -252,13 +248,17 @@ const SignUp = () => {
                 label="City"
                 rules={[
                   {
-                    required:true,
+                    required: true,
                     message: "Please select your City",
                     whitespace: true,
                   },
                 ]}
               >
-                <PlacesAutocomplete onSelectLocation={(value) => setCity(value)} initialValue={null} onChange={(value) => setCity(value)}/>
+                <PlacesAutocomplete
+                  onSelectLocation={(value) => setCity(value)}
+                  initialValue={null}
+                  onChange={(value) => setCity(value)}
+                />
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>

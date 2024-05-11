@@ -1,5 +1,4 @@
 import axios from "./axios";
-import getIdFromToken from "../jwt/getIdFromToken";
 
 export const getCheckbuttonsEvents = async (
   is_my_events,
@@ -9,21 +8,27 @@ export const getCheckbuttonsEvents = async (
 ) => {
   const DATA_URL = "/events/checkbox-filter";
 
-  const user_id = getIdFromToken();
+  const accessToken = localStorage.getItem("token");
 
-  const response = await axios.post(
-    DATA_URL,
-    {
-      user_id,
-      is_my_events,
-      is_joined_events,
-      is_pending_events,
-      is_archive_events,
-    },
-    {
-      headers: { "Content-Type": "application/json" },
-    }
-  );
-
-  return response.data;
+  try {
+    const response = await axios.post(
+      DATA_URL,
+      {
+        user_id: null,
+        is_my_events,
+        is_joined_events,
+        is_pending_events,
+        is_archive_events,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error:", error.message);
+  }
 };

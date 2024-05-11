@@ -1,5 +1,6 @@
 package org.eventhub.main.exception;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
@@ -50,10 +51,17 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<?> jwtExpiredException(ExpiredJwtException ex) {
+        log.error("JWT expired exception: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
+    }
+
+    @ExceptionHandler
     public ResponseEntity<?> handlePasswordException(PasswordException ex) {
         log.error("Bad request with user password: {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+
     @ExceptionHandler
     public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         String errorMessage = ex.getMostSpecificCause().getMessage();
@@ -71,7 +79,6 @@ public class GlobalExceptionHandler {
         else {
             errorMessage = "Data violation error occurred";
         }
-
 
         log.error(ex.getMostSpecificCause().getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);

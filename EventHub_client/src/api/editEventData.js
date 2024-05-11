@@ -4,7 +4,7 @@ export const editDataWithoutPhotos = async (eventData, event_id) => {
   const accessToken = localStorage.getItem("token");
   const authAxios = axios.create({
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "content-type",
       "Access-Control-Allow-Credentials": "true",

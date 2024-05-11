@@ -13,7 +13,7 @@ public interface FilterRepository extends JpaRepository<Event, UUID> {
     @Query("SELECT e FROM Event e WHERE e.owner.id = :userId")
     List<Event> findMyEvents(@Param("userId") UUID userId);
 
-    @Query("SELECT p.event FROM Participant p WHERE p.user.id = :userId")
+    @Query("SELECT p.event FROM Participant p WHERE p.user.id = :userId AND p.isApproved = true")
     List<Event> findJoinedEvents(@Param("userId") UUID userId);
 
     @Query("SELECT p.event FROM Participant p WHERE p.user.id = :userId AND p.isApproved = false")
