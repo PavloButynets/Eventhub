@@ -16,13 +16,11 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
-    private final JwtService jwtService;
 
     @Autowired
-    public RefreshTokenServiceImpl(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository, JwtService jwtService) {
+    public RefreshTokenServiceImpl(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository) {
         this.refreshTokenRepository = refreshTokenRepository;
         this.userRepository = userRepository;
-        this.jwtService = jwtService;
     }
 
     @Override

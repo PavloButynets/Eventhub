@@ -115,6 +115,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const refresh = async (token) => {
       try {
+        //console.log("oboba");
         await refreshToken(token);
       } catch (error) {
         localStorage.removeItem("refreshToken");
