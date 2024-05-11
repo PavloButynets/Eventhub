@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.PasswordException;
+import org.eventhub.main.exception.ResponseStatusException;
 import org.eventhub.main.mapper.UserMapper;
 import org.eventhub.main.model.Photo;
 import org.eventhub.main.model.User;
@@ -11,18 +12,19 @@ import org.eventhub.main.repository.UserRepository;
 import org.eventhub.main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 //@RequiredArgsConstructor
 @Service
+@EnableScheduling
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userDtoMapper;
@@ -140,6 +142,26 @@ public class UserServiceImpl implements UserService {
         user.setPassword(newPassword);
         return userDtoMapper.entityToResponse(userRepository.save(user));
     }
+
+    @Override
+    public UserResponse confirmUser(UUID id){
+        User user = readByIdEntity(id);
+        if(user.isVerified()){
+            throw new ResponseStatusException("User is already verified!");
+        }
+        user.setVerified(true);
+        return userDtoMapper.entityToResponse(this.userRepository.save(user));
+    }
+
+    @Override
+    public List<UserResponseBriefInfo> findApprovedUsersByEventId(UUID eventId){
+        List<User> users = this.userRepository.findApprovedUsersByEventId(eventId);
+
+        return users.stream()
+                .map(this.userDtoMapper::entityToBriefResponse)
+                .collect(Collectors.toList());
+    }
+
 //    public User readByEmail(String email) {
 //        return userRepository.findByEmail(email);
 //    }

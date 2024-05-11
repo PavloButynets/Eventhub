@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
-import { checkEmail } from "../SignUp/validation";
+
+import { checkEmail } from "../SignUp/Registration/validation";
 import AuthContext from "../../../context/authProvider";
 
 const LogIn = () => {

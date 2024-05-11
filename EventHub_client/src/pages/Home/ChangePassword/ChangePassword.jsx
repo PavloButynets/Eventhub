@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
+import useLogin from "../../../hooks/useLogin";
 import { Input, message } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
@@ -10,18 +11,19 @@ import { changePassword } from "../../../api/changePassword";
 import styles from "./ChangePassword.module.css";
 
 const ChangePassword = () => {
-  const { auth, setAuth } = useAuth();
+  //const { auth, setAuth } = useAuth();
+  const authenticated = useLogin();
   const navigate = useNavigate();
   const [passwords, setPasswords] = useState({
     old_password: "",
     new_password: "",
     confirmNewPassword: "",
   });
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [submitChanges, setSubmitChanges] = useState(false);
 
   useEffect(() => {
-    if (!auth.token) {
+    if (!authenticated) {
       navigate("/login");
     }
     setShow(true);

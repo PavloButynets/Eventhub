@@ -32,6 +32,8 @@ import { message } from "antd";
 import { getUserParticipants } from "../../../api/getUserParticipants";
 import { leaveEvent } from "../../../api/leaveEvent";
 
+import useLogin from "../../../hooks/useLogin";
+
 const EventInfoSideBar = () => {
   // States
   const { eventId } = useParams();
@@ -66,7 +68,8 @@ const EventInfoSideBar = () => {
   const [searchParams] = useSearchParams();
 
   // Auth
-  const { auth } = useAuth();
+  //const { auth } = useAuth();
+  const authenticated = useLogin();
 
   // Navigation
   const navigate = useNavigate();
@@ -79,7 +82,7 @@ const EventInfoSideBar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (auth.token) {
+        if (authenticated) {
           const userState = await getParticipantState(eventId);
           setUserState(userState.state);
           setIsOwner(userState.owner);
@@ -161,7 +164,7 @@ const EventInfoSideBar = () => {
     fetchData();
 
     return () => setIsShowMore(false);
-  }, [eventId, auth, userState, reloadList]);
+  }, [eventId, userState, reloadList]);
 
   useEffect(() => {
     if (

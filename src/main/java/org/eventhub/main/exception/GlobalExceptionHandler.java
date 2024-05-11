@@ -63,6 +63,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<?> handleNullPointerException(NullPointerException ex) {
+        log.error("Null pointer exception" + ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler
     public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         String errorMessage = ex.getMostSpecificCause().getMessage();
         if (errorMessage.contains("duplicate")) {

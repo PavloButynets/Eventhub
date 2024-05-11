@@ -62,20 +62,26 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (userData) => {
-    try {
-      const res = await axios.post(REGISTER_URL, userData, {
-        headers: { "Content-Type": "application/json" },
-      });
-      const accessToken = res?.data?.accessToken;
-      const refToken = res?.data?.refreshToken;
-      const expiryDate = res?.data?.expiryDate;
+    await axios.post(REGISTER_URL, userData, {
+      headers: { "Content-Type": "application/json" },
+    });
+  };
 
-      localStorage.setItem("token", accessToken);
-      localStorage.setItem("refreshToken", refToken);
-      localStorage.setItem("expDate", expiryDate);
-    } catch (error) {
-      console.error(error);
-    }
+  const confirmEmail = async (emailToken) => {
+    const res = await axios.get(
+      `authentication/confirm-account?token=${emailToken}`,
+      emailToken,
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    const accessToken = res?.data?.accessToken;
+    const refToken = res?.data?.refreshToken;
+    const expiryDate = res?.data?.expiryDate;
+
+    localStorage.setItem("token", accessToken);
+    localStorage.setItem("refreshToken", refToken);
+    localStorage.setItem("expDate", expiryDate);
   };
 
   const logout = async () => {
@@ -109,10 +115,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const refresh = async (token) => {
       try {
-        console.log("not-exp");
         await refreshToken(token);
       } catch (error) {
-        console.log("Refresh token expired.");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("token");
         localStorage.removeItem("expDate");
@@ -145,7 +149,9 @@ export const AuthProvider = ({ children }) => {
   }, [auth]);
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ auth, setAuth, login, confirmEmail, logout, register }}
+    >
       {children}
     </AuthContext.Provider>
   );

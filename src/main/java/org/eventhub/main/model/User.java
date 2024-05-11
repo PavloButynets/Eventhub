@@ -78,6 +78,9 @@ public class User implements UserDetails {
     @Column (name = "show_email")
     private boolean showEmail;
 
+    @Column (name = "is_verified")
+    private boolean isVerified;
+
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     private List<Event> userEvents;
 
@@ -86,6 +89,9 @@ public class User implements UserDetails {
 
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<Photo> profileImages = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private ConfirmationToken confirmationToken;
 
 //    @Enumerated(EnumType.STRING)
 //    Role role;

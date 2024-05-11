@@ -1,9 +1,6 @@
 package org.eventhub.main.mapper;
 
-import org.eventhub.main.dto.PhotoResponse;
-import org.eventhub.main.dto.UserRequestCreate;
-import org.eventhub.main.dto.UserRequestUpdate;
-import org.eventhub.main.dto.UserResponse;
+import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.NullEntityReferenceException;
 import org.eventhub.main.model.Photo;
@@ -55,6 +52,15 @@ public class UserMapper {
         return response;
     }
 
+    public UserResponseBriefInfo entityToBriefResponse(User user){
+        return UserResponseBriefInfo.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .build();
+    }
+
     public User createRequestToEntity(UserRequestCreate userRequest, User user) {
         if(userRequest == null){
             throw new NullDtoReferenceException("UserRequest can't be null");
@@ -72,6 +78,7 @@ public class UserMapper {
         user.setCity(userRequest.getCity());
         user.setGender(userRequest.getGender());
         user.setShowEmail(false);
+        user.setVerified(false);
         return user;
     }
 

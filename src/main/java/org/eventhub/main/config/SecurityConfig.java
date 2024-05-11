@@ -52,6 +52,7 @@ public class SecurityConfig {
                         "/users/events/{event_id}",
                         "/users/{user_id}",
                         "/users/{username}/profile",
+                        "users/register",
                         "/categories/**",
                         "/search",
                         "/events/filter",
