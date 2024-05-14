@@ -391,6 +391,21 @@ const EditEvent = () => {
       console.error("Error deleting event:", error);
     }
   };
+  const handleKeyDown = (event) => {
+
+    if (event.key === 'Escape') {
+      event.preventDefault(); 
+      clearEventData();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return eventId && userId ? (
     <div className={styles.backdrop}>

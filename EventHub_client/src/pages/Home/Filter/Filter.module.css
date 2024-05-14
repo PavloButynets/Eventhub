@@ -11,7 +11,7 @@
     
 }
 .applyButtonContainer{
-   text-align: right;
+   text-align: -webkit-right;
    margin-right: 10px;   
 }
 

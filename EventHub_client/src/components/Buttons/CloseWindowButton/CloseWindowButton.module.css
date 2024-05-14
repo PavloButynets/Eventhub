@@ -1,11 +1,18 @@
 .btn {
   all: unset;
   background: transparent;
-  width: 3.5vh;
-  height: 3.5vh;
   cursor: pointer;
   box-shadow: 0 0 3px 0;
   border-radius: 10px;
+  width: 3.5vh;
+  height: 3.5vh;
+}
+
+@media (width > 1700px) {
+  .btn {
+    height: 1.7rem;
+    width: 1.7rem;
+  }
 }
 
 .btn-icon {

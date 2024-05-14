@@ -37,6 +37,16 @@ const defaultOption = {
   styles: light,
   minZoom: 5,
   maxZoom: 20,
+  restriction: {
+    latLngBounds: {
+      north: 85, 
+      south: -80,
+      west: -180,
+      east: 180, 
+    },
+    strictBounds: false, 
+  },
+
 };
 
 const Map = ({ center }) => {

@@ -375,6 +375,19 @@ const CreateEvent = () => {
       setProcessing(false);
     }
   };
+  const handleKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      handleCloseButton();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <>

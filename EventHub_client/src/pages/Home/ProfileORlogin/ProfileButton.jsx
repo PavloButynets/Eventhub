@@ -83,8 +83,8 @@ const MenuButton = () => {
         </Menu>
       }
       trigger={["click"]}
-      open={isOpen}
-      onOpenChange={toggleMenu}
+      visible={isOpen}
+      onVisibleChange={toggleMenu}
     >
       <ProfileInfo onProfileClick={toggleMenu} />
     </Dropdown>

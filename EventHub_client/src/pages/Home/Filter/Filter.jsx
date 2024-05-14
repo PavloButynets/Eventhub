@@ -109,13 +109,13 @@ const EventFilter = () => {
             <Space compact="true">
                 <Input
                   placeholder="Min Participants"
-                  style={{ width: "50%" }}
+                  style={{ width: "100%" }}
                   onChange={(e) => setMinParticipants(e.target.value)}
                   value={minParticipants}
                 />
                 <Input
                   placeholder="Max Participants"
-                  style={{ width: "50%" }}
+                  style={{ width: "100%" }}
                   onChange={(e) => setMaxParticipants(e.target.value)}
                   value={maxParticipants}
                 />
@@ -131,6 +131,7 @@ const EventFilter = () => {
             <Menu.Item key="4">
               <DatePicker.RangePicker
                 placeholder={["Start Date", "End Date"]}
+                style={{ width: "100%" }}
                 onChange={(dates) => setDateRange(dates)}
                 value={dateRange}
               ></DatePicker.RangePicker>

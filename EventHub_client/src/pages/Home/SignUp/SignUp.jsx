@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+
 import Registration from "./Registration/Registration";
 import EmailVerification from "./EmailVerification/EmailVerification";
 
