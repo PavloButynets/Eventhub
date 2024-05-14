@@ -239,7 +239,7 @@ const EventInfoSideBar = () => {
     try {
       if (userState === ParticipantState.REQUESTED) {
         const participant = await getParticipantByUser(eventId);
-        await deleteParticipant(participant.id, eventId);
+        await leaveEvent(participant.id, eventId);
         setUserState(ParticipantState.NONE);
       }
     } catch (error) {

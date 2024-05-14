@@ -68,6 +68,8 @@ const Registration = ({ setUserEmail, setIsRegistered }) => {
       password,
       city,
       gender,
+      provider: "EventHub",
+      is_verified: false,
     };
     try {
       setProcessing(true);

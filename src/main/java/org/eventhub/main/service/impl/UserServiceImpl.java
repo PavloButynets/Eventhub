@@ -1,6 +1,8 @@
 package org.eventhub.main.service.impl;
 
+import groovy.util.logging.Slf4j;
 import jakarta.persistence.EntityNotFoundException;
+import org.eventhub.main.config.AuthenticationService;
 import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.exception.PasswordException;
@@ -9,7 +11,10 @@ import org.eventhub.main.mapper.UserMapper;
 import org.eventhub.main.model.Photo;
 import org.eventhub.main.model.User;
 import org.eventhub.main.repository.UserRepository;
+import org.eventhub.main.service.PhotoService;
 import org.eventhub.main.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -25,22 +30,35 @@ import java.util.stream.Collectors;
 //@RequiredArgsConstructor
 @Service
 @EnableScheduling
+@Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userDtoMapper;
 
+    private final PhotoService photoService;
+    private final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
     @Lazy
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userDtoMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userDtoMapper, PhotoService photoService) {
         this.userRepository = userRepository;
         this.userDtoMapper = userDtoMapper;
+        this.photoService = photoService;
     }
 
     @Override
     public UserResponse create(UserRequestCreate userRequest) {
         if (userRequest != null) {
             User user = userDtoMapper.createRequestToEntity(userRequest, new User());
-            return userDtoMapper.entityToResponse(userRepository.save(user));
+            UserResponse response = userDtoMapper.entityToResponse(userRepository.save(user));
+            logger.info("User entity saved");
+            if (userRequest.getPhotoUrl() != null) {
+                photoService.addUserPhotoByUrl(response.getId(), userRequest.getPhotoUrl());
+
+                logger.info("Photo added: " + userRequest.getPhotoUrl());
+            }
+
+            return response;
         }
         throw new NullDtoReferenceException("User cannot be 'null'");
     }

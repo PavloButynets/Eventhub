@@ -128,9 +128,11 @@ public class ParticipantServiceImpl implements ParticipantService {
     public void deleteSelf(UUID id, UUID eventId, String token) {
         UUID userId = jwtService.getId(token);
         Participant participant = readByIdEntity(id);
-        if (participant.getUser().getId().equals(userId) && participant.isApproved()) {
+        if (participant.getUser().getId().equals(userId)) {
             Event event = eventService.readByIdEntity(eventId);
-            event.setParticipantCount(event.getParticipantCount() - 1);
+            if (participant.isApproved()) {
+                event.setParticipantCount(event.getParticipantCount() - 1);
+            }
             participantRepository.delete(readByIdEntity(id));
         }
         else {

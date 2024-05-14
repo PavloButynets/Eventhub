@@ -26,6 +26,13 @@ public class PhotoMapper {
         if (photo == null) {
             throw new NullEntityReferenceException("Photo can't be null");
         }
+        if (photo.getPhotoName().startsWith("GPhoto")) {
+            return PhotoResponse.builder()
+                    .id(photo.getId())
+                    .photoName(photo.getPhotoName())
+                    .photoUrl(photo.getPhotoUrl())
+                    .build();
+        }
         OffsetDateTime expiryTime = OffsetDateTime.now().plusDays(1);
         BlobSasPermission sasPermission = new BlobSasPermission()
                 .setReadPermission(true);

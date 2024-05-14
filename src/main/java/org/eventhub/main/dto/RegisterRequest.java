@@ -22,7 +22,7 @@ public class RegisterRequest {
             message = "Last name must start with a capital letter followed by one or more lowercase letters")
     private String lastName;
 
-    @Size(min = 3, max = 15, message = "Username must be between 3 and 15 symbols")
+    @Size(min = 3, max = 20, message = "Username must be between 3 and 20 symbols")
     private String username;
 
     @Pattern(regexp = "[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}", message = "Must be a valid e-mail address")
@@ -43,9 +43,15 @@ public class RegisterRequest {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    private String provider;
+
+    private String photoUrl;
+
+    private boolean isVerified;
+
     public RegisterRequest() {}
 
-    public RegisterRequest(String firstName, String lastName, String username, String email, String password, String city, Gender gender) {
+    public RegisterRequest(String firstName, String lastName, String username, String email, String password, String city, Gender gender, String provider, String photoUrl, boolean isVerified) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -53,5 +59,8 @@ public class RegisterRequest {
         this.password = password;
         this.city = city;
         this.gender = gender;
+        this.provider = provider;
+        this.photoUrl = photoUrl;
+        this.isVerified = isVerified;
     }
 }

@@ -91,10 +91,25 @@ public class PhotoServiceImpl implements PhotoService {
     public void deleteProfileImage(UUID ownerId, UUID imageId) {
 
         String blobName = this.readById(imageId).getPhotoName();
-        BlockBlobClient blockBlobClient = this.blobContainerClientUser.getBlobClient(blobName).getBlockBlobClient();
-        blockBlobClient.delete();
+        if (!blobName.startsWith("GPhoto")) {
+            BlockBlobClient blockBlobClient = this.blobContainerClientUser.getBlobClient(blobName).getBlockBlobClient();
+            blockBlobClient.delete();
+        }
         userService.deleteImage(ownerId, this.readByIdEntity(imageId));
         photoRepository.delete(readByIdEntity(imageId));
+    }
+
+    @Override
+    public PhotoResponse addUserPhotoByUrl(UUID userId, String photoUrl) {
+        Photo photo = new Photo();
+        photo.setId(UUID.randomUUID());
+        photo.setPhotoName(String.format("GPhoto%s", photo.getId()));
+        photo.setPhotoUrl(photoUrl);
+
+        userService.addImage(userId, photo);
+        PhotoResponse response = photoMapper.entityToResponse(photoRepository.save(photo));
+
+        return response;
     }
 
     @Override

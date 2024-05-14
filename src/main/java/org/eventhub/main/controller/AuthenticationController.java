@@ -1,10 +1,12 @@
 package org.eventhub.main.controller;
 
+import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.eventhub.main.config.AuthenticationService;
 import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.ResponseStatusException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eventhub.main.model.User;
 import org.eventhub.main.service.ConfirmationTokenService;
 import org.eventhub.main.service.EmailService;
@@ -13,8 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+
+import java.security.GeneralSecurityException;
+
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationService authService;
+    private final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
     private final ConfirmationTokenService confirmationTokenService;
     private final EmailService emailService;
 
@@ -59,6 +67,11 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+    @PostMapping("/google")
+    public ResponseEntity<GoogleJwtResponse> googleAuthentication(@RequestBody GoogleOauthRequest request) throws GeneralSecurityException, IOException {
+        log.info("Authorizing with google");
+        return ResponseEntity.ok(authService.googleLogin(request));
     }
 
     @PostMapping("/refreshToken")

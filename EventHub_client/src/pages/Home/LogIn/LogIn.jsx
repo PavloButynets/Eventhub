@@ -1,22 +1,42 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "../../../api/axios";
 import styles from "./LogIn.module.css";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, Redirect, useAsyncError } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
-
+import { GoogleLogin } from "@react-oauth/google";
 import { checkEmail } from "../SignUp/Registration/validation";
 import AuthContext from "../../../context/authProvider";
+import EmailVerification from "../SignUp/EmailVerification/EmailVerification";
 
 const LogIn = () => {
-  const { login } = useContext(AuthContext);
+  const { login, googleAuth } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [navigate, setNavigate] = useState(false);
+  const [isVerified, setIsVerified] = useState(true);
   const navigateToHome = useNavigate();
+
+  const successGoogleLogin = async (credentialResponse) => {
+    const googleToken = credentialResponse.credential;
+
+    const res = await googleAuth(googleToken);
+
+    const email = res?.data?.email;
+    const accessToken = res?.data?.accessToken;
+    setEmail(email);
+    if (!accessToken) {
+      setIsVerified(false);
+    } else {
+      navigateToHome("/");
+      window.location.reload();
+      message.success("Login successful!");
+    }
+  };
+
   const onFinish = async () => {
     try {
       await login(email, password);
@@ -92,7 +112,7 @@ const LogIn = () => {
     return <Navigate to="/" />;
   }
 
-  return (
+  return isVerified ? (
     <div className={styles.outerContainer}>
       <div className={styles.container}>
         <div className={styles.Buttons}>
@@ -160,23 +180,19 @@ const LogIn = () => {
               Login
             </Button>
           </Form.Item>
-          {/*<p style={{ textAlign: "center" }}>Or</p>*/}
-          {/*<Form.Item style={{ marginBottom: "0px" }}>*/}
-          {/*    <div className={styles.loginButtonContainer}>*/}
-          {/*        <Button type="link" htmlType="button" className={styles.socialMediaLogin}>*/}
-          {/*            <img className={styles.loginImg} src="/images/fb_logo.png"*/}
-          {/*                 alt="Continue with Facebook" />*/}
-          {/*        </Button>*/}
-          {/*        <Button type="link" htmlType="button" className={styles.socialMediaLogin}>*/}
-          {/*            <img className={styles.loginImg} src="/images/apple_logo.png"*/}
-          {/*                 alt="Continue with Apple" />*/}
-          {/*        </Button>*/}
-          {/*        <Button type="link" htmlType="button" className={styles.socialMediaLogin}>*/}
-          {/*            <img className={styles.loginImg} src="/images/google_logo.png"*/}
-          {/*                 alt="Continue with Google" />*/}
-          {/*        </Button>*/}
-          {/*    </div>*/}
-          {/*</Form.Item>*/}
+          <p style={{ textAlign: "center" }}>Or</p>
+          <div className={styles.oauthContainer}>
+            <GoogleLogin
+              onSuccess={successGoogleLogin}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+              useOneTap
+              ux_mode="popup"
+              shape="pill"
+              // login_uri="http://localhost:3000/login"
+            />
+          </div>
           <p style={{ textAlign: "center", fontSize: "12px" }}>
             Don’t have an account in EventHub yet?{" "}
             <Link to="/register">Register!</Link>
@@ -184,6 +200,8 @@ const LogIn = () => {
         </Form>
       </div>
     </div>
+  ) : (
+    <EmailVerification email={email} />
   );
 };
 export default LogIn;

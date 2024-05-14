@@ -6,6 +6,7 @@ import { message } from "antd";
 const LOGIN_URL = "/authentication/login";
 const REGISTER_URL = "/authentication/register";
 const LOGOUT_URL = "/authentication/logout";
+const GOOGLE_AUTH_URL = "/authentication/google";
 
 const AuthContext = createContext({});
 
@@ -103,12 +104,45 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("expDate");
 
-      message.error("You are loged out");
+      message.info("You are loged out");
       setAuth({});
 
       return response.data;
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const googleAuth = async (googleToken) => {
+    try {
+      const res = await axios.post(
+        GOOGLE_AUTH_URL,
+        { google_token: googleToken },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const accessToken = res?.data?.accessToken;
+      const refToken = res?.data?.refreshToken;
+      const expiryDate = res?.data?.expiryDate;
+
+      if (accessToken && refToken && expiryDate) {
+        localStorage.setItem("token", accessToken);
+        localStorage.setItem("refreshToken", refToken);
+        localStorage.setItem("expDate", expiryDate);
+      }
+
+      return res;
+    } catch (err) {
+      if (!err.response) {
+        // Помилка з'єднання з сервером
+        message.error("No server response");
+      } else {
+        message.error(err.response.data);
+      }
     }
   };
 
@@ -151,7 +185,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ auth, setAuth, login, confirmEmail, logout, register }}
+      value={{
+        auth,
+        setAuth,
+        login,
+        confirmEmail,
+        logout,
+        register,
+        googleAuth,
+      }}
     >
       {children}
     </AuthContext.Provider>

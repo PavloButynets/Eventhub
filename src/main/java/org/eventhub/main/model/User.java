@@ -37,7 +37,7 @@ public class User implements UserDetails {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Size(min = 3, max = 15)
+    @Size(min = 3, max = 20)
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
@@ -53,7 +53,7 @@ public class User implements UserDetails {
 //            message = "Must contain at least one uppercase letter")
 //    @Pattern(regexp = ".*[a-z].*",
 //            message = "Must contain at least one lowercase letter")
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = true)
     private String password;
 
     @Size(max = 255,
@@ -64,7 +64,7 @@ public class User implements UserDetails {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "location_city", nullable = false)
+    @Column(name = "location_city", nullable = true)
     private String city;
 
     @Past
@@ -74,6 +74,9 @@ public class User implements UserDetails {
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @Column(name = "provider", nullable = true)
+    private String provider;
 
     @Column (name = "show_email")
     private boolean showEmail;

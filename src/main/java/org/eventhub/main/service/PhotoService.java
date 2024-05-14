@@ -15,6 +15,8 @@ public interface PhotoService {
     PhotoResponse update(PhotoRequest photoRequest, UUID id);
     void deleteEventImage (UUID eventId, UUID imageId, String token);
     void deleteProfileImage(UUID userId, UUID imageId);
+
+    PhotoResponse addUserPhotoByUrl(UUID userId, String photoUrl);
     List<PhotoResponse> getAll();
     List<PhotoResponse> uploadEventPhotos(UUID eventId, List<MultipartFile> files, String token);
     List<PhotoResponse> uploadProfilePhotos(UUID userId, List<MultipartFile> files);

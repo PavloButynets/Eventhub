@@ -1,5 +1,6 @@
 package org.eventhub.main.mapper;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import org.eventhub.main.dto.RegisterRequest;
 import org.eventhub.main.dto.UserRequestCreate;
 import org.eventhub.main.exception.NullDtoReferenceException;
@@ -33,6 +34,25 @@ public class RegisterMapper {
         userRequest.setPassword(registerRequest.getPassword());
         userRequest.setCity(registerRequest.getCity());
         userRequest.setGender(registerRequest.getGender());
+        userRequest.setProvider(registerRequest.getProvider());
+        userRequest.setVerified(registerRequest.isVerified());
+        if (registerRequest.getPhotoUrl() != null) {
+            userRequest.setPhotoUrl(registerRequest.getPhotoUrl());
+        }
+
         return userRequest;
     }
+    public RegisterRequest googlePayloadToRegisterRequest(GoogleIdToken.Payload payload) {
+
+        return RegisterRequest.builder()
+                .email(payload.getEmail())
+                .firstName((String) payload.get("given_name"))
+                .lastName((String) payload.get("family_name"))
+                .provider("Google")
+                .username((String) payload.get("given_name") + (String) payload.get("family_name"))
+                .photoUrl((String) payload.get("picture"))
+                .isVerified(payload.getEmailVerified())
+                .build();
+    }
+
 }

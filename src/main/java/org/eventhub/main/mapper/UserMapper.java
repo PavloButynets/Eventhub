@@ -13,12 +13,14 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class UserMapper {
     private final PhotoMapper photoMapper;
     private final PhotoRepository photoRepository;
+
     @Autowired
     public UserMapper(PhotoMapper photoMapper, PhotoRepository photoRepository){
         this.photoMapper = photoMapper;
@@ -40,6 +42,7 @@ public class UserMapper {
                 .birthDate(user.getBirthDate())
                 .gender(user.getGender())
                 .showEmail(user.isShowEmail())
+                .provider(user.getProvider())
                 .photoResponses(user.getProfileImages()
                         .stream()
                         .map(photoMapper::entityToResponse)
@@ -78,7 +81,9 @@ public class UserMapper {
         user.setCity(userRequest.getCity());
         user.setGender(userRequest.getGender());
         user.setShowEmail(false);
-        user.setVerified(false);
+        user.setProvider(userRequest.getProvider());
+
+        user.setVerified(userRequest.isVerified());
         return user;
     }
 
