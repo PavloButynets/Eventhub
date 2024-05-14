@@ -3,9 +3,7 @@ package org.eventhub.main.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import org.hibernate.engine.internal.Cascade;
 
-import org.hibernate.engine.internal.Cascade;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

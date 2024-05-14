@@ -6,6 +6,7 @@ import org.eventhub.main.dto.ParticipantRequest;
 import org.eventhub.main.dto.ParticipantResponse;
 import org.eventhub.main.dto.ParticipantStateResponse;
 import org.eventhub.main.dto.UserParticipantResponse;
+import org.eventhub.main.event.EmailEventPublisher;
 import org.eventhub.main.exception.AccessIsDeniedException;
 import org.eventhub.main.exception.NullDtoReferenceException;
 import org.eventhub.main.mapper.ParticipantMapper;
@@ -31,14 +32,16 @@ public class ParticipantServiceImpl implements ParticipantService {
     private final ParticipantMapper participantMapper;
     private final EventService eventService;
     private final JwtService jwtService;
+    private final EmailEventPublisher emailEventPublisher;
 
 
     @Autowired
-    public ParticipantServiceImpl(ParticipantRepository participantRepository, ParticipantMapper participantMapper, EventService eventService, JwtService jwtService) {
+    public ParticipantServiceImpl(ParticipantRepository participantRepository, ParticipantMapper participantMapper, EventService eventService, JwtService jwtService, EmailEventPublisher emailEventPublisher) {
         this.participantRepository = participantRepository;
         this.participantMapper = participantMapper;
         this.eventService = eventService;
         this.jwtService = jwtService;
+        this.emailEventPublisher = emailEventPublisher;
     }
 
 
@@ -74,9 +77,8 @@ public class ParticipantServiceImpl implements ParticipantService {
         if (event.getParticipantCount() >= event.getMaxParticipants()) {
             throw new AccessIsDeniedException("Event " + event.getTitle() + " is full.");
         }
-        System.out.println("Participant count: " + event.getParticipantCount());
+
         event.setParticipantCount(event.getParticipantCount() + 1);
-        System.out.println("Participant count: " + event.getParticipantCount());
         existingParticipant.setApproved(true);
 
         return participantMapper.entityToResponse(participantRepository.save(existingParticipant));

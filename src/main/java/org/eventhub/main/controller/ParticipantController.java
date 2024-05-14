@@ -3,12 +3,14 @@ package org.eventhub.main.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.eventhub.main.config.JwtService;
 import org.eventhub.main.dto.*;
+import org.eventhub.main.event.EmailEventPublisher;
 import org.eventhub.main.exception.ResponseStatusException;
 import org.eventhub.main.model.ParticipantState;
 import org.eventhub.main.service.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +24,14 @@ import java.util.UUID;
 @RequestMapping("/events/{event_id}/participants")
 public class ParticipantController {
     private final ParticipantService participantService;
-
+    private final EmailEventPublisher emailEventPublisher;
     private final JwtService jwtService;
 
     @Autowired
-    public ParticipantController(ParticipantService participantService, JwtService jwtService){
+    public ParticipantController(ParticipantService participantService, JwtService jwtService, EmailEventPublisher emailEventPublisher){
         this.participantService = participantService;
         this.jwtService = jwtService;
+        this.emailEventPublisher = emailEventPublisher;
     }
 
     @PostMapping("/create")
@@ -112,13 +115,18 @@ public class ParticipantController {
         ParticipantResponse response = participantService.addParticipant(participantId, eventId, token);
         log.info("**/Added participant(id) = " + response.getId());
 
+        this.emailEventPublisher.publishParticipantApproval(response.getUserId(), eventId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{participant_id}")
     public ResponseEntity<OperationResponse> delete(@PathVariable("participant_id") UUID participantId, @PathVariable("event_id") UUID eventId, @RequestHeader (name="Authorization") String token){
+        ParticipantResponse response = this.participantService.readById(participantId);
+
         participantService.delete(participantId, eventId, token);
         log.info("**/deleted participant(id) = " + participantId);
+
+        this.emailEventPublisher.publishParticipantDelete(response.getUserId(), eventId);
         return new ResponseEntity<>(new OperationResponse("Participant deleted successfully"), HttpStatus.OK);
     }
     @DeleteMapping("/{participant_id}/leave")

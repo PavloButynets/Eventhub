@@ -59,6 +59,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserResponseBriefInfo readByIdBriefInfo(UUID id) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("User with " + id + " not found"));
+        return userDtoMapper.entityToBriefResponse(user);
+    }
+
+    @Override
     public UserResponse readByUsername(String username){
         User user = userRepository.findByUsername(username);
         if(user == null)
@@ -154,12 +161,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponseBriefInfo> findApprovedUsersByEventId(UUID eventId){
-        List<User> users = this.userRepository.findApprovedUsersByEventId(eventId);
-
-        return users.stream()
-                .map(this.userDtoMapper::entityToBriefResponse)
-                .collect(Collectors.toList());
+    public List<User> findApprovedUsersByEventId(UUID eventId){
+       return this.userRepository.findApprovedUsersByEventId(eventId);
     }
 
 //    public User readByEmail(String email) {

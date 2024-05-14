@@ -2,9 +2,13 @@ package org.eventhub.main.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eventhub.main.dto.*;
+import org.eventhub.main.event.EmailEventPublisher;
 import org.eventhub.main.exception.ResponseStatusException;
+import org.eventhub.main.model.Event;
+import org.eventhub.main.model.User;
 import org.eventhub.main.service.EventService;
 import org.eventhub.main.service.ParticipantService;
+import org.eventhub.main.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +24,17 @@ import java.util.UUID;
 @Slf4j
 @RequestMapping("/users")
 public class EventController {
+    private final UserService userService;
     private final EventService eventService;
+    private final EmailEventPublisher emailEventPublisher;
     private final ParticipantService participantService;
 
     @Autowired
-    public EventController(EventService eventService, ParticipantService participantService){
+    public EventController(UserService userService,EventService eventService, ParticipantService participantService, EmailEventPublisher emailEventPublisher){
+        this.userService = userService;
         this.eventService = eventService;
         this.participantService = participantService;
+        this.emailEventPublisher = emailEventPublisher;
     }
 
     @PostMapping("/{user_id}/events")
@@ -80,15 +88,19 @@ public class EventController {
         EventFullInfoResponse response = eventService.update(eventId, request, token);
         log.info("**/updated event(id) = " + response.getId());
 
+        this.emailEventPublisher.publishEventUpdate(response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/events/{event_id}")
     public ResponseEntity<OperationResponse> delete(@RequestHeader (name="Authorization") String token, @PathVariable("event_id") UUID eventId) {
         String title = eventService.readById(eventId).getTitle();
+        List<User> users =  userService.findApprovedUsersByEventId(eventId);
+
         eventService.delete(eventId, token);
         log.info("**/deleted event(id) = " + eventId);
 
+        this.emailEventPublisher.publishEventDelete(title,users);
         return new ResponseEntity<>(new OperationResponse("Event with title '"+title+"' deleted successfully"), HttpStatus.OK);
     }
 
