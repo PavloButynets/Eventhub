@@ -96,6 +96,9 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
     private ConfirmationToken confirmationToken;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private PasswordResetToken passwordResetToken;
+
 //    @Enumerated(EnumType.STRING)
 //    Role role;
 

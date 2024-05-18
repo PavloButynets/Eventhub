@@ -61,7 +61,24 @@ public class AuthenticationController {
     @GetMapping("/confirm-account")
     public ResponseEntity<JwtResponse> confirm(@RequestParam("token")String confirmationToken) {
         log.info("**/confirm token(id) = " + confirmationToken);
-        return ResponseEntity.ok(authService.confirm(UUID.fromString(confirmationToken)));
+        return ResponseEntity.ok(authService.confirm(confirmationToken));
+    }
+
+    @GetMapping("forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestParam("email")String email) throws IOException {
+        authService.resetPassword(email);
+
+        log.info("**/check email to reset password = " + email);
+        return new ResponseEntity<>(email, HttpStatus.OK);
+    }
+
+    @PostMapping("forgot-password")
+    public ResponseEntity<JwtResponse> resetPassword(@Validated @RequestBody PasswordResetRequest request, BindingResult result) {
+        if(result.hasErrors()){
+            throw new ResponseStatusException(Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
+        }
+        log.info("**/reset password, token = " + request.getToken());
+        return ResponseEntity.ok(authService.confirmResetPassword(request));
     }
 
     @PostMapping("/login")

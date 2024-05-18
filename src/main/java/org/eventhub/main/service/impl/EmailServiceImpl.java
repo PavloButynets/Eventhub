@@ -65,11 +65,7 @@ public class EmailServiceImpl implements EmailService {
 
         mail.addPersonalization(personalization);
     }
-
-    @Override
-    public Response sendVerificationEmail(UUID tokenId, EmailRequest emailRequest) throws IOException {
-        String verificationEndPoint = this.url + "confirm/" + tokenId.toString();
-
+    private Response sendSecurityEmail(EmailRequest emailRequest, String verificationEndPoint, String template) throws IOException {
         Mail mail = new Mail();
         mail.setFrom(this.emailFrom);
 
@@ -81,9 +77,20 @@ public class EmailServiceImpl implements EmailService {
         personalization.addDynamicTemplateData("url",verificationEndPoint);
 
         mail.addPersonalization(personalization);
-        mail.setTemplateId(System.getenv("verification_template"));
+        mail.setTemplateId(System.getenv(template));
 
         return this.sendEmail(mail);
+    }
+    @Override
+    public Response sendVerificationEmail(String token, EmailRequest emailRequest) throws IOException {
+        String verificationEndPoint = this.url + "confirm/" + token;
+        return this.sendSecurityEmail(emailRequest, verificationEndPoint, "verification_template");
+    }
+
+    @Override
+    public Response sendResetPasswordEmail(String token, EmailRequest emailRequest) throws IOException {
+        String verificationEndPoint = this.url + "reset-password/" + token;
+        return this.sendSecurityEmail(emailRequest, verificationEndPoint, "reset_password_template");
     }
 
     @Override

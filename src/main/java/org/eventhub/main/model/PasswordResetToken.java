@@ -14,8 +14,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "confirmation_tokens")
-public class ConfirmationToken {
+@Table(name = "password_reset_tokens")
+public class PasswordResetToken {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -27,8 +28,8 @@ public class ConfirmationToken {
     @Column(nullable = false)
     private Date expiryDate;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name="user_id")
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public boolean isExpired() {

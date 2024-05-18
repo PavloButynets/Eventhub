@@ -1,0 +1,110 @@
+/*.bodyC{*/
+/*    background-color: #b21010; !* Змініть колір за вашим вибором *!*/
+
+/*    display: flex;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+
+/*}*/
+
+.outerContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #efefef;
+  border-radius: 15px;
+  border: 2px solid #ccc;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+  align-items: center;
+  width: 70%;
+  min-width: fit-content;
+  max-width: 550px;
+  height: 550px;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+
+  position: absolute;
+
+  transform: translate(-50%, -50%);
+}
+
+.loginButton {
+  width: 400px;
+  height: 40px;
+  font-size: 16px;
+  background-color: rgb(7, 104, 159);
+}
+
+.RememberMe {
+  display: flex;
+  justify-content: space-between;
+}
+
+/*.Photo {*/
+/*    border-radius: 45px;*/
+/*    width: auto; !* Ширина фото *!*/
+/*    height: 450px; !* Автоматична висота для збереження пропорцій *!*/
+/*    margin: 40px;*/
+/*    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);*/
+
+/*}*/
+
+.input {
+  height: 40px;
+}
+
+.loginButtonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.forgotPassword{
+  color: #1677ff;
+  border: none;
+
+  cursor: pointer;
+}
+
+.Buttons {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 8%;
+}
+
+.oauthContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/*.socialMediaLogin{*/
+/*    width: 48px;*/
+/*    height: 48px;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    margin-right: 16px;*/
+/*    margin-left: 16px;*/
+
+/*    background-color: white;*/
+/*    border-color: #D9D9D9;*/
+/*}*/
+
+/*.loginImg{*/
+/*    width: 24px;*/
+/*    height: 24px;*/
+/*}*/

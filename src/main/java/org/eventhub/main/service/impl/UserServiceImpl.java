@@ -123,7 +123,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email);
+        if(user == null)
+            throw new EntityNotFoundException("User with email " + email + " not found");
+        return user;
     }
 
     @Override

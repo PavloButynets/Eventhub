@@ -4,28 +4,23 @@ import { message } from "antd";
 import CountdownCircle from "../../../../components/CountdownCircle/CountdownCircle";
 import { resedVerificationEmail } from "../../../../api/resendVerificationEmail";
 import PrimaryButton from "../../../../components/Buttons/PrimaryButton/PrimaryButton"
-import ProcessingEffect from "../../../../components/ProcessingEffect/ProcessingEffect";
 import styles from "./EmailVerification.module.css";
 import image from "../../../../images/EmailImage1.png";
 
 const EmailVerification = ({ email }) => {
   const navigate = useNavigate();
-  const [processing, setProcessing] = useState(false);
 
   const resendEmail = async (resendTo) => {
     try {
-      setProcessing(true);
       await resedVerificationEmail(resendTo);
+      message.success("Email Resent!");
     } catch (error) {
       message.error("Failed to resend verification email!");
-    } finally {
-      setProcessing(false);
-    }
+    } 
   };
 
-  return processing ? (
-    <ProcessingEffect />
-  ) : (
+  return(
+  
     <div className={styles.OuterContainer}>
       <div className={styles.InnerContainer}>
         <div className={styles.EmailImage}>
@@ -43,7 +38,7 @@ const EmailVerification = ({ email }) => {
         </p>
         <div className={styles.Bottom}>
           <PrimaryButton children={"Resend Email"} onClick={() => resendEmail(email)} className={styles.Button}/>
-          <CountdownCircle seconds={60} onFinish={() => navigate("/")} />
+          <CountdownCircle seconds={90} onFinish={() => navigate("/")} />
         </div>
       </div>
     </div>

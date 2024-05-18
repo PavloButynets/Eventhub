@@ -83,6 +83,23 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("expDate", expiryDate);
   };
 
+  const confirmResetPassword = async (data) => {
+    const res = await axios.post("/authentication/forgot-password", data, {
+      headers: { "Content-Type": "application/json" },
+    });
+  
+    const accessToken = res?.data?.accessToken;
+    const refToken = res?.data?.refreshToken;
+    const expiryDate = res?.data?.expiryDate;
+  
+    localStorage.setItem("token", accessToken);
+    localStorage.setItem("refreshToken", refToken);
+    localStorage.setItem("expDate", expiryDate);
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${res.data["token"]}`;
+  };
+
   const logout = async () => {
     const accessToken = localStorage.getItem("token");
 
@@ -183,6 +200,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         register,
         googleAuth,
+        confirmResetPassword,
       }}
     >
       {children}

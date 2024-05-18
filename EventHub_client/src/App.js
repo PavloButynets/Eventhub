@@ -8,6 +8,7 @@ import UserProfile from "./pages/Home/UserProfile/UserProfile";
 import EditUserProfile from "./pages/Home/EditUserProfile/EditUserProfile";
 import EventInfoSideBar from "./pages/Home/EventInfoSideBar/EventInfoSideBar.jsx";
 import ConfirmEmail from "./pages/Home/SignUp/EmailVerification/ConfirmEmail.jsx";
+import ResetPassword from "./pages/Home/ResetPassword/ResetPassword.jsx";
 
 function App() {
   return (
@@ -20,6 +21,10 @@ function App() {
             <Route
               path="/profile/change-password"
               element={<ChangePassword />}
+            />
+            <Route
+              path="/reset-password/:token"
+              element={<ResetPassword />}
             />
             <Route path="/profile/:username" element={<UserProfile />} />
             <Route path="/profile/edit" element={<EditUserProfile />} />

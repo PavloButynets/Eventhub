@@ -5,22 +5,23 @@ import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.eventhub.main.dto.*;
 import org.eventhub.main.exception.AccessIsDeniedException;
+import org.eventhub.main.exception.PasswordException;
+import org.eventhub.main.exception.ResponseStatusException;
 import org.eventhub.main.mapper.RegisterMapper;
 import org.eventhub.main.model.ConfirmationToken;
+import org.eventhub.main.model.PasswordResetToken;
 import org.eventhub.main.model.User;
 import org.eventhub.main.repository.UserRepository;
-import org.eventhub.main.service.ConfirmationTokenService;
-import org.eventhub.main.service.EmailService;
+import org.eventhub.main.service.*;
 
 import org.eventhub.main.model.RefreshToken;
-import org.eventhub.main.service.RefreshTokenService;
-import org.eventhub.main.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,15 +30,10 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.json.JsonFactory;
 
-
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.*;
-import java.io.IOException;
 import java.time.Instant;
-
-import java.util.*;
-import java.util.concurrent.ScheduledFuture;
 
 @Slf4j
 @Service
@@ -52,38 +48,26 @@ public class AuthenticationService {
     private final RegisterMapper registerMapper;
 
     private final ConfirmationTokenService confirmationTokenService;
+    private final PasswordResetTokenService passwordResetTokenService;
     private final EmailService emailService;
     private final ThreadPoolTaskScheduler scheduler;
 
     private final RefreshTokenService refreshTokenService;
-    private final Map<String, ScheduledFuture<?>> confirmationTasks = new HashMap<>();
 
     private final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 
     @Value("${google.clientId}")
     private String googleClientId;
 
-
     private void scheduleConfirmationTask(String email) {
-        int timeForVerification = 68;
-        ScheduledFuture<?> task = scheduler.schedule(() -> {
+        int timeForVerification = 110;
+        scheduler.schedule(() -> {
             User user = userService.findByEmail(email);
             if (!user.isVerified()) {
                 userService.delete(user.getId());
             }
 
-            confirmationTasks.remove(email);
         }, Instant.now().plusSeconds(timeForVerification));
-
-        confirmationTasks.put(email, task);
-    }
-
-    private void cancelConfirmationTask(String email) {
-        ScheduledFuture<?> task = confirmationTasks.get(email);
-        if (task != null && !task.isDone()) {
-            task.cancel(true);
-            confirmationTasks.remove(email);
-        }
     }
 
     public User register(UserRequestCreate registerRequest) throws IOException {
@@ -94,7 +78,7 @@ public class AuthenticationService {
         ConfirmationToken confirmationToken = confirmationTokenService.create(user);
         
         EmailRequest emailRequest = new EmailRequest(registerRequest.getEmail(),"Verify email", "Please, verify your email", registerRequest.getFirstName());
-        emailService.sendVerificationEmail(confirmationToken.getId(), emailRequest);
+        emailService.sendVerificationEmail(confirmationToken.getToken(), emailRequest);
 
         scheduleConfirmationTask(userResponse.getEmail());
         return user;
@@ -108,17 +92,19 @@ public class AuthenticationService {
         }
 
         EmailRequest emailRequest = new EmailRequest(email, "Verify email", "Please, verify your email", user.getFirstName());
-        emailService.sendVerificationEmail(user.getConfirmationToken().getId(), emailRequest);
-
-        cancelConfirmationTask(email);
-        scheduleConfirmationTask(email);
+        emailService.sendVerificationEmail(user.getConfirmationToken().getToken(), emailRequest);
     }
 
-    public JwtResponse confirm(UUID confirmationTokenId){
-        ConfirmationToken token = this.confirmationTokenService.read(confirmationTokenId);
+    public JwtResponse confirm(String confirmationToken){
+        ConfirmationToken token = this.confirmationTokenService.findByToken(confirmationToken);
+        if(token.isExpired()){
+            this.confirmationTokenService.delete(token.getId());
+            throw new ResponseStatusException("Token is not valid!");
+        }
         UUID userId = token.getUser().getId();
 
         userService.confirmUser(userId);
+        confirmationTokenService.delete(token.getId());
 
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("id", userId);
@@ -134,6 +120,46 @@ public class AuthenticationService {
                 .build();
     }
 
+    public void resetPassword(String email) throws IOException {
+        User user = this.userService.findByEmail(email);
+        if(user.getPasswordResetToken() == null) {
+           PasswordResetToken token = passwordResetTokenService.create(user);
+           user.setPasswordResetToken(token);
+        }
+
+        EmailRequest emailRequest = new EmailRequest(email,"Reset password", "Please, reset your password", user.getFirstName());
+        emailService.sendResetPasswordEmail(user.getPasswordResetToken().getToken(),emailRequest);
+    }
+    public JwtResponse confirmResetPassword(PasswordResetRequest request){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        PasswordResetToken token = passwordResetTokenService.findByToken(request.getToken());
+        if(token.isExpired()){
+            passwordResetTokenService.delete(token.getId());
+            throw new PasswordException("Token is not valid!");
+        }
+
+        User user = token.getUser();
+        if(encoder.matches(request.getNewPassword(),user.getPassword())){
+            throw new PasswordException("A new password cannot be the same as the old one!");
+        }
+
+        String newPassword = encoder.encode(request.getNewPassword());
+        user.setPassword(newPassword);
+        passwordResetTokenService.delete(token.getId());
+
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("id", user.getId());
+
+        var accessToken = jwtService.generateToken(extraClaims, user);
+
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getEmail());
+
+        return JwtResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken.getToken())
+                .expiryDate(jwtService.expDate(accessToken))
+                .build();
+    }
     public JwtResponse login(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
