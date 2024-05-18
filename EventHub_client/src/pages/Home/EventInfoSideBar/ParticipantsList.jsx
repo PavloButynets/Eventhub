@@ -13,7 +13,6 @@ import RequestsCount from "../../../components/RequestsCount/RequestsCount";
 import { message } from "antd";
 
 const ParticipantsList = ({
-  setIsLoading,
   handleGoBackToSideBar,
   handleCloseWindow,
   handleShowRequests,
@@ -28,10 +27,6 @@ const ParticipantsList = ({
   const { eventId } = useParams();
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    participants && owner && setIsLoading(false);
-  }, [participants, owner]);
 
   return (
     _event &&

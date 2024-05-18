@@ -21,8 +21,8 @@ const ConfirmEmail = () => {
           message.error("Error confirming email!");
         }
       } finally {
-        window.location.reload();
         navigate("/");
+        window.location.reload();
       }
     };
 

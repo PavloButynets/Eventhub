@@ -31,13 +31,13 @@ public class UserRequestCreate {
     private String email;
 
     @Pattern(regexp = "[A-Za-z\\d]{6,}",
-            message = "Must be minimum 6 symbols long, using digits and latin letters")
+            message = "Password must be minimum 6 symbols long, using digits and latin letters")
     @Pattern(regexp = ".*\\d.*",
-            message = "Must contain at least one digit")
+            message = "Password must contain at least one digit")
     @Pattern(regexp = ".*[A-Z].*",
-            message = "Must contain at least one uppercase letter")
+            message = "Password must contain at least one uppercase letter")
     @Pattern(regexp = ".*[a-z].*",
-            message = "Must contain at least one lowercase letter")
+            message = "Password must contain at least one lowercase letter")
     private String password;
 
     private String city;

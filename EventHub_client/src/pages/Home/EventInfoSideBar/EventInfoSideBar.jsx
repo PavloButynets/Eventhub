@@ -56,7 +56,7 @@ const EventInfoSideBar = () => {
 
   const [reloadList, setReloadList] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [joinedParticipants, setJoinedParticipants] = useState(null);
 
@@ -82,6 +82,7 @@ const EventInfoSideBar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         if (authenticated) {
           const userState = await getParticipantState(eventId);
           setUserState(userState.state);
@@ -98,7 +99,6 @@ const EventInfoSideBar = () => {
 
         const fullEventData = await getFullEventById(eventId);
         setEvent(fullEventData);
-        setIsLoading(false);
         setIsFull(
           fullEventData.max_participants === fullEventData.participant_count
         );
@@ -158,6 +158,8 @@ const EventInfoSideBar = () => {
           }
         }
         navigate("/");
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -186,10 +188,6 @@ const EventInfoSideBar = () => {
     };
     resetSideBar();
   }, [eventId]);
-
-  useEffect(() => {
-    showAllParticipants && setIsLoading(true);
-  }, [showAllParticipants]);
 
   // Funcs
 
@@ -507,7 +505,6 @@ const EventInfoSideBar = () => {
 
       {showAllParticipants && !showRequests && joinedParticipants && owner && (
         <ParticipantsList
-          setIsLoading={setIsLoading}
           handleGoBackToSideBar={handleShowAllParticipants}
           handleCloseWindow={handleCloseWindow}
           handleShowRequests={handleShowRequests}

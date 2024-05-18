@@ -376,7 +376,7 @@ const CreateEvent = () => {
     }
   };
   const handleKeyDown = (event) => {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       handleCloseButton();
     }
   };
@@ -518,7 +518,7 @@ const CreateEvent = () => {
                       />
                     </div>
                     <div className={styles.ParamContainer}>
-                      <div className={styles.ParamLabel}>Participants</div>
+                      <div className={styles.ParamLabel}>Max participants</div>
                       <Input
                         placeholder="Participants"
                         className={styles.Param}

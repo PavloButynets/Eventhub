@@ -124,10 +124,11 @@ const EditUserProfile = () => {
       await deleteUserPhotos(toDeletePhotos);
       await sendPhotosToServer(uploadedPhotos);
 
-      handleClose();
+      navigate(-1);
       message.success("Successfully updated");
     } catch (error) {
       message.error(error.response.data);
+      console.error(error);
     } finally {
       setSubmitChanges(false);
     }
@@ -142,8 +143,8 @@ const EditUserProfile = () => {
   };
 
   const handleClose = (e) => {
-    // e.preventDefault();
-    navigate("/");
+    e.preventDefault();
+    navigate(-1);
   };
   return (
     <div className={styles.OuterContainer}>
