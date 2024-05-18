@@ -20,8 +20,10 @@ export const refreshToken = async (token) => {
     );
 
     const newAccessToken = response?.data?.accessToken;
+    const expiryDate = response?.data?.expiryDate;
 
     localStorage.setItem("token", newAccessToken);
+    localStorage.setItem("expDate", expiryDate);
 
     return response.data;
   } catch (error) {

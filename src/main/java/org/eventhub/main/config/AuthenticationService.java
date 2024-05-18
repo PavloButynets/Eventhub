@@ -235,6 +235,7 @@ public class AuthenticationService {
                     return JwtResponse.builder()
                             .accessToken(accessToken)
                             .refreshToken(refreshTokenRequest.getToken())
+                            .expiryDate(jwtService.expDate(accessToken))
                             .build();
                 }).orElseThrow(() -> new RuntimeException(
                         "Refresh token is not in database"));

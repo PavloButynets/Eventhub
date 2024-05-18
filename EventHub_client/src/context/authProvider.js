@@ -3,6 +3,8 @@ import { refreshToken } from "../jwt/refreshToken";
 import axios from "../api/axios";
 import { message } from "antd";
 
+import Cookies from "js-cookie";
+
 const LOGIN_URL = "/authentication/login";
 const REGISTER_URL = "/authentication/register";
 const LOGOUT_URL = "/authentication/logout";
@@ -15,6 +17,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
+
     if (savedToken) {
       setAuth({ token: savedToken });
     }
@@ -45,17 +48,12 @@ export const AuthProvider = ({ children }) => {
     const refToken = res?.data?.refreshToken;
     const expiryDate = res?.data?.expiryDate;
 
+    //Cookies.set("ref", refToken);
+    //Cookies.set("exp", expiryDate);
+
     localStorage.setItem("token", accessToken);
     localStorage.setItem("refreshToken", refToken);
     localStorage.setItem("expDate", expiryDate);
-
-    //setAuth({ refToken: refToken, expDate: expiryDate });
-
-    // console.log(accessToken);
-    // console.log(refToken);
-    // console.log(expiryDate);
-    // console.log(auth.refToken);
-    // console.log(auth.expDate);
 
     axios.defaults.headers.common[
       "Authorization"
@@ -147,36 +145,28 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const refresh = async (token) => {
-      try {
-        //console.log("oboba");
-        await refreshToken(token);
-      } catch (error) {
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("token");
-        localStorage.removeItem("expDate");
-        message.error("You are loged out");
-        setAuth({});
-      }
-    };
-
-    //const { token, expDate } = auth;
-
     const accessToken = localStorage.getItem("token");
-    const token = localStorage.getItem("refreshToken");
 
-    //const token = auth.refToken;
+    const token = localStorage.getItem("refreshToken");
+    //const token = Cookies.get("ref");
 
     const expDate = new Date(localStorage.getItem("expDate"));
-    const intervalTime = expDate.getTime() - Date.now() - 20000;
+    //const expDate = new Date(Cookies.get("exp"));
 
-    //const expDate = new Date(auth.expDate);
-    // const expiry = new Date(expDate);
-    // const intervalTime = expiry.getTime() - Date.now() - 20000;
+    const intervalTime = expDate.getTime() - Date.now() - 20000;
 
     if (accessToken) {
       const interval = setInterval(async () => {
-        await refresh(token);
+        try {
+          console.log("refresh");
+          await refreshToken(token);
+        } catch (error) {
+          localStorage.removeItem("refreshToken");
+          localStorage.removeItem("token");
+          localStorage.removeItem("expDate");
+          message.error("You are loged out");
+          setAuth({});
+        }
       }, intervalTime);
 
       return () => clearInterval(interval);
