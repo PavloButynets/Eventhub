@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./ListEvents.module.css";
+import useStore from '../../hooks/useStore';
+
 import {
   UserOutlined,
   CalendarOutlined,
@@ -10,11 +12,18 @@ import {
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const SearchResults = ({ eventsData }) => {
+
   const [searchParams] = useSearchParams();
 
   const navigate = useNavigate();
+  const setLocation = useStore((state) => state.setLocation);
+  const handleLocationClick = (event) => {
+    setLocation(event.latitude, event.longitude);
+  };
 
-  const handleClick = (ownerId, eventId) => {
+  const handleClick = (ownerId,eventId) => {
+    const event = eventsData.find(event => event.id === eventId);
+    handleLocationClick(event)
     navigate({
       pathname: `/event/${eventId}`,
       search: `?${searchParams.toString()}`,

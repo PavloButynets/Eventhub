@@ -390,6 +390,7 @@ const EditEvent = () => {
     }
   };
   const handleKeyDown = (event) => {
+
     if (event.key === "Escape") {
       event.preventDefault();
       clearEventData();
