@@ -224,6 +224,7 @@ const EventInfoSideBar = () => {
       if (userState === ParticipantState.NONE) {
         await createParticipant(eventId);
         setUserState(ParticipantState.REQUESTED);
+        message.info("Request successful. Wait for approval");
       }
     } catch (error) {
       if (error.response) {
@@ -295,7 +296,7 @@ const EventInfoSideBar = () => {
 
   const getFormattedDate = (dateTimeString) => {
     const date = new Date(dateTimeString);
-    const month = date.toLocaleString("default", { month: "short" });
+    const month = date.toLocaleString("eng", { month: "short" });
     const day = date.getDate();
     return `${month} ${day}`;
   };

@@ -62,15 +62,19 @@
 /*}*/
 
 .input {
-  height: 40px;
+  height: 32px;
 }
 
 .loginButtonContainer {
   display: flex;
   justify-content: center;
 }
+.forgotPasswordContainer {
+  display: flex;
+  justify-content: center;
+}
 
-.forgotPassword{
+.forgotPassword {
   color: #1677ff;
   border: none;
 
@@ -89,7 +93,6 @@
   justify-content: center;
   align-items: center;
 }
-
 
 /*.socialMediaLogin{*/
 /*    width: 48px;*/

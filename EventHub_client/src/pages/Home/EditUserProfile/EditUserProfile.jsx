@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Input, Select, DatePicker, Checkbox, message } from "antd";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
-import CancelButton from "../../../components/Buttons/CancelButton/CancelButton";
-import ApplyChangesButton from "../../../components/Buttons/ApplyChangesButton/ApplyChangesButton";
+import PrimaryButton from "../../../components/Buttons/PrimaryButton/PrimaryButton";
 import { CameraOutlined, DeleteOutlined } from "@ant-design/icons";
 import { sendDataWithoutPhotos } from "../../../api/updateUserInfo";
 import { deleteUserPhotos } from "../../../api/updateUserInfo";
@@ -235,6 +234,14 @@ const EditUserProfile = () => {
                     onSelectLocation={handleCityUpdate}
                     initialValue={user.city}
                     cancelChanges={cancelAddress}
+                    style={{
+                      width: "100%",
+                      height: "4.2vh",
+                      border: "0.5px solid var(--third-color)",
+                      borderRadius: "7px",
+                      cursor: "pointer",
+                      fontSize: "2vh",
+                    }}
                   />
                 </div>
                 <div className={styles.InputContainer}>
@@ -242,7 +249,14 @@ const EditUserProfile = () => {
                   <Select
                     name="gender"
                     placeholder="Gender"
-                    className={styles.Select}
+                    style={{
+                      width: "100%",
+                      height: "4.2vh",
+                      border: "0.5px solid var(--third-color)",
+                      borderRadius: "7px",
+                      cursor: "pointer",
+                      fontSize: "2vh",
+                    }}
                     value={user.gender}
                     onChange={(value) => setUser({ ...user, gender: value })}
                   >
@@ -254,7 +268,14 @@ const EditUserProfile = () => {
                 <div className={styles.InputContainer}>
                   <p className={styles.Caption}>Birthday</p>
                   <DatePicker
-                    className={styles.Param}
+                    style={{
+                      width: "100%",
+                      height: "4.2vh",
+                      border: "0.5px solid var(--third-color)",
+                      borderRadius: "7px",
+                      cursor: "pointer",
+                      fontSize: "2vh",
+                    }}
                     format={"YYYY-MM-DD"}
                     name="birth_date"
                     value={user.birth_date}
@@ -269,6 +290,7 @@ const EditUserProfile = () => {
                     name="show_email"
                     onChange={updateUserInfo}
                     value={!user.show_email}
+                    className={styles.CheckBox}
                   >
                     <p className={styles.Caption}>Show e-mail for others</p>
                   </Checkbox>
@@ -278,7 +300,7 @@ const EditUserProfile = () => {
             <div className={styles.Description}>
               <p className={styles.Caption}>About</p>
               <TextArea
-                autoSize={{ minRows: 5, maxRows: 5 }}
+                autoSize={{ minRows: 4, maxRows: 4 }}
                 name="description"
                 placeholder="Enter description..."
                 className={styles.TextArea}
@@ -287,8 +309,16 @@ const EditUserProfile = () => {
               />
             </div>
             <div className={styles.Buttons}>
-              <CancelButton onclick={handleCancel} />
-              <ApplyChangesButton onClick={applyChanges} />
+              <PrimaryButton
+                children={"Discrad"}
+                onClick={handleCancel}
+                className={`${styles.CancelButton} ${styles.Button}`}
+              />
+              <PrimaryButton
+                children={"Apply"}
+                onClick={applyChanges}
+                className={styles.Button}
+              />
             </div>
           </form>
         </>

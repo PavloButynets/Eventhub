@@ -1,21 +1,20 @@
-@import '../../../App.css';
+@import "../../../App.css";
 
 .filterButtonContainer {
-    position: absolute;
-    top: 20px;
-    left: 480px; 
+  position: absolute;
+  top: 20px;
+  left: 480px;
 }
 
 .BackgroungContainer {
   position: absolute;
-  top: 88px;
+  top: 80px;
   left: 32px;
-  width: 100%;
-  height: 553px;
+  height: 85vh;
   background-color: var(--secondary-popup-background);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border: 1px solid #cacaca;
-  border-radius: 25px 25px 25px 25px;
+  border-radius: 25px;
   padding: 8px 8px 16px 8px;
   box-sizing: border-box;
   width: 352px;
@@ -26,8 +25,8 @@
   height: 60%;
   max-height: 362px;
   width: 100%;
-  overflow-y: auto; 
-  overflow-x: hidden; 
+  overflow-y: auto;
+  overflow-x: hidden;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -36,7 +35,7 @@
   overflow-y: auto;
 }
 
-.Title{
+.Title {
   width: 112px;
   font-family: var(--primary-font-family);
   font-style: normal;
@@ -44,7 +43,7 @@
 }
 
 .CheckboxContainer {
-  height: 23%;
+  /* height: 23%; */
   top: 108px;
   left: 20px;
   padding: 8px 8px 16px 8px;
@@ -55,8 +54,8 @@
   top: 22px;
 }
 
-.Heading{
-  height: 17%;
+.Heading {
+  /* height: 17%; */
   font-family: var(--secondary-font-family), sans-serif;
   margin: none;
   padding: 0 5px;
@@ -66,4 +65,20 @@
   justify-content: space-between;
   font-size: 1.1rem;
   border-bottom: 2px solid #cacaca;
+}
+
+.Heading h2 {
+  margin: 5px;
+}
+
+@media (width >= 1080px) and (width < 1280px) {
+  .Heading {
+    font-size: var(--xxs-size);
+  }
+}
+
+@media (width >= 1280px) and (width < 1700px) {
+  .Heading {
+    font-size: var(--xs-size);
+  }
 }

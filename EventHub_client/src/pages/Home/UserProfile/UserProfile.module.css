@@ -27,27 +27,33 @@
 }
 
 .InnerContainer {
-  width: 68%;
-  height: 87%;
+  width: 60%;
+  height: 82%;
+  margin: auto;
   background-color: var(--primary-popup-background);
+
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-items: center;
   border-radius: 8px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .Title {
-  height: 7%;
+  width: 95%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 12px;
-  margin-bottom: -18px;
-  padding: 0 25px;
 }
 
 .Heading {
-  font-size: 24px;
+  font-size: 3vh;
   font-weight: 500;
   text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 }
@@ -59,51 +65,52 @@
 }
 
 .AboutUser {
-  flex: 2;
-  margin-top: 35px;
+  width: 65%;
+  margin-top: 3.5vh;
   padding: 0;
 }
 
 .Header {
-  width: 293px;
-  line-height: 20px;
-  margin: 0;
-  margin-bottom: 20px;
+  width: 100%;
+  line-height: 2vh;
+  margin-bottom: 1vh;
 }
 
 .MainCaption {
-  font-size: 24px;
+  font-size: 3vh;
   font-weight: 650;
   margin: 0;
   padding: 0;
 }
 
 .SecondaryCaption {
-  font-size: 20px;
+  font-size: 2.5vh;
   margin: 0;
-  margin-top: 3px;
+  margin-top: 0.5vh;
   padding: 0;
 }
 
 .Information {
   margin: 0;
-  margin-top: 27px;
-  margin-bottom: 10px;
+  width: 100;
+  margin-top: 3.5vh;
+  margin-bottom: 3vh;
   padding: 0;
-  line-height: 20px;
+  line-height: 2vh;
 }
 
 .InformationText {
   width: 95%;
   color: var(--third-color);
-  font-size: 20px;
+  font-size: 2.5vh;
   border-bottom: 1.5px solid var(--third-color);
   margin: 0;
-  margin-bottom: 10px;
+  margin-bottom: 2.5vh;
+  padding-bottom: 0.25vh;
 }
 
 .NoInfo {
-  margin: 10px 0;
+  margin: 1vh 0;
   color: #aaa;
 }
 
@@ -116,30 +123,29 @@
 }
 
 .Caption {
+  font-size: 2vh;
   font-weight: 600;
-  width: 160px;
-  margin: 10px 0;
+  width: 22vh;
+  margin: 1.5vh 0;
 }
 
 .Info {
-  margin: 10px 0;
+  font-size: 2vh;
+  margin: 1.5vh 0;
 }
 
 .DescriptionBox {
+  font-size: 2vh;
   width: 95%;
-  margin: 25px;
+  height: 30%;
+  margin: 2vh;
   margin-top: 0;
 }
 
 .DescriptionCaption {
   color: var(--third-color);
-  font-size: 20px;
+  font-size: 2.5vh;
   width: 100%;
   border-bottom: 1.5px solid var(--third-color);
-  margin-bottom: 10px;
-}
-
-.Description {
-  hyphens: auto;
-  word-wrap: break-word;
+  margin-bottom: 1.5vh;
 }

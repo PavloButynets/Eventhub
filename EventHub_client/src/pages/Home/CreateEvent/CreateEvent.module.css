@@ -1,267 +1,263 @@
-@import '../../../App.css';
+@import "../../../App.css";
 
 .backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* напівпрозорий чорний колір */
-    z-index: 98; /* підніміть поверх інших елементів */
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* напівпрозорий чорний колір */
+  z-index: 98; /* підніміть поверх інших елементів */
+}
 .mainContainer {
-    width: 100%;
-    max-width: 44vw;
-    
-    height: auto;
-    max-height: 92vh;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: var(--primary-popup-background);
-    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(10px);
-    border-radius: 8px;
-    z-index: 99; 
-    overflow-y: auto;
-    
-    overflow-x: hidden;
-    
-  }
+  width: 100%;
+  max-width: 44vw;
 
+  height: auto;
+  max-height: 92vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--primary-popup-background);
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 8px;
+  z-index: 99;
+  overflow-y: auto;
 
+  overflow-x: hidden;
+}
 
-  .createEventHeader {
-    width: 42vw;
-    height: auto;
-    max-height: 4vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 auto;
-    margin-top: 8px;
-    border-bottom: 2px solid var(--primary-color);
-  }
-  
+.createEventHeader {
+  width: 42vw;
+  height: auto;
+  max-height: 4vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 8px;
+  border-bottom: 2px solid var(--primary-color);
+}
+
 .CloseButton {
-    margin-top: auto;
+  margin-top: auto;
 }
 
 .photoContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin: 20px 30px 0px 30px;
-  }
-  
-  .photo {
-    width: 12.7vw; /* Ширина фотографії */
-    height: 13.87vh; /* Висота фотографії */
-    background-color: var(--primary-2-popup-background);
-    position: relative; /* Для розміщення тексту і кнопки додавання */
-    margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 20px 30px 0px 30px;
 }
-  
-  .photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Заповнює область фотографії */
-  }
-  
-  .addPhotoLabel {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--text-secondary-color);
-    font-size: 1.421875vh;
-    font-family: var(--primary-font-family);
-    padding: 5px 10px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent; /* Додаємо початковий невидимий нижній бордер */
-    transition: font-size 0.3s; /* Додаємо плавний перехід для зміни розміру шрифту */
-  }
-  
-  .addPhotoLabel:hover {
-    border-bottom: 2px solid var(--text-secondary-color);
-    font-size: 1.55875vh; /* Збільшуємо розмір шрифту при наведенні */
-  }
-  
 
-  .miniContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 0px 8px;
-    gap: 4px;
-    position: absolute;
-    width: 64px;
-    height: 21px;
-    left: 0;
-    bottom: 0;
-    background: var(--primary-color);
-    border-radius: 0 4px 0 0;
-  }
-  .mainPhotoText{
-    font-size: 14px;
-    font-family: var(--primary-font-family);
-    color: white;
-  }
-  .cameraIcon{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.photo {
+  width: 12.7vw; /* Ширина фотографії */
+  height: 13.87vh; /* Висота фотографії */
+  background-color: var(--primary-2-popup-background);
+  position: relative; /* Для розміщення тексту і кнопки додавання */
+  margin-bottom: 20px;
+}
 
-  }
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Заповнює область фотографії */
+}
 
-  .photoActions {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex; /* Застосовуємо flexbox для гнучкого розміщення */
-    justify-content: center; /* Центруємо елементи по горизонталі */
-    align-items: center; /* Центруємо елементи по вертикалі */
-    gap: 10px; /* Додаємо відступ між іконками */
-  }
+.addPhotoLabel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--text-secondary-color);
+  font-size: 1.421875vh;
+  font-family: var(--primary-font-family);
+  padding: 5px 10px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent; /* Додаємо початковий невидимий нижній бордер */
+  transition: font-size 0.3s; /* Додаємо плавний перехід для зміни розміру шрифту */
+}
 
+.addPhotoLabel:hover {
+  border-bottom: 2px solid var(--text-secondary-color);
+  font-size: 1.55875vh; /* Збільшуємо розмір шрифту при наведенні */
+}
 
-  
-  .actionIcon {
-    margin: 0 5px; /* Додайте бажаний відступ між іконками */
-  }
-  
-  .actionIcon:hover {
-    transform: scale(1.1); /* Збільшуємо розмір іконки при наведенні */
-  }
+.miniContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 8px;
+  gap: 4px;
+  position: absolute;
+  width: 64px;
+  height: 21px;
+  left: 0;
+  bottom: 0;
+  background: var(--primary-color);
+  border-radius: 0 4px 0 0;
+}
+.mainPhotoText {
+  font-size: 14px;
+  font-family: var(--primary-font-family);
+  color: white;
+}
+.cameraIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-  .ParamsContainer{
-    /* width: 42.3vw;
+.photoActions {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex; /* Застосовуємо flexbox для гнучкого розміщення */
+  justify-content: center; /* Центруємо елементи по горизонталі */
+  align-items: center; /* Центруємо елементи по вертикалі */
+  gap: 10px; /* Додаємо відступ між іконками */
+}
+
+.actionIcon {
+  margin: 0 5px; /* Додайте бажаний відступ між іконками */
+}
+
+.actionIcon:hover {
+  transform: scale(1.1); /* Збільшуємо розмір іконки при наведенні */
+}
+
+.ParamsContainer {
+  /* width: 42.3vw;
     height: 25.1vh; */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* Вирівнювання елементів по горизонталі */
-    align-items: center; 
-    justify-content: space-around;
-    margin: 0px 30px 0px 30px;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Вирівнювання елементів по горизонталі */
+  align-items: center;
+  justify-content: space-around;
+  margin: 0px 30px 0px 30px;
+}
+.row {
+  width: 100%;
+  display: flex;
+  align-items: center; /* Вирівнювання елементів по вертикалі */
+  gap: 16px; /* Відступи між елементами */
+  margin-bottom: 20px;
+}
+@media (max-height: 650px) {
   .row {
-    width: 100%;
-    display: flex;
-    align-items: center; /* Вирівнювання елементів по вертикалі */
-    gap: 16px; /* Відступи між елементами */
-    margin-bottom: 20px;
+    margin-bottom: 5px;
   }
-  .ParamContainer{
-    width: 100%;
-  }
-  
-.Param{
-    position: relative;
-    width: 100%;
-    height: 4vh;
 }
-.ParamLabel{
-    font-size: 1.421875vh;
-    font-family: var(--primary-font-family);
-    font-weight: normal;
+.ParamContainer {
+  width: 100%;
 }
 
-.DescriptionContainer{
-    margin: 0 30px 0px 30px;
+.Param {
+  position: relative;
+  width: 100%;
+  height: 4vh;
 }
-.ParticipationContainer{
-    margin: 8px 30px 0px 30px;
+.ParamLabel {
+  font-size: 1.421875vh;
+  font-family: var(--primary-font-family);
+  font-weight: normal;
 }
 
-.CreateButtonContainer{
-    height: 4.4vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 16px 30px 16px 30px;
-    bottom: 16px;
+.DescriptionContainer {
+  margin: 0 30px 0px 30px;
 }
-.CreateButton{
-    /* Frame 427321175 */
-background: var(--primary-color);
-box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.25);
-border-radius: 25px;
-color: white;
-width: 100%;
-height: 100%;
-margin: 0 auto;
-font-family: var(--primary-font-family);
-font-weight:lighter;
-font-size: 18px;
-transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-border: none;
+.ParticipationContainer {
+  margin: 8px 30px 0px 30px;
+}
+
+.CreateButtonContainer {
+  height: 4.4vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 30px 16px 30px;
+  bottom: 16px;
+}
+.CreateButton {
+  /* Frame 427321175 */
+  background: var(--primary-color);
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.25);
+  border-radius: 25px;
+  color: white;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  font-family: var(--primary-font-family);
+  font-weight: lighter;
+  font-size: 18px;
+  transition: background-color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
+  border: none;
+  cursor: pointer;
 }
 .CreateButton:hover {
-    background-color: var(--primary-color-hover); 
-    box-shadow: 2px 2px 2px 2px rgba(0.1, 0.1, 0.1, 0.2); 
-    border: none;
-  }
-  
-  .CreateButton:active {
-    transform: scale(1.01); 
-    box-shadow: none; 
-  }
-
-
-  .autocompleteList {
-    position: absolute;
-    background-color: #fff;
-    border: 1px solid #d9d9d9;
-    border-top: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    max-height: 200px; /* Задайте максимальну висоту для прокрутки, якщо список занадто довгий */
-    overflow-y: auto; /* Дозволяє прокрутку, якщо список виходить за межі */
-    width: 100%; /* Забезпечуємо, що ширина списку буде відповідати ширині інпута */
-  }
-  
-  .autocompleteItem {
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .autocompleteItem:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .fullSizePhotoModal {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000; 
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background-color: var(--primary-color-hover);
+  box-shadow: 2px 2px 2px 2px rgba(0.1, 0.1, 0.1, 0.2);
+  border: none;
 }
 
+.CreateButton:active {
+  transform: scale(1.01);
+  box-shadow: none;
+}
 
+.autocompleteList {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-top: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px; /* Задайте максимальну висоту для прокрутки, якщо список занадто довгий */
+  overflow-y: auto; /* Дозволяє прокрутку, якщо список виходить за межі */
+  width: 100%; /* Забезпечуємо, що ширина списку буде відповідати ширині інпута */
+}
+
+.autocompleteItem {
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.autocompleteItem:hover {
+  background-color: #f0f0f0;
+}
+
+.fullSizePhotoModal {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .fullSizePhotoModal img {
-
-  max-width: 100%; 
-  max-height: 100%; 
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain; /* Зберігати пропорції фото при масштабуванні */
 }
 .fullSizePhotoModal:not(:target) * {
-    pointer-events: none; 
+  pointer-events: none;
 }
 
 .fullSizePhotoModal:target * {
-    pointer-events: auto; /* Enable click events within the modal */
+  pointer-events: auto; /* Enable click events within the modal */
 }

@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../../hooks/useAuth";
 import useLogin from "../../../hooks/useLogin";
 import { Input, message } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
-import CancelButton from "../../../components/Buttons/CancelButton/CancelButton";
-import ApplyChangesButton from "../../../components/Buttons/ApplyChangesButton/ApplyChangesButton";
+import PrimaryButton from "../../../components/Buttons/PrimaryButton/PrimaryButton";
 import { changePassword } from "../../../api/changePassword";
 import styles from "./ChangePassword.module.css";
+import ProcessingEffect from "../../../components/ProcessingEffect/ProcessingEffect";
+import { FaUnlock } from "react-icons/fa";
 
 const ChangePassword = () => {
   //const { auth, setAuth } = useAuth();
@@ -68,19 +67,14 @@ const ChangePassword = () => {
   return (
     show && (
       <>
-        {submitChanges && (
-          <div className={styles.SubmitChanges}>
-            <LoadingOutlined
-              style={{ color: "white", fontSize: "72px", fontWeight: "1000" }}
-            />
-          </div>
-        )}
+        {submitChanges && <ProcessingEffect />}
         <div className={styles.OuterContainer}>
           <div className={styles.InnerContainer}>
             <div className={styles.Buttons}>
               <p className={styles.Caption}>Change password</p>
               <CloseWindowButton onClick={handleClose} />
             </div>
+            <FaUnlock className={styles.Lock}/>
             <div className={styles.PasswordsContainer}>
               <div className={styles.Password}>
                 <p className={styles.PasswordCaption}>Old password</p>
@@ -117,8 +111,8 @@ const ChangePassword = () => {
               </div>
             </div>
             <div className={styles.Buttons}>
-              <CancelButton onclick={handleClose} />
-              <ApplyChangesButton onClick={handleApply} />
+              <PrimaryButton children={"Cancel"} onClick={handleClose} className={`${styles.CancelButton} ${styles.Button}`}/>
+              <PrimaryButton children={"Apply"} onClick={handleApply} className={styles.Button}/>
             </div>
           </div>
         </div>

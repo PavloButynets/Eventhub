@@ -102,9 +102,9 @@ hr {
   width: 100%;
 }
 
-@media (width < 1280px) {
+@media (width >= 1080px) and (width < 1280px) {
   .pop-up-container {
-    top: -395%;
+    top: -380%;
     height: 162px;
   }
 

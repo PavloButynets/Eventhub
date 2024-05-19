@@ -8,6 +8,7 @@ export const PlacesAutocomplete = ({
   initialValue,
   cancelChanges,
   onChange,
+  style
 }) => {
   const {
     ready,
@@ -65,6 +66,7 @@ export const PlacesAutocomplete = ({
       disabled={!ready}
       placeholder="Where do you live?"
       className={styles.Select}
+      style={style}
       defaultActiveFirstOption={false}
     />
   );

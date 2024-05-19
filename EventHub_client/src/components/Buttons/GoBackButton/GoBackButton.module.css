@@ -22,3 +22,10 @@
 .btn-icon:hover {
   background-color: var(--primary-color-hover);
 }
+
+@media (width > 1700px) {
+  .btn {
+    height: 1.7rem;
+    width: 1.7rem;
+  }
+}

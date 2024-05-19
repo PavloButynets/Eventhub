@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, redirect } from "react-router-dom";
 import { getUserByUsername } from "../../../api/getUserByUsername";
-import { Input, message } from "antd";
+import { message } from "antd";
 import UserImages from "../../../components/UserImages/UserImages";
 import CloseWindowButton from "../../../components/Buttons/CloseWindowButton/CloseWindowButton";
+import ProcessingEffect from "../../../components/ProcessingEffect/ProcessingEffect";
 import styles from "./UserProfile.module.css";
 
 const UserProfile = () => {
@@ -28,11 +29,7 @@ const UserProfile = () => {
 
   if (loading) {
     return (
-      <div className={styles.OuterContainer}>
-        <div className={styles.Loading}>
-          <p>Loading...</p>
-        </div>
-      </div>
+      <ProcessingEffect/>
     );
   }
 

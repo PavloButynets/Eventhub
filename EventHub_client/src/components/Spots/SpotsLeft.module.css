@@ -5,9 +5,9 @@
   font-size: 20px;
 }
 
-@media (width < 1280px) {
+@media (width >= 1080px) and (width < 1280px) {
   .spots {
-    font-size: var(--sm-size);
+    font-size: var(--xs-size);
   }
 }
 

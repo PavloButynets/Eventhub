@@ -135,18 +135,26 @@ main {
   height: 3.9vh;
 }
 
-@media (width < 1280px) {
+@media (width >= 1080px) and (width < 1280px) {
   .requests-list-container {
     font-size: var(--xxs-size);
   }
 
   .requested-participant-container {
-    height: 60px;
+    height: 45px;
   }
 
   .requested-participant-photo {
-    width: 60px;
-    height: 100%;
+    width: 45px;
+    height: 45px;
+  }
+
+  .username {
+    font-size: var(--xxs-size);
+  }
+
+  .full-name p {
+    font-size: var(--xxs-size);
   }
 }
 

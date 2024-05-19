@@ -1,20 +1,19 @@
-@import '../../../App.css';
+@import "../../../App.css";
 
-.filterContainer{
-    background-color: var(--primary-popup-background) !important; 
+.filterContainer {
+  background-color: var(--primary-popup-background) !important;
 }
 
-.filterButtonContainer{
-    position: absolute;
-    top: 20px;
-    left: 416px; 
-    
+.filterButtonContainer {
+  position: absolute;
+  top: 20px;
+  left: 416px;
 }
-.applyButtonContainer{
-   text-align: -webkit-right;
-   margin-right: 10px;   
+.applyButtonContainer {
+  text-align: -webkit-right;
+  margin-right: 10px;
 }
 
 .menu {
-    background-color: blue !important;
+  background-color: blue !important;
 }

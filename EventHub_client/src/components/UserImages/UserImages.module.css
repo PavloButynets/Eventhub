@@ -1,8 +1,7 @@
 .UserImages {
-    flex: 1;
-    margin: 25px;
-    width: 336px;
-    height: 336px;
+    margin: 2.5vh 2.5vh;
+    width: 42vh;
+    height: 42vh;
     position: relative;
   }
   

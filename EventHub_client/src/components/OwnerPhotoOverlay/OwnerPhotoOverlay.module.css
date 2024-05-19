@@ -63,7 +63,29 @@
   cursor: pointer;
 }
 
-@media (width < 1700px) {
+@media (width >= 1080px) and (width < 1280px) {
+  .owner-container {
+    height: 45px;
+    min-height: 45px;
+  }
+
+  .full-name-container {
+    top: -15%;
+    font-size: var(--xxs-size);
+    margin-left: 0;
+  }
+
+  .owner-img {
+    height: 45px;
+    width: 45px;
+  }
+
+  .username-container {
+    font-size: var(--xxs-size);
+  }
+}
+
+@media (width >= 1280px) and (width < 1700px) {
   .owner-container {
     font-size: var(--xxs-size);
     height: 53px;

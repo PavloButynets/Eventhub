@@ -143,18 +143,33 @@ main {
   height: 3vh;
 }
 
-@media (width < 1280px) {
+@media (width >= 1080px) and (width < 1280px) {
   .participants-list-container {
     font-size: var(--xxs-size);
   }
 
   .participant-container {
-    height: 60px;
+    height: 45px;
   }
 
   .participant-photo {
-    width: 60px;
-    height: 100%;
+    width: 45px;
+    height: 45px;
+  }
+
+  .username {
+    font-size: var(--xxs-size);
+  }
+
+  .full-name p {
+    font-size: var(--xxs-size);
+  }
+
+  .requests-btn {
+    font-size: var(--xxs-size);
+    /* width: 6.5vw;
+    height: 3.5vh;
+    position: relative; */
   }
 }
 

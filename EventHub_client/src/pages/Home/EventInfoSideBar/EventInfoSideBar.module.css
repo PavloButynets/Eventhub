@@ -355,25 +355,29 @@ main {
   border-radius: 100vw;
 }
 
-@media (width < 1280px) {
+@media (width >= 1080px) and (width < 1280px) {
   .side-bar-container {
     margin-top: 0;
   }
 
   .header {
-    font-size: var(--xs-size);
+    font-size: var(--xxxs-size);
   }
 
   .heading {
-    font-size: var(--md-size);
-  }
-
-  .date-range-container {
     font-size: var(--xs-size);
   }
 
-  .location {
+  .photo-container {
+    height: 35%;
+  }
+
+  .date-range-container {
     font-size: var(--xxs-size);
+  }
+
+  .location {
+    font-size: var(--xxxs-size);
   }
 
   .spots {
@@ -413,11 +417,26 @@ main {
     font-size: var(--xxs-size);
   }
 
+  .about-text-full {
+    font-size: var(--xxs-size);
+  }
+
+  .about-text-hidden {
+    font-size: var(--xxs-size);
+  }
+
   .isOwner-action-btn {
     font-size: var(--xxxs-size);
   }
   .isOwner-edit-btn {
     font-size: var(--xxxs-size);
+  }
+
+  .category {
+    padding: 0.3vh;
+    border-radius: 5px;
+    font-weight: 400;
+    font-size: var(--xxs-size);
   }
 }
 
@@ -455,11 +474,13 @@ main {
 
   .location {
     font-size: var(--xxs-size);
-    width: 140px;
+    width: 110px;
+    /* border: solid; */
   }
 
   .vl {
-    display: none;
+    /* display: none; */
+    height: 80%;
   }
 
   .action-btn {
